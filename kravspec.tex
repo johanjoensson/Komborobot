@@ -1,0 +1,427 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\input{LIPS.tex}
+
+
+\newcommand{\LIPSartaltermin}{2012/VT}
+\newcommand{\LIPSkursnamn}{TSEA27}
+
+\newcommand{\LIPSprojekttitel}{Komborobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 17}
+\newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
+\newcommand{\LIPSgrupphemsida}{finns ej}
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{}
+
+
+\newcommand{\LIPSdokumenttyp}{Kravspecifikation}
+\newcommand{\LIPSredaktor}{Simon Larsson}
+\newcommand{\LIPSversion}{0.1}
+%\newcommand{\LIPSdatum}{2004-xx-yy}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+% Förslag till versionshantering:
+% döp helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
+
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{cajla304@student.liu.se}
+  \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
+  \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
+  \LIPSgruppmedlem{Johan Jönsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Tobias Andersson}{Hårdvara (HV)}{073-7201098}{toban963@student.liu.se}
+  \LIPSgruppmedlem{Markus Falck}{Leveransansvarig (LV)}{076-3457552}{marlo265@student.liu.se}
+  \LIPSgruppmedlem{Simon Wallin}{Testansvarig (GM)}{076-2300665}{simwa252@student.liu.se}
+\end{LIPSprojektidentitet}
+
+\tableofcontents{}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\section{Inledning}
+I detta dokument formuleras samtliga krav som Komboroboten som beställare Tomas Svensson beställt av Grupp 17 ska uppfylla. Komboroboten ska vara moduluppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet. Den ska ha ett läge för manuell styrning via blåtand samt ett läge för att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
+  samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
+\ref{DEF} Definitioner senare i detta avsnitt.
+
+\includegraphics[scale=.7]{Tsea29.pdf}
+
+
+% Argument till \LIPSkrav och \LIPSunderkrav: förändring, kravtext, prioritet
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Roboten ska vara moduluppbyggd}{1}
+\end{LIPSkravlista}
+
+\subsection{Parter}
+Med parter avses dels beställaren (Ola Dahl) och dels leverantören
+(projektgrupp 11). 
+
+\subsection{Mål}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Roboten ska kunna köra ett heat enligt
+  tävlingsreglerna i bilaga \ref{app:rules}}{1}
+%  \LIPSunderkrav{Reviderat enl. beslut 2004-xx-yy}{Bluttan.}{Utgått}
+%  \LIPSunderkrav{Reviderat enl. beslut 2004-xx-yy}{Blaj.}{Extra}
+\end{LIPSkravlista}
+
+\subsection{Användning}
+Roboten ska kunna användas i två olika lägen. Autonomt läge och
+fjärrstyrningsläge. En brytarknapp på roboten ska användas för att välja läge.
+
+\subsubsection{Autonomt läge}
+Det autonoma läget ska startas med roboten i labyrinten; den ska där i navigera
+själv och kartlägga hela labyrinten samtidigt som kartan ritas upp i den
+tillhörande PC-mjukvaran.
+
+\subsubsection{Fjärrstyrningsläge}
+Roboten ska kunna fjärrstyras via den tillhörande PC-mjukvaran. Roboten ska
+kunna att manuellt styras: framåt, fram och vänster (samtidigt), fram och
+höger (samtidigt), bakåt, vänster (genom rotation runt normalen till marken)
+och höger (genom rotation runt normalen till marken).
+ 
+\subsection{Bakgrundsinformation}
+Beställaren har beställt en kartrobot som ska uppfylla vissa krav.
+
+\subsection{Definitioner}
+\label{DEF}
+En enhet är ett abstrakt delsystem. En modul är ett fysiskt delsystem som
+innehåller minst en processor samt en eller flera enheter.
+
+Vi har följande prioriteter på våra krav:
+
+\begin{tabular}{ l l }
+  Prioritet & Beskriving \\
+  \hline
+  1 & Krav som ska göras \\
+  2 & Krav som görs om vi har tid över efter 1-kraven är gjorda \\
+  3 & Krav som görs om vi har mer tid över efter 2-krav är gjorda \\
+\end{tabular}
+
+\pagebreak %thor är ett gnälligt luder FIXME
+
+\section{Översikt av systemet}
+
+%\subsection{Grov beskrivning av produkten}
+Produkten är en robot som kan förflytta sig i en plan bana.
+Medan roboten förflyttar sig, ska ett program på en PC rita upp en karta
+som föreställer banan. Roboten ska även gå att styra manuellt via
+PC-mjukvaran, när roboten är i fjärrstyrningsläget.
+
+\includegraphics[scale=.7]{tsea29robot.pdf}
+
+\subsection{Produktkomponenter}
+Robot, PC-mjukvara, teknisk dokumentation och användarmanual.
+% TODO textify
+
+\subsection{Beroenden till andra system}
+Roboten kommer att behöva en PC med blåtandsanslutning för att köra den
+tillhörande mjukvaran. Det kommer även att krävas kartongbitar av ett
+särskilt slag (se tävlingsregler i bilaga \ref{app:rules}) att konstruera
+en bana med.
+
+\subsection{Ingående delsystem}
+
+De ingående delsystemen ska vara:
+
+\begin{itemize}
+\item Kommunikationsenhet
+\item Styrenhet
+\item Sensorenhet
+\item PC-mjukvara
+\item Kart- och positionslogikenhet
+\end{itemize}
+
+
+% TODO
+
+\subsection{Avgränsningar}
+Roboten behöver endast kunna klara av banor som följer tävlingsreglerna.
+Kartan behöver i PC-mjukvaran endast ritas ut i 2D.
+
+%\subsection{Designfilosofi}
+
+\subsection{Generella krav på hela systemet}
+
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Roboten ska ha en brytarknapp för val mellan
+    autonomt och fjärrstyrningsläge}{1} 
+  \LIPSkrav{Original}{Roboten ska ha en knapp för att starta 
+    tävlingsläget}{1}
+  \LIPSkrav{Original}{Roboten ska bestå av minst tre moduler,
+    kommunikationsmodul, sensormodul och styrmodul}{1}
+\end{LIPSkravlista}
+
+
+\section{Kommunikationsenhet}
+%\subsection{Inledande beskrivning}
+
+Kommunikationsenheten ska kommunicera via blåtand med en PC. Den ska kunna ta
+emot styrkommandon, skicka felsökningsdata och skicka kartdata.
+
+\subsection{Gränssnitt}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska kunna skicka kartdata, sensorvärden
+    och styrbeslut till PC}{1} \LIPSkrav{Original}{Enheten ska kunna
+    ta emot styr- och felsökningskommandon från PC}{1}
+\end{LIPSkravlista}
+
+%\subsection{Designkrav}
+
+\subsection{Funktionella krav}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska ha en fysisk indikation som visar
+		  blåtandsaktivitet}{2}
+  \LIPSkrav{Original}{Enheten ska möjliggöra kommunikation mellan den
+		  medföljande PC-mjukvaran och kart- och
+		  positionslogikenheten}{1}
+\end{LIPSkravlista}
+
+\section{Styrenhet}
+%\subsection{Inledande beskrivning}
+
+Styrenheten ska ta emot styrdata från kart- och positionslogikenheten
+och styr sedan motorerna utifrån det.
+
+\subsection{Gränssnitt}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska kunna ta emot styrdata från kart- och 
+  			positionslogikenheten}{1}
+\end{LIPSkravlista}
+%\subsection{Designkrav}
+\subsection{Funktionella krav}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska styra robotens motorer utifrån styrdatan}{1}
+  \LIPSkrav{Original}{Enheten ska kunna styra roboten på följande sätt:
+  	fram, fram vänster, fram höger, back, stopp, rotera vänster och
+	rotera höger}{1}
+\end{LIPSkravlista}
+
+\section{Sensorenhet}
+%\subsection{Inledande beskrivning}
+Sensorenheten ska agera gränssnitt mellan sensorer och resten av systemet.
+
+\subsection{Gränssnitt}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska skicka sensordata till kart- och 
+  	positionslogikenheten}{1}
+\end{LIPSkravlista}
+
+%\subsection{Designkrav}
+\subsection{Funktionella krav}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska ta emot rå data från de sensorer som finns på 
+  	roboten}{1}
+  \LIPSkrav{Original}{Enheten ska göra om den råa datan till hanterbar 
+  	sensordata innan den skickas till kart- och positionslogikenheten}{1}
+  \LIPSkrav{Original}{Enheten ska ha sensorer som kan upptäcka väggar}{1}
+  \LIPSkrav{Original}{Enheten ska ha sensorer som kan avgöra när roboten rört sig en
+  	bestämd sträcka. Detta för att kart- och positionslogikenheten ska
+	kunna avgöra var i banan roboten befinner sig}{1}
+\end{LIPSkravlista}
+
+
+
+\section{PC-mjukvara}
+%\subsection{Inledande beskrivning}
+
+PC-mjukvaran ska ta emot kartan roboten gjort och visa resultatet grafiskt.
+
+\subsection{Gränssnitt}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna ta emot kartdata via blåtand}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna skicka styrdata till roboten via blåtand}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna ta emot och begära sensordata via blåtand}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna ta emot och begära positionsdata via
+  		blåtand}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna ta emot och begära intern tillståndsdata från
+  		kart- och positionslogikenheten}{1}
+\end{LIPSkravlista}
+%\subsection{Designkrav}
+\subsection{Funktionella krav}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{PC-mjukvaran ska kunna tolka kartdata och rita ut en karta när roboten
+		  är i det autonoma läget}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska tillåta en människa styra roboten via tangentbordet
+		  när roboten är i fjärrstyrningsläget}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska visa den mottagna positionsdatan genom att rita
+  		en markör för roboten i den utritade kartan}{1}
+  \LIPSkrav{Original}{PC-mjukvara ska visa den mottagna sensordatan med siffror som
+  		representerar olika värden}{1}
+  \LIPSkrav{Original}{PC-mjukvaran ska med ett eller flera ord visa vilket tillstånd
+  		kart- och positionslogikenheten befinner sig i}{1}
+\end{LIPSkravlista}
+
+\section{Kart- och positionslogiksenhet}
+%\subsection{Inledande beskrivning}
+Enheten ska fatta beslut om vart roboten ska åka och rita karta.
+
+\subsection{Gränssnitt}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska ta emot styrkommandon från
+  	kommunikationsenheten}{1}
+  \LIPSkrav{Original}{Enheten ska ta emot sensordata från
+  	sensorenheten}{1}
+  \LIPSkrav{Original}{Enheten ska skicka styrdata till styrenheten}{1}
+  \LIPSkrav{Original}{Enheten ska skicka kartdata till kommunikationsenheten}{1}
+  \LIPSkrav{Original}{Enheten ska skicka sensordata och styrbeslut till
+  	kommunikationsenheten}{1}
+\end{LIPSkravlista}
+
+%\subsection{Designkrav}
+\subsection{Funktionella krav}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Enheten ska kunna generera en karta}{1}
+  \LIPSkrav{Original}{Enheten ska kunna hålla reda på robotens position i kartan}{1}
+\end{LIPSkravlista}
+
+\section{Prestandakrav}
+Roboten ska klara att kartlägga alla labyrinter som följer tävlingsreglerna.
+
+\section{Krav på möjlighet att uppgradera}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Modulerna ska vara ersättningsbara}{1}
+\end{LIPSkravlista}
+% TODO
+
+\section{Tillförlitlighet}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Roboten ska kunna rita upp en karta oavsett
+  startposition i banan}{1}
+\end{LIPSkravlista}
+% TODO
+
+\section{Ekonomi}
+\begin{LIPSkravlista}
+  \LIPSkrav{Original}{Projektet får max ta 160 arbetstimmar per person}{1}
+  \LIPSkrav{Original}{Projektgruppen har max 2 timmar handledartid per
+  vecka}{1}
+\end{LIPSkravlista}
+
+%\section{Krav på säkerhet}
+%Roboten anses vara så liten och lätt att inga säkerhetsproblem kan uppstå.
+
+\section{Leveranskrav och delleveranser}
+\begin{LIPSkravlista}	
+\LIPSkrav{Original}{Designspecifikationen ska vara godkänd senast den 28 oktober}{1}
+\LIPSkrav{Original}{Roboten ska klara kraven i denna kravspecifikation till tävlingen v.49}{1}
+\LIPSkrav{Original}{Teknisk dokumentation ska vara färdigskriven senast tre dagar före slutredovisning}{1}
+\end{LIPSkravlista}
+
+\section{Dokumentation}
+
+\begin{LIPSkravlista}
+\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgå från LIPS-mallar}{1}
+\LIPSkrav{Original}{Dokument ska märkas med versionsnummer}{1}
+%\LIPSkrav{Original}{Möten ska protokollföras enligt LIPS-mallen för mötesprotokoll}{1}
+%\LIPSkrav{Original}{Mötesprotokoll ska justeras av två utsedda justeringspersoner}{1}
+\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
+\end{LIPSkravlista}
+
+Med dokumentation avses designspecifikation, projektplan
+samt teknisk dokumentation och användarmanual.
+
+\section{Utbildning}
+Projektgruppen kommer att behöva datablad tillhörande komponenterna. Databladen
+tillhandahålls av ISY.
+
+\section{Kvalitetskrav}
+Komponentleverantören tillhandahåller komponenterna och ansvarar därför för
+dess kvalitet.
+
+\section{Underhållsbarhet}
+Roboten kräver ett energiförsörjningssystem. T.ex. ett batteri som måste laddas
+innan användning.
+
+\newpage
+\appendix
+\section{Tävlingsregler} \label{app:rules}
+Version 1.1
+
+2 - 4 Lag
+
+Roboten ska operera autonomt och måste bära med sig den dator som utför
+beräkningarna som krävs för att den ska utföra sin kartläggning.  Detta innebär
+att roboten inte får fjärrstyras från en laptop som utför beräkningarna som
+krävs för att roboten ska navigera etc.  Man får inte tejpa fast en laptop på
+roboten.
+
+\subsection{Regler}
+
+En robot per lag.  Roboten ska själv avgöra när kartläggningen är klar och
+signalera det.  Kartan ska under uppritning visas på en skärm eller projektor
+och vara komplett när roboten anser sig klar.  Robotarna kör i tur och ordning
+och börjar i samma ruta, dock inte tvunget vriden åt samma håll.  Robotarna ska
+starta kartläggningen genom att någon trycker på en knapp på roboten.  Den
+robot som snabbast signalerar att den är klar med kartritningen och vars karta
+överrensstämmer med verkligheten får 4 poäng, 2:an får 3 poäng, 3:an får 2
+poäng och fyran får 1 poäng.  Man kör två omgångar och om man i slutet har n
+(n: heltal) par med samma resultat får de spela om sin placering i en 4:de
+omgång.  Ola väljer startpositioner. Laget väljer var på rutan roboten ska
+starta. Ingen del av roboen får vara utanför den designerade rutan vid start.
+Körtiden mäts från det att knappen är tryckt i sekunder tills roboten
+signalerat klar och man kan se en karta på skärmen.
+
+Man får inte ge roboten en hårdkodad verision av banan att arbeta utifrån.
+Roboten ska söka sig fram till kartan inte bara verifiera en existerande
+version.
+
+Om roboten signalerar klar i förtid (innan hela kartan syns på persondatorn)
+läggs 10 sekunder till på dess arbetstid. Dessutom kommer tiden mellan KLAR
+signalen och då hela kartan visas på persondatorn att läggas till robotens tid
+den omgången.  Om kartan är ofullständig 4 minuter efter KLAR signal eller då
+gruppen ger upp får roboten i den omgången 0 poäng.  Om två eller fler robotar
+klarar uppgiften på samma tid så delar de på placeringen och får samma poäng.
+Roboten på platsen efter de två med lika tid får då poängen som den skulle fått
+om den två hade olika bättre tider.  Huruvida tiderna är optimala bör
+förhandlas.
+
+Vid oklarheter är det Ola Dahl som bedömmer utgången av en omgång eller en
+annan person utsedd av Ola. Ola har också tillåtelse att tilldela/dra ifrån
+sekunder på en omgång.
+
+\subsection{Banan} 
+
+Ska vara uppförd av Ola Dahl eller ersättare tillsatt av Ola Dahl.  Max 8 x 8 rutor
+stor. Varje ruta är 80cm x 80cm. Max 6.4 x 6.4 m. (projektdirektivet anger 6x6m
+vilket är omöjligt) Vara tät, dvs inga hål i yttre väggen får finnas.  Inte ha
+"tunna" väggar. Varje vägg har alltså en otillgänglig ruta bakom sig.  Ha
+väggar beståendes av 80cm långa vita pappskivor som skär varandra i 90 graders
+vinklar.  Maximalt ha en "köksö", "köksön" kan ha godtycklig storlek. "Köksön"
+ska vara placerad passade till det rutnät (grid) man kan bygga upp av
+ytterväggen. "Köksön" består av rutor på samma sätt som övriga banan.
+
+\addcontentsline{toc}{section}{Referenser}
+\begin{thebibliography}{99}
+\bibitem{lipskompendiet}\textit{LIPS -- nivå 1. Version 1.0.} Tomas Svensson
+och Christian Krysander. Kompendium, LiTH, 2002.
+\end{thebibliography}
+
+
+\end{document} 
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
