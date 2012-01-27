@@ -1,0 +1,47 @@
+Git är en versionshanterare, den håller koll på alla olika versioner av de
+dokument som ligger i repon. Detta underlättar något oerhört för oss då vi bara
+behöver skriva våra delar och sedan låta git ta hand om uppdateringarna och
+versionshanteringen.
+
+Dessvärre är det så att det tar ett tag att vänja sig vid git. Jag personligen
+kan rekommendera http://progit.org/book/ en sida som jag använder för att lära
+mig mer. Annars borde informationen här nedan räcka för det mest grundläggande,
+notera dock att jag bara beskrivit hur man använder det terminalbaserade
+gränssnittet. För de olika GUIn som finns så får ni helt enkelt leta upp de
+knappar som gör det som står här nedan. Informationen nedan är långt ifrån
+komplett och det kan mycket väl vara så att jag skrivit fel nånstans, så inga
+garantier, men jg tror att det ska fungera bra.
+
+
+Här kommer lite information om hur Git används, detta är väldigt kortfattat och
+kommer definitivt inte täcka allt, men förhoppningsvis det viktigaste.
+
+1: Lägg till filer till repon.
+        Kan ju vara bra att kunna göra, via terminalen skriver man "git add
+        |filnamn|" så vet git att filen ska bevakas. Skriver ni sedan "git
+        commit" så kommer git spara era ändringar på er lokala kopia av repon.
+        För att sedan synca repon på github med er lokala (alltså, för att
+        "skicka" era ändringar) skriver ni "git push", då kommer ni ansluta till
+        github och lägga era ändringar till repon.
+
+
+2: Uppdatera er lokala repo (hämta från github).
+        Enkelt, skriv "git pull" så ansluter ni till github och sedan hämtar ni
+        uppdateringarna.
+
+3: Uppdatera en fil som ni ändrat.
+        Se "1: Lägg till filer till repon", ni gör exakt samma sak.
+
+
+4: Lös konflikter.
+        Ibland kommer det uppstå en konflikt mellan er lokala repo och serverns
+        repo, det som då händer är att era 2 versioner står i direkt konflikt
+        med varandra (vanligast då flera personer jobbar med samma del av ett
+        dokument) det man då får göra är lösa konflikten manuellt. Alltså gå in
+        i filen och ta bort det som inte sk vara med i filen (plus allt som git
+        lagt till för att markera konflikten). När detta är klart uppdaeterar ni
+        er lokala repo ("git add |filnamn|" "git commit" ) och sedan uppdaterar
+        ni github (git push).
+        Sådär ja, konflikt löst. Det kommer inte gå så lätt i början dock, men
+        efter ett tag kommer ni lära er hur man snabbt och effektivt löser
+        konflikter (eller ännu hellre hur man undviker dem).
