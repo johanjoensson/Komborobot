@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{graphicx}
 \usepackage{epstopdf}
+\usepackage{gensymb}
 \input{LIPS.tex}
 
 
@@ -63,7 +64,7 @@
 \section{Inledning}
 I detta dokument formuleras samtliga krav som Komboroboten som
 beställare Tomas Svensson beställt av Grupp 17 ska uppfylla.
-Komboroboten ska vara moduluppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet.
+Komboroboten ska vara enhetsuppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet.
 Den ska ha ett läge för manuell styrning via blåtand samt ett läge för 
 att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, 
 en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
@@ -75,7 +76,7 @@ I samband med leverans ska Komboroboten delta i en tävling där konstruktionen 
 
 % Argument till \LIPSkrav och \LIPSunderkrav: förändring, kravtext, prioritet
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Roboten ska vara moduluppbyggd}{1}
+  \LIPSkrav{Original}{Roboten ska vara enhetsuppbyggd}{1}
 \end{LIPSkravlista}
 
 \subsection{Parter}
@@ -83,8 +84,8 @@ Beställare: Tomas Svensson \\
 Leverantör: Grupp 17
 
 \subsection{Mål}
-I samband med leveransen ska roboten klara av att under tävling helt autonomt 
- en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen. 
+I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
+en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
  Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner.
 
 \subsection{Användning}
@@ -95,8 +96,8 @@ Man ska kunna växla mellan de två lägena med en brytarknapp på roboten.
 I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation.
 
 \subsubsection{Fjärrstyrningsläge}
-I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medfäljande användargränssnitt.
-Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation. 
+I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medföljande mjukvara.
+Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation och back. 
 
 \subsection{Bakgrundsinformation}
 Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfyller vissa krav.
@@ -114,12 +115,11 @@ Produkten är en komborobot som ska kunna styras trådlöst via blåtand samt au
 
 \subsection{Produktkomponenter}
 De komponenter som ska ingå i den slutgiltiga produkten är
-komboroboten med tillhörande teknisk dokumentation och programvara som 
-kan styra roboten när den är i fjärrstyrningsläge och visa information om roboten när den är i autonomt läge.
+komboroboten med tillhörande teknisk dokumentation, användarmanual och programvara.
 
 \subsection{Beroenden till andra system}
 När roboten är i fjärrstyrningsläge så ska den styras från en PC 
-med blåtandsanslutning och med installerad programvara tillhörande roboten.
+med blåtandsanslutning och den mjukvara som levereras tillsammans med roboten.
 
 \subsection{Ingående delsystem}
 De delsystem som ska ingå är en styrenhet som sköter motorer och styrning,
@@ -140,7 +140,7 @@ styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 % TODO
 
 \subsection{Avgränsningar}
-Roboten behöver bara klara de banor som beskrivs i banreglerna, Appendix A.
+Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
 
 %\subsection{Designfilosofi}
 
@@ -152,7 +152,7 @@ Systemet i sin helhet ska uppfylla följande krav.
   \LIPSkrav{Original}{Roboten ska kunna köra autonomt}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
-  \LIPSkrav{Original}{Roboten ska bestå av minst tre moduler, styrenhet, kommunikationsenhet och sensorenhet}{1}
+  \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
 \end{LIPSkravlista}
 
 
@@ -172,12 +172,12 @@ Styrenheten ska designas så att den kan bytas ut mot en annan styrenhet med t e
 
 \begin{LIPSkravlista}
 	\LIPSkrav{Original}{Styrenheten ska innehålla minst en processor}{1}
-	\LIPSkrav{Original}{Styrenheten ska kunna bytas utStyrenheten ska kunna bytas ut}{1}
+	\LIPSkrav{Original}{Styrenheten ska kunna bytas ut}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt Appendix A utan att slingra sig fram}{2}
+	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{2}
   \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{2}
 \end{LIPSkravlista}
 
@@ -194,15 +194,15 @@ Dessa instruktioner och data kan sedan användas för att styra komboroboten.
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Kommunikationsenheten ska skicka data, exempelvis felmeddelanden till datorn via blåtand}{1}
   \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data, exempelvis instruktioner till styrenheten via blåtand}{1}
-  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data från datorn till lämplig modul, exempelvis navigationsinstruktioner skickas till styrenheten}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data från datorn till lämplig enhet, exempelvis navigationsinstruktioner skickas till styrenheten}{1}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
-Kommuniaktionsenheten ska kommunicera med övriga moduler på roboten samt datorn och förmedla information mellan dessa.
+Kommuniaktionsenheten ska kommunicera med övriga enheter på roboten samt datorn och förmedla information mellan dessa.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data från sensorenheten och förmedla den till datorn, via blåtand.}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data från sensorenheten och förmedla den till datorn, via blåtand}{1}
   \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data från styrenheten och skicka denna vidare till datorn, via blåtand}{1}
 \end{LIPSkravlista}
 
@@ -245,14 +245,14 @@ Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskv�
 \subsection{Designkrav}
 Sensorenheten ska kommunicera med kommunikationsenheten samt 
 styrenheten och förmedla vidare sensordata.
-Modulen ska vara designad så att den är utbytbar med en likvärdig modul. Modulen ska innehålla minst en processor.
+Enheten ska vara designad så att den är utbytbar med en likvärdig enhet. Enheten ska innehålla minst en processor.
 
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Sensorenheten ska innehålla minst en processor}{1}
   \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till styrenheten}{1}
   \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till kommunikationsenheten}{1}
-  \LIPSkrav{Original}{Sensormodulen ska vara utbytbar}{1}
+  \LIPSkrav{Original}{Sensorenheten ska vara utbytbar}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
@@ -260,7 +260,7 @@ Linjeföljarsensor skall i labyrintläge läsa av markeringar på marken som sed
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Sensorenheten ska kunna läsa av markeringar på marken (se banspecifikation för tydligare beskrivning av markeringar)}{1}
+	\LIPSkrav{Original}{Sensorenheten ska kunna läsa av markeringar på marken (se \ref{app:bana} för tydligare beskrivning av markeringar)}{1}
 \end{LIPSkravlista} 
 
 \subsection{Användargränssnitt}
@@ -281,7 +281,7 @@ För att styra roboten krävs datormjukvara som kan låta användaren skicka kom
 
 \subsection{Designkrav}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Mjukvaran ska designas på så sätt att man enkelt kan anpassa den ifall någon av robotens moduler byts ut}{1}
+  \LIPSkrav{Original}{Mjukvaran ska designas på så sätt att man enkelt kan anpassa den ifall någon av robotens enheter byts ut}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
@@ -292,8 +292,8 @@ Användaren ska även kunna styra roboten via mjukvaran då roboten befinner sig
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Datormjukvaran ska ge möjlighet att styra roboten då den befinner sig i fjärrstyrt läge}{1}
   \LIPSkrav{Original}{Datormjukvaran ska innehålla ett grafiskt användargränssnitt för att styra roboten i fjärrstyrt läge}{2}
-  \LIPSkrav{Original}{Datormjukvaran ska visa information från robotens olika moduler}{1}
-  \LIPSkrav{Original}{Datormjukvaran ska via ett grafiskt användargränssnitt visa information från robotens olika moduler}{2}
+  \LIPSkrav{Original}{Datormjukvaran ska visa information från robotens olika enheter}{1}
+  \LIPSkrav{Original}{Datormjukvaran ska via ett grafiskt användargränssnitt visa information från robotens olika enheter}{2}
 \end{LIPSkravlista}
 
 
@@ -305,14 +305,14 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom bana
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Roboten ska ta sig igenom en bana som uppfyller banspecifikationen för den nivå som bestämts}{1}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana som uppfyller banspecifikationen (\ref{app:bana}) för den nivå som bestämts}{1}
 \end{LIPSkravlista}
 
 
 \section{Krav på vidareutveckling}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Samtliga av de olika modulerna på roboten ska ha väl specificerade gränssnitt}{1}
-  \LIPSkrav{Original}{Det ska på ett enkelt vis vara möjligt att byta ut enskilda moduler på roboten}{1}
+  \LIPSkrav{Original}{Samtliga av de olika enheterna på roboten ska ha väl specificerade gränssnitt}{1}
+  \LIPSkrav{Original}{Det ska på ett enkelt vis vara möjligt att byta ut enskilda enheterna på roboten}{1}
 \end{LIPSkravlista}
 
 
@@ -347,6 +347,18 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sa
 \end{LIPSleveranslista}
 
 \section{Dokumentation}
+Dokumentation för projektet innebär följande dokument: 
+\begin{list}{*}{}
+\item Teknisk dokumentation: Beskriver systemet och dess olika delar
+\item Användarmanual: Beskriver på ett änklare sätt hur produkten används
+\end{list} 
+
+\begin{LIPSkravlista}	
+	\LIPSkrav{Original}{Dokumentation enligt ovan ska finnas vid leverans.}{1}
+	\LIPSkrav{Original}{Dokumentationen ska vara tydligt formulerad, samt samt ha en enhetlig layout.}{1}
+	\LIPSkrav{Original}{Dokumentationen ska fälja LIPS-standard.}{1}
+	\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
+\end{LIPSkravlista}
 
 %\begin{LIPSkravlista}
 %\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgå från LIPS-mallar}{1}
@@ -359,7 +371,7 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sa
 
 \newpage
 \appendix
-\section{Tävlingsregler} \label{app:rules}
+\section{Bilagor} \label{app:rules}
 %Version 1.1
 %
 %2 - 4 Lag
@@ -370,7 +382,7 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sa
 %krävs för att roboten ska navigera etc.  Man får inte tejpa fast en laptop på
 %roboten.
 
-\subsection{Regler}
+%\subsection{Regler}
 
 %En robot per lag.  Roboten ska själv avgöra när kartläggningen är klar och
 %signalera det.  Kartan ska under uppritning visas på en skärm eller projektor
@@ -404,7 +416,7 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sa
 %annan person utsedd av Ola. Ola har också tillåtelse att tilldela/dra ifrån
 %sekunder på en omgång.
 
-\subsection{Banan} 
+\subsection{Banspecifikation} \label{app:bana}
 
 %Ska vara uppförd av Ola Dahl eller ersättare tillsatt av Ola Dahl.  Max 8 x 8 rutor
 %stor. Varje ruta är 80cm x 80cm. Max 6.4 x 6.4 m. (projektdirektivet anger 6x6m
@@ -415,10 +427,24 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sa
 %ska vara placerad passade till det rutnät (grid) man kan bygga upp av
 %ytterväggen. "Köksön" består av rutor på samma sätt som övriga banan.
 
+Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
+
+Linjedelen:
+Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
+
+Labyrintdelen:
+
+\begin{list}{*}{}
+\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn fåljd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
+\item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
+\item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. \"Hål\" 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
+\end{list} 
+
+\newpage
 \addcontentsline{toc}{section}{Referenser}
 \begin{thebibliography}{99}
-\bibitem{lipskompendiet}\textit{LIPS -- nivå 1. Version 1.0.} Tomas Svensson
-och Christian Krysander. Kompendium, LiTH, 2002.
+\bibitem{lipskompendiet}\textit{Projektmodellen LIPS - } Svensson, Tomas
+\\Studentlitteratur, 2011.
 \end{thebibliography}
 
 
