@@ -1,2 +1,6 @@
 *.*~    #  Emacs swap files
 *.o     #  Objektfiler, dumt att inkludera
+*~		#  Vim swap files
+*.log	#  Generade när man bygger med pdflatex
+*.aux	
+*.toc	
