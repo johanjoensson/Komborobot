@@ -2,7 +2,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
-\input{LIPS.tex}
+\input{../LIPS.tex}
 
 
 \newcommand{\LIPSartaltermin}{2012/VT}
@@ -23,8 +23,7 @@
 
 \newcommand{\LIPSdokumenttyp}{Kravspecifikation}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{0.1}
-%\newcommand{\LIPSdatum}{2004-xx-yy}
+\newcommand{\LIPSversion}{0.2}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 % Förslag till versionshantering:
@@ -58,6 +57,7 @@
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
   \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+  \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -70,6 +70,8 @@ att autonomt kunna följa en bana bestående av antingen en linje längs underla
 en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
 
 I samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
+
+Prioritetsnivåer enligt \ref{DEF}.
 
 %\includegraphics[scale=.7]{Tsea29.pdf}
 
@@ -104,7 +106,11 @@ Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfy
 Ytterligare en leverantör ska konstruera en liknande robot,
 och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna som bäst tillgodoser beställarens krav.
 
-%\pagebreak %thor är ett gnälligt luder FIXME
+\subsection{Definitioner} \label{DEF}
+\begin{itemize}
+\item Prioritetsnivå 1 - Dessa krav ska uppfyllas
+\item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
+\end{itemize}
 
 \section{Översikt av systemet}
 
@@ -143,14 +149,12 @@ styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 \subsection{Avgränsningar}
 Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
 
-%\subsection{Designfilosofi}
-
 \subsection{Generella krav på hela systemet}
 Systemet i sin helhet ska uppfylla följande krav.
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna köra autonomt}{1}
+  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt \ref{app:bana}}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
   \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
@@ -178,8 +182,8 @@ Styrenheten ska designas så att den kan bytas ut mot en annan styrenhet med t e
 
 \subsection{Funktionella krav}
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{2}
-  \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{2}
+	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{1}
+  \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{1}
 \end{LIPSkravlista}
 
 \section{Kommunikationsenhet}
@@ -235,7 +239,8 @@ Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskv�
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
   \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{2}
+  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
+   \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras tr?dl?st via bluetooth}{2}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
@@ -276,8 +281,9 @@ För att styra roboten krävs datormjukvara som kan låta användaren skicka kom
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Data från styrenheten skall kontinuerligt visas på en datorskärm}{1}
-  \LIPSkrav{Original}{Data från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{Förståelig information från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{Avståndet till väggarna skall redovisas i cm på en datorskärm}{2}
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
@@ -318,11 +324,11 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom bana
 
 
 \section{Ekonomi}
-Efter att projektet har passerat BP2 får maximalt 980 timmar (140 timmar per projektmedlem) brukas.
+Efter att projektet har passerat BP2 får totalt 980 timmar (140 timmar per projektmedlem) brukas.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Maximalt får 980 timmar används i projektet efter att projektplanen godkänts}{1}
+  \LIPSkrav{Original}{Totalt 980 timmar skall används i projektet efter att projektplanen godkänts}{1}
 \end{LIPSkravlista}
 
 
