@@ -150,7 +150,7 @@ Systemet i sin helhet ska uppfylla följande krav.
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna köra autonomt}{1}
+  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt Appendix A}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
   \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
@@ -178,8 +178,8 @@ Styrenheten ska designas så att den kan bytas ut mot en annan styrenhet med t e
 
 \subsection{Funktionella krav}
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{2}
-  \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{2}
+	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{1}
+  \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{1}
 \end{LIPSkravlista}
 
 \section{Kommunikationsenhet}
@@ -235,7 +235,8 @@ Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskv�
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
   \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{2}
+  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
+   \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras tr�dl�st via bluetooth}{2}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
@@ -276,8 +277,9 @@ För att styra roboten krävs datormjukvara som kan låta användaren skicka kom
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Data från styrenheten skall kontinuerligt visas på en datorskärm}{1}
-  \LIPSkrav{Original}{Data från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{F�rst�elig information från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
+  \LIPSkrav{Original}{Avst�ndet till v�ggarna skall redovisas i cm p� en datorsk�rm}{2}
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
@@ -322,7 +324,7 @@ Efter att projektet har passerat BP2 får maximalt 980 timmar (140 timmar per pr
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Maximalt får 980 timmar används i projektet efter att projektplanen godkänts}{1}
+  \LIPSkrav{Original}{Totalt 980 timmar skall används i projektet efter att projektplanen godkänts}{1}
 \end{LIPSkravlista}
 
 
