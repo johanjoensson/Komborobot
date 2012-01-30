@@ -2,7 +2,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
-\input{LIPS.tex}
+\input{../LIPS.tex}
 
 
 \newcommand{\LIPSartaltermin}{2012/VT}
@@ -23,8 +23,7 @@
 
 \newcommand{\LIPSdokumenttyp}{Kravspecifikation}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{0.1}
-%\newcommand{\LIPSdatum}{2004-xx-yy}
+\newcommand{\LIPSversion}{0.2}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 % Förslag till versionshantering:
@@ -58,6 +57,7 @@
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
   \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+  \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -70,6 +70,8 @@ att autonomt kunna följa en bana bestående av antingen en linje längs underla
 en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
 
 I samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
+
+Prioritetsnivåer enligt \ref{DEF}.
 
 %\includegraphics[scale=.7]{Tsea29.pdf}
 
@@ -104,7 +106,11 @@ Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfy
 Ytterligare en leverantör ska konstruera en liknande robot,
 och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna som bäst tillgodoser beställarens krav.
 
-%\pagebreak %thor är ett gnälligt luder FIXME
+\subsection{Definitioner} \label{DEF}
+\begin{itemize}
+\item Prioritetsnivå 1 - Dessa krav ska uppfyllas
+\item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
+\end{itemize}
 
 \section{Översikt av systemet}
 
@@ -142,8 +148,6 @@ styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 
 \subsection{Avgränsningar}
 Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
-
-%\subsection{Designfilosofi}
 
 \subsection{Generella krav på hela systemet}
 Systemet i sin helhet ska uppfylla följande krav.
