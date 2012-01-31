@@ -85,6 +85,7 @@ Prioritetsnivåer enligt \ref{DEF}.
 Beställare: Tomas Svensson \\
 Leverantör: Grupp 17
 
+
 \subsection{Mål}
 I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
 en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
@@ -110,6 +111,7 @@ och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna
 \begin{itemize}
 \item Prioritetsnivå 1 - Dessa krav ska uppfyllas
 \item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
+\item Prioritetsnivå 3 - Dessa krav ska uppfyllas mån av tid och efter alla krav med prioritet 2 uppfyllts
 \end{itemize}
 
 \section{Översikt av systemet}
@@ -312,8 +314,11 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom bana
 
 
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana som uppfyller banspecifikationen (\ref{app:bana}) för den nivå som bestämts}{1}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
+        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
 \end{LIPSkravlista}
+
 
 
 \section{Krav på vidareutveckling}
@@ -437,18 +442,19 @@ Dokumentation för projektet innebär följande dokument:
 Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
 
 Linjedelen:
-Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
+Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal, två tjocka tvärgående linjer, eller övergår till en labyrint.
 
 
 Labyrintdelen:
 
 \begin{list}{*}{}
-\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn fåljd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
+\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn följd av en tjock indikerar vänster och två tunna linjer indikerar rakt fram. 
 \item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
 \item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
 \end{list} 
 
 \newpage
+
 
 \addcontentsline{toc}{section}{Referenser}
 \begin{thebibliography}{99}
