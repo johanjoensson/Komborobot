@@ -51,6 +51,8 @@ begin
                         count <= 0;
                         bitcount <= 0;
                         regis <= (others=>'0');
+								seg7 <= (others=>'0');
+								led <= '0';
                 elsif rising_edge(clk) then
                         if state = 0 then
                                 if insignal = '1' then
@@ -69,6 +71,7 @@ begin
                                         end if;
                                 end if;
                         elsif state = 2 then
+                                led <= '0';
                                 if count = 15 then
                                         if bitcount = 4 then
                                                 state <= 3;
@@ -99,6 +102,8 @@ begin
                                                         count <= 0;
                                                 end if;
                                         end if;
+                                else
+                                        count <= count + 1;
                                 end if;
                         else   
                                 state <= 0;
