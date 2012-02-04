@@ -74,11 +74,14 @@ begin
                                 led <= '0';
                                 if count = 15 then
                                         if bitcount = 4 then
+                                                regis(3 downto 0) <= regis(4 downto 1);
+                                                regis(4) <= insignal;
                                                 state <= 3;
                                                 count <= 0;
                                                 bitcount <= 0;
                                         else
-                                                regis(4 downto 0) <= insignal & regis(4 downto 1);
+                                                regis(3 downto 0) <= regis(4 downto 1);
+                                                regis(4) <= insignal;
                                                 bitcount <= bitcount + 1;
                                                 count <= 0;
                                         end if;
@@ -92,7 +95,7 @@ begin
                                                 state <= 0;
                                                 count <= 0;
                                         else   
-                                                if (regis(4) xnor ( not ( (regis(0) xnor regis(1)) xnor (regis(2) xnor regis(3))))) = '1' then -- Pratitetstest
+                                                if (regis(4) xnor ( not ( (regis(0) xnor regis(1)) xnor (regis(2) xnor regis(3))))) = '1' then -- Paritetstest
                                                         seg7 <= regis(3 downto 0);
                                                         state <= 0;
                                                         count <= 0;
