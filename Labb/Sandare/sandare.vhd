@@ -91,7 +91,10 @@ begin
 	    cnt <= "00000";
     	  end if;
 	  when 7 =>
-          if strobe /= '0' then
+          if cnt < "10000" then
+                  cnt <= cnt + '1';
+                  u <= 0;
+          elsif strobe = '1' then
             u <= '0';
           else
             state <= 0;
