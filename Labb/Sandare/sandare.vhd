@@ -5,33 +5,33 @@ use ieee.std_logic_unsigned.all;
 entity sender is
   port(
     x : std_logic_vector(3 downto 0);
-    clk, strobe : in std_logic;
+    clk, strobe, rst : in std_logic;
     u : out std_logic
     );
 end sender;
 
 
 -- ############################################################################
--- Gå genom 6 lägen, synkroniserat via klockan.
--- 0, invänta hög strob (data ligger redo), gå till 1.
--- 1, skicka 1 i 16 klockintervall, gå till 2.
--- 2, skicka X1 i 16 klockintervall, gå till 3.
--- 3, skicka X2 i 16 klockintervall, gå till 4.
--- 4, skicka X4 i 16 klockintervall, gå till 5.
--- 5, skicka X8 i 16 klockintervall, gå till 6.
--- 6, skicka paritetsbit i 16 klockintervall, gå till 7.
--- 7, skicka 0 tills stroben blir låg, gå till 0.
--- Rst - resetsignal, gå till läge 0. Asynkron.
+-- Gï¿½genom 6 lï¿½en, synkroniserat via klockan.
+-- 0, invï¿½ta hï¿½ strob (data ligger redo), gï¿½till 1.
+-- 1, skicka 1 i 16 klockintervall, gï¿½till 2.
+-- 2, skicka X1 i 16 klockintervall, gï¿½till 3.
+-- 3, skicka X2 i 16 klockintervall, gï¿½till 4.
+-- 4, skicka X4 i 16 klockintervall, gï¿½till 5.
+-- 5, skicka X8 i 16 klockintervall, gï¿½till 6.
+-- 6, skicka paritetsbit i 16 klockintervall, gï¿½till 7.
+-- 7, skicka 0 tills stroben blir lï¿½, gï¿½till 0.
+-- Rst - resetsignal, gï¿½till lï¿½e 0. Asynkron.
 -- ############################################################################
 architecture send of sender is
   signal cnt : std_logic_vector (4 downto 0);
   signal state : integer range 0 to 7;
-  signal rst : std_logic;
 begin
   process (clk, rst)
   begin
     if rst = '1' then
       state <= 0;
+      u <= '0';
     
     elsif rising_edge(clk) then 
       case state is
@@ -93,7 +93,7 @@ begin
 	  when 7 =>
           if cnt < "10000" then
                   cnt <= cnt + '1';
-                  u <= 0;
+                  u <= '0';
           elsif strobe = '1' then
             u <= '0';
           else
