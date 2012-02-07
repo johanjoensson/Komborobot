@@ -56,14 +56,9 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-<<<<<<< HEAD
-  \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
-\LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{marlo265}{}
-=======
-  \LIPSversionsinfo{0.1}{2012-01-26}{FÃ¶rsta utkast.}{matja307}{}
-  \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
-  \LIPSversionsinfo{1.0}{2012-01-31}{FÃ¶rsta versionen}{gussv666}{johjo939}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
+\LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+\LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
+\LIPSversionsinfo{1.0}{2012-01-31}{Första versionen}{gussv666}{johjo939}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -91,18 +86,10 @@ Prioritetsnivåer enligt \ref{DEF}.
 Beställare: Tomas Svensson \\
 Leverantör: Grupp 17
 
-<<<<<<< HEAD
 \subsection{Mål}
 I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
 en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
  Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner.
-=======
-
-\subsection{MÃ¥l}
-I samband med leveransen ska roboten klara av att under tÃ¤vling helt autonomt navigera
-en bana som Ã¤r uppbyggd enligt bestÃ¤mmelserna i den bifogade banspecifikationen \ref{app:bana}. 
- TÃ¤vlingen avgÃ¶rs pÃ¥ tid, den robot som tar sig runt banan pÃ¥ kortast tid vinner.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 
 \subsection{Användning}
 Roboten ska ha ett autonomt läge och ett fjärrstyrningsläge.
@@ -122,14 +109,9 @@ och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna s
 
 \subsection{Definitioner} \label{DEF}
 \begin{itemize}
-<<<<<<< HEAD
 \item Prioritetsnivå 1 - Dessa krav ska uppfyllas
 \item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
-=======
-\item PrioritetsnivÃ¥ 1 - Dessa krav ska uppfyllas
-\item PrioritetsnivÃ¥ 2 - Dessa krav ska uppfyllas i mÃ¥n av tid
-\item PrioritetsnivÃ¥ 3 - Dessa krav ska uppfyllas i mÃ¥n av tid och efter alla krav med prioritet 2 uppfyllts
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
+\item Prioritetsnivå 3 - Dessa krav ska uppfyllas i mån av tid och efter alla krav med prioritet 2 uppfyllts
 \end{itemize}
 
 \section{översikt av systemet}
@@ -173,19 +155,11 @@ Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
 Systemet i sin helhet ska uppfylla följande krav.
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt Appendix A}{1}
+  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt \ref{app:bana}}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
   \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
-=======
-  \LIPSkrav{Original}{Roboten ska kunna styras med blÃ¥tand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna kÃ¶ra autonomt genom en bana enligt \ref{app:bana}}{1}
-  \LIPSkrav{Original}{Val mellan fjÃ¤rrstyrnings- och autonomt lÃ¤ge ska styras med en brytare}{1}
-  \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tÃ¤vlingen}{1}
-  \LIPSkrav{Original}{Roboten ska bestÃ¥ av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{LIPSkravlista}
 
 
@@ -265,17 +239,10 @@ Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskvärt.
 
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
   \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
   \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
-   \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras trådlöst via bluetooth}{2}
-=======
-  \LIPSkrav{Original}{Sensordata fÃ¶r avstÃ¥nd till vÃ¤ggarna pÃ¥ sidan om roboten skall samlas in}{1}
-  \LIPSkrav{Original}{Sensordata frÃ¥n linjefÃ¶ljarsensor ska kunna mÃ¤rka skillnader mellan golv och svart tejp pÃ¥ marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensor ska kunna kalibreras}{1}
-   \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensor ska kunna kalibreras trÃ¥dlÃ¶st via bluetooth}{2}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
+  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras trådlöst via bluetooth}{2}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
@@ -316,15 +283,9 @@ För att styra roboten krävs datormjukvara som kan låta användaren skicka kommand
 
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas på en datorskärm}{1}
   \LIPSkrav{Original}{Förståelig information från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
   \LIPSkrav{Original}{Avståndet till väggarna skall redovisas i cm på en datorskärm}{2}
-=======
-  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
-  \LIPSkrav{Original}{FÃ¶rstÃ¥elig information frÃ¥n sensorenheten skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
-  \LIPSkrav{Original}{AvstÃ¥ndet till vÃ¤ggarna skall redovisas i cm pÃ¥ en datorskÃ¤rm}{2}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
@@ -360,9 +321,9 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom banan.
 
 \section{Krav på vidareutveckling}
 =======
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
-        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
+        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
 \end{LIPSkravlista}
 
 
@@ -376,12 +337,7 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom banan.
 
 
 \section{Ekonomi}
-<<<<<<< HEAD
 Efter att projektet har passerat BP2 får maximalt 980 timmar (140 timmar per projektmedlem) brukas.
-=======
-Efter att projektet har passerat BP2 fÃ¥r totalt 980 timmar (140 timmar per projektmedlem) brukas.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
-
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Totalt 980 timmar skall används i projektet efter att projektplanen godkänts}{1}
@@ -401,11 +357,7 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sam
 	\LIPSleverans{Original}{Slutgiltig version av projektplan, tidplan och systemskiss}{15/2-2012}{1}
 	\LIPSleverans{Original}{Första version av designspecifikation}{12/3-2012}{1}
 	\LIPSleverans{Original}{Slutgiltig version av designspecifikation}{16/3-2012}{1}
-<<<<<<< HEAD
-	\LIPSleverans{Original}{Teknisk Dokumentation}{3 arbetsdagar före redovisningen v20}{1}
-=======
-	\LIPSleverans{Original}{Teknisk Dokumentation och anvÃ¤ndaranvisning}{3 arbetsdagar fÃ¶re redovisningen v20}{1}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
+	\LIPSleverans{Original}{Teknisk Dokumentation och användaranvisning}{3 arbetsdagar före redovisningen v20}{1}
 	\LIPSleverans{Original}{Efterstudie}{1/6-2012}{1}
 	\LIPSleverans{Original}{Tidrapporter}{12/3, 19/3, 26/3, 2/4, 16/4, 23/4, 30/4, 7/5, 14/5, 21/5}{1}
 	\LIPSleverans{Original}{Statusrapport}{Vid begäran}{1}
