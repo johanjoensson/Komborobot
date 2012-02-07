@@ -12,20 +12,21 @@ end sender;
 
 
 -- ############################################################################
--- Gï¿½genom 6 lï¿½en, synkroniserat via klockan.
--- 0, invï¿½ta hï¿½ strob (data ligger redo), gï¿½till 1.
--- 1, skicka 1 i 16 klockintervall, gï¿½till 2.
--- 2, skicka X1 i 16 klockintervall, gï¿½till 3.
--- 3, skicka X2 i 16 klockintervall, gï¿½till 4.
--- 4, skicka X4 i 16 klockintervall, gï¿½till 5.
--- 5, skicka X8 i 16 klockintervall, gï¿½till 6.
--- 6, skicka paritetsbit i 16 klockintervall, gï¿½till 7.
--- 7, skicka 0 tills stroben blir lï¿½, gï¿½till 0.
--- Rst - resetsignal, gï¿½till lï¿½e 0. Asynkron.
+-- Gå igenom 7 lägen, synkroniserat via klockan.
+-- 0, invänta hög strob (data ligger redo), gå till 1.
+-- 1, skicka 1 i 16 klockintervall, gå till 2.
+-- 2, skicka X1 i 16 klockintervall, gå till 3.
+-- 3, skicka X2 i 16 klockintervall, gå till 4.
+-- 4, skicka X4 i 16 klockintervall, gå till 5.
+-- 5, skicka X8 i 16 klockintervall, gå till 6.
+-- 6, skicka paritetsbit i 16 klockintervall, gå till 7.
+-- 7, skicka 0 i 16 klockintervall och sedan tills stroben blir låg, gå till 0.
+-- Rst - resetsignal, gå till läge 0. Asynkron.
 -- ############################################################################
 architecture send of sender is
   signal cnt : std_logic_vector (4 downto 0);
   signal state : integer range 0 to 7;
+  signal reg : std_logic_vector (3 downto 0);
 begin
   process (clk, rst)
   begin
@@ -37,6 +38,7 @@ begin
       case state is
         when 0 =>
           if strobe = '1' then
+	    reg(3 downto 0) <= x(3 downto 0);
             state <= 1;
            cnt <= "00000";
           end if;
@@ -51,7 +53,7 @@ begin
         when 2 =>
           if cnt < "10000" then
             cnt <= cnt + '1';
-            u <= x(0);
+            u <= reg(0);
           else
             state <= 3;
             cnt <= "00000";
@@ -60,7 +62,7 @@ begin
           when 3 =>
           if cnt < "10000" then
             cnt <= cnt + '1';
-            u <= x(1);
+            u <= reg(1);
           else
             state <= 4;
             cnt <= "00000";
@@ -68,7 +70,7 @@ begin
           when 4 =>
           if cnt < "10000" then
             cnt <= cnt + '1';
-            u <= x(2);
+            u <= reg(2);
           else
             state <= 5;
             cnt <= "00000";
@@ -77,7 +79,7 @@ begin
           when 5 =>
           if cnt < "10000" then
             cnt <= cnt + '1';
-            u <= x(3);
+            u <= reg(3);
           else
             state <= 6;
             cnt <= "00000";
@@ -85,7 +87,7 @@ begin
           when 6 =>
 	  if cnt < "10000" then
 	    cnt <= cnt + '1';
-	    u <= not ((x(0) xnor x(1)) xnor (x(2) xnor x(3)));
+	    u <= not ((reg(0) xnor reg(1)) xnor (reg(2) xnor reg(3)));
     	  else
 	    state <= 7;
 	    cnt <= "00000";
