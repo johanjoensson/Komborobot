@@ -5,8 +5,8 @@ use ieee.std_logic_unsigned.all;
 entity lab is 
         port (
                 clock : in std_logic;
-		reset : in std_logic;
-		stroben : in std_logic;
+					 reset : in std_logic;
+					 stroben : in std_logic;
                 knapp : in std_logic_vector(3 downto 0);
                 lampa : out std_logic;
                 utsignal : out std_logic_vector(3 downto 0));
