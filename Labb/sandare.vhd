@@ -2,13 +2,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-entity sender is
+entity sandare is
   port(
     x : std_logic_vector(3 downto 0);
     clk, strobe, rst : in std_logic;
     u : out std_logic
     );
-end sender;
+end sandare;
 
 
 -- ############################################################################
@@ -23,8 +23,8 @@ end sender;
 -- 7, skicka 0 i 16 klockintervall och sedan tills stroben blir låg, gå till 0.
 -- Rst - resetsignal, gå till läge 0. Asynkron.
 -- ############################################################################
-architecture send of sender is
-  signal cnt : std_logic_vector (4 downto 0);
+architecture send of sandare is
+  signal cnt : std_logic_vector (3 downto 0);
   signal state : integer range 0 to 7;
   signal reg : std_logic_vector (3 downto 0);
 begin
@@ -37,68 +37,67 @@ begin
     elsif rising_edge(clk) then 
       case state is
         when 0 =>
+          u <= '0';
           if strobe = '1' then
 	    reg(3 downto 0) <= x(3 downto 0);
             state <= 1;
-           cnt <= "00000";
+           cnt <= "0000";
           end if;
         when 1 =>
-          if cnt < "10000" then
+          u <= '1';
+          if cnt < "1111" then
             cnt <= cnt + '1';
-            u <= '1';
           else
             state <= 2;
-            cnt <= "00000";
+            cnt <= "0000";
           end if;
         when 2 =>
-          if cnt < "10000" then
+          u <= reg(0);
+          if cnt < "1111" then
             cnt <= cnt + '1';
-            u <= reg(0);
           else
             state <= 3;
-            cnt <= "00000";
+            cnt <= "0000";
           end if;
           
-          when 3 =>
-          if cnt < "10000" then
+        when 3 =>
+          u <= reg(1);
+          if cnt < "1111" then
             cnt <= cnt + '1';
-            u <= reg(1);
           else
             state <= 4;
-            cnt <= "00000";
+            cnt <= "0000";
           end if;
-          when 4 =>
-          if cnt < "10000" then
+        when 4 =>
+          u <= reg(2);
+          if cnt < "1111" then
             cnt <= cnt + '1';
-            u <= reg(2);
           else
             state <= 5;
-            cnt <= "00000";
+            cnt <= "0000";
           end if;
           
-          when 5 =>
-          if cnt < "10000" then
+        when 5 =>
+          u <= reg(3);
+          if cnt < "1111" then
             cnt <= cnt + '1';
-            u <= reg(3);
           else
             state <= 6;
-            cnt <= "00000";
+            cnt <= "0000";
           end if;
-          when 6 =>
-	  if cnt < "10000" then
+        when 6 =>
+	  u <= not ((reg(0) xnor reg(1)) xnor (reg(2) xnor reg(3)));
+	  if cnt < "1111" then
 	    cnt <= cnt + '1';
-	    u <= not ((reg(0) xnor reg(1)) xnor (reg(2) xnor reg(3)));
     	  else
 	    state <= 7;
-	    cnt <= "00000";
+	    cnt <= "0000";
     	  end if;
-	  when 7 =>
-          if cnt < "10000" then
-                  cnt <= cnt + '1';
-                  u <= '0';
-          elsif strobe = '1' then
-            u <= '0';
-          else
+	when 7 =>
+          u <= '0';
+          if cnt < "1111" then
+            cnt <= cnt + '1';
+          elsif strobe = '0' then
             state <= 0;
           end if;
         end case;
