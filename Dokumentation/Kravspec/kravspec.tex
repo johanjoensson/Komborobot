@@ -56,14 +56,9 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-<<<<<<< HEAD
-  \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
-\LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{marlo265}{}
-=======
   \LIPSversionsinfo{0.1}{2012-01-26}{FÃ¶rsta utkast.}{matja307}{}
   \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
   \LIPSversionsinfo{1.0}{2012-01-31}{FÃ¶rsta versionen}{gussv666}{johjo939}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -91,25 +86,10 @@ Prioritetsnivåer enligt \ref{DEF}.
 Beställare: Tomas Svensson \\
 Leverantör: Grupp 17
 
-<<<<<<< HEAD
 \subsection{Mål}
 I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
 en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
  Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner.
-=======
-
-\subsection{MÃ¥l}
-I samband med leveransen ska roboten klara av att under tÃ¤vling helt autonomt navigera
-en bana som Ã¤r uppbyggd enligt bestÃ¤mmelserna i den bifogade banspecifikationen \ref{app:bana}. 
- TÃ¤vlingen avgÃ¶rs pÃ¥ tid, den robot som tar sig runt banan pÃ¥ kortast tid vinner.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
-
-\subsection{Användning}
-Roboten ska ha ett autonomt läge och ett fjärrstyrningsläge.
-Man ska kunna växla mellan de två lägena med en brytarknapp på roboten.
-
-\subsubsection{Autonomt läge}
-I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation.
 
 \subsubsection{Fjärrstyrningsläge}
 I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medföljande mjukvara.
@@ -122,14 +102,8 @@ och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna s
 
 \subsection{Definitioner} \label{DEF}
 \begin{itemize}
-<<<<<<< HEAD
 \item Prioritetsnivå 1 - Dessa krav ska uppfyllas
 \item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
-=======
-\item PrioritetsnivÃ¥ 1 - Dessa krav ska uppfyllas
-\item PrioritetsnivÃ¥ 2 - Dessa krav ska uppfyllas i mÃ¥n av tid
-\item PrioritetsnivÃ¥ 3 - Dessa krav ska uppfyllas i mÃ¥n av tid och efter alla krav med prioritet 2 uppfyllts
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{itemize}
 
 \section{översikt av systemet}
@@ -173,20 +147,12 @@ Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
 Systemet i sin helhet ska uppfylla följande krav.
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
   \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt Appendix A}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
   \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
-=======
-  \LIPSkrav{Original}{Roboten ska kunna styras med blÃ¥tand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna kÃ¶ra autonomt genom en bana enligt \ref{app:bana}}{1}
-  \LIPSkrav{Original}{Val mellan fjÃ¤rrstyrnings- och autonomt lÃ¤ge ska styras med en brytare}{1}
-  \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tÃ¤vlingen}{1}
-  \LIPSkrav{Original}{Roboten ska bestÃ¥ av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
-\end{LIPSkravlista}
+  \end{LIPSkravlista}
 
 
 \section{Styrenhet}
@@ -265,17 +231,10 @@ Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskvärt.
 
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
   \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
   \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
    \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras trådlöst via bluetooth}{2}
-=======
-  \LIPSkrav{Original}{Sensordata fÃ¶r avstÃ¥nd till vÃ¤ggarna pÃ¥ sidan om roboten skall samlas in}{1}
-  \LIPSkrav{Original}{Sensordata frÃ¥n linjefÃ¶ljarsensor ska kunna mÃ¤rka skillnader mellan golv och svart tejp pÃ¥ marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensor ska kunna kalibreras}{1}
-   \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensor ska kunna kalibreras trÃ¥dlÃ¶st via bluetooth}{2}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
@@ -316,15 +275,9 @@ För att styra roboten krävs datormjukvara som kan låta användaren skicka kommand
 
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
   \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas på en datorskärm}{1}
   \LIPSkrav{Original}{Förståelig information från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
   \LIPSkrav{Original}{Avståndet till väggarna skall redovisas i cm på en datorskärm}{2}
-=======
-  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
-  \LIPSkrav{Original}{FÃ¶rstÃ¥elig information frÃ¥n sensorenheten skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
-  \LIPSkrav{Original}{AvstÃ¥ndet till vÃ¤ggarna skall redovisas i cm pÃ¥ en datorskÃ¤rm}{2}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
@@ -353,22 +306,11 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom banan.
 
 
 \begin{LIPSkravlista}
-<<<<<<< HEAD
 	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana som uppfyller banspecifikationen (\ref{app:bana}) för den nivå som bestämts}{1}
 \end{LIPSkravlista}
 
 
 \section{Krav på vidareutveckling}
-=======
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
-        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
-\end{LIPSkravlista}
-
-
-
-\section{Krav pÃ¥ vidareutveckling}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Samtliga av de olika enheterna på roboten ska ha väl specificerade gränssnitt}{1}
   \LIPSkrav{Original}{Det ska på ett enkelt vis vara möjligt att byta ut enskilda enheterna på roboten}{1}
@@ -376,11 +318,7 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom banan.
 
 
 \section{Ekonomi}
-<<<<<<< HEAD
 Efter att projektet har passerat BP2 får maximalt 980 timmar (140 timmar per projektmedlem) brukas.
-=======
-Efter att projektet har passerat BP2 fÃ¥r totalt 980 timmar (140 timmar per projektmedlem) brukas.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 
 
 \begin{LIPSkravlista}
@@ -401,11 +339,7 @@ Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, sam
 	\LIPSleverans{Original}{Slutgiltig version av projektplan, tidplan och systemskiss}{15/2-2012}{1}
 	\LIPSleverans{Original}{Första version av designspecifikation}{12/3-2012}{1}
 	\LIPSleverans{Original}{Slutgiltig version av designspecifikation}{16/3-2012}{1}
-<<<<<<< HEAD
 	\LIPSleverans{Original}{Teknisk Dokumentation}{3 arbetsdagar före redovisningen v20}{1}
-=======
-	\LIPSleverans{Original}{Teknisk Dokumentation och anvÃ¤ndaranvisning}{3 arbetsdagar fÃ¶re redovisningen v20}{1}
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 	\LIPSleverans{Original}{Efterstudie}{1/6-2012}{1}
 	\LIPSleverans{Original}{Tidrapporter}{12/3, 19/3, 26/3, 2/4, 16/4, 23/4, 30/4, 7/5, 14/5, 21/5}{1}
 	\LIPSleverans{Original}{Statusrapport}{Vid begäran}{1}
@@ -498,24 +432,14 @@ Dokumentation för projektet innebär följande dokument:
 Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
 
 Linjedelen:
-<<<<<<< HEAD
 Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
-=======
-Linjerna i banan skall bestÃ¥ av svart tejp pÃ¥ grÃ¥tt underlag. Tejpens bredd ska vara mellan 14-18 mm. I de fall dÃ¥ en tjock linje nÃ¤mns avses en tejplinje med bredd mellan 42-54 mm (tre tejpbredder). Med en smal tejplinje avses en linje med bredd 14-18 mm (en tejpbredd). Tejpbanan kan korsa sig sjÃ¤lv i 90\degree korsningar, den kan dock ej dela sig. SvÃ¤ngradien fÃ¶r banan Ã¤r minst 25 cm. Banan avslutas med en stoppsignal, tvÃ¥ tjocka tvÃ¤rgÃ¥ende linjer, eller Ã¶vergÃ¥r till en labyrint.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 
 Labyrintdelen:
 
 \begin{list}{*}{}
-<<<<<<< HEAD
 \item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn fåljd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
 \item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
 \item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
-=======
-\item NivÃ¥ 1: AvstÃ¥ndet mellan parallella vÃ¤ggar Ã¤r 80 cm. 3-vÃ¤gskorsningar och 4-vÃ¤gskorsningar kan fÃ¶rekomma, dock med rÃ¤ta vinklar mellan varandra, rÃ¤tt vÃ¤g anges av markeringar pÃ¥ golvet. Markeringarna gÃ¶rs med tvÃ¥ linjer som gÃ¥r vinkelrÃ¤tt mellan vÃ¤ggarna. En tjock linje fÃ¶ljd av en tunn indikerar hÃ¶ger, en tunn fÃ¶ljd av en tjock indikerar vÃ¤nster och tvÃ¥ tunna linjer indikerar rakt fram. 
-\item NivÃ¥ 2: Som nivÃ¥ 1 med fÃ¶ljande justeringar: Inga markeringar behÃ¶vs dÃ¥ ena vÃ¤gen vid en korsning Ã¤r en Ã¥tervÃ¤ndsgrÃ¤nd med djup pÃ¥ 80 cm.
-\item NivÃ¥ 3: Som nivÃ¥ 1 med fÃ¶ljande justeringar: Inga markeringar nÃ¶dvÃ¤ndiga. HÃ¥l 80 cm stora ut ur labyrinten som inte leder nÃ¥gonstans kan fÃ¶rekomma.
->>>>>>> db89843d6b239e4d3cfac94a87554ad98e6f76b3
 \end{list} 
 
 \newpage
