@@ -27,7 +27,8 @@ kommer definitivt inte täcka allt, men förhoppningsvis det viktigaste.
 
 2: Uppdatera er lokala repo (hämta från github).
         Enkelt, skriv "git pull" så ansluter ni till github och sedan hämtar ni
-        uppdateringarna.
+        uppdateringarna. Skulle git klaga på att ni inte indikerar varifrån ni 
+	vill hämta data så skriver ni istället "git pull origin master"
 
 3: Uppdatera en fil som ni ändrat.
         Se "1: Lägg till filer till repon", ni gör exakt samma sak.
@@ -45,6 +46,3 @@ kommer definitivt inte täcka allt, men förhoppningsvis det viktigaste.
         Sådär ja, konflikt löst. Det kommer inte gå så lätt i början dock, men
         efter ett tag kommer ni lära er hur man snabbt och effektivt löser
         konflikter (eller ännu hellre hur man undviker dem).
-
-
-Markus testar

@@ -1,0 +1,169 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\input{../LIPS.tex}
+
+
+\newcommand{\LIPSartaltermin}{2012/VT}
+\newcommand{\LIPSkursnamn}{TSEA27}
+
+\newcommand{\LIPSprojekttitel}{Komborobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 17}
+\newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
+\newcommand{\LIPSgrupphemsida}{finns ej}
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{}
+
+
+\newcommand{\LIPSdokumenttyp}{Systemskiss}
+\newcommand{\LIPSredaktor}{Simon Larsson}
+\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{simla804@student.liu.se}
+  \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
+  \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
+  \LIPSgruppmedlem{Johan Jönsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Tobias Andersson}{Hårdvara (HV)}{073-7201098}{toban963@student.liu.se}
+  \LIPSgruppmedlem{Markus Falck}{Leveransansvarig (LV)}{076-3457552}{marlo265@student.liu.se}
+  \LIPSgruppmedlem{Simon Wallin}{Testansvarig (GM)}{076-2300665}{simwa252@student.liu.se}
+\end{LIPSprojektidentitet}
+
+\tableofcontents{}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{0.1}{2012-02-10}{Första utkast.}{gussv666}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\section{Inledning}
+Systemet består av en robot och tillhörande mjukvara. I detta dokument så beskrivs hur systemet 
+fungerar och interagerar med omvärlden.
+
+\section{Översikt av systemet}
+
+\subsection{Grov beskrivning av produkten}
+Roboten ska autonomt kunna följa linjer och navigera labyrinter. Från och med nu kallas denna robot för komborobot.
+Komboroboten ska vara enhetsuppbyggd och dessutom kunna styras via blåtand med tillhörande mjukvara installerad på en PC.
+
+
+\subsection{Produktkomponenter}
+
+\subsection{Beroenden till andra system}
+
+\subsection{Ingående delsystem}
+
+
+\subsection{Avgränsningar}
+
+\subsection{Generella krav på hela systemet}
+
+
+\section{Styrenhet}
+\subsection{Inledande beskrivning}
+
+\subsection{Gränssnitt}
+
+\subsection{Designkrav}
+
+
+\subsection{Funktionella krav}
+
+\section{Kommunikationsenhet}
+\subsection{Inledande beskrivning}
+
+\subsection{Externa interface}
+
+
+\subsection{Designkrav}
+
+\subsection{Funktionella krav}
+
+
+\section{Sensorenhet}
+\subsection{Inledande beskrivning}
+
+
+\subsection{Externa interface}
+
+\subsection{Designkrav}
+
+
+\subsection{Funktionella krav}
+
+\subsection{Användargränssnitt}
+
+
+\section{Datormjukvara}
+\subsection{Inledande beskrivning}
+
+\subsection{Designkrav}
+
+\subsection{Funktionella krav}
+
+
+\section{Prestandakrav}
+
+
+\section{Krav på vidareutveckling}
+
+
+\section{Ekonomi}
+
+
+\section{Leveranskrav och delleveranser}
+
+
+\section{Dokumentation}
+
+%\begin{LIPSkravlista}
+%\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgå från LIPS-mallar}{1}
+%\LIPSkrav{Original}{Dokument ska märkas med versionsnummer}{1}
+%\LIPSkrav{Original}{Möten ska protokollföras enligt LIPS-mallen för mötesprotokoll}{1}
+%\LIPSkrav{Original}{Mötesprotokoll ska justeras av två utsedda justeringspersoner}{1}
+%\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
+%\end{LIPSkravlista}
+
+
+\newpage
+\appendix
+\section{Bilagor} \label{app:rules}
+
+
+\subsection{Banspecifikation} \label{app:bana}
+
+\newpage
+
+
+\addcontentsline{toc}{section}{Referenser}
+\begin{thebibliography}{99}
+\bibitem{lipskompendiet}\textit{Projektmodellen LIPS - } Svensson, Tomas
+\\Studentlitteratur, 2011.
+\end{thebibliography}
+
+\end{document} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
