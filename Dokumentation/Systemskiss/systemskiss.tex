@@ -110,6 +110,9 @@ Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika
 enheterna i systemet. Detta kommer ske via en blåtandslänk mellan en PC och
 själva roboten och antingen via en I2C-buss eller UART.
+
+Kommunikationsenheten gör själv inga tolkningar av vad som skickas, den ser bara
+till att saker skickas till rätt destination.
 \subsubsection{Blåtand}
 Kommunikationsenheten kommer via blåtand att kommunicera med en PC och förmedla
 instruktioner från PCn till roboten. Kommunikationsenheten kommer dessutom att
