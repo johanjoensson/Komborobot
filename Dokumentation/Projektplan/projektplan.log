@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  13 FEB 2012 21:41
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  14 FEB 2012 18:12
 entering extended mode
 **C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
 (C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
@@ -191,7 +191,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \c@LIPSkravnummer=\count92
 \c@LIPSunderkravnummer=\count93
 )
-No file projektplan.aux.
+(C:\Users\Simon\Desktop\TSEA27\Dokumentation\Projektplan\projektplan.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
@@ -205,6 +205,7 @@ LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Try loading font information for T1+ptm on input line 34.
+
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
@@ -322,8 +323,8 @@ or  <return>  to continue without it.
 
  
 Here is how much of TeX's memory you used:
- 2880 strings out of 494045
- 39513 string characters out of 3145969
+ 2882 strings out of 494045
+ 39655 string characters out of 3145969
  101998 words of memory out of 3000000
  6116 multiletter control sequences out of 15000+200000
  33518 words of font info for 41 fonts, out of 3000000 for 9000
