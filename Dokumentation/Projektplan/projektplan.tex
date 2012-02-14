@@ -172,7 +172,85 @@ Milstolpar för projektet bestäms inom gruppen, och sätts för att kunna kontr
 
 \begin{tabular}{|p{7mm}|p{90mm}|p{23mm}|p{23mm}|}
 	\LIPSleverans{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Beroende av aktivitet nr}}{\textbf{Beräknad tid (h)}} 
-	\LIPSaktivitet{Hoppa högt}{pi}{5 h}
+	\LIPSleverans{\textbf{1}}{\textbf{Färdigställande av
+designspec}}{\textbf{}}{\textbf{70}} 
+	\LIPSleverans{\textbf{2}}{\textbf{Omvandling av analoga signaler till
+digitala sådana}}{\textbf{}}{\textbf{12}} 
+	\LIPSleverans{\textbf{3}}{\textbf{Trösklande av
+sensorvärden}}{\textbf{2}}{\textbf{4}} 
+	\LIPSleverans{\textbf{4}}{\textbf{Hitt skillnaden mellan önskade och
+aktuella värden}}{\textbf{3}}{\textbf{4}} 
+	\LIPSleverans{\textbf{5}}{\textbf{Skicka skilnaden till styrenheten (via
+kommunikationsenheten)}}{\textbf{4 \& 10}}{\textbf{14}} 
+	\LIPSleverans{\textbf{6}}{\textbf{Skicka avstånd i cm till display- och
+kommunikationsenheten}}{\textbf{2 \& 10}}{\textbf{12}} 
+	\LIPSleverans{\textbf{7}}{\textbf{Upptäck
+riktningsmarkeringar}}{\textbf{1 \& 2}}{\textbf{20}} 
+	\LIPSleverans{\textbf{8}}{\textbf{Hantera
+riktningsmarkeringar}}{\textbf{6}}{\textbf{20}} 
+	\LIPSleverans{\textbf{9}}{\textbf{Upptäck korsningar}}{\textbf{2 \&
+3}}{\textbf{20}} 
+	\LIPSleverans{\textbf{10}}{\textbf{Ordna master som sköter
+buss}}{\textbf{}}{\textbf{60}} 
+	\LIPSleverans{\textbf{11}}{\textbf{Skicka styrinfo till
+pc}}{\textbf{15 \& 16 \& 10}}{\textbf{19}} 
+	\LIPSleverans{\textbf{12}}{\textbf{Skicka sensorinfo till
+pc}}{\textbf{5 \& 15 \& 16}}{\textbf{15}} 
+	\LIPSleverans{\textbf{13}}{\textbf{Ta emot styrkommandon från
+pc}}{\textbf{15 \& 16}}{\textbf{15}} 
+	\LIPSleverans{\textbf{14}}{\textbf{Skicka styrkommando till styrenhet
+från kommunikqtionsenhet}}{\textbf{10}}{\textbf{15}} 
+	\LIPSleverans{\textbf{15}}{\textbf{Fixa blåtand i
+kommunikationsenhet}}{\textbf{}}{\textbf{25}} 
+	\LIPSleverans{\textbf{16}}{\textbf{Fixa blåtand i
+pc}}{\textbf{}}{\textbf{25}} 
+	\LIPSleverans{\textbf{17}}{\textbf{Ordna gränssnitt på
+pc}}{\textbf{}}{\textbf{40}} 
+	\LIPSleverans{\textbf{18}}{\textbf{Ta emot sensorvärden
+(Styrenhet)}}{\textbf{10 \& 5}}{\textbf{20}} 
+	\LIPSleverans{\textbf{19}}{\textbf{Reglera motorer utifrånsensorvärden}}{\textbf{18 \& 21 \& 29}}{\textbf{50}} 
+	\LIPSleverans{\textbf{20}}{\textbf{Ta emot styrkommandon
+(styrenheten)från kommunikationsenheten}}{\textbf{10 \& 24 \& 14}}{\textbf{20}} 
+	\LIPSleverans{\textbf{21}}{\textbf{Styra motorer (autonomt och manuellt)}}{\textbf{}}{\textbf{50}} 
+	\LIPSleverans{\textbf{22}}{\textbf{Skicka styrinfo till
+kommunikationsenheten från
+styrenheten}}{\textbf{10}}{\textbf{20}} 
+	\LIPSleverans{\textbf{23}}{\textbf{Hantera
+specialkommandon}}{\textbf{8 \& 21}}{\textbf{40}} 
+	\LIPSleverans{\textbf{24}}{\textbf{Hämta och skicka styrkommandon från
+pc till kommunikationsenheten (Mjukvara)}}{\textbf{15 \& 16}}{\textbf{30}} 
+	\LIPSleverans{\textbf{25}}{\textbf{Ta emot styrinfo i PC från
+kommunikationsenheten}}{\textbf{15 \& 16 \& 22}}{\textbf{20}} 
+	\LIPSleverans{\textbf{26}}{\textbf{Ta emot sensorinfo}}{\textbf{15 \& 16 \&
+6}}{\textbf{20}} 
+	\LIPSleverans{\textbf{27}}{\textbf{Visa styrinfo på
+skärm}}{\textbf{25}}{\textbf{2}} 
+	\LIPSleverans{\textbf{28}}{\textbf{Visa sensorinfo på
+skärm}}{\textbf{26}}{\textbf{2}} 
+	\LIPSleverans{\textbf{29}}{\textbf{Regulator}}{\textbf{5}}{\textbf{30}} 
+	\LIPSleverans{\textbf{30}}{\textbf{Sammanställa
+tekniskdokumentation}}{\textbf{samtliga}}{\textbf{50}} 
+	\LIPSleverans{\textbf{31}}{\textbf{Sammanställa
+Användarmanual}}{\textbf{30}}{\textbf{60}} 
+	\LIPSleverans{\textbf{32}}{\textbf{Förbereda
+redovisning}}{\textbf{31}}{\textbf{15}} 
+	\LIPSleverans{\textbf{33}}{\textbf{Montering av
+avståndssensorer}}{\textbf{}}{\textbf{10}} 
+	\LIPSleverans{\textbf{34}}{\textbf{Montering av
+linjesensorer}}{\textbf{}}{\textbf{10}} 
+	\LIPSleverans{\textbf{35}}{\textbf{Tidsloggning (ska ske
+kontinuerligt)}}{\textbf{}}{\textbf{20}} 
+	\LIPSleverans{\textbf{36}}{\textbf{Efterstudie}}{\textbf{32}}{\textbf{15}} 
+	\LIPSleverans{\textbf{37}}{\textbf{Montering}}{\textbf{33 \&
+34}}{\textbf{30}} 
+	\LIPSleverans{\textbf{38}}{\textbf{Utför styrkommandon}}{\textbf{20 \&
+23}}{\textbf{30}} 
+	\LIPSleverans{\textbf{39}}{\textbf{Test av hela systemet}}{\textbf{2-29
+\& 34-35 \& 37 \& 40}}{\textbf{15}} 
+	\LIPSleverans{\textbf{40}}{\textbf{Kalibrering av
+sensorer}}{\textbf{}}{\textbf{20}} 
+	\LIPSleverans{\textbf{41}}{\textbf{Möten}}{\textbf{}}{\textbf{70}} 
+	\LIPSleverans{\textbf{42}}{\textbf{Rest}}{\textbf{}}{\textbf{}} 
 \hline
 \end{tabular}
 
