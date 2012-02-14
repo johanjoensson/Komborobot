@@ -100,9 +100,47 @@ Att byta ut eller uppgradera en enhet blir dock lika enkelt med en UART som med 
 
 PC-mjukavaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
 Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att utveckla egen mjukvara eller uppgradera den befintliga mjukvaran.
-\section{Kommunkationsenhet}
-\section{Sensorenhet}
-\section{Styrsenhet}
+\section{Delsystem}
+\subsection{Kommunkationsenhet}
+\subsection{Sensorenhet}
+\subsection{Styrsenhet}
+Styrmodulen kommer att styra motorerna och sköta regleringen så att roboten kan följa en linje och navigera en labyrint utan att slingra sig fram.
+När roboten är i fjärrstyrt läge så ska styrenheten ta emot styrkommandon från kommunikationsenheten.
+Styrenheten ska sedan styra motorerna så att dessa kommandon utförs. De styrkommandon som ska kunna behandlas är:
+\begin{itemize}
+        \item Framåt
+        \item Fram vänster
+        \item Fram höger
+        \item Bakåt
+        \item Rotera vänster
+        \item Rotera Höger
+        \item Stopp
+\end{itemize}
+
+När roboten är i automatiskt läge (dvs. linjeföljande eller labyrintnavigerande) så ska den ta emot skillnaden mellan aktuellt och önskat läge.
+Detta värdet räknas ut av sensorenheten och skickas till styrenheten via kommunikationsenheten.
+Utifrån det värdet ska styrenheten reglera motorerna med en PD-regulator. Vissa specialkommandon ska också kunna hanteras i autonomt läge 
+för att hantera 90\degree s svängar i labyrinten och korsningar. De specialkommandon som ska kunna hanteras är:
+\begin{itemize}
+        \item Sväng vänster 90\degree
+        \item Sväng höger 90\degree
+        \item Kör rakt fram x cm
+\end{itemize}
+
+Information om hur styrenheten kör ska skickas till kommunikationsenheten, t ex svänger vänster.
+
+\subsubsection{Arbetsblock}
+\begin{itemize}
+        \item Ta emot data från kommunikationsenheten
+        \item Reglera motorer utifrån sensorvärden
+        \item Koda styrkommandon
+        \item Koda specialkommandon
+        \item Skicka styrinfo till kommunikationsenheten
+        \item Implementera alla kommandon
+\end{itemize}
+
+
+
 \end{document} 
 
 %%% Local Variables: 
