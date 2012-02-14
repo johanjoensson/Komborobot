@@ -71,22 +71,82 @@ På plattformen kommer tre enheter att monteras:
         \item Kommunikationsenhet
         \item Sensorenhet
         \item Styrenhet
+Varje enhet kommer styras av en egen AVR-processor.
+\subsection{Kommunikation}
+De tre enheterna måste kunna kommunicera med varandra, här förslås en I2C-buss och ett system med flera UART.
+\subsubsection{I2C}
 \end{itemize}
 \begin{center}
 \includegraphics[scale=0.7]{delsystem_i2c.png}
 \end{center}
-Varje enhet kommer styras av en egen AVR-processor.
 De olika enheterna kommer att kommunicera över en I2C-buss där kommunikationsenheten är master och de andra två enheterna är slave,
 detta är för att den mesta kommunikationen kommer att ske genom kommunkationsenheten.
+\subsubsection{UART}
+\begin{center}
+\includegraphics[scale=0.7]{delsystem_uart.png}
+\end{center}
+De olika enheterna kommer att kommunicera med de i processorerna inbyggda UART-portarna. 
+Då dessa redan finns i processorerna blir de lättare att implementera. Det finns dock en nackdel, UART är en 
+punkt till punkt kommunikation och då det är tre enheter som måste kommunicera med varandra måste minst en enhet
+ha två UART-portar, men processorerna har bara en inbyggd UART-port. Detta går att lösa genom att omvandla en av de generella 
+IO-portarna på processorerna till en UART med hjälp av mjukvara. 
+Det räcker med att kommunikationsenhten har en extra UART om all kommunikation sker genom den enheten.
+
 \subsection{Uppgraderbarhet}
-Ett tydligt kommunikationsprotokoll mellan enheterna kommer att användas så att det är lätt att lägga till eller modifiera enheter.
-Då en I2C-buss kommer att användas så blir det lättare att lägga till eller byta ut enheter.
+Ett tydligt kommunikationsprotokoll mellan enheterna kommer att användas så att det är lätt att modifiera enheter.
+Om en I2C-buss används blir det lättare at lägga till och byta ut enheter då I2C kan ses som en standardbuss.
+Om istället UART används som kommunikation blir det svårare att lägga till nya enheter då flera UART-portar måste implementeras.
+Att byta ut eller uppgradera en enhet blir dock lika enkelt med en UART som med en I2C.
 
 PC-mjukavaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
 Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att utveckla egen mjukvara eller uppgradera den befintliga mjukvaran.
-\section{Kommunkationsenhet}
-\section{Sensorenhet}
-\section{Styrsenhet}
+\section{Delsystem}
+
+\subsection{Kommunkationsenhet}
+Kommunikationsenheten har som uppgift att styra kommunikation mellan de olika
+modulerna och PCn. Detta innebär att kommunikationsenheten kommer fungera som en
+master över bussen och de övriga modulerna kommer agera slave. För att
+kommunicera med PCn kommer kommunikationsenheten behöva använda sig av en
+blåtandsanslutning. Så fort en modul vill skicka någon form av information till
+någon annan modul kommer denna att skickas via kommunikationsenheten.
+
+\subsection{Sensorenhet}
+\subsection{Styrsenhet}
+Styrmodulen kommer att styra motorerna och sköta regleringen så att roboten kan följa en linje och navigera en labyrint utan att slingra sig fram.
+När roboten är i fjärrstyrt läge så ska styrenheten ta emot styrkommandon från kommunikationsenheten.
+Styrenheten ska sedan styra motorerna så att dessa kommandon utförs. De styrkommandon som ska kunna behandlas är:
+\begin{itemize}
+        \item Framåt
+        \item Fram vänster
+        \item Fram höger
+        \item Bakåt
+        \item Rotera vänster
+        \item Rotera Höger
+        \item Stopp
+\end{itemize}
+
+När roboten är i automatiskt läge (dvs. linjeföljande eller labyrintnavigerande) så ska den ta emot skillnaden mellan aktuellt och önskat läge.
+Detta värdet räknas ut av sensorenheten och skickas till styrenheten via kommunikationsenheten.
+Utifrån det värdet ska styrenheten reglera motorerna med en PD-regulator. Vissa specialkommandon ska också kunna hanteras i autonomt läge 
+för att hantera 90\degree s svängar i labyrinten och korsningar. De specialkommandon som ska kunna hanteras är:
+\begin{itemize}
+        \item Sväng vänster 90\degree
+        \item Sväng höger 90\degree
+        \item Kör rakt fram x cm
+\end{itemize}
+
+Information om hur styrenheten kör ska skickas till kommunikationsenheten, t ex svänger vänster.
+
+\subsubsection{Arbetsblock}
+\begin{itemize}
+        \item Ta emot data från kommunikationsenheten
+        \item Reglera motorer utifrån sensorvärden
+        \item Koda styrkommandon
+        \item Koda specialkommandon
+        \item Skicka styrinfo till kommunikationsenheten
+        \item Implementera alla kommandon
+\end{itemize}
+
 \end{document} 
 
 %%% Local Variables: 
