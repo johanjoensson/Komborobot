@@ -85,6 +85,12 @@ Då en I2C-buss kommer att användas så blir det lättare att lägga till eller
 PC-mjukavaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
 Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att utveckla egen mjukvara eller uppgradera den befintliga mjukvaran.
 \section{Kommunkationsenhet}
+Kommunikationsenheten har som uppgift att styra kommunikation mellan de olika
+modulerna och PCn. Detta innebär att kommunikationsenheten kommer fungera som en
+master över bussen och de övriga modulerna kommer agera slave. För att
+kommunicera med PCn kommer kommunikationsenheten behöva använda sig av en
+blåtandsanslutning. Så fort en modul vill skicka någon form av information till
+någon annan modul kommer denna att skickas via kommunikationsenheten.
 \section{Sensorenhet}
 \section{Styrsenhet}
 \end{document} 
