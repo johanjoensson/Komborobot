@@ -110,7 +110,18 @@ kommunicera med PCn kommer kommunikationsenheten behöva använda sig av en
 blåtandsanslutning. Så fort en modul vill skicka någon form av information till
 någon annan modul kommer denna att skickas via kommunikationsenheten.
 
+
 \subsection{Sensorenhet}
+För prioritet 1 behövs två  optiska avståndssensorer placerade på vardera sida om roboten. För prioritetsnivå 2 och 3 kommer en tredje riktad frammåt vara nödvändig. De tänkta är de IR sensorer med avstånd på 20 till 150 cm. 
+
+Som prioritet 2 skall roboten visa avståndet till väggarna på en display när bilen kör i labyrinten, där finns alternativen LCD-display och alfanumerisk LED-display.
+
+För att upptäcka och läsa av linjer och markeringar på marken används en reflexsensormodul bestånde av 11 st IR-lysdioder. Dessa nyttjas genom att en diod tänds, reflektionen A/D omvandlas varefter dioden släckas så att detta kan upprepas på nästa diod. Det avlästa värdet trösklas till tejp eller icke tejp för enkel hantering.
+
+Sensorenheten omvandlar de avlästa sensorvärdena till position relativ mitten av banan och skickar detta till styrenheten.
+
+
+
 \subsection{Styrsenhet}
 Styrmodulen kommer att styra motorerna och sköta regleringen så att roboten kan följa en linje och navigera en labyrint utan att slingra sig fram.
 När roboten är i fjärrstyrt läge så ska styrenheten ta emot styrkommandon från kommunikationsenheten.
