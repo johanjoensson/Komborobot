@@ -103,12 +103,24 @@ Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att
 \section{Delsystem}
 
 \subsection{Kommunkationsenhet}
-Kommunikationsenheten har som uppgift att styra kommunikation mellan de olika
-modulerna och PCn. Detta innebär att kommunikationsenheten kommer fungera som en
-master över bussen och de övriga modulerna kommer agera slave. För att
-kommunicera med PCn kommer kommunikationsenheten behöva använda sig av en
-blåtandsanslutning. Så fort en modul vill skicka någon form av information till
-någon annan modul kommer denna att skickas via kommunikationsenheten.
+Kommunikationsenheten ansvarar för att förmedla information mellan de olika
+enheterna i systemet. Detta kommer ske via en blåtandslänk mellan en PC och
+själva roboten och antingen via en I2C-buss eller UART.
+\subsubsection{Blåtand}
+Kommunikationsenheten kommer via blåtand att kommunicera med en PC och förmedla
+instruktioner från PCn till roboten. Kommunikationsenheten kommer dessutom att
+skicka information från robotens olika enheter till PCn så att användaren kan få
+en uppfattning om vad roboten faktiskt håller på att göra.
+\subsubsection{I2C}
+Kommunikationsenheten kommer agera master för I2C-bussen, vilket innebär att all
+information på bussen kommer gå via kommunikationsenheten. Detta för att
+kommunikationsenheten kommer behöva skicka data till samtliga andra enheter från
+samtliga enheter.
+\subsubsection{UART}
+Då en UART används kommer all information att skickas först till
+kommunikationsenheten för att sedan därifrfån skickas till rätt destination,
+antingen via UART om destinationen är en enhet på roboten eller via blåtand om
+destinationen är PCn.
 
 \subsection{Sensorenhet}
 \subsection{Styrsenhet}
