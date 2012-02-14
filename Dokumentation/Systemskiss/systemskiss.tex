@@ -101,7 +101,15 @@ Att byta ut eller uppgradera en enhet blir dock lika enkelt med en UART som med 
 PC-mjukavaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
 Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att utveckla egen mjukvara eller uppgradera den befintliga mjukvaran.
 \section{Delsystem}
+
 \subsection{Kommunkationsenhet}
+Kommunikationsenheten har som uppgift att styra kommunikation mellan de olika
+modulerna och PCn. Detta innebär att kommunikationsenheten kommer fungera som en
+master över bussen och de övriga modulerna kommer agera slave. För att
+kommunicera med PCn kommer kommunikationsenheten behöva använda sig av en
+blåtandsanslutning. Så fort en modul vill skicka någon form av information till
+någon annan modul kommer denna att skickas via kommunikationsenheten.
+
 \subsection{Sensorenhet}
 \subsection{Styrsenhet}
 Styrmodulen kommer att styra motorerna och sköta regleringen så att roboten kan följa en linje och navigera en labyrint utan att slingra sig fram.
@@ -138,8 +146,6 @@ Information om hur styrenheten kör ska skickas till kommunikationsenheten, t ex
         \item Skicka styrinfo till kommunikationsenheten
         \item Implementera alla kommandon
 \end{itemize}
-
-
 
 \end{document} 
 
