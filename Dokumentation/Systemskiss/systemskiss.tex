@@ -60,7 +60,7 @@
 Systemet består av en robot och tillhörande mjukvara. I detta dokument beskrivs hur roboten ska byggas,
 observera att detta är en systemskiss, så olika förslag kan finnas. 
 Roboten kommer att bestå av tre enheter som vardera innehåller en processor och som kan kommunicera med varandra. 
-Enheterna kommer att monteras på en plattform med hjul och tillhörande motorer.
+Enheterna kommer att monteras på en plattform med två drivande hjul och ett stödhjul och tillhörande motorer.
 Mjukvaran är avsedd för att köras på en PC och används för att kommunicera med roboten.
 
 \includegraphics[angle=270,scale=0.5]{Oversikt.pdf}
@@ -74,14 +74,18 @@ På plattformen kommer tre enheter att monteras:
 Varje enhet kommer styras av en egen AVR-processor.
 \subsection{Kommunikation}
 De tre enheterna måste kunna kommunicera med varandra, här förslås en I2C-buss och ett system med flera UART.
+
 \subsubsection{I2C}
+
 \end{itemize}
 \begin{center}
 \includegraphics[scale=0.7]{delsystem_i2c.png}
 \end{center}
 De olika enheterna kommer att kommunicera över en I2C-buss där kommunikationsenheten är master och de andra två enheterna är slave,
 detta är för att den mesta kommunikationen kommer att ske genom kommunkationsenheten.
+
 \subsubsection{UART}
+
 \begin{center}
 \includegraphics[scale=0.7]{delsystem_uart.png}
 \end{center}
