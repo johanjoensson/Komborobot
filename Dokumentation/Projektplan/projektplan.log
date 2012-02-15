@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  15 FEB 2012 01:21
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  15 FEB 2012 01:46
 entering extended mode
 **C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
 (C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
@@ -623,74 +623,74 @@ Overfull \hbox (22.39247pt too wide) in paragraph at lines 82--95
 File: organisation-figur.pdf Graphic file (type pdf)
 
 <use organisation-figur.pdf>
-Package pdftex.def Info: organisation-figur.pdf used on input line 111.
+Package pdftex.def Info: organisation-figur.pdf used on input line 116.
 (pdftex.def)             Requested size: 472.40375pt x 280.04555pt.
 
-Overfull \hbox (17.15964pt too wide) in paragraph at lines 111--112
+Overfull \hbox (17.15964pt too wide) in paragraph at lines 116--117
 [][] 
  []
 
 [8 <C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/organisation-figur.
 pdf>]
-Overfull \hbox (2.81566pt too wide) in paragraph at lines 126--126
+Overfull \hbox (2.81566pt too wide) in paragraph at lines 132--132
 []\T1/ptm/m/n/12 Dokumentansvarig| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--127
+Underfull \hbox (badness 10000) in paragraph at lines 133--133
 []\T1/ptm/m/n/12 Ansvarig för
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--133
+Underfull \hbox (badness 10000) in paragraph at lines 126--139
 
  []
 
-[9]
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 173--173
+[9] [10]
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 194--194
 []\T1/ptm/m/n/12 BP0| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 174--174
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 195--195
 []\T1/ptm/m/n/12 BP1| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 175--175
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 196--196
 []\T1/ptm/m/n/12 BP2| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 176--176
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 197--197
 []\T1/ptm/m/n/12 BP3| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 177--177
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 198--198
 []\T1/ptm/m/n/12 BP4| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 178--178
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 199--199
 []\T1/ptm/m/n/12 BP5| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 179--179
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 200--200
 []\T1/ptm/m/n/12 BP6| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 []\T1/ptm/b/n/12 Beräknad
  []
 
-[10]
+[11]
 Overfull \vbox (78.07559pt too high) has occurred while \output is active []
 
 
-[11] [12] [13] [14]
+[12] [13] [14] [15] [16]
 (C:\Users\Simon\Desktop\TSEA27\Dokumentation\Projektplan\projektplan.aux) ) 
 Here is how much of TeX's memory you used:
  3063 strings out of 494045
@@ -699,16 +699,16 @@ Here is how much of TeX's memory you used:
  6283 multiletter control sequences out of 15000+200000
  43966 words of font info for 51 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 42i,10n,43p,611b,360s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,11n,43p,1028b,380s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/
 Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/times/utmri8a.pfb>
-Output written on projektplan.pdf (14 pages, 174306 bytes).
+Output written on projektplan.pdf (16 pages, 180240 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
