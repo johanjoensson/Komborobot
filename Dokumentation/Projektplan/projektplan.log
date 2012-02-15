@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  15 FEB 2012 00:52
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  15 FEB 2012 01:21
 entering extended mode
 **C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
 (C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
@@ -686,12 +686,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 185--186
 []\T1/ptm/b/n/12 Beräknad
  []
 
-[10] [11] [12] [13]
+[10]
+Overfull \vbox (78.07559pt too high) has occurred while \output is active []
+
+
+[11] [12] [13] [14]
 (C:\Users\Simon\Desktop\TSEA27\Dokumentation\Projektplan\projektplan.aux) ) 
 Here is how much of TeX's memory you used:
  3063 strings out of 494045
  41098 string characters out of 3145969
- 112566 words of memory out of 3000000
+ 133566 words of memory out of 3000000
  6283 multiletter control sequences out of 15000+200000
  43966 words of font info for 51 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
@@ -702,9 +706,9 @@ s (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/times/utmri8a.pfb>
-Output written on projektplan.pdf (13 pages, 170503 bytes).
+Output written on projektplan.pdf (14 pages, 174306 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
+ 85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

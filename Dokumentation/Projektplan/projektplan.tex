@@ -183,7 +183,86 @@ Milstolpar för projektet bestäms inom gruppen, och sätts för att kunna kontr
 
 \begin{tabular}{|p{7mm}|p{90mm}|p{23mm}|p{23mm}|}
 	\LIPSleverans{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Beroende av aktivitet nr}}{\textbf{Beräknad tid (h)}} 
-	\LIPSaktivitet{Hoppa högt}{pi}{5 h}
+\LIPSaktivitet{Färdigställande av
+designspec}{}{70} 
+	\LIPSaktivitet{Omvandling av analoga signaler till
+digitala sådana}{}{12} 
+	\LIPSaktivitet{Trösklande av
+sensorvärden}{2}{4} 
+	\LIPSaktivitet{Hitt skillnaden mellan önskade och
+aktuella värden}{3}{4} 
+	\LIPSaktivitet{Skicka skilnaden till styrenheten (via
+kommunikationsenheten)}{4 \& 10}{14} 
+	\LIPSaktivitet{Skicka avstånd i cm till display- och
+kommunikationsenheten}{2 \& 10}{12} 
+	\LIPSaktivitet{Upptäck
+riktningsmarkeringar}{1 \& 2}{20} 
+	\LIPSaktivitet{Hantera
+riktningsmarkeringar}{6}{20} 
+	\LIPSaktivitet{Upptäck korsningar}{2 \&
+3}{20} 
+	\LIPSaktivitet{Ordna master som sköter
+buss}{}{60} 
+	\LIPSaktivitet{Skicka styrinfo till
+pc}{15 \& 16 \& 10}{19} 
+	\LIPSaktivitet{Skicka sensorinfo till
+pc}{5 \& 15 \& 16}{15} 
+	\LIPSaktivitet{Ta emot styrkommandon från
+pc}{15 \& 16}{15} 
+	\LIPSaktivitet{Skicka styrkommando till styrenhet
+från kommunikqtionsenhet}{10}{15} 
+	\LIPSaktivitet{Fixa blåtand i
+kommunikationsenhet}{}{25} 
+	\LIPSaktivitet{Fixa blåtand i
+pc}{}{25} 
+	\LIPSaktivitet{Ordna gränssnitt på
+pc}{}{40} 
+	\LIPSaktivitet{Ta emot sensorvärden
+(Styrenhet)}{10 \& 5}{20} 
+	\LIPSaktivitet{Reglera motorer utifrånsensorvärden}{18 \& 21 \& 29}{50} 
+	\LIPSaktivitet{Ta emot styrkommandon
+(styrenheten)från kommunikationsenheten}{10 \& 24 \& 14}{20} 
+	\LIPSaktivitet{Styra motorer (autonomt och manuellt)}{}{50} 
+	\LIPSaktivitet{Skicka styrinfo till
+kommunikationsenheten från
+styrenheten}{10}{20} 
+	\LIPSaktivitet{Hantera
+specialkommandon}{8 \& 21}{40} 
+	\LIPSaktivitet{Hämta och skicka styrkommandon från
+pc till kommunikationsenheten (Mjukvara)}{15 \& 16}{30} 
+	\LIPSaktivitet{Ta emot styrinfo i PC från
+kommunikationsenheten}{15 \& 16 \& 22}{20} 
+	\LIPSaktivitet{Ta emot sensorinfo}{15 \& 16 \&
+6}{20} 
+	\LIPSaktivitet{Visa styrinfo på
+skärm}{25}{2} 
+	\LIPSaktivitet{Visa sensorinfo på
+skärm}{26}{2} 
+	\LIPSaktivitet{Regulator}{5}{30} 
+	\LIPSaktivitet{Sammanställa
+tekniskdokumentation}{samtliga}{50} 
+	\LIPSaktivitet{Sammanställa
+Användarmanual}{30}{60} 
+	\LIPSaktivitet{Förbereda
+redovisning}{31}{15} 
+	\LIPSaktivitet{Montering av
+avståndssensorer}{}{10} 
+	\LIPSaktivitet{Montering av
+linjesensorer}{}{10}
+	\LIPSaktivitet{Tidsloggning (ska ske
+kontinuerligt)}{}{20} 
+	\LIPSaktivitet{Efterstudie}{32}{15} 
+	\LIPSaktivitet{Montering}{33 \&
+34}{30} 
+	\LIPSaktivitet{Utför styrkommandon}{20 \&
+23}{30} 
+	\LIPSaktivitet{Test av hela systemet}{2-29
+\& 34-35 \& 37 \& 40}{15} 
+	\LIPSaktivitet{Kalibrering av
+sensorer}{}{20} 
+	\LIPSaktivitet{Möten}{}{70} 
+	\LIPSaktivitet{Rest}{}{}
+
 \hline
 \end{tabular}
 
