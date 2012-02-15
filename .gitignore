@@ -3,3 +3,4 @@
 *.log	#  Generade när man bygger med pdflatex
 *.aux	
 *.toc	
+*.dia   #  Diagramfiler innan de är .png
