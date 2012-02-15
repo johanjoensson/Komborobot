@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  14 FEB 2012 23:19
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.1.31)  15 FEB 2012 01:46
 entering extended mode
 **C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
 (C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/projektplan.tex
@@ -518,178 +518,197 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 54.
  [5]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 68.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 65.
 
-Overfull \hbox (3.86845pt too wide) in paragraph at lines 86--86
+Overfull \hbox (3.86845pt too wide) in paragraph at lines 83--83
 []\T1/ptm/b/n/12 Ansvarig
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--86
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
 \T1/ptm/b/n/12 / God-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--86
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
 \T1/ptm/b/n/12 känns
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
 []\T1/ptm/b/n/12 Färdig-
  []
 
 
-Underfull \hbox (badness 2818) in paragraph at lines 87--87
+Underfull \hbox (badness 2818) in paragraph at lines 84--84
 []\T1/ptm/m/n/12 Första ver-sion av Pro-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--87
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
 \T1/ptm/m/n/12 jekt-plan, tid-plan och
  []
 
 
-Underfull \hbox (badness 1194) in paragraph at lines 88--88
+Underfull \hbox (badness 1194) in paragraph at lines 85--85
 []\T1/ptm/m/n/12 Slutiltig av Pro-jekt-plan,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 86--86
 []\T1/ptm/m/n/12 Johan /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 []\T1/ptm/m/n/12 12/3, 19/3,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 \T1/ptm/m/n/12 26/3, 2/4,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 \T1/ptm/m/n/12 16/4, 23/4,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 \T1/ptm/m/n/12 30/4, 7/5,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--93
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 []\T1/ptm/m/n/12 Teknisk do-ku-men-ta-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
 []\T1/ptm/m/n/12 Tre ar-bets-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
 \T1/ptm/m/n/12 da-gar in-nan
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
 \T1/ptm/m/n/12 re-do-vis-ning-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
 \T1/ptm/m/n/12 en vec-ka
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 94--94
+Underfull \hbox (badness 1584) in paragraph at lines 91--91
 \T1/ptm/m/n/12 mi-nu-ter lång pre-sen-ta-tion av ro-bo-tens
  []
 
 
-Underfull \hbox (badness 1147) in paragraph at lines 95--95
+Underfull \hbox (badness 1147) in paragraph at lines 92--92
 []\T1/ptm/m/n/12 Projektgruppen sam-man-stäl-ler här si-na
  []
 
 
-Overfull \hbox (22.39247pt too wide) in paragraph at lines 85--98
+Overfull \hbox (22.39247pt too wide) in paragraph at lines 82--95
 [][] 
  []
 
-[6] <organisation-figur.pdf, id=23, 472.4049pt x 280.04625pt>
+[6] [7] <organisation-figur.pdf, id=27, 472.4049pt x 280.04625pt>
 File: organisation-figur.pdf Graphic file (type pdf)
 
 <use organisation-figur.pdf>
-Package pdftex.def Info: organisation-figur.pdf used on input line 114.
+Package pdftex.def Info: organisation-figur.pdf used on input line 116.
 (pdftex.def)             Requested size: 472.40375pt x 280.04555pt.
 
-Overfull \hbox (17.15964pt too wide) in paragraph at lines 114--115
+Overfull \hbox (17.15964pt too wide) in paragraph at lines 116--117
 [][] 
  []
 
-[7] [8 <C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/organisation-fi
-gur.pdf>] [9]
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 161--161
+[8 <C:/Users/Simon/Desktop/TSEA27/Dokumentation/Projektplan/organisation-figur.
+pdf>]
+Overfull \hbox (2.81566pt too wide) in paragraph at lines 132--132
+[]\T1/ptm/m/n/12 Dokumentansvarig| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 133--133
+[]\T1/ptm/m/n/12 Ansvarig för
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--139
+
+ []
+
+[9] [10]
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 194--194
 []\T1/ptm/m/n/12 BP0| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 162--162
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 195--195
 []\T1/ptm/m/n/12 BP1| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 163--163
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 196--196
 []\T1/ptm/m/n/12 BP2| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 164--164
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 197--197
 []\T1/ptm/m/n/12 BP3| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 165--165
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 198--198
 []\T1/ptm/m/n/12 BP4| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 166--166
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 199--199
 []\T1/ptm/m/n/12 BP5| 
  []
 
 
-Overfull \hbox (0.75891pt too wide) in paragraph at lines 167--167
+Overfull \hbox (0.75891pt too wide) in paragraph at lines 200--200
 []\T1/ptm/m/n/12 BP6| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--174
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 []\T1/ptm/b/n/12 Beräknad
  []
 
-[10] [11] [12] [13]
+[11]
+Overfull \vbox (78.07559pt too high) has occurred while \output is active []
+
+
+[12] [13] [14] [15] [16]
 (C:\Users\Simon\Desktop\TSEA27\Dokumentation\Projektplan\projektplan.aux) ) 
 Here is how much of TeX's memory you used:
  3063 strings out of 494045
  41098 string characters out of 3145969
- 112523 words of memory out of 3000000
+ 133566 words of memory out of 3000000
  6283 multiletter control sequences out of 15000+200000
  43966 words of font info for 51 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 42i,10n,43p,611b,360s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,11n,43p,1028b,380s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/
 Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/times/utmri8a.pfb>
-Output written on projektplan.pdf (13 pages, 169136 bytes).
+Output written on projektplan.pdf (16 pages, 180240 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
+ 91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -110,6 +110,9 @@ Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika
 enheterna i systemet. Detta kommer ske via en blåtandslänk mellan en PC och
 själva roboten och antingen via en I2C-buss eller UART.
+
+Kommunikationsenheten gör själv inga tolkningar av vad som skickas, den ser bara
+till att saker skickas till rätt destination.
 \subsubsection{Blåtand}
 Kommunikationsenheten kommer via blåtand att kommunicera med en PC och förmedla
 instruktioner från PCn till roboten. Kommunikationsenheten kommer dessutom att
@@ -130,6 +133,7 @@ destinationen är PCn.
 \subsection{Sensorenhet}
 Sensorenheten har som uppgift att läsa av omgivningen och beräkna vilken position roboten har relativt mitten av banan och skicka detta vidare till styrenheten. För detta kommer två olika typer av sensorer att behövas, en typ för att läsa linjer och markeringar och en för att bestämma avstånd till väggar.
 
+
 \subsubsection{Labyrintsensor}
 För prioritet 1 behövs två  optiska avståndssensorer placerade på vardera sida om roboten. För prioritetsnivå 2 och 3 kommer en tredje riktad frammåt vara nödvändig. Lämpliga sensorer är de IR sensorer med avstånd på 20 till 150 cm som fungerar för alla prioritetsnivåer, vid prioritetsnivå 1 kan även sensorer med intervallet 10 till 80 cm användas.
 Vid korsningar och 90\degree s kurvor kommer avståndet till åtminstonde den ena väggen bli för stort, om det är en korsning skall en riktningsmarkering ha hittats och sparats och styrenheten kan då specialbehandla korsningen. Om ingen markering hittats är det en 90\degree s kurva och sensorenheten signalerar att styrenheten ska köra i den riktning där det inte finns någon vägg som då också måste specialbehandlas av styrenheten.
@@ -137,10 +141,11 @@ Vid korsningar och 90\degree s kurvor kommer avståndet till åtminstonde den en
 \includegraphics[scale=0.45]{korsningar.png}
 \end{center}
 
+
 Som prioritet 2 skall roboten visa avståndet till väggarna på en display när bilen kör i labyrinten, här finns alternativen LCD-display och alfanumerisk LED-display.
 
 \subsubsection{Linjesensor}
-För att upptäcka och läsa av linjer och markeringar på marken kan en reflexsensormodul bestånde av 11 st IR-lysdioder används. Dessa nyttjas genom att en diod tänds, reflektionen A/D omvandlas varefter dioden släckas så att detta kan upprepas på nästa diod. Det avlästa värdet trösklas till tejp eller icke tejp för enkel hantering. 
+För att upptäcka och läsa av linjer och markeringar på marken kan en reflexsensormodul bestånde av 11 st IR-lysdioder används. Dessa nyttjas genom att en diod tänds, reflektionen A/D omvandlas varefter dioden släcks så att detta kan upprepas på nästa diod. Det avlästa värdet trösklas till tejp eller icke tejp för enkel hantering. 
 Linjen får korsa sig själv vilket kommer betyda att alla dioder kan visa tejp, detta bör kunna hanteras igenom att roboten får fortsätta i sin färdriktning tills korsningen passerats.
 
 \subsubsection{Arbetsblock}
