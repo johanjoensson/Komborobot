@@ -98,7 +98,7 @@ Anges inte annat ska samtliga leveranser ske senast klockan 16:00 under dagen f�
 
 
 \subsection{Begränsningar}
-Projektarbetet begränsas till att uppfylla de krav som finns specificerade i kravspecifikationen. I denna finns tre olika prioriteringsnivåer för vad roboten ska kunna uppnå vid slutleverans. Projektet begränsas till att endast i mån av tid hantera de krav med prioritering 2 och 3.
+Projektarbetet begränsas till att uppfylla de krav som finns specificerade i projektets kravspecifikation. I denna finns tre olika prioriteringsnivåer för vad roboten ska kunna uppnå vid slutleverans. Projektet begränsas till att endast i mån av tid hantera de krav med prioritering 2 och 3.
 Den kanske viktigaste begränsningen av projektgruppens arbete är att efter det att projektplanen blivit godkänd får endast 140 timmar per projektmedlem användas till projektet.
 
 
@@ -343,6 +343,18 @@ Detta avslutar den aktiva delen av projektet och efter detta påbörjas den så 
 
 
 \subsection{Banspecifikation} \label{app:bana}
+Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
+
+Linjedelen:
+Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
+
+Labyrintdelen:
+
+\begin{list}{*}{}
+\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn följd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
+\item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
+\item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
+\end{list} 
 
 \newpage
 
