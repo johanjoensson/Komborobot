@@ -110,6 +110,9 @@ Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika
 enheterna i systemet. Detta kommer ske via en blåtandslänk mellan en PC och
 själva roboten och antingen via en I2C-buss eller UART.
+
+Kommunikationsenheten gör själv inga tolkningar av vad som skickas, den ser bara
+till att saker skickas till rätt destination.
 \subsubsection{Blåtand}
 Kommunikationsenheten kommer via blåtand att kommunicera med en PC och förmedla
 instruktioner från PCn till roboten. Kommunikationsenheten kommer dessutom att
@@ -126,7 +129,18 @@ kommunikationsenheten för att sedan därifrfån skickas till rätt destination,
 antingen via UART om destinationen är en enhet på roboten eller via blåtand om
 destinationen är PCn.
 
+
 \subsection{Sensorenhet}
+För prioritet 1 behövs två  optiska avståndssensorer placerade på vardera sida om roboten. För prioritetsnivå 2 och 3 kommer en tredje riktad frammåt vara nödvändig. De tänkta är de IR sensorer med avstånd på 20 till 150 cm. 
+
+Som prioritet 2 skall roboten visa avståndet till väggarna på en display när bilen kör i labyrinten, där finns alternativen LCD-display och alfanumerisk LED-display.
+
+För att upptäcka och läsa av linjer och markeringar på marken används en reflexsensormodul bestånde av 11 st IR-lysdioder. Dessa nyttjas genom att en diod tänds, reflektionen A/D omvandlas varefter dioden släcks så att detta kan upprepas på nästa diod. Det avlästa värdet trösklas till tejp eller icke tejp för enkel hantering.
+
+Sensorenheten omvandlar de avlästa sensorvärdena till position relativ mitten av banan och skickar detta till styrenheten.
+
+
+
 \subsection{Styrsenhet}
 Styrmodulen kommer att styra motorerna och sköta regleringen så att roboten kan följa en linje och navigera en labyrint utan att slingra sig fram.
 När roboten är i fjärrstyrt läge så ska styrenheten ta emot styrkommandon från kommunikationsenheten.
