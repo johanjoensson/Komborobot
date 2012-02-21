@@ -2,7 +2,8 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
-\input{../LIPS.tex}
+\usepackage{longtable}
+\input{LIPS.tex}
 
 
 \newcommand{\LIPSartaltermin}{2012/VT}
@@ -18,7 +19,7 @@
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
-\newcommand{\LIPShandledare}{}
+\newcommand{\LIPShandledare}{Olov Andersson, 013-282658, olov@isy.liu.se}
 
 
 \newcommand{\LIPSdokumenttyp}{Projektplan}
@@ -26,8 +27,8 @@
 \newcommand{\LIPSversion}{0.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
-\newcommand{\LIPSgranskare}{}
-\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgranskare}{Markus Falck}
+\newcommand{\LIPSgranskatdatum}{\dagensdatum}
 \newcommand{\LIPSgodkannare}{}
 \newcommand{\LIPSgodkantdatum}{}
 
@@ -52,102 +53,287 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+  \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{marlo265}
 \end{LIPSdokumenthistorik}
 \newpage
 
 
 \section{Beställare} %%SL
+Projektets beställare är Tomas Svensson vid institutionen för systemteknik vid Linköpings universitet.
 
 \section{Översiktlig beskrivning av projektet} %%Markus
 
 \subsection{Syfte och mål}
 
 Syftet med detta projektarbete är att konstruera en robot som på ett tillfredsställande vis uppfyller de krav som
-som finns specificerade i *Kravspecifikationen*. Projektgruppen förbinder sig att senast under vecka 20, år 2012, ha en
-färdig produkt att leverera. Projektgruppen syftar också till att utföra projektet på ett metodiskt och professionellt vis.
+som finns specificerade i projektets kravspecifikation. Projektgruppen förbinder sig att senast under vecka 20, år 2012, ha en
+färdig produkt att leverera. Projektgruppen syftar till att utföra projektet på ett metodiskt och professionellt vis.
 
-I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen A.1. Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner. 
+I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera en bana som är uppbyggd enligt bestämmelserna i  bifogad banspecifikation se~\ref{app:bana}. Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner. 
 
-Projektet är lejonparten i kursen TSEA27  som är en obligatorisk kurs på civilingenjörsutbildningen i teknisk fysik & elektroteknik vid Linköpings universitet. Projektgruppens mål är också att ta till sig de kunskaper denna kurs syftar till att förmedla angående till exempel projektorganisatoriska färdigheter.
+Projektet är lejonparten i kursen TSEA27  som är en obligatorisk kurs på civilingenjörsutbildningen i teknisk fysik \& elektroteknik vid Linköpings universitet. Projektgruppens mål är också att ta till sig de kunskaper denna kurs syftar till att förmedla angående till exempel projektorganisatoriska färdigheter. 
  
 \subsection{Leveranser}
-Under projektets gång så förbinder sig projektgruppen att göra ett antal olika leveranser. Slutleveranser kommer att ske under vecka 20 men innan dess ska det ske en mängd olika delleveranser. Dessa, med tillhörande leveransdatum och vem som är mottagaren av leveransen specificeras i nedanstående tabell.Anges inte annat ska samtliga leveranser ske senast klockan 16:00 under dagen för leverans.
-\begin{LIPSleveranslista}
-\LIPSleverans{Dokument}{Ansvarig/Godkänns av}{Syfte}{Distribueras tilll}{Färdig-datum}
-\LIPSleverans{Första version av Projektplan, tidplan och systemskiss}{Markus/Tomas}{Beskriver hur projektet ska utföras och ger en handvisning till hur roboten ska fungera}{Beställare/Projektgruppen}{15/2-2012}
-\LIPSleverans{Slutiltig av Projektplan, tidplan och systemskiss}{Simon L/Tomas}{Beskriver hur projektet ska utföras och ger en handvisning till hur konstruktionen av roboten ska ske}{Beställare/Projektgruppen}{23/2-2012}
-\LIPSleverans{Första version av designspecifikation}{Johan/Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{Handledare/Projektgruppen}{13/3-2012}
-\LIPSleverans{Slutgiltig version av designspecifikation}{Simon L/Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{Handledare/Projektgruppen}{16/3-2012}
-\LIPSleverans{Tidrapporter och uppdaterad tidplan}{Markus/Tomas}{Visar hur tidfördelningen mellan de olika aktiviteterna har gått under den senaste tidsperioden, samt hur projektgruppen tänkt lägga upp sitt framtida arbete}{Beställaren/Projektgruppen}{12/3, 19/3, 26/3, 2/4, 16/4, 23/4, 30/4, 7/5, 14/5, 21/5}
-\LIPSleverans{Statusrapport för projektet}{Simon L/Tomas}{Ger en bild av projektgruppens nuvarande status i förhållande till tidigare planering}{Beställaren}{Vid begäran}
-\LIPSleverans{Teknisk dokumentation och användaranvisning}{Gustav/Tomas}{Ger en detaljerad bild över hur systemet fungerar, information om användargränssnit och beskrivning hur roboten används}{Beställaren/Handledaren/Projektgruppen}{Tre arbetsdagar innan redovisningen vecka 20}
-\LIPSleverans{Muntlig presetation och demonstration}{Simon L/Tomas}{Slutleveransen som består av en 15-20 minuter lång presentation av robotens specifikationer och funktioner}{Åhörare}{Vecka 20}
-\LIPSleverans{Efterstudie}{Simon L/Tomas}{Projektgruppen sammanställer här sina erfarenheter från projektarbetet och lämnar synpunkter på hur projektkursen skulle kunna förändras}{Beställaren/Projektgruppen}{1/6-2012}
-\end{LIPSleveranslista}
+Nedan följer en lista över alla dokument som kommer att skrivas under projektets gång. Med ''Ansvarig'' åsyftas den medlem i projektgruppen som är ytterst ansvarig för att dokumentet skrivs och är av god standard. Rubriken ''Godkänns av'' syftar på den person utanför projektgruppen som beslutar huruvida dokumentet är godkänt eller ej. Under ''Syfte'' så beskrivs kort vad dokumentet innehåller. Datumet är deadline för de olika dokumenten. 
+
+Alla dokument kommer att distribueras till projektgruppen, samt till den person som nämns under ''Godkänns av''.
+
+
+\begin{tabular}{|p{43mm}|p{15mm}|p{70mm}|p{23mm}|}
+\LIPSleverans{\textbf{Dokument}}{\textbf{Ansvarig / Godkänns av}}{\textbf{Syfte}}{\textbf{Färdig-datum}}
+\LIPSleverans{Första version av Projektplan, tidplan och systemskiss}{Markus / Tomas}{Beskriver hur projektet ska utföras och ger en handvisning till hur roboten ska fungera}{15/2-2012}
+\LIPSleverans{Slutiltig av Projektplan, tidplan och systemskiss}{Simon L / Tomas}{Beskriver hur projektet ska utföras och ger en handvisning till hur konstruktionen av roboten ska ske}{23/2-2012}
+\LIPSleverans{Första version av designspecifikation}{Johan / Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{13/3-2012}
+\LIPSleverans{Slutgiltig version av designspecifikation}{Simon L / Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{16/3-2012}
+\LIPSleverans{Tidrapporter och uppdaterad tidplan}{Markus / Tomas}{Visar hur tidfördelningen mellan de olika aktiviteterna har gått under den senaste tidsperioden, samt hur projektgruppen tänkt lägga upp sitt framtida arbete}{12/3, 19/3, 26/3, 2/4, 16/4, 23/4, 30/4, 7/5, 14/5, 21/5}
+\LIPSleverans{Statusrapport för projektet}{Simon L / Tomas}{Ger en bild av projektgruppens nuvarande status i förhållande till tidigare planering}{Vid begäran}
+\LIPSleverans{Teknisk dokumentation och användaranvisning}{Gustav / Tomas}{Ger en detaljerad bild över hur systemet fungerar, information om användargränssnit och beskrivning hur roboten används}{Tre arbetsdagar innan redovisningen vecka 20}
+\LIPSleverans{Muntlig presetation och demonstration}{Simon L / Tomas}{Slutleveransen som består av en 15-20 minuter lång presentation av robotens specifikationer och funktioner}{Vecka 20}
+\LIPSleverans{Efterstudie}{Simon L / Tomas}{Projektgruppen sammanställer här sina erfarenheter från projektarbetet och lämnar synpunkter på hur projektkursen skulle kunna förändras}{1/6-2012}
+\hline
+\end{tabular}
+
+
 
 
 \subsection{Begränsningar}
-Projektarbetet begränsas till att uppfylla de krav som finns specificerade i kravspecifikationen, se *. I denna finns det tre olika prioriteringsnivåer för vad roboten ska kunna uppnå vid slutleverans. Projektet begränsas till att endast i mån av tid hantera de krav med prioritering 2 och 3.
+Projektarbetet begränsas till att uppfylla de krav som finns specificerade i projektets kravspecifikation. I denna finns tre olika prioriteringsnivåer för vad roboten ska kunna uppnå vid slutleverans. Projektet begränsas till att endast i mån av tid hantera de krav med prioritering 2 och 3.
 Den kanske viktigaste begränsningen av projektgruppens arbete är att efter det att projektplanen blivit godkänd får endast 140 timmar per projektmedlem användas till projektet.
 
-\section{Fasplan}		
-\subsection{Före projektstart}
-\subsection{Under projektet}
-\subsection{Efter projektet}
 
+Vilka komponenter som ska användas vid konstruktionen av roboten är begränsat av utbudet i ISY's komponentbibliotek. Märk dock att denna begränsning inte är strikt, vid behov av ytterligare komponenter kan eventuellt beställning från extern part göras efter en diskussion med beställare och handledare. 
+
+
+\section{Fasplan}		
+
+\subsection{Under projektet}
+Under projektets gång ligger huvudfokus på att konstruera komboroboten samt att framställa den dokumentation som beställaren kräver. Dessutom läggs en del av tiden på laborationer och utbildning av gruppmedlemar.
+\subsection{Efter projektet}
+När roboten är klar för leverans skall den delta i en tävling där den skall visa att den uppfyller kraven. Efter tävlingen beslutar beställaren om projektet godkänns eller ej. En efterstudie ska genomföras av samtliga projektmedlemar, och rapport på denna ska lämnas in till beställaren. 
 
 \section{Organisationsplan för hela projektet}	%%SL
-\subsection{Organisationsplan per fas}
-\subsection{Organisationsplan hos kunden}
+\begin{figure}[h]
+        \includegraphics{organisation-figur.pdf}
+	\caption{Översikt av ansvarsfördelning}
+\end{figure}
+Beställarens kontakt med gruppen sker huvudsakligen genom projektledaren. Varje gruppmedlem har ett eget ansvarsområde, och det ligger under projektledarens ansvar att se till att övriga gruppmedlemmar arbetar mot samma mål och att samtliga planerade aktiviteter har minst en huvudansvarig. Projektledaren ansvarar dessutom för att projektgruppen under projektets gång  delas in i mindre arbetsgrupper för att arbetsfördelningen inom gruppen, sett till nedlagda arbetstimmar,  skall bli så jämnt fördelad som möjligt.
+Handledaren finns tillgänglig som vägledning för projektgruppen under hela projektets gång. Om gruppen har frågor rörande någon teknisk del av projektet kan handledaren hänvisa till en teknisk expert på området ifråga. Handledaren ska även godkänna vissa beslutspunkter för att projektet ska kunna fortskrida, se "Milstolpar och beslutspunkter".
+
 \subsection{Villkor för samarbete inom projektgruppen}
+Se gruppkontrakt (Appendix B)
+
 \subsection{Definition av arbetsinnehåll och ansvar}
+Varje medlem i projektgruppen har blivit tilldelat ett ansvarsområde enligt tabellen nedan. Den huvudansvarige för ett område ska se till att aktiviteter inom ansvarsområdet genomförs som planerat och med önskvärt resultat. Alla medlemmar i projektgruppen finns tillgängliga som extra arbetskraft när det finns tid över från det egna huvudområdet.
+\\
+\\
+\begin{tabular}{|p{16mm}|p{31mm}|p{100mm}|}
+        	\LIPSmilstolpe{\textbf{Namn}}{\textbf{Ansvarsområde}}{\textbf{Kommentar}}
+	\LIPSmilstolpe{Simon L}{Projektledare}{Ansvarar för att projektgruppens sammanlagda arbete går framåt mot uppsatta mål. Kontaktperson för beställaren}
+	\LIPSmilstolpe{Mattias}{Dokumentansvarig}{Ansvarar för alla dokument och möteshandlingar}
+	\LIPSmilstolpe{Gustav}{Ansvarig för reglersystem}{Huvudansvarig för robotens styr-och reglersystem}
+	\LIPSmilstolpe{Johan}{Mjukvaruansvarig}{Ansvarar för framtagande och optimering av all programmeringskod i projektet.}
+	\LIPSmilstolpe{Tobias}{Hårdvaruansvarig}{Ansvarar för konstruktion av nödvändig hårdvara}
+	\LIPSmilstolpe{Simon W}{Testansvarig}{Ansvarig för att upprätta en testplan och kontinuerligt genomföra tester enligt denna}
+\hline
+\end{tabular}
 
 \section{Dokumentplan}	%%MJ
+Nedan följer en lista över alla dokument som kommer att skrivas under projektets gång. Med ''Ansvarig'' åsyftas den medlem i projektgruppen som är ytterst ansvarig för att dokumentet skrivs och är av god standard. Rubriken ''Godkänns av'' syftar på den person utanför projektgruppen som beslutar huruvida dokumentet är godkänt eller ej. Under ''Syfte'' så beskrivs kort vad dokumentet innehåller. Färdig-datum syftar till det datum då respektive dokument sk levereras. 
 
-\section{Utvecklingsmetodik}	%%SW
+Alla dokument kommer att distribueras till projektgruppen, samt till den person som nämns under ''Godkänns av''.
+
+\begin{tabular}{|p{40mm}|p{20mm}|p{50mm}|p{23mm}|}
+\LIPSleverans{\textbf{Dokument}}{\textbf{Ansvarig / Godkänns av}}{\textbf{Syfte}}{\textbf{Färdig-datum}}
+\LIPSleverans{Kravspecifikation}{Simon L / Tomas}{Definierar kraven som ställs på projektet}{2/2-2012}
+\LIPSleverans{Projektplan, första inlämningnen}{Markus / Tomas}{Beskriver hur projektet ska utföras.}{15/2-2012}
+\LIPSleverans{Systemskiss, första inlämningnen}{Markus / Tomas}{Beskriver hur systemet ska byggas upp}{15/2-2012}
+\LIPSleverans{Tidplan, första inlämningnen}{Markus / Tomas}{Listar aktiviteternas budgeterade tidsåtgång.}{15/2-2012}
+\LIPSleverans{Projektplan, slutgiltig inlämning}{Simon L / Tomas}{Beskriver hur projektet ska utföras.}{23/2-2012}
+\LIPSleverans{Systemskiss, slutgiltig inlämning}{Simon L / Tomas}{Beskriver hur systemet ska byggas upp}{23/2-2012}
+\LIPSleverans{Tidplan, slutgiltig inlämning}{Simon L / Tomas}{Listar aktiviteternas budgeterade tidsåtgång.}{23/2-2012}
+\LIPSleverans{Designspecifikation, första inlämningen}{Johan / Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{13/3-2012}
+\LIPSleverans{Designspecifikation, slutlig inlämning}{Simon L / Olov}{Visar mer detaljerat hur konstruktionen av roboten ska ske}{16/3-2012}
+\LIPSleverans{Tidrapporter och uppdaterad tidplan}{Markus / Tomas}{Visar budgeterad och spenderad tid, uppdelad på de olika aktiviteterna}{Måndagar varje vecka, med start 12/3 och slut 21/5-2012 (undantaget 9/4)}
+\LIPSleverans{Statusrapport för projektet}{Simon L / Tomas}{Dokumentet ska översiktligt sammanfatta hur projektet fortskrider.}{Vid begäran}
+\LIPSleverans{Teknisk dokumentation}{Gustav / Tomas}{Beskriver i detalj systemets uppbyggnad}{Tre arbetsdagar innan redovisningen, vecka 20}
+\LIPSleverans{Användaranvisning}{Mattias / Tomas}{Beskriver hur produkten används och dess olika funktioner.}{Tre arbetsdagar innan redovisningen, vecka 20}
+\LIPSleverans{Efterstudiedokument}{Simon L / Tomas}{Dokumenterar gruppens reflektioner över projektet och hur det har genomförts}{1/6-2012}
+\hline
+\end{tabular}
+
+%%\section{Utvecklingsmetodik}	%%SW
 
 \section{ Utbildningplan}	%%Markus
 \subsection{Egen utbildning}
-Vid behov kommer medlemmarna i projektgruppen att kunna utbildas i de olika verktyg som ska användas under projektet. Exempel på sådana verktyg kan vara AVR Studio, C Programmering och alla de mätinstrument som kommer att vara nödvändiga. För att utbilda projektetgruppens medlemmar tillhandahåller kunden med Tekniska experter som kan ge korta lektioner. Innan Någon av de tekniska experterna anlitas kommer projektgruppen dock att tillfråga handledaren om inte denna kan hålla en kort intern utbildning.
+Vid behov kommer medlemmarna i projektgruppen att kunna utbildas i de olika verktyg som ska användas under projektet. Exempel på sådana verktyg kan vara AVR Studio, C Programmering och alla de mätinstrument som kommer att vara nödvändiga. För att utbilda projektetgruppens medlemmar tillhandahåller beställaren med Tekniska experter som kan ge korta lektioner. Innan någon av de tekniska experterna anlitas kommer projektgruppen dock att tillfråga handledaren om denna kan hålla en kort intern utbildning. 
+
+I den kurs som projektarbetet ingår, TSEA27, finns också andra utbildande moment. Kursen innehåller elva frivilliga föreläsningar som samtliga deltagare i projektgruppen i största möjliga mån ska lyssna på. Fem stycken av dessa föreläsningar handlar om projektets upplägg och projektmodellen LIPS och sex stycken handlar om den teknik som kan användas för att konstruera roboten.
+
+Samtliga av projektgruppens deltagare kommer också att deltaga på tre stycken laborationer som är obligatoriska moment i projektkursen. Dessa laborationer är utbildande moment och syftar till att förbereda projektgruppen för uppgiften.
+
+
+\subsection{Kundens utbildning}
+Den information som är nödvändig för att använda roboten kommer att finnas i den användaranvisning som ska levereras tillsammans med den tekniska specifikationen senast tre dagar innan presentationen vecka 20. Annan utbildning av kunden anses vara inte nödvändig.
+
+
+\section{Rapporteringsplan}
 
 \section{Mötesplan}
 
 \section{Resursplan}	%%SW
+Detta avsnitt beskriver de resurser som projektgruppen har att tillgå samt de som är nödvändiga för att projektet ska kunna genomföras. De resurser som kommer att behandlas i avsnittet är personal, material så som kretsar, datorer osv, vilka lokaler som kommer att finnas tillgängliga, hur många timmar som gruppmedlemmarna kan lägga samt den hjälp gruppen kommer behöva från experter på området. 
 \subsection{Personer}
+Gruppen består av sju medlemmar som alla har sina specifika uppgifter. Dessa är Simon Larsson, Simon Wallin, Johan Jönsson, Gustav Svensk, Markus Falck, Mattias Jansson, Tobias Andersson. Dessa personer kommer att se till att projektet tar sig framåt, att tiden blir allokerad på lämpligt sätt och det är deras ansvar att deadline för beslutspunkterna följs. Utöver detta är även projekthandledaren, Olov, del av projektet. Handledaren ska inte göra något direkt arbete i projektet, utan däremot hjälpa till med att styra projektet åt rätt riktning och ha en administrativ översikt. Han kan också hjälpa till om projektmedlemmarna stöter på något problem. Kontinuerliga möten med handledaren kommer att ske under projektets gång.
 \subsection{Materiel}
+Allt det material som kommer behövas till projektet kommer att tillhandahållas av ISY. Till detta kommer även all användardata så som manualer och datablad till chip finnas tillgängliga. ISY kommer även att stå för övrig materiel som behövs för att slutför projektet så som hjulbas, sensorer osv.
 \subsection{Lokaler}
+Den lokal vi huvudsakligen kommer att använda är MUXEN där vi kommer att ha tillgång till en plats för att bygga och programmera vår robot. Vi kommer att ha tillgång till MUXEN 24 timmar om dygnet.
 \subsection{Ekonomi}
+Vår ekonomi vi har är i utförandet av timmar vi kan förbruka på projektet. Var person i projektgruppen kommer att ha totalt 140 timmar att spendera på olika aktiviteter vilket sammanlagt ger oss 980 timmar till projektet.
+
 
 \section{ Milstolpar och beslutspunkter} %%SL
-
+Milstolpar för projektet bestäms inom gruppen, och sätts för att kunna kontrollera att tidsplanen följs som planerat. Varje milstolpe innefattar ett eller flera krav som ska vara uppfyllda och testade vid det datum som specificerats nedan. Beslutspunkter är krav uppsatta från beställaren. Vid varje beslutspunkt har beställaren rätt att besluta om projektet skall fortsätta eller ej.
 \subsection{Milstolpar}
+
+\begin{tabular}{|p{7mm}|p{117mm}|p{23mm}|}
+        	\LIPSmilstolpe{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Datum}}
+	\LIPSmilstolpe{1}{Designspecifikationen accepterad av handledaren}{2012-03-16}
+	\LIPSmilstolpe{2}{Bussen fungerar som den ska}{2012-03-30}
+	\LIPSmilstolpe{3}{Data och mätvärden skickas via komunikationsenheten}{2012-04-05}
+	\LIPSmilstolpe{4}{Roboten kan upptäcka korsningar}{2012-04-19}
+	\LIPSmilstolpe{5}{Korrekt sensorinfo visas på PCn}{2012-04-20}
+	\LIPSmilstolpe{6}{Motorn regleras autonomt utifrån sensorvärdena}{2012-04-27}
+	\LIPSmilstolpe{7}{Styrkommandon utförs korrekt}{2012-05-04}
+\hline
+\end{tabular}
+
 \subsection{Beslutspunkter}
 
+\begin{tabular}{|p{7mm}|p{117mm}|p{23mm}|}
+        	\LIPSmilstolpe{\textbf{BP}}{\textbf{Beskrivning}}{\textbf{Datum}}
+	\LIPSmilstolpe{BP0}{Godkännande av projektdirektiv, beslut att starta förstudie}{2012-01-20}
+	\LIPSmilstolpe{BP1}{Godkännande av kravspecifikation, beslut att starta förberedelsefasen}{2012-02-02}
+	\LIPSmilstolpe{BP2}{Godkännande av projektplanering, beslut att starta utförandefasen}{2012-02-23}
+	\LIPSmilstolpe{BP3}{Godkännande av designspecifikation, beslut att fortsätta utförandefasen}{2012-03-16}
+	\LIPSmilstolpe{BP4}{Ej specifierad}{-}
+	\LIPSmilstolpe{BP5}{Godkännande av produktens funktionalitet, beslut att leverera}{vecka 19}
+	\LIPSmilstolpe{BP6}{Godkännande av leverans, beslut att upplösa projektgruppen}{2012-06-01}
+\hline
+\end{tabular}
 \section{Aktiviteter}
 
-\section{Tidplan}
+\begin{longtable}{|p{7mm}|p{90mm}|p{23mm}|p{23mm}|}
+	\LIPSleverans{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Beroende av aktivitet nr}}{\textbf{Beräknad tid (h)}} 
+\LIPSaktivitet{Färdigställande av
+designspec}{}{70} 
+	\LIPSaktivitet{Omvandling av analoga signaler till
+digitala sådana}{}{12} 
+	\LIPSaktivitet{Trösklande av
+sensorvärden}{2}{4} 
+	\LIPSaktivitet{Hitt skillnaden mellan önskade och
+aktuella värden}{3}{4} 
+	\LIPSaktivitet{Skicka skilnaden till styrenheten (via
+kommunikationsenheten)}{4 \& 10}{14} 
+	\LIPSaktivitet{Skicka avstånd i cm till display- och
+kommunikationsenheten}{2 \& 10}{12} 
+	\LIPSaktivitet{Upptäck
+riktningsmarkeringar}{1 \& 2}{20} 
+	\LIPSaktivitet{Hantera
+riktningsmarkeringar}{6}{20} 
+	\LIPSaktivitet{Upptäck korsningar}{2 \&
+3}{20} 
+	\LIPSaktivitet{Ordna master som sköter
+buss}{}{60} 
+	\LIPSaktivitet{Skicka styrinfo till
+pc}{15 \& 16 \& 10}{19} 
+	\LIPSaktivitet{Skicka sensorinfo till
+pc}{5 \& 15 \& 16}{15} 
+	\LIPSaktivitet{Ta emot styrkommandon från
+pc}{15 \& 16}{15} 
+	\LIPSaktivitet{Skicka styrkommando till styrenhet
+från kommunikqtionsenhet}{10}{15} 
+	\LIPSaktivitet{Fixa blåtand i
+kommunikationsenhet}{}{25} 
+	\LIPSaktivitet{Fixa blåtand i
+pc}{}{25} 
+	\LIPSaktivitet{Ordna gränssnitt på
+pc}{}{40} 
+	\LIPSaktivitet{Ta emot sensorvärden
+(Styrenhet)}{10 \& 5}{20} 
+	\LIPSaktivitet{Reglera motorer utifrånsensorvärden}{18 \& 21 \& 29}{50} 
+	\LIPSaktivitet{Ta emot styrkommandon
+(styrenheten)från kommunikationsenheten}{10 \& 24 \& 14}{20} 
+	\LIPSaktivitet{Styra motorer (autonomt och manuellt)}{}{50} 
+	\LIPSaktivitet{Skicka styrinfo till
+kommunikationsenheten från
+styrenheten}{10}{20} 
+	\LIPSaktivitet{Hantera
+specialkommandon}{8 \& 21}{40} 
+	\LIPSaktivitet{Hämta och skicka styrkommandon från
+pc till kommunikationsenheten (Mjukvara)}{15 \& 16}{30} 
+	\LIPSaktivitet{Ta emot styrinfo i PC från
+kommunikationsenheten}{15 \& 16 \& 22}{20} 
+	\LIPSaktivitet{Ta emot sensorinfo}{15 \& 16 \&
+6}{20} 
+	\LIPSaktivitet{Visa styrinfo på
+skärm}{25}{2} 
+	\LIPSaktivitet{Visa sensorinfo på
+skärm}{26}{2} 
+	\LIPSaktivitet{Regulator}{5}{30} 
+	\LIPSaktivitet{Sammanställa
+tekniskdokumentation}{samtliga}{50} 
+	\LIPSaktivitet{Sammanställa
+Användarmanual}{30}{60} 
+	\LIPSaktivitet{Förbereda
+redovisning}{31}{15} 
+	\LIPSaktivitet{Montering av
+avståndssensorer}{}{10} 
+	\LIPSaktivitet{Montering av
+linjesensorer}{}{10}
+	\LIPSaktivitet{Tidsloggning (ska ske
+kontinuerligt)}{}{20} 
+	\LIPSaktivitet{Efterstudie}{32}{15} 
+	\LIPSaktivitet{Montering}{33 \&
+34}{30} 
+	\LIPSaktivitet{Utför styrkommandon}{20 \&
+23}{30} 
+	\LIPSaktivitet{Test av hela systemet}{2-29
+\& 34-35 \& 37 \& 40}{15} 
+	\LIPSaktivitet{Kalibrering av
+sensorer}{}{20} 
+	\LIPSaktivitet{Möten}{}{70} 
+	\LIPSaktivitet{Rest}{}{}
 
-\section{Förändringsplan}	%%Markus
+\hline
+\end{longtable}
+
+\section{Tidplan}
+Se  Appendix A.
+
 
 \section{Kvalitetsplan}	%SL
+För att säkerställa att kvalitén på roboten och dokumentationen används två metoder, granskning och tester. Granskning rör all form av dokumentation som ingår i projektet. Dessutom kommer tester att göras kontinuerligt under projektet för att säkerställa att varje aktivitet ger önskat resultat.
 \subsection{Granskningar}
-\subsection{Testplan}
+Varje ny version av dokumentationen skall granskas av minst en gruppmedlem innan den anses färdig för inlämning. Om inget annat sägs är det dokumentansvarigs (Mattias Jansson) ansvar att dokumentet granskas. Syftet med granskningen är att kontrollera att dokumentet innehåller alla önskade delar och att det inte innehåller några grova språkliga eller utseendemässiga fel.
 
-\section{Riskanalys} %SW
+\subsection{Testplan}
+Under projektet kommer tester utföras löpande för att säkerställa att arbetet ger önskat resultat. Gruppmedlemmen som utsetts till testansvarig (Simon Wallin) är ansvarig för att planera och utföra testningen, samt att framställa en testplan som beskriver hur testerna ska genomföras och vilka krav som måste vara uppfyllda för att ett test ska godkännas.
+
+
 
 \section{Prioriteringar}
 
 
 \section{Projektavslut} %MARKUS
 
-%\begin{LIPSkravlista}
-%\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgå från LIPS-mallar}{1}
-%\LIPSkrav{Original}{Dokument ska märkas med versionsnummer}{1}
-%\LIPSkrav{Original}{Möten ska protokollföras enligt LIPS-mallen för mötesprotokoll}{1}
-%\LIPSkrav{Original}{Mötesprotokoll ska justeras av två utsedda justeringspersoner}{1}
-%\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
-%\end{LIPSkravlista}
+Under vecka 20 så sker en redovisning då projektgruppen presenterar sin produkt och utför en demonstration. Redovisningen ska vara 15-20 minuter lång och ska innehålla en muntlig presentation av projektets slutprodukt, såväl som en grafisk presentation som visas på en projektor. Även andra av de tillgängliga presentationsverktygen kan komma att användas. Presentationen kommer att utföras av två personer i projektgruppen varav en kommer att vara projektledaren. Övriga deltagare i projektgruppen kommer att finnas på plats för att svara på frågor efter redovisningen.
+
+Senast tre dagar innan presentationen genomförs kommer den tekniska dokumentationen att levereras till beställaren. Denna ska bland annat innehålla detaljerad information om alla olika delsystem i roboten. I den tekniska manualen kommer det också att ingå en användarmanual som beskriver hur roboten ska användas. Den tekniska dokumentationen, projektredovisningen och demonstrationen är de tre komponenter som utgör projektets slutleverans. 
+
+Demonstrationen av roboten kommer att bestå i en tävling där projektgruppens robot ska utmana en konkurrerande projektgrupp som ska bygga en liknande robot. Reglerna för tävlingen har projektgrupperna kommit överens om gemensamt och dessa finns presenterade i Appendix A. En kort sammanfattning av dessa regler är att det vid tävlingstillfället kommer att fastslås vilken typ av bana som robotarna kommer att tävla i, beroende på hur avancerade funktioner projektgrupperna lyckats åstadkomma. De olika banorna finns presenterade i Appendix B. Vinnaren av tävlingen kommer att få sin robot utställd av beställaren och förloraren får montera isär sin robot.
+
+Detta avslutar den aktiva delen av projektet och efter detta påbörjas den så kallade efter-fasen, se mer information under rubrik 3, Fasplan. Under denna fas i projektarbetet ska  projektgruppen utvärdera hur väl arbetet med projektet har gått och vad som skulle varit bättre att göra på annorlunda sätt. Projektets upplägg ska utvärderas och projektgruppen kommer att göra utlåtanden om hur väl kontakten med de olika parter som är involverade i projektarbetet har gått. En annan viktig punkt i denna utvärdering kommer att vara vad projektgruppen har för tips att ge nästa års studenter som ska utföra liknande projektarbeten. Dessa reflektioner, synpunkter och tips ska sammanfattas i en efterstudie som levereras till beställaren senast 1/6-2012. Efter detta datum är projektet avslutat och det enda som återstår är att återlämna den utrustning som projektgruppen tillåtits låna av institutionen för systemteknik.
 
 
 \newpage
@@ -156,6 +342,18 @@ Vid behov kommer medlemmarna i projektgruppen att kunna utbildas i de olika verk
 
 
 \subsection{Banspecifikation} \label{app:bana}
+Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
+
+Linjedelen:
+Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
+
+Labyrintdelen:
+
+\begin{list}{*}{}
+\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn följd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
+\item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
+\item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
+\end{list} 
 
 \newpage
 

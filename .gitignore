@@ -1,5 +1,14 @@
-*~      #  Emacs & Vim swap files
-*.o     #  Objektfiler, dumt att inkludera
-*.log	#  Generade när man bygger med pdflatex
+#  Emacs & Vim swap files
+*~      
+*.swp
+#  Objektfiler, dumt att inkludera
+*.o     
+#  Generade när man bygger med pdflatex
+*.log	
 *.aux	
 *.toc	
+#  Diagramfiler innan de är .png
+*.dia   
+
+# Bygg egna .pdf filer  ni snälla:
+*.pdf

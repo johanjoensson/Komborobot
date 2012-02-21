@@ -1,0 +1,45 @@
+\select@language {swedish}
+\contentsline {section}{Dokumenthistorik}{5}
+\contentsline {section}{\numberline {1}Inledning}{6}
+\contentsline {subsection}{\numberline {1.1}Parter}{6}
+\contentsline {subsection}{\numberline {1.2}M\IeC {\r a}l}{6}
+\contentsline {subsection}{\numberline {1.3}Anv\IeC {\"a}ndning}{6}
+\contentsline {subsubsection}{\numberline {1.3.1}Autonomt l\IeC {\"a}ge}{6}
+\contentsline {subsubsection}{\numberline {1.3.2}Fj\IeC {\"a}rrstyrningsl\IeC {\"a}ge}{6}
+\contentsline {subsection}{\numberline {1.4}Bakgrundsinformation}{6}
+\contentsline {subsection}{\numberline {1.5}Definitioner}{7}
+\contentsline {section}{\numberline {2}\IeC {\"O}versikt av systemet}{7}
+\contentsline {subsection}{\numberline {2.1}Grov beskrivning av produkten}{7}
+\contentsline {subsection}{\numberline {2.2}Produktkomponenter}{7}
+\contentsline {subsection}{\numberline {2.3}Beroenden till andra system}{8}
+\contentsline {subsection}{\numberline {2.4}Ing\IeC {\r a}ende delsystem}{8}
+\contentsline {subsection}{\numberline {2.5}Avgr\IeC {\"a}nsningar}{8}
+\contentsline {subsection}{\numberline {2.6}Generella krav p\IeC {\r a} hela systemet}{8}
+\contentsline {section}{\numberline {3}Styrenhet}{9}
+\contentsline {subsection}{\numberline {3.1}Inledande beskrivning}{9}
+\contentsline {subsection}{\numberline {3.2}Gr\IeC {\"a}nssnitt}{9}
+\contentsline {subsection}{\numberline {3.3}Designkrav}{9}
+\contentsline {subsection}{\numberline {3.4}Funktionella krav}{9}
+\contentsline {section}{\numberline {4}Kommunikationsenhet}{10}
+\contentsline {subsection}{\numberline {4.1}Inledande beskrivning}{10}
+\contentsline {subsection}{\numberline {4.2}Externa interface}{10}
+\contentsline {subsection}{\numberline {4.3}Designkrav}{10}
+\contentsline {subsection}{\numberline {4.4}Funktionella krav}{10}
+\contentsline {section}{\numberline {5}Sensorenhet}{11}
+\contentsline {subsection}{\numberline {5.1}Inledande beskrivning}{11}
+\contentsline {subsection}{\numberline {5.2}Externa interface}{11}
+\contentsline {subsection}{\numberline {5.3}Designkrav}{11}
+\contentsline {subsection}{\numberline {5.4}Funktionella krav}{11}
+\contentsline {subsection}{\numberline {5.5}Anv\IeC {\"a}ndargr\IeC {\"a}nssnitt}{11}
+\contentsline {section}{\numberline {6}Datormjukvara}{12}
+\contentsline {subsection}{\numberline {6.1}Inledande beskrivning}{12}
+\contentsline {subsection}{\numberline {6.2}Designkrav}{12}
+\contentsline {subsection}{\numberline {6.3}Funktionella krav}{12}
+\contentsline {section}{\numberline {7}Prestandakrav}{12}
+\contentsline {section}{\numberline {8}Krav p\IeC {\r a} vidareutveckling}{13}
+\contentsline {section}{\numberline {9}Ekonomi}{13}
+\contentsline {section}{\numberline {10}Leveranskrav och delleveranser}{13}
+\contentsline {section}{\numberline {11}Dokumentation}{14}
+\contentsline {section}{\numberline {A}Bilagor}{15}
+\contentsline {subsection}{\numberline {A.1}Banspecifikation}{15}
+\contentsline {section}{Referenser}{16}
