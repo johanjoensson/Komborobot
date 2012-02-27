@@ -1,0 +1,33 @@
+\section{Styrmodul}
+
+Styrmodulen tar emot kommandon från kartmodulen och kontrollerar, utifrån
+dessa, robotplattformens motorer. Syftet är att avlasta kartmodulen från behöva
+utföra PWM. Styrmodulen fungerar också som ett abstraktionslager mellan
+kartmodul och plattform. Om man i framtiden vill byta plattform till en som
+styrs på annat vis, behöver man bara byta ut styrmodulen.
+
+\subsection{Hårdvara}
+
+Styrmodulen består av en AVR ATmega8 som sitter kopplad mellan kartmodulen och
+robotplattformens H-brygga. AVR ATmega8 har inbyggd PWM och UART. UART:en är
+kopplad till kartmodulens USB-serieport och två PWM-utgångar är kopplade till
+vardera PWM-ingång på H-bryggan. (En kanal styr motorerna på vänster sida och
+en annan kanal styr motorerna på höger sida.) Två I/O-utgångar på AVR:en är
+kopplade till vardera riktnings-ingång på H-bryggan.
+
+En extern klocka som är gemensam för de båda AVR:erna i roboten.
+
+\subsection{Mjukvara}
+
+Styrmodulens mjukvara är väldigt enkel. Arbetet utförs i en avbrottsrutin som
+anropas när det kommer en byte på serieporten. När styrmodulen tagit mot två
+bytes kommer den att tolka dessa som signade heltal och justera de två
+PWM-utgångarna (som anger hastighet) och de två I/O-utgångarna (som anger
+riktning) därefter. En negativ byte försätter motorn i backriktning och en
+positiv i framriktning. Bytens absolutbelopp anger hastigheten. MSB används
+alltså för att styra motsvarande I/O-utgång och resten av bitarna i byte:n
+används för att kontrollera pulsbredden på motsvarande PWM-utgång. 127 är full
+fart frammåt, -128 är full back och 0 är stillastående.
+
+\subsection{Kopplingsschema}
+Se appendix \ref{styr-sch}.
