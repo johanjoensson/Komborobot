@@ -1,2 +1,16 @@
 \section{Styrenhet}
-text här
+Styrenhetens uppgift är att styra motorerna utifrån data som skickas från kommunikationsenheten.
+Styrenheten ska kunna vara i två lägen, autonomt läge då den reglerar motorerna utifrån sensorvärden eller 
+fjärrstyrt läge då den tar emot och behandlar styrkommandon.
+\subsection{Hårdvara}
+Styrmoodulen består av en AVR ATmega16 som ska placeras på robotplattformen.
+Mikroprocessorns PWM-utgångar ska kopplas till PWM-ingångarna på robotplattformen för att styra motorerna.
+För att styra riktning på motorerna kopplas två I/O-utgångar från mikroprocessorn till plattformens riktningsingångar.
+\subsection{Mjukvara}
+Mjukvaran kommer att fungera väldigt olika beroende på om roboten är i fjärrstyrt eller autonomt läge.
+\subsubsection{Fjärrstyrt läge}
+
+\subsubsection{Autonomt läge}
+\subsection{Reglering}
+\subsection{Blockschema}
+Se appendix \ref{app:styrenhet}
