@@ -1,2 +1,38 @@
 \section{Sensorenhet}
-text här
+
+\subsection{Hårdvara}
+Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display som visar avståndet till väggar. 
+
+\subsection{Linjeföljarsensor}
+Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer.  Muxarna styrs av AVR:en och får lysdioderna och transistorerna att arbeta i par. Den ena muxen är kopplad till logiskt ett på sin ingång för att tända en lysdiod i taget, demuxen kopplar motsvarande transistor till A/D omvandlaren. Efter att en omvandling är klar kopplas muxarna om till nästa par och en ny omvandling kan starta.
+
+analog multiplexer 4067B (16 kanaler)
+
+filtrering? för varje transistor eller en för alla?
+tid? behövs det set-up tid för att transistorn ska bli ledande?
+4 pinnar
+1 AD pinne
+
+\subsubsection{Avståndssensorer}
+Sensorenheten har 3 optiskaavståndsmätare av typen GP2Y0A02YK (20-150 cm). En placerad på vardera sida av roboten och en riktad frammåt. Dessa ger en analog utsignal som kopplas till AVR:ens AD omvandlare och de tar upp en pinne var.
+
+filtrering?
+Tid: ca 50 ms mellan mätningar
+3 AD pinnar
+
+\subsubsection{Display}
+En alfanumerisk LED-display av typen HDSP-2112 används för att visa avstånd till väggarna när roboten är i labyrintläge. Den kopplas till Port ? på AVR:en, 8 pinnar.
+
+vilka input har den?
+8 pinnar
+
+\subsection{Mjukvara}
+
+
+\subsubsection{AD}
+
+\subsubsection{Linjeföljare}
+
+\subsubsubsection{Mux}
+
+\subsubsection{Kommunikation}
