@@ -1,13 +1,15 @@
 \section{Sensorenhet}
+Sensorenheten har till uppgift att samla in information från omgivningen via sensorer samt tolka den insamlade datan. 
 
 \subsection{Hårdvara}
-Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display som visar avståndet till väggar. 
+Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display. ATmega16 har en intern AD-omvandlare som kommer användas.
 
-\subsection{Linjeföljarsensor}
+\subsubsection{Linjeföljarsensor}
 Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer.  Muxarna styrs av AVR:en och får lysdioderna och transistorerna att arbeta i par. Den ena muxen är kopplad till logiskt ett på sin ingång för att tända en lysdiod i taget, demuxen kopplar motsvarande transistor till A/D omvandlaren. Efter att en omvandling är klar kopplas muxarna om till nästa par och en ny omvandling kan starta.
 
 analog multiplexer 4067B (16 kanaler)
 
+koppla logiskt ett till oanvänd utgång på muxen?
 filtrering? för varje transistor eller en för alla?
 tid? behövs det set-up tid för att transistorn ska bli ledande?
 4 pinnar
@@ -27,12 +29,27 @@ vilka input har den?
 8 pinnar
 
 \subsection{Mjukvara}
-
+Kommer
 
 \subsubsection{AD}
+ATmegas inbyggda AD-omvandlaren kommer att arbeta med 10-bitars upplösning. Alla sensorer kommer i turordning omvandlas. När en omvandling är klar läses data ur ADC Data Registers och sparas i ett annat register varefter nästa omvandling startas. En räknare kontrollerar vilken av de 3 avståndssensorerna och de 11 linjesensorerna som AD-omvandlas igenom att ställa in interna och externa muxar.
 
-\subsubsection{Linjeföljare}
+frekvens?
+snabb räkning säger att det tar ca 1 ms att ad-omvandla all sensordata i 200hz läge (13 cykler ger 65 us per omvandling), hänsyn kan behöva tas till muxarnas hastighet.
 
-\subsubsubsection{Mux}
+\subsubsection{Linjesensor}
+När AD-omvandlaren har gått igenom alla linjessensorer ett varv kommer värdena från linjesensorerna trunkeras till ett eller noll. Trunkering ska ske så att tejp kommer motsvara en etta och ingen tejp en nolla. Med detta går det att räkna fram hur långt till höger eller vänster roboten befinner sig om linjen. 
+
+Specialfall: vid korsning kommer data skickas (vad för data?) för att få roboten att köra rakt fram.
+Specialfall: Roboten befinner sig i labyrint och måste hantera vidden på linjer. Vida linjer skall tolkas till specialkommandon åt styrenheten.
+
+\subsubsection{Avståndsberäkning}
+Värdena från AD-omvandlingen av avståndssensorernas data omvandlas enligt en tabell till avstånd. Dessa visas direkt på på den externa displayen. Avstånden kan sedan användas för att ta fram vart roboten befinner sig relativt mitten av banan.
+
+Om avståndet till en vägg är större än 80 cm så undersöker sensorenheten om det finns ett sparat styrkomando, om det inte finns skickas ett svängkommando, om det finns skickas det sparade styrkommandot.
+
+
+
+
 
 \subsubsection{Kommunikation}
