@@ -47,8 +47,8 @@ Kodningen av kommandon ses i tabell \ref{kodning}.
 I autonomt läge så ska styrenheten ta emot skillnaden mellan aktuella och önskade sensorvärden och styra motorerna utifrån detta.
 För att undvika att roboten slingrar sig fram när den följer linjer eller väggar så kommer en PD-regulator att användas, se \ref{reglering}.
 När data har tagits emot så genereras ett avbrott. I avbrottsrutinen kommer själva regleringen att ske. Datat som tas emot är en byte långt 
-och tolkas som ett signat heltal. Utöver den vanliga regleringen ska tre specialkommandon kunna hanteras, sväng vänster 90\degree, sväng höger 90\degree
-och kör rakt fram x cm.
+och tolkas som ett signat heltal. Utöver den vanliga regleringen ska fyra specialkommandon kunna hanteras, sväng vänster 90\degree, sväng höger 90\degree
+, kör rakt fram och återuppta vanlig reglering.
 
 \subsection{Reglering}
 \label{reglering}
@@ -60,12 +60,13 @@ Där konstanterna $K_P$, $K_D$ och $\Delta T$ ska bestämmas. $K_P$ är konstant
 $K_D$ är konstanten som styr den deriverande delen (D) av regleringen och $\Delta T$ är tiden mellan två sensoravläsningar. 
 För att bestämma konstanterna måste mätningar göras på sensorer, motorer och roboten.
 
-\begin{figure}[h]
+\begin{figure}[H]
         \label{regulator}
         \begin{center}
                 \includegraphics[scale=0.7]{bilder/regulator.png}
         \end{center}
         \caption{Regulatorns blockschema}
 \end{figure}
+
 \subsection{Blockschema}
 Se appendix \ref{app:styrenhet}
