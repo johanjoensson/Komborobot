@@ -1,0 +1,73 @@
+\section{Kommunikations- och kartnavigeringsmodul}
+
+Kartmodulen består av en Beagleboard xM och hanterar kartlogik, styr sensor-
+och styrmodulen; samt kommunicerar med PC-mjukvaran.
+
+\subsection{Hårdvara}
+%Känns lite hurp durp, men det ska ju vara specat
+Beagleboardens DC-anslutning kräver 5 V, 350 mA och är ansluten till
+robotchassits inbyggda spänningsregulator.
+
+För att implementera de två kontrollknapparna på roboten används knapparna på
+en USB-mus användas. Mjukvaran fångar upp mushändelser. 
+
+\subsection{Mjukvara}
+
+\subsubsection{Operativsystem}
+
+Vi ska använda standarddistributionen Ångström på Beagleboarden.
+
+\subsubsection{Övrig mjukvara}
+
+Under utvecklingsfasen används hjälpverktyg så som OpenSSH,
+versionshanteringssystem, kompilatorer och textredigerare.
+
+För att hantera USB- till serieomvandlaren och blåtandsstickan behövs
+eventuellt drivrutiner.
+
+Blåtandskommunikation hanteras med blåtandsstacken BlueZ. BlueZ möjliggör
+för i princip vanlig sockelprogrammering för blåtandskommunikation i C.
+% TODO ref http://people.csail.mit.edu/albert/bluez-intro/c404.html
+
+För att hantera mushändelser används GPM.
+
+\subsubsection{Egentuvecklad mjukvara}
+Mjukvaran i kartmodulen är nästan uteslutande skriven i C. Mindre saker så som
+start av robot och hantering av robotens program skrivs i shellskript.
+
+Eftersom att kartmodulen styr roboten, hanterar reglerloop och kontinuerligt
+kommunicerar med PC-mjukvaran, blir det svårt att implementera allt detta i ett
+program. Mjukvaran är därför att uppdelad i olika program, vilket möjliggör
+större utvecklingsparallellisering. Eftersom att roboten arbetar i två olika
+lägen, fjärrstyrningsläget och det autonoma läget, så utvecklas dessa separat.
+
+Lägesvalet hanteras av ett masterprogram. Masterprogrammet agerar även
+mellanlager för I/O-hantering på roboten.
+
+Högst prioritet i det autonoma läget har hanteringen av styr- och
+sensormodulen. Blåtandshantering, d.v.s. att skicka över kartinformation till
+datorn, är inte lika tidskritiskt. Mjukvaran för det autonoma läget är uppdelad
+i två delar: dels ett huvudprogram som hanterar kartlogik, och dels ett program
+för att hantera blåtandskommunikation med PC-mjukvaran. Kartlogikprogrammet
+uppdaterar kontinuerligt en fill innehållandes kartdata som blåtandsprogrammet
+läser av när PC-mjukvaran begär kartan.
+
+Reglerloopen måste kontinuerligt efterfråga sensordata från sensormodulen. För
+att reglerloopen ska fungera bäst så ska den ha ny sensordata för varje
+uppdatering.
+
+%\subsection{Blåtandshantering}
+% Typ köra RFCOMM för att det är enkelt
+
+\subsection{Kartalgoritmer}
+
+Roboten måste dels kunna rita ut en kartan och hålla koll på sin
+nuvarande position. Eftersom att kartan roboten ska ritas ut är har vissa
+kraftigt begränsade egenskaper, så som väggdimensioner och endast 90-graders
+vinklar, så kan implementationen av kartalgoritmen förenklas.
+
+Kartalgoritmen ska skapa en förenklad matris som representerar 80x80 cm stora
+block. För denna antas startpositionen vara i origo.
+
+% Kolla FastSLAM, kanske lite överdriven för just vårt problem.
+% http://tinyurl.com/5wesprc

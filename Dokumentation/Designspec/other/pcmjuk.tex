@@ -1,0 +1,23 @@
+\section{PC-mjukvara}
+
+PC-mjukvaran har ett grafiskt gränssnitt som tillåter kommunikation mellan en
+användare och roboten. Med PC-mjukvaran kan en användare: se kartan som roboten
+ritar upp, styra roboten manuellt och läsa debug-information. PC-mjukvaran
+kommunicerar med roboten via blåtand.
+
+\subsection{Implementation}
+
+PC-mjukvaran är skriven i programspråket Java. PC-mjukvaran använder Javas
+standardbibliotek (J2SE) samt ett tredjepartsbibliotek med gränssnittet JSR 82
+för blåtandskommunikation.
+
+\subsection{Användande}
+
+PC-mjukvaran består av ett program som visar ett fönster delat i två delar: en
+karta och ruta för debug-information. Kartan uppdateras automatiskt när roboten
+är i tävlingsläget. Programmet styrs med tangentbordet; \textit{F5} hämtar ny
+debug-information som visas i debug-informationsfältet och om roboten är i
+försatt i manuellt styrläge kommer \emph{piltangenterna} att styra roboten.
+
+Programmet är lätt att använda; tangentbordsgenvägar och beskrivningar över vad
+som visas på skärmen, syns i programfönstret.
