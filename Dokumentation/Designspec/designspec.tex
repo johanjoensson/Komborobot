@@ -2,6 +2,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
+\usepackage{float}
 \input{LIPS.tex}
 
 
@@ -52,7 +53,7 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{0.1}{2012-02-10}{Första utkast.}{gussv666}{johjo939}
+  \LIPSversionsinfo{0.1}{2012-02-10}{Första utkast.}{gussv666}{}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -66,6 +67,9 @@
 \input{test.tex}
 \input{dok.tex}
 
+\newpage
+\appendix
+\section{Blockschema styrenhet} \label{app:styrenhet}
 \end{document} 
 
 %%% Local Variables: 
