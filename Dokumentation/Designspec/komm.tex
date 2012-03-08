@@ -17,7 +17,15 @@ Nedan följer klargöranden om hur projektgruppen ämnar använda de olika porta
 CLK porten är en port som förmedlar en klocka med en viss frekvens från Mastern till de två slavarna. Denna signal bestämmer hur snabbt överföringen ska ske. Denna klocka behöver inte nödvändigtvis vara samma som masterenhetens arbetsklocka. 
 
 \subsubsection{MOSI}
-MOSI porten är den port som används när kommunikationsenheten ska förmedla information till styrenheten och sensorenheten. Den kommer att användas som input för slavarna och output för mastern. Den information som kommer att skickas beror på i vilket läge roboten arbetar i. I manuellt läge kommer det genom MOSI portarna förmedlas styrinformation till styrenheten som kommunikationsenheten i sin tur får från en PC via bluetooth. I autonomt läge kommer här t.ex. att skickas data som sensorenheten använder vid regleringsalgoritmen. Annan information som kommer att skickas via MOSI är specialbeslut, till exempel om roboten måste svänga 90° i en labyrint.
+MOSI porten är den port som används när kommunikationsenheten ska förmedla
+information till styrenheten och sensorenheten. Den kommer att användas som
+input för slavarna och output för mastern. Den information som kommer att
+skickas beror på i vilket läge roboten arbetar i. I manuellt läge kommer det
+genom MOSI portarna förmedlas styrinformation till styrenheten som
+kommunikationsenheten i sin tur får från en PC via bluetooth. I autonomt läge
+kommer här t.ex. att skickas data som sensorenheten använder vid
+regleringsalgoritmen. Annan information som kommer att skickas via MOSI är
+specialbeslut, till exempel om roboten måste svänga 90\degree i en labyrint.
 
 \subsubsection{MISO}
 MISO porten kommer att konfigureras att fungera som den port som används då kommunikationsenheten hämtar information från styr- och sensorenheten. Den kommer alltså att vara en input för mastern och output för båda slavarna. Exempel på information som ska skickas med MISO är data som skickas från sensorenheten för vidare transport till styrenheten. Ett annat exempel är i autonomt läge när roboten befinner sig i en labyrint. Då kommer här att skickas information om vilka beslut sensorenheten. Dessa beslut skickas sedan vidare till en PC via bluetooth.
