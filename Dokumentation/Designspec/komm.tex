@@ -3,15 +3,19 @@
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. 
 Kommunikationen mellan PC och roboten kommer att ske via bluetooth. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss.
 
-\includegraphics[angle=270,scale=0.5]{SPI-buss.pdf}
+\includegraphics[angle=270,scale=0.5]{SPI-buss.png}
 
 
 \subsection{SPI}
-SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I Roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
-Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI enheten kan arbeta i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan en 2 bits skickas via SPI bussen på 1 klockcykel.
+SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
+Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI bussen arbetar alltid i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan en 2 bits skickas via SPI bussen på 1 klockcykel. 
 
-Robotens kommunikations-system kommer att fungera så att styr- och sensorenheten inte har någon möjlighet att ta initiativ till kommunikation med kommunikationsenheten. De två slavenheterna kommer alltså inte att veta när kommunikationseheten vill påbörja kommunikation. Därför kommer alla sorters kommunikation att styras med hjälp av avbrott, som är ett utmärkt sätt att hantera plötsliga externa kommandon. 
-Nedan följer klargöranden om hur projektgruppen ämnar använda de olika portarna i SPI-bussen. Det faktum att slavenheterna inte ar någon möjlighet att initiera kommunikation har också som effekt att kommunikationsenheten kommer att behöva kontakta sensorenheten med jämna mellanrum under autonom drift. 
+Robotens kommunikationssystem kommer att fungera så att styr- och sensorenheten har möjlighet att ta initiativ till kommunikation med kommunikationsenheten. Detta är inte standard på SPI-bussen utan löses med två stycken extrasignaler vi kallar för REQ-signaler. Alla sorters kommunikation kommer att styras med hjälp av avbrott, som är ett utmärkt sätt att hantera plötsliga externa kommandon. REQ signalen kommer att generera ett avbrott hos mastern som i sin tur kommer att generera ett avbrott på enheten som skickat REQ signalen. Då mastern initierar kontakten kommer ett avbrott att genereras på den valda enheten. Alla SPI-överföringar avslutas med att en speciell avbrottsflagga kallad (SPIF) sätts.
+
+För att klargöra vart informationen som skickas till Mastern ska sändas kommer det att användas en så kallad header. Detta är en byte med information som specificerar vilken typ av information som skickas och vad som är målet. Som ett exempel kan vi föreställa oss att roboten är inne i en labyrint. 
+
+Nedan följer klargöranden om hur projektgruppen ämnar använda de olika portarna i SPI-bussen. 
+
 
 \subsubsection{CLK}
 
