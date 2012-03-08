@@ -2,15 +2,20 @@
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. 
 Kommunikationen mellan PC och roboten kommer att ske via bluetooth. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss.
 
-\includegraphics[angle=0,scale=0.5]{bilder/SPI-buss.pdf}
+\includegraphics[angle=0,scale=0.5]{bilder/SPI-buss.png}
+
 
 
 \subsection{SPI}
-SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I Roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
-Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI enheten kan arbeta i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan en 2 bits skickas via SPI bussen på 1 klockcykel.
+SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
+Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI bussen arbetar alltid i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan en 2 bits skickas via SPI bussen på 1 klockcykel. 
 
-Robotens kommunikations-system kommer att fungera så att styr- och sensorenheten inte har någon möjlighet att ta initiativ till kommunikation med kommunikationsenheten. De två slavenheterna kommer alltså inte att veta när kommunikationseheten vill påbörja kommunikation. Därför kommer alla sorters kommunikation att styras med hjälp av avbrott, som är ett utmärkt sätt att hantera plötsliga externa kommandon. 
-Nedan följer klargöranden om hur projektgruppen ämnar använda de olika portarna i SPI-bussen. Det faktum att slavenheterna inte ar någon möjlighet att initiera kommunikation har också som effekt att kommunikationsenheten kommer att behöva kontakta sensorenheten med jämna mellanrum under autonom drift. 
+Robotens kommunikationssystem kommer att fungera så att styr- och sensorenheten har möjlighet att ta initiativ till kommunikation med kommunikationsenheten. Detta är inte standard på SPI-bussen utan löses med två stycken extrasignaler vi kallar för REQ-signaler. Alla sorters kommunikation kommer att styras med hjälp av avbrott, som är ett utmärkt sätt att hantera plötsliga externa kommandon. REQ signalen kommer att generera ett avbrott hos mastern som i sin tur kommer att generera ett avbrott på enheten som skickat REQ signalen. Då mastern initierar kontakten kommer ett avbrott att genereras på den valda enheten. Alla SPI-överföringar avslutas med att en speciell avbrottsflagga kallad (SPIF) sätts.
+
+För att klargöra vart informationen som skickas till Mastern ska sändas kommer det att användas en så kallad header. Detta är en byte med information som specificerar vilken typ av information som skickas och vad som är målet. Som ett exempel kan vi föreställa oss att roboten är inne i en labyrint. 
+
+Nedan följer klargöranden om hur projektgruppen ämnar använda de olika portarna i SPI-bussen. 
+
 
 \subsubsection{CLK}
 
@@ -35,4 +40,25 @@ Då all kommunikation med SPI är tvåsidig kommer även MOSI porten att använd
 SS portarna skickar eller tar emot en variant på en chip-select . Den SS signal som är låg väljer vilken av slavarna som mastern ska kommunicera med. Endast en av de två SS portarna kan vara låg samtidigt. Dessa portar kommer att vara output på kommunikationsenheten och input på de styr- och sensorenheten.
 När SS signalen till en av slavarna är låg betyder det alltså att slavens SPI är aktiverad. Ett avbrott kommer att göras på den valda slaven och när olika konfigurationer utförts kommer information att börja skickas från kommunikationsenheten till den enhet som har en låg SS signal. Kommunikation kommer som sagt samtidigt att ske åt andra riktningen också. Under tiden kommer den enhet som får en hög SS signal att vara omöjlig att kommunicera med.
 När sändningen är klar sätts SPI avbrottsflaggan (SPIF) i både mastern(kommunikationsenheten) och slaven(någon av styr- eller sensorenheten). Detta avbrott berättar att överföringen är färdig och SS signalen återigen kan sättas hög av kommunikationsenheten.
+
+\subsubsection{REQ}
+REQ portarna används av styr- och sensorenheten för att uppmärksamma kommunikationsenheten om att dem har ny information att förmedla. När kommunikationsenheten tar emot en signal på någon av request portarna som kommer det att generera ett avbrott. Underavbrottet kommer SS signalen till enheten som begärt kommunikation att sättas låg och kommunikationen påbörjas.  REQ portarna kommer att ha en avbrottsnivå som understiger det avbrott som är aktivt vid pågående kommunikation.
+
+\subsubsection{Exempel}
+
+När roboten befinner sig i labyrint läge har sensorenheten gjort en ny avläsning som resulterar i att sensorenheten tar beslutet om att en 90\degree kurva är nödvändig. Den vill distribuera denna information vidare. Sensorenheten sätter då en hög utsignal på sin REQ port vilket resulterar i ett avbrott på kommunikationsenheten. Om kommunikationsenheten för närvarande överför reglerdata till styrenheten kommer avbrottet att få vänta tills denna överföring är klar.
+
+I avbrottet på kommunikationsenheten så sätts SS signalen till sensorenheten låg, och därefter förmedlar kommunikationsenheten en klockpuls till sensorenheten. När två bytes överförts, en headerbyte och en databyte, så avslutas överföringen och SS signalen till sensorenheten sätts åter hög. Efter att ha tolkat headerbyten så sätter kommunikationsenheten SS signalen till styrenheten till låg, samt genererar en klockpuls till styrenheten. Detta genererar ett avbrott i styrenheten som tar emot de två byten som härstammar från sensorenheten. När överföringen är färdig sätts SS signalen till styrenheten återigen hög vilket avslutar kommunikationen. 
+
+Då headerbyten innehöll information om att detta var ett styrbeslut så ska kommunikationsenheten också skicka detta till PCn. Detta görs via en UART port på kommunikationsenheten.
+
+De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema.
+
+\includegraphics[angle=0,scale=0.5]{bilder/Schema_exempel.png}
+
+\subsubsection{Övrigt om kommunikationsenheten}
+
+Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten som det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller manuellt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas i manuellt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via bluetooth. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
+
+Vid omställning till manuellt läge kommer det att överföras ett speciellt kommando till sensorenheten som beordrar denna att avläsa sensorerna och begära dataöverföringar. Styrenheten kommer inte att behöva någon liknande kod då denna inte kommer att utföra någon reglering om den inte mottar någon reglerdata. Headerbyten kommer att användas för att instruera styrenheten om att mottagen information är specialkommandon som efterfrågar någon av typ av speciellt beteende.
 
