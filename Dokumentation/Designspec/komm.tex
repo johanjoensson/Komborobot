@@ -1,10 +1,23 @@
 \section{Kommunikationsenhet}
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. 
-Kommunikationen mellan PC och roboten kommer att ske via bluetooth. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss.
+Kommunikationen mellan PC och roboten kommer att ske via blåtand. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss.
 
 \includegraphics[angle=0,scale=0.5]{bilder/SPI-buss.png}
 
+\subsection{Blåtand}
+Kommunikationsenheten kommer ha en blåtandsmodul av typ Firefly, ansluten via
+UART, för att kommunicera med mjukvaran på PCn.
 
+En blinkande röd LED på blåtandsenheten visar att enheten är redo för en
+blåtandsanslutning medan en stadigt grön LED indikerar att blåtandsenheten har
+en aktiv anslutning.
+
+\subsubsection{Överföringar}
+Blåtandsenheten kommer skicka och ta emot information från PCn enligt formatet
+8N1, det vill säga vi skickar data i enheter om 8 bitar (en byte), använder oss
+inte av någon paritetsbit, har en bit som slutbit och en bit som startbit
+(som inte anges). Totalt kommer alltså 10 bitar skickas för att överföra 8
+bitar.
 
 \subsection{SPI}
 SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
@@ -27,13 +40,13 @@ information till styrenheten och sensorenheten. Den kommer att användas som
 input för slavarna och output för mastern. Den information som kommer att
 skickas beror på i vilket läge roboten arbetar i. I manuellt läge kommer det
 genom MOSI portarna förmedlas styrinformation till styrenheten som
-kommunikationsenheten i sin tur får från en PC via bluetooth. I autonomt läge
+kommunikationsenheten i sin tur får från en PC via blåtand. I autonomt läge
 kommer här t.ex. att skickas data som sensorenheten använder vid
 regleringsalgoritmen. Annan information som kommer att skickas via MOSI är
 specialbeslut, till exempel om roboten måste svänga 90\degree i en labyrint.
 
 \subsubsection{MISO}
-MISO porten kommer att konfigureras att fungera som den port som används då kommunikationsenheten hämtar information från styr- och sensorenheten. Den kommer alltså att vara en input för mastern och output för båda slavarna. Exempel på information som ska skickas med MISO är data som skickas från sensorenheten för vidare transport till styrenheten. Ett annat exempel är i autonomt läge när roboten befinner sig i en labyrint. Då kommer här att skickas information om vilka beslut sensorenheten. Dessa beslut skickas sedan vidare till en PC via bluetooth.
+MISO porten kommer att konfigureras att fungera som den port som används då kommunikationsenheten hämtar information från styr- och sensorenheten. Den kommer alltså att vara en input för mastern och output för båda slavarna. Exempel på information som ska skickas med MISO är data som skickas från sensorenheten för vidare transport till styrenheten. Ett annat exempel är i autonomt läge när roboten befinner sig i en labyrint. Då kommer här att skickas information om vilka beslut sensorenheten. Dessa beslut skickas sedan vidare till en PC via blåtand.
 Då all kommunikation med SPI är tvåsidig kommer även MOSI porten att användas varje gång MISO porten används, och vice versa. Finns det inget intresse av dubbelsidig kommunikation finns möjligheterna att ignorera den skickade informationen.
 
 \subsubsection{SS}
@@ -58,7 +71,7 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema.
 
 \subsubsection{Övrigt om kommunikationsenheten}
 
-Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten som det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller manuellt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas i manuellt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via bluetooth. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
+Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten som det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller manuellt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas i manuellt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via blåtand. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
 
 Vid omställning till manuellt läge kommer det att överföras ett speciellt kommando till sensorenheten som beordrar denna att avläsa sensorerna och begära dataöverföringar. Styrenheten kommer inte att behöva någon liknande kod då denna inte kommer att utföra någon reglering om den inte mottar någon reglerdata. Headerbyten kommer att användas för att instruera styrenheten om att mottagen information är specialkommandon som efterfrågar någon av typ av speciellt beteende.
 
