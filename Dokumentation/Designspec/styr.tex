@@ -16,15 +16,29 @@ Uppdelningen kan ses i tabell \ref{tab:styrbitar}.
 
 I avbrottsrutinen så tolkas kommandot och PWM-utgångarna och I/O-utgångarna som styr riktningarna på motorerna ställs.
 Så om inget nytt avbrott kommer så fortsätter det senaste kommandot.
-Kodningen av kommandon ses i tabell \ref{tab:kodning}.
+Kodningen av kommandon ses i tabell \ref{tab:styrkommando}.
 
 
 \subsubsection{Autonomt läge}
 I autonomt läge så ska styrenheten ta emot skillnaden mellan aktuella och önskade sensorvärden och styra motorerna utifrån detta.
-För att undvika att roboten slingrar sig fram när den följer linjer eller väggar så kommer en PD-regulator att användas, se \ref{reglering}.
-När data har tagits emot så genereras ett avbrott. I avbrottsrutinen kommer själva regleringen att ske. Datat som tas emot är en byte långt 
-och tolkas som ett signat heltal. Utöver den vanliga regleringen ska fyra specialkommandon kunna hanteras, sväng vänster 90\degree, sväng höger 90\degree
-, kör rakt fram och återuppta vanlig reglering.
+För att undvika att roboten slingrar sig fram när den följer linjer eller 
+väggar så kommer en PD-regulator att användas, se \ref{reglering}.
+När data har tagits emot så genereras ett avbrott. 
+I avbrottsrutinen kommer själva regleringen att ske. Datat som tas emot är en byte långt 
+och tolkas som ett signat heltal. 
+
+Utöver den vanliga regleringen ska fyra specialkommandon kunna hanteras:
+\begin{itemize}
+  \item{Sväng vänster 90\degree}
+  \item{Sväng höger 90\degree}
+  \item{Kör rakt fram}
+  \item{Återuppta vanlig reglering}
+\end{itemize}
+
+Sväng vänster/höger 90\degree  kommer att utföras så att roboten kör fram en viss sträcka (ca 40 cm) för 
+att sedan svänga 90\degree  och fortsätta rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
+Specialkommandot ``Kör rakt fram'' kör rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
+Kodningen av specialkommandon kan ses i tabell \ref{tab:special}.
 
 \subsection{Reglering}
 \label{reglering}

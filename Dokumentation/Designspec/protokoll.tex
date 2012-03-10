@@ -8,7 +8,11 @@ I headerbyten anges till vilken enhet som den efterföljande informationen ska, 
 De tre mest signifikanta bitarna i headern anger till vilken enhet informationen ska och de 5 minst signifikanta bitarna anger 
 hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:header}.
 Kodningen av de tre mest signifikanta bitarna kan ses i tabell \ref{tab:headerkod}.
-\begin{table}[hb]
+
+All kommunikation kommer att gå via kommunkationsenheten, så om sensorenhete vill 
+skicka data till styrenheten skickar den en headerbyte med styrenhetens address och en databyte till kommunikationsenheten som 
+tolkar headern och skickar headern och databyten till styrenheten.
+\begin{table}[h]
   \centering
   \begin{tabular}{| c | c |}
     \hline
@@ -19,7 +23,7 @@ Kodningen av de tre mest signifikanta bitarna kan ses i tabell \ref{tab:headerko
   \label{tab:header}
 \end{table}
 
-\begin{table}[hb]
+\begin{table}[h]
   \centering
   \begin{tabular}{l l}
     \textbf{3 MSB} & \textbf{Målenhet} \\
@@ -35,12 +39,14 @@ text här
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunkationsenhet}
 text här
 \subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
+Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på
+om roboten är i fjärrstyrt eller autonomt läge.
 \subsubsection{Fjärrstyrt läge}
 I fjärrstyrt läge så kommer styrenheten att ta emot headers och styrkommandon. I detta läge så 
 innehåller inte headern någon intressant information och kommer att ignoreras. Styrkommandots bituppdelning kan ses i 
 tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
  
-\begin{table}[hb] 
+\begin{table}[h] 
   \centering
   \begin{tabular}{| c | c |}
     \hline
@@ -50,7 +56,7 @@ tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
   \label{tab:styrbitar}
 \end{table}
 
-\begin{table}[hb] 
+\begin{table}[h] 
   \centering
   \begin{tabular}{l l}
     \textbf{4 MSB} & \textbf{Kommando} \\
@@ -67,3 +73,32 @@ tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
 \end{table}
 
 \subsubsection{Autonomt läge}
+I autonomt läge så avgör en bit i headern om efterföljande byte är sensordata som ska användas i regleringen eller
+om det är ett specialkommando som ska utföras utan reglering.
+Bituppdelning av kommandon ses i tabell \ref{tab:specialbitar} och kodningen i tabell \ref{tab:special}.
+
+Eftersom en SPI-buss används så kommer även styrenheten att skicka data till kommunikationsenheten samtidigt som den tar emot data.
+Detta kommer att användas till att skicka information om körningen, t ex ``Vanlig reglering'' eller ``Svänger vänster''.
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Specialkommando [3 bitar] & Argument [5 bitar] \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av specialkommandon}
+  \label{tab:specialbitar}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{3 MSB} & \textbf{Specialkommando} \\
+    000 & Återuppta vanlig reglering\\
+    001 & Kör rakt fram \\
+    010 & Sväng vänster 90\degree \\
+    011 & Sväng höger 90\degree \\
+  \end{tabular}
+  \caption{Kodning av specialkommandon}
+  \label{tab:special}
+\end{table}
