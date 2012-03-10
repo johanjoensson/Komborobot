@@ -1,2 +1,37 @@
 \section{Protokoll}
+Här besrivs hur kommunikationen mellan de olika delsystemen kommer att implementeras.
+
+\subsection{Generell överföring mellan enheter}
+Kommunikationen mellan de olika enheterna kommer att gå via en SPI-buss (se \ref{sec:SPI}).
+All kommunikation består av en headerbyte följt av en eller flera databytes.
+I headerbyten anges till vilken enhet som den efterföljande informationen ska, samt hur den ska tolkas av den mottagande enheten.
+De tre mest signifikanta bitarna i headern anger till vilken enhet informationen ska och de 5 minst signifikanta bitarna anger 
+hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:header}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Målenhet [3 bitar] & Flaggor [5 bitar]\\
+    \hline
+  \end{tabular}
+  \caption{Bituppdelning av header}
+  \label{tab:header}
+\end{table}
+
+\subsection{PC-mjukavara $\longleftrightarrow$ Kommunikationsenhet}
 text här
+\subsection{Sensorenhet $\longleftrightarrow$ Kommunkationsenhet}
+text här
+\subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
+text här
+
+\begin{table}[h] 
+        \begin{center}
+                \begin{tabular}{| c | c |}
+                        \hline
+                        Kommando [4 bitar] & Hastighet [4 bitar] \\ \hline
+                \end{tabular}
+        \end{center}
+        \caption{Bituppdelning av styrkommandon}
+        \label{tab:styrbitar}
+\end{table}
