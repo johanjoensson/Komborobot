@@ -6,8 +6,9 @@ Kommunikationen mellan de olika enheterna kommer att gå via en SPI-buss (se \re
 All kommunikation består av en headerbyte följt av en eller flera databytes.
 I headerbyten anges till vilken enhet som den efterföljande informationen ska, samt hur den ska tolkas av den mottagande enheten.
 De tre mest signifikanta bitarna i headern anger till vilken enhet informationen ska och de 5 minst signifikanta bitarna anger 
-hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:header}
-\begin{table}[h]
+hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:header}.
+Kodningen av de tre mest signifikanta bitarna kan ses i tabell \ref{tab:headerkod}.
+\begin{table}[hb]
   \centering
   \begin{tabular}{| c | c |}
     \hline
@@ -18,20 +19,51 @@ hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:head
   \label{tab:header}
 \end{table}
 
+\begin{table}[hb]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{3 MSB} & \textbf{Målenhet} \\
+    000 & Kommunikationsenhet \\
+    001 & Sensorenhet \\
+    010 & Styrenhet \\
+  \end{tabular}
+  \caption{Kodning av header}
+  \label{tab:headerkod}
+\end{table}
 \subsection{PC-mjukavara $\longleftrightarrow$ Kommunikationsenhet}
 text här
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunkationsenhet}
 text här
 \subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
-text här
-
-\begin{table}[h] 
-        \begin{center}
-                \begin{tabular}{| c | c |}
-                        \hline
-                        Kommando [4 bitar] & Hastighet [4 bitar] \\ \hline
-                \end{tabular}
-        \end{center}
-        \caption{Bituppdelning av styrkommandon}
-        \label{tab:styrbitar}
+\subsubsection{Fjärrstyrt läge}
+I fjärrstyrt läge så kommer styrenheten att ta emot headers och styrkommandon. I detta läge så 
+innehåller inte headern någon intressant information och kommer att ignoreras. Styrkommandots bituppdelning kan ses i 
+tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
+ 
+\begin{table}[hb] 
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Kommando [4 bitar] & Hastighet [4 bitar] \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av styrkommandon}
+  \label{tab:styrbitar}
 \end{table}
+
+\begin{table}[hb] 
+  \centering
+  \begin{tabular}{l l}
+    \textbf{4 MSB} & \textbf{Kommando} \\
+    0000 & Stopp \\
+    0001 & Framåt \\
+    0010 & Fram vänster \\
+    0011 & Fram höger \\
+    0100 & Rotera vänster \\
+    0101 & Rotera höger \\
+    0110 & Back \\
+  \end{tabular}
+  \caption{Kommandokodning}
+  \label{tab:styrkommando}
+\end{table}
+
+\subsubsection{Autonomt läge}
