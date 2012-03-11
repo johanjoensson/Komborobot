@@ -39,8 +39,13 @@ tolkar headern och skickar headern och databyten till styrenheten.
 
 
 \subsection{PC-mjukvara $\longleftrightarrow$ Kommunikationsenhet}
-Kommunikationsenheten tar emot 2 byte från någon annan enhet i systemet och
-läser av målenheten ur headern och skickar vidare de 2 byten till målenheten.
+PC-mjukvaran kommer generera en header-byte samt en data-byte som sedan skickas
+till kommunikationsenheten via blåtand. Kommuniktionsenheten kommer därefter
+behandla de två byten precis som alla andra.
+
+Då kommunikationsenheten sänder data till PC-mjukvran kommer mjukvaran att
+översätta header-bytem samt data-byten så att man enkelt kan åskådliggöra
+instruktonen som sändes.
 
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
 Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PC och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
