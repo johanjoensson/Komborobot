@@ -39,7 +39,8 @@ tolkar headern och skickar headern och databyten till styrenheten.
 
 
 \subsection{PC-mjukvara $\longleftrightarrow$ Kommunikationsenhet}
-text här
+Kommunikationsenheten tar emot 2 byte från någon annan enhet i systemet och
+läser av målenheten ur headern och skickar vidare de 2 byten till målenheten.
 
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
 Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PC och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
