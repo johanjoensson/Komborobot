@@ -7,12 +7,10 @@ Robeten byggs på en trehjulig plattform(CarpetRover). På plattformen kommer tr
 \end{itemize}
 Varje enhet kommer styras av en egen AVR-processor.
 
-(BILD)
-
-
 \subsection{Kommunikation}
 All intern kommunikation kommer att ske via en SPI-buss. Kommunikationsenheten kommer att fungera som master på bussen, och all kommunikation kommer att gå via den. När en enhet vill kommunicera med en annan kommer att avisera detta genom att generera ett avbrott. 
 Roboten ska även kunna kommunicera med en PC via bluetooth.
 
-%%\subsection{Uppgraderbarhet}
-
+\subsection{Uppgraderbarhet}
+Ett tydligt kommunikationsprotokoll mellan enheterna kommer att användas så att det är lätt att modifiera enheter. PC-mjukavaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
+Mjukvaran kommer att använda ett tydligt protokoll vilket gör det möjligt att utveckla egen mjukvara eller uppgradera den befintliga mjukvaran.
