@@ -36,10 +36,13 @@ tolkar headern och skickar headern och databyten till styrenheten.
   \caption{Kodning av header}
   \label{tab:headerkod}
 \end{table}
+
 \subsection{PC-mjukavara $\longleftrightarrow$ Kommunikationsenhet}
 text här
+
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunkationsenhet}
-text här
+Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PC och styrenheten. Detta anges med en header enligt tabell xx. Efterföljande data är antingen ett styrkommando, se \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
+
 \subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
 Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på
 om roboten är i fjärrstyrt eller autonomt läge.
