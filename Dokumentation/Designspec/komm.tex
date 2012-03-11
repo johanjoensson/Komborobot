@@ -19,6 +19,11 @@ inte av någon paritetsbit, har en bit som slutbit och en bit som startbit
 (som inte anges). Totalt kommer alltså 10 bitar skickas för att överföra 8
 bitar.
 
+Kommunikationsenheten agerar master för SPI-bussen och tar därför emot all data
+som skickas mellan systemets olika moduler. För att skicka rätt data till rätt
+mottagare så utnyttjar kommunikationsenheten addressfältet i meddelandets
+header.
+
 \subsection{SPI}
 SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I roboten kommer kommunikationsenheten att vara Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
 Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI bussen arbetar alltid i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan en 2 bits skickas via SPI bussen på 1 klockcykel. 
