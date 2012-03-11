@@ -1,2 +1,23 @@
 \section{Montering}
-text här
+En hjulbas kommer att finnas tillhanda och det är på den som samtliga moduler kommer att monteras. Hjulbasen som vi kommer att använda heter Carpet Rover och är trehjulig med två drivande hjul och ett stödhjul.
+
+\subsection{Moduler}
+För att underlätta byta av en hel modul och underlätta felsökning så kommer all hårdvara att monteras modulvis. Modulerna kommer i sin tur att monteras i tre nivåer med undantag för sensorerna. 
+
+\subsubsection{Styrenheten}
+Underst kommer styrenheten vara monterad som består av en AVR ATmega16. Denna kommer att vara kopplad för att ta emot signaler från kommunikationsenheten och sända information till motorerna.
+
+\subsubsection{Sensorenheten}
+På mittenplanet ska sensorenheten monteras. Den kommer att bestå av en AVR ATmega16, tre optiska avståndsmätare av typen GP2Y0A02YK (20-150 cm), en alfanumerisk LED-display av typen HDSP-2112, 11st lysdioder med 11st ljuskänsliga transistorer, en mux och en demux. AVR ATmega16 inehåller åtta portar för A/D omvandling (ADC). De optiska avståndsmätarna ska vara kopplade till ADCn. LEDn ska sedan vara kopplad till AVRn för att visa avståndsinformation. Muxen ska vara kopplad för att styra lysdioderna och ska styras av AVR:en.  De elva transistorerna ska vara kopplade till demuxen som  i sin tur är kopplad vidare till ADCn.
+
+\subsubsection{Kommunikationsenheten}
+Till kommunikationsenheten kommer en AVR ATmega16 och en FireFly enhet att användas. dessa kommer att vara monterade på översta planet på roboten. FireFlyn ska vara kopplad till AVRn via UART AVRn ska i sin tur var kopplad till de två andra enheterna.
+
+\subsection{Sensorer}
+Sensorernas montering ska möjliggöra för roboten att hinna ta ett beslut. Därför ska sensorerna vara monterade så långt fram som möjligt.
+
+\subsubsection{Linjesensor}
+Linjesensorerna består av en 11st lysdioder med 11st ljuskänsliga transistorer. Dessa ska var monterade parvis i en rak linje framför de två drivande hjulen på roboten. Linjesensorn ska monteras nära marken så att den ger en god signal.
+
+\subsubsection{Avståndssensor}
+De tre avståndssensorerna ska vara riktade åt var sitt håll en rakt fram, en åt höger och en åt vänster. Alla tre sensorer ska vara monterade i främre delan av roboten. Avståndsmätarna ska sedan vara kopplade till ADC på AVRn.
