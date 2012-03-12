@@ -3,7 +3,7 @@ Styrenhetens uppgift är att styra motorerna utifrån data som skickas från kom
 Styrenheten ska kunna vara i två lägen, autonomt läge då den reglerar motorerna utifrån sensorvärden eller 
 fjärrstyrt läge då den tar emot och behandlar styrkommandon.
 \subsection{Hårdvara}
-Styrmoodulen består av en AVR ATmega16 som ska placeras på robotplattformen.
+Styrmodulen består av en AVR ATmega16 som ska placeras på robotplattformen.
 Mikroprocessorns PWM-utgångar ska kopplas till PWM-ingångarna på robotplattformen för att styra motorerna.
 För att styra riktning på motorerna kopplas två I/O-utgångar från mikroprocessorn till plattformens riktningsingångar.
 \subsection{Mjukvara}
@@ -14,8 +14,7 @@ Varje kommando är en byte långt där de fyra mest signifikanta bitarna bestäm
 och de 4 minst signifikanta bitarna bestämmer hur kommandot ska utföras (t ex hur snabbt roboten ska svänga).
 Uppdelningen kan ses i tabell \ref{tab:styrbitar}.
 
-I avbrottsrutinen så tolkas kommandot och PWM-utgångarna och I/O-utgångarna som styr riktningarna på motorerna ställs.
-Så om inget nytt avbrott kommer så fortsätter det senaste kommandot.
+I avbrottsrutinen så tolkas kommandot och PWM-utgångarna. Därefter ställs I/O-utgångarna som styr riktningarna på motorerna. Om inget nytt avbrott kommer så fortsätter det senaste kommandot.
 Kodningen av kommandon ses i tabell \ref{tab:styrkommando}.
 
 
@@ -24,7 +23,7 @@ I autonomt läge så ska styrenheten ta emot skillnaden mellan aktuella och öns
 För att undvika att roboten slingrar sig fram när den följer linjer eller 
 väggar så kommer en PD-regulator att användas, se \ref{reglering}.
 När data har tagits emot så genereras ett avbrott. 
-I avbrottsrutinen kommer själva regleringen att ske. Datat som tas emot är en byte långt 
+I avbrottsrutinen kommer själva regleringen att ske. Den data som tas emot är en byte långt 
 och tolkas som ett signat heltal. 
 
 Utöver den vanliga regleringen ska fyra specialkommandon kunna hanteras:
@@ -35,9 +34,8 @@ Utöver den vanliga regleringen ska fyra specialkommandon kunna hanteras:
   \item{Återuppta vanlig reglering}
 \end{itemize}
 
-Sväng vänster/höger 90\degree  kommer att utföras så att roboten kör fram en viss sträcka (ca 40 cm) för 
-att sedan svänga 90\degree  och fortsätta rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
-Specialkommandot ``Kör rakt fram'' kör rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
+Sväng vänster/höger 90\degree  kommer att utföras så att roboten kör fram en viss sträcka för att placera sig en bit in i kurvan (ca 40 cm). Därefter ska roboten svänga 90\degree  och fortsätta rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
+Specialkommandot ``Kör rakt fram'' resulterar i att roboten kör rakt fram tills specialkommandot ``Återuppta vanlig reglering'' mottas.
 Kodningen av specialkommandon kan ses i tabell \ref{tab:special}.
 
 \subsection{Reglering}
