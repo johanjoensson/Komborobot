@@ -1,9 +1,9 @@
 \section{Kommunikationsenhet}
-Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega 16 och en Fireflymodul. 
+Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en Fireflymodul. 
 Kommunikationen mellan PCn och roboten kommer att ske via blåtand. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}.
 
 \begin{figure}[H]
-  
+  \centering
  \includegraphics[angle=0,scale=0.5]{bilder/SPI-buss.png}
   \caption{SPI-bussens olika anslutningar}
   \label{fig:spibuss}
@@ -51,7 +51,7 @@ CLK porten är en port som förmedlar en klocka med en viss frekvens från maste
 MOSI porten är den port som används när kommunikationsenheten ska förmedla
 information till styrenheten och sensorenheten. Den kommer alltså att användas som
 input för slavarna och output för mastern. Den information som kommer att
-skickas beror på i vilket läge roboten arbetar i. I manuellt läge kommer det
+skickas beror på i vilket läge roboten arbetar i. I fjärrstyrt läge kommer det
 genom MOSI portarna förmedlas styrinformation till styrenheten som
 kommunikationsenheten i sin tur får från en PC via blåtand. I autonomt läge
 kommer här t.ex. att skickas data som sensorenheten använder vid
@@ -60,12 +60,12 @@ specialbeslut, till exempel om roboten måste svänga 90\degree i en labyrint.
 
 \subsubsection{MISO}
 MISO porten kommer användas då kommunikationsenheten hämtar information från styr- och sensorenheten. Den kommer alltså att vara en input för mastern och output för båda slavarna. Exempel på information som ska skickas med MISO är data som skickas från sensorenheten för vidare transport till styrenheten.
-Då all kommunikation med SPI är tvåsidig kommer även MOSI porten att användas varje gång MISO porten används och viceversa. Finns det inget intresse av dubbelsidig kommunikation finns möjligheten att ignorera den skickade informationen.
+Då all kommunikation med SPI är tvåsidig kommer även MOSI porten att användas varje gång MISO porten används och viceversa. Finns det inget intresse av dubbelsidig kommunikation finns möjligheten att ignorera skickad data.
 
 \subsubsection{SS}
 SS portarna skickar eller tar emot en variant på en chip-select signal. Den SS signal som är låg väljer vilken av slavarna som mastern ska kommunicera med. Endast en av de två SS signalerna kan vara låg samtidigt. Dessa portar kommer att vara output på kommunikationsenheten och input på styr- och sensorenheten.
 När SS signalen till en av slavarna är låg betyder det alltså att slavens SPI är aktiverad. Ett avbrott kommer att göras på den valda slaven och när olika konfigurationer utförts, och en klockfrekvens levererats från masterenheten, kommer information att börja skickas till den enhet som har en låg SS signal. Den enhet som får en hög SS signal kommer att ha sin SPI inaktiv och kommer inte att påverkas av denna överföring.
-När sändningen är klar sätts SPI avbrottsflaggan (SPIF) i både mastern(kommunikationsenheten) och slaven(någon av styr- eller sensorenheten). Denna flagga bekräftar att överföringen är färdig och SS signalen återigen kan sättas hög av kommunikationsenheten.
+När sändningen är klar sätts SPI avbrottsflaggan (SPIF) i både mastern(kommunikationsenheten) och slaven(någon av styr- eller sensorenheten). Denna flagga bekräftar att överföringen är färdig och SS signalen kan åter sättas hög av kommunikationsenheten.
 
 \subsubsection{REQ}
 REQ portarna används av styr- och sensorenheten för att uppmärksamma kommunikationsenheten om att dem har ny information att förmedla. När kommunikationsenheten tar emot en signal på någon av REQ portarna kommer det att generera ett avbrott. Under avbrottet kommer SS signalen till enheten som begärt kommunikation att sättas låg och kommunikationen påbörjas.  REQ portarna kommer att ha en avbrottsnivå som understiger det avbrott som är aktivt vid pågående kommunikation.
@@ -85,7 +85,7 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema, se 
 
 
 \begin{figure}[H]
- 
+ \centering
 \includegraphics[angle=0,scale=0.7]{bilder/Schema_exempel.png}
   \caption{Schema över de olika enheternas metodik vid exempelöverföringen}
   \label{fig:schema}
@@ -93,6 +93,6 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema, se 
 
 \subsubsection{Övrigt om kommunikationsenheten}
 
-Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller manuellt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas i manuellt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via bluetooth. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
+Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller fjärrstyrt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas för beslutsfattning i fjärrstyrt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via bluetooth. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
 Vid omställning mellan de olika driftlägena, autonomt och fjärrstyrt, kommer det att överföras ett speciellt kommando till enheterna som beordrar dessa att förändra sina funktioner.  
 
