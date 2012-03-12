@@ -1,5 +1,6 @@
 \section{Protokoll}
-Här besrivs hur kommunikationen mellan de olika delsystemen kommer att implementeras.
+\label{sec:Protokoll}
+Här beskrivs hur kommunikationen mellan de olika delsystemen kommer att implementeras.
 
 \subsection{Generell överföring mellan enheter}
 Kommunikationen mellan de olika enheterna kommer att gå via en SPI-buss (se \ref{sec:SPI}).
@@ -10,7 +11,7 @@ hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:head
 Kodningen av de tre mest signifikanta bitarna kan ses i tabell \ref{tab:headerkod}.
 
 All kommunikation kommer att gå via kommunkationsenheten, så om sensorenheten vill 
-skicka data till styrenheten skickar den en headerbyte med styrenhetens address och en databyte till kommunikationsenheten som 
+skicka data till styrenheten skickar den en headerbyte med styrenhetens adress och en databyte till kommunikationsenheten som 
 tolkar headern och skickar headern och databyten till styrenheten.
 \begin{table}[h]
   \centering
@@ -39,8 +40,8 @@ tolkar headern och skickar headern och databyten till styrenheten.
 
 
 \subsection{PC-mjukvara $\longleftrightarrow$ Kommunikationsenhet}
-PC-mjukvaran kommer generera en header-byte samt en data-byte som sedan skickas
-till kommunikationsenheten via blåtand. Kommuniktionsenheten kommer därefter
+PC-mjukvarn kommer generera en header-byte samt en data-byte som sedan skickas
+till kommunikationsenheten via blåtand. Kommunikationsenheten kommer därefter
 behandla de två byten precis som alla andra.
 
 Då kommunikationsenheten sänder data till PC-mjukvaran kommer mjukvaran att
@@ -48,7 +49,7 @@ Då kommunikationsenheten sänder data till PC-mjukvaran kommer mjukvaran att
 instruktionen som sändes.
 
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
-Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PC och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
+Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PCn och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
 
 \subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
 Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på

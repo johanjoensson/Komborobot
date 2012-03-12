@@ -23,7 +23,7 @@ Blåtandsenheten kommer att skicka och ta emot information från PCn enligt form
 8N1, det vill säga att vi skickar data i enheter om 8 bitar (en byte), använder oss
 inte av någon paritetsbit samt att vi har en bit som slutbit och en bit som startbit
 (som inte anges). Totalt kommer alltså 10 bitar skickas för att överföra 8
-bitar.
+bitar. 
 
 Kommunikationsenheten agerar master för SPI-bussen och tar därför emot all data
 som skickas mellan systemets olika moduler. För att skicka rätt data till rätt
@@ -86,7 +86,7 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema, se 
 
 \begin{figure}[H]
  
-\includegraphics[angle=0,scale=0.5]{bilder/Schema_exempel.png}
+\includegraphics[angle=0,scale=0.7]{bilder/Schema_exempel.png}
   \caption{Schema över de olika enheternas metodik vid exempelöverföringen}
   \label{fig:schema}
 \end{figure}
@@ -94,6 +94,5 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema, se 
 \subsubsection{Övrigt om kommunikationsenheten}
 
 Som nämnts tidigare kommer det vara kommunikationsenheten som sköter all kontakt mellan PCn och de olika enheterna. Det är på kommunikationsenheten det kommer att finnas en brytare där användaren kan avgöra huruvida denna vill använda roboten i autonomt eller manuellt läge. Den största skillnaden i kommunikationsenhetens arbete mellan de två lägena är att sensorenheten inte kommer att användas i manuellt läge. Istället kommer alla styrkommandon att skickas till kommunikationsenheten via bluetooth. Kommunikationsenheten kommer också att vara den enhet som tillhandahåller en av- och påknapp för hela systemet.
-
-Vid omställning till manuellt läge kommer det att överföras ett speciellt kommando till sensorenheten som beordrar denna att sluta avläsa sensorerna och begära dataöverföringar. Styrenheten kommer inte att behöva någon liknande kod då denna inte kommer att utföra någon reglering om den inte mottar någon reglerdata. Headerbyten kommer att användas för att instruera styrenheten om att mottagen information är specialkommandon som efterfrågar någon av typ av speciellt beteende.
+Vid omställning mellan de olika driftlägena, autonomt och fjärrstyrt, kommer det att överföras ett speciellt kommando till enheterna som beordrar dessa att förändra sina funktioner.  
 
