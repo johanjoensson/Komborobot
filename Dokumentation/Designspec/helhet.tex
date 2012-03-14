@@ -5,7 +5,7 @@ Robeten byggs på en trehjulig plattform(CarpetRover). På plattformen kommer tr
         \item Sensorenhet
         \item Styrenhet
 \end{itemize}
-Varje enhet kommer styras av en egen AVR-processor.
+Varje enhet kommer styras av en egen AVR-processor som klockas av en extern EXO-3 kristalloscillator.
 
 \subsection{Kommunikation}
 All intern kommunikation kommer att ske via en SPI-buss. Kommunikationsenheten kommer att fungera som master på bussen, och all kommunikation kommer att gå via den. När en enhet vill kommunicera med en annan kommer detta att aviseras genom att enheten genererar ett avbrott på kommunikationsenheten. 
