@@ -2,7 +2,15 @@
 Sensorenheten utgörs av en AVR microcontroller samt de analoga sensorer som är kopplade till denna. Sensorenheten har till uppgift att samla in information från omgivningen via sensorer samt tolka den insamlade datan. I autonomt läge kommer sensorenheten ta direkta styrbeslut baserade på denna data. 
 
 \subsection{Hårdvara}
-Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display. ATmega16 har en intern AD-omvandlare på Port A som kommer användas.
+Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display. ATmega16 har en intern AD-omvandlare på Port A som kommer användas. Hur de olika pinnarna på processorn ska anslutas kan betraktas i figur 
+\ref{fig:PINsensor}.
+
+\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=0.5]{bilder/PIN_styr.jpg}
+  \caption{Sensorsenhetens pin-anslutningar}
+  \label{fig:PINsensor}
+\end{figure}
 
 \subsubsection{Linjeföljarsensor}
 Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer. Muxarna styrs av AVRen och får lysdioderna och transistorerna att arbeta i par. Den ena muxen är kopplad till logiskt ett på sin ingång för att tända en lysdiod i taget, demuxen kopplar motsvarande transistor till A/D omvandlaren. Efter att en omvandling är klar kopplas muxarna om till nästa par och en ny omvandling kan starta.
