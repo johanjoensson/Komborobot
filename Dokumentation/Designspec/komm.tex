@@ -1,6 +1,14 @@
 \section{Kommunikationsenhet}
 Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en Fireflymodul. 
-Kommunikationen mellan PCn och roboten kommer att ske via blåtand. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}.
+Kommunikationen mellan PCn och roboten kommer att ske via blåtand. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}. Hur de olika pinnarna på processorn ska anslutas kan betraktas i figur \ref{fig:PINkomm}.
+
+\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=0.5]{bilder/PIN_komm.jpg}
+  \caption{Kommunikationsenhetens pin-anslutningar}
+  \label{fig:PINkomm}
+\end{figure}
+
 
 \begin{figure}[H]
   \centering
