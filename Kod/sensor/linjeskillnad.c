@@ -30,27 +30,27 @@ int calculate_diff(int value)
         }
         switch(index){
                 case 0 :
-                        return 127;
+                        return -128;
                 case 1:
-                        return 102;
+                        return -102;
                 case 2:
-                        return 78;
+                        return -78;
                 case 3:
-                        return 53;
+                        return -53;
                 case 4:
-                        return 25;
+                        return -25;
                 case 5:
                         return 0;
                 case 6:
-                        return -25;
+                        return 25;
                 case 7:
-                        return -53;
+                        return 53;
                 case 8:
-                        return -78;
+                        return 78;
                 case 9:
-                        return -103;
+                        return 102;
                 case 10:
-                        return -128;
+                        return 127;
                 default:
                         return 0;
         }
