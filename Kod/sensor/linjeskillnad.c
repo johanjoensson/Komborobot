@@ -7,12 +7,12 @@ int get_first_one(int value);
 int main(int argc, char *argv[])
 {
         if(argc == 1){
-                printf("I wants arguments\n");
+                printf("Användning: linjeskillnad data_från_linejesensor\n");
                 return 1;
         }
         int sensorvalue = atoi(argv[1]);
         int diff = calculate_diff(sensorvalue);
-        printf("difference is %d\n", diff);
+        printf("Skillnad: %d\n", diff);
 
         return 0;
 }
@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
 int calculate_diff(int value)
 {
         int index = get_first_one(value);
-        printf("Index is %d\n", index);
+        printf("Index är %d\n", index);
         if(index == -1){
-                printf("No ones in value\n");
+                printf("Inga ettor i datat\n");
                 return 0;
         }
         switch(index){
