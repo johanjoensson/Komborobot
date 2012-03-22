@@ -24,7 +24,7 @@
 
 \newcommand{\LIPSdokumenttyp}{Projektplan}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{1.0}
+\newcommand{\LIPSversion}{1.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 \newcommand{\LIPSgranskare}{Markus Falck}
@@ -203,8 +203,8 @@ Milstolpar för projektet bestäms inom gruppen, och sätts för att kunna kontr
 \begin{tabular}{|p{7mm}|p{117mm}|p{23mm}|}
         	\LIPSmilstolpe{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Datum}}
 	\LIPSmilstolpe{1}{Designspecifikationen accepterad av handledaren}{2012-03-16}
-	\LIPSmilstolpe{2}{Bussen fungerar som den ska}{2012-03-30}
-	\LIPSmilstolpe{3}{Data och mätvärden skickas via komunikationsenheten}{2012-04-05}
+	\LIPSmilstolpe{2}{Bussen fungerar som den ska}{2012-03-23}
+	\LIPSmilstolpe{3}{Data och mätvärden skickas via komunikationsenheten}{2012-04-30}
 	\LIPSmilstolpe{4}{Roboten kan upptäcka korsningar}{2012-04-19}
 	\LIPSmilstolpe{5}{Korrekt sensorinfo visas på PCn}{2012-04-20}
 	\LIPSmilstolpe{6}{Motorn regleras autonomt utifrån sensorvärdena}{2012-04-27}
@@ -230,7 +230,7 @@ Milstolpar för projektet bestäms inom gruppen, och sätts för att kunna kontr
 \begin{longtable}{|p{7mm}|p{90mm}|p{23mm}|p{23mm}|}
 	\LIPSleverans{\textbf{Nr}}{\textbf{Beskrivning}}{\textbf{Beroende av aktivitet nr}}{\textbf{Beräknad tid (h)}} 
 \LIPSaktivitet{Färdigställande av
-designspec}{}{55} 
+designspec}{}{44} 
 %% SENSOR
 	\LIPSaktivitet{Omvandling av analoga signaler till
 digitala sådana}{}{12} 
@@ -264,10 +264,10 @@ kommunikationsenhet}{}{25}
 %% STYRENHET
 	\LIPSaktivitet{Ta emot sensorvärden
 (Styrenhet)}{10 \& 5}{20} 
-	\LIPSaktivitet{Reglera motorer utifrånsensorvärden}{16 \& 19 \& 22}{50} 
+	\LIPSaktivitet{Reglera motorer utifrånsensorvärden}{16 \& 19 \& 22}{40} 
 	\LIPSaktivitet{Ta emot styrkommandon
 (styrenheten)från kommunikationsenheten}{10 \& 24 \& 14}{20} 
-	\LIPSaktivitet{Styra motorer (autonomt och manuellt)}{}{50} 
+	\LIPSaktivitet{Styra motorer (autonomt och manuellt)}{}{40} 
 	\LIPSaktivitet{Skicka styrinfo till
 kommunikationsenheten från
 styrenheten}{10}{20} 
@@ -288,20 +288,24 @@ skärm}{25}{2}
 	\LIPSaktivitet{Visa sensorinfo på
 skärm}{26}{2} 
 	\LIPSaktivitet{Ordna gränssnitt på
-pc}{}{20} 
+pc}{}{15} 
 %% MONTERING OCH TEST
 	\LIPSaktivitet{Montering av
 avståndssensorer}{}{10} 
 	\LIPSaktivitet{Montering av
 linjesensorer}{}{10}
 	\LIPSaktivitet{Montering}{30 \&
-31}{25} 
+31}{20} 
 	\LIPSaktivitet{Utför styrkommandon}{18 \&
 21}{30} 
-	\LIPSaktivitet{Test av hela systemet}{2-33 \& (35)}{40} 
+	\LIPSaktivitet{Test av hela systemet}{2-33 \& (35)}{35} 
 	\LIPSaktivitet{Kalibrering av
 sensorer}{}{20}
-	\LIPSaktivitet{Planering och utförande av tester}{}{46}
+	\LIPSaktivitet{Planering och utförande av tester}{}{10}
+	\LIPSaktivitet{Test av bussen}{}{10}
+	\LIPSaktivitet{Test av kommunikationsenheten}{}{10}
+	\LIPSaktivitet{Test av sensorenheten}{}{10}
+	\LIPSaktivitet{Test av styrenheten}{}{10}
 %% EFTERARBETE OCH DOKUMENTATION
 	\LIPSaktivitet{Sammanställa och granska
 teknisk dokumentation}{samtliga}{20} 
@@ -310,9 +314,9 @@ Användarmanual}{37}{20}
 	\LIPSaktivitet{Förbereda
 redovisning}{38}{15} 
 	\LIPSaktivitet{Tidsloggning (ska ske
-kontinuerligt)}{}{11} 
+kontinuerligt)}{}{20} 
 	\LIPSaktivitet{Efterstudie}{39}{15}  
-	\LIPSaktivitet{Rest / Reservtid}{}{13}
+	\LIPSaktivitet{Rest / Reservtid}{}{46}
 	\LIPSaktivitet{Möten}{}{70} 
 
 \hline
