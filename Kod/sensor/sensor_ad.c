@@ -1,4 +1,3 @@
-
 /*
 Fyller en byte med data där bitarna visar 1 för svart och 0 för vit
 */
@@ -15,9 +14,6 @@ int convert_to_distance(unsigned char analog_distance);
 /*
 Styr muxar, startar ad och anropar omvandlingar
 */
-
-void start_next_ad();
-
 
 
 void start_next_ad()
