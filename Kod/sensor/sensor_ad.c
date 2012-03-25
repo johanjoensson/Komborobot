@@ -1,8 +1,27 @@
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include "sensor_ad.h"
+
 void create_line_array(int trunc_value, int vect_id);
-
 int truncate(unsigned char inbyte);
-
 int convert_to_distance(unsigned char analog_distance);
+void start_next_ad();
+int get_first_one(int value);
+
+
+
+ISR(ADC_vect)
+{
+		start_next_ad();
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+		ADCSRA |= (1<<ADSC);
+		count=0;			//starta om
+}
+
 
 
 /* 
@@ -118,7 +137,7 @@ void create_line_array(int trunc_value, int vect_id)
  */
 int convert_to_distance(unsigned char analog_distance)
 {
-		TODO
+		//TODO
 		return 0;
 }
 
@@ -163,9 +182,9 @@ int calculate_distance_diff(unsigned char distance_left, unsigned char distance_
 int calculate_diff(int value)
 {
         int index = get_first_one(value);
-        printf("Index är %d\n", index);
+        //printf("Index är %d\n", index);
         if(index == -1){
-                printf("Inga ettor i datat\n");
+                //printf("Inga ettor i datat\n");
                 return 0;
         }
         switch(index){

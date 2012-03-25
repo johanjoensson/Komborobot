@@ -1,11 +1,9 @@
 #ifndef SENSOR_AD_H
-#define 
+#define SENSOR_AD_H
 
-void start_next_ad();
-
-unsigned char line_array_1;
-unsigned char line_array_2;
-unsigned char level = 0x80;
+int count;
+unsigned char line_array_1, line_array_2;
+unsigned char level;
 unsigned char dist_left, dist_right, dist_front;
 
 #endif
