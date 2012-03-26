@@ -15,6 +15,7 @@ ISR(SPI_STC_vect) //sensor REQ
 {
 		
 
+
 		switch(transfer_count){
 		case 0:
 				PORTB &= ~(1<<PB3); 		//REQ low

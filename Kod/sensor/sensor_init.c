@@ -1,6 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h> 
-
+#include "sensor_ad.h"
 		
 void spi_init()
 {		
@@ -15,8 +15,10 @@ void ad_init()
 		ADMUX |= (1<<ADLAR);				//Vänsterjustering
 		ADCSRA |= (1<<ADEN) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
 		//Tillåt ADC avbrott, dela frekvens med 128
+
 		DDRC |= (1<<DDC0) | (1<<DDC1) | (1<<DDC6) | (1<<DDC7);
 		PORTC |= (1<<PC0) | (1<<PC1) | (1<<PC6) | (1<<PC7);
 		TIMSK |= (1<<TOV1);			//Tillåt interrupts på timer overflow
 		TCCR1B |= (1<<CS11);		//Prescaler delar med 8, startar räknare
+		level = 0x90;				//Tröskelvärde
 }
