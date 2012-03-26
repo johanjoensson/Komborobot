@@ -1,0 +1,117 @@
+\section{Protokoll}
+\label{sec:Protokoll}
+Här beskrivs hur kommunikationen mellan de olika delsystemen kommer att implementeras.
+
+\subsection{Generell överföring mellan enheter}
+Kommunikationen mellan de olika enheterna kommer att gå via en SPI-buss (se \ref{sec:SPI}).
+All kommunikation består av en headerbyte följt av en eller flera databytes.
+I headerbyten anges till vilken enhet den efterföljande informationen ska, samt hur den ska tolkas av den mottagande enheten.
+De tre mest signifikanta bitarna i headern anger till vilken enhet informationen ska och de 5 minst signifikanta bitarna anger 
+hur denna information ska behandlas. Uppdelningen kan ses i tabell \ref{tab:header}.
+Kodningen av de tre mest signifikanta bitarna kan ses i tabell \ref{tab:headerkod}.
+
+All kommunikation kommer att gå via kommunkationsenheten, så om sensorenheten vill 
+skicka data till styrenheten skickar den en headerbyte med styrenhetens adress och en databyte till kommunikationsenheten som 
+tolkar headern och skickar headern och databyten till styrenheten.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Målenhet [3 bitar] & Flaggor [5 bitar]\\
+    \hline
+  \end{tabular}
+  \caption{Bituppdelning av header}
+  \label{tab:header}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{3 MSB} & \textbf{Målenhet} \\
+    000 & Kommunikationsenhet \\
+    001 & Sensorenhet \\
+    010 & Styrenhet \\
+    100 & PC \\
+    110 & PC och Styrenhet\\
+  \end{tabular}
+  \caption{Kodning av header}
+  \label{tab:headerkod}
+\end{table}
+
+
+\subsection{PC-mjukvara $\longleftrightarrow$ Kommunikationsenhet}
+PC-mjukvarn kommer generera en header-byte samt en data-byte som sedan skickas
+till kommunikationsenheten via blåtand. Kommunikationsenheten kommer därefter
+behandla de två byten precis som alla andra.
+
+Då kommunikationsenheten sänder data till PC-mjukvaran kommer mjukvaran att
+översätta header-byten samt data-byten så att man enkelt kan åskådliggöra
+instruktionen som sändes.
+
+\subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
+Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PCn och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
+
+\subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
+Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på
+om roboten är i fjärrstyrt eller autonomt läge.
+\subsubsection{Fjärrstyrt läge}
+I fjärrstyrt läge så kommer styrenheten att ta emot headers och styrkommandon. I detta läge så 
+innehåller inte headern någon intressant information och kommer att ignoreras. Styrkommandots bituppdelning kan ses i 
+tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
+ 
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Kommando [4 bitar] & Hastighet [4 bitar] \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av styrkommandon}
+  \label{tab:styrbitar}
+\end{table}
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{l l}
+    \textbf{4 MSB} & \textbf{Kommando} \\
+    0000 & Stopp \\
+    0001 & Framåt \\
+    0010 & Fram vänster \\
+    0011 & Fram höger \\
+    0100 & Rotera vänster \\
+    0101 & Rotera höger \\
+    0110 & Back \\
+  \end{tabular}
+  \caption{Kommandokodning}
+  \label{tab:styrkommando}
+\end{table}
+
+\subsubsection{Autonomt läge}
+I autonomt läge så avgör en bit i headern om efterföljande byte är sensordata som ska användas i regleringen eller
+om det är ett specialkommando som ska utföras utan reglering.
+Bituppdelning av kommandon ses i tabell \ref{tab:specialbitar} och kodningen i tabell \ref{tab:special}.
+
+Eftersom en SPI-buss används så kommer även styrenheten att skicka data till kommunikationsenheten samtidigt som den tar emot data.
+Detta kommer att användas till att skicka information om körningen, t ex ``Vanlig reglering'' eller ``Svänger vänster''.
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Specialkommando [3 bitar] & Argument [5 bitar] \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av specialkommandon}
+  \label{tab:specialbitar}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{3 MSB} & \textbf{Specialkommando} \\
+    000 & Återuppta vanlig reglering\\
+    001 & Kör rakt fram \\
+    010 & Sväng vänster 90\degree \\
+    011 & Sväng höger 90\degree \\
+  \end{tabular}
+  \caption{Kodning av specialkommandon}
+  \label{tab:special}
+\end{table}

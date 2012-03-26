@@ -1,0 +1,53 @@
+\section{Sensorenhet}
+Sensorenheten utgörs av en AVR microcontroller samt de analoga sensorer som är kopplade till denna. Sensorenheten har till uppgift att samla in information från omgivningen via sensorer samt tolka den insamlade datan. I autonomt läge kommer sensorenheten ta direkta styrbeslut baserade på denna data. 
+
+\subsection{Hårdvara}
+Sensorenheten består av en AVR ATmega16 som kopplats till 3 avståndssensorer, de sensorer som hittar linjer på marken samt en display. ATmega16 har en intern AD-omvandlare på Port A som kommer användas. Hur de olika pinnarna på processorn ska anslutas kan betraktas i figur 
+\ref{fig:PINsensor}.
+
+\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=0.5]{bilder/PIN_sensor.jpg}
+  \caption{Sensorsenhetens pin-anslutningar}
+  \label{fig:PINsensor}
+\end{figure}
+
+\subsubsection{Linjeföljarsensor}
+Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer. Muxarna styrs av AVRen och får lysdioderna och transistorerna att arbeta i par. Den ena muxen är kopplad till logiskt ett på sin ingång för att tända en lysdiod i taget, demuxen kopplar motsvarande transistor till A/D omvandlaren. Efter att en omvandling är klar kopplas muxarna om till nästa par och en ny omvandling kan starta.
+
+\subsubsection{Avståndssensorer}
+Sensorenheten har 3 optiska avståndsmätare av typen GP2Y0A02YK (20-150 cm). En kommer att vara placerad på vardera sida av roboten och en riktad framåt. Dessa ger en analog utsignal som kopplas till AVR:ens AD-omvandlare och tar upp en pinne var.
+
+\subsubsection{Display}
+En alfanumerisk LCD-display av typen HD44780U används för att visa avstånd till väggarna när roboten är i labyrintläge. Displayen körs i sitt 4 databits läge och kopplas till Port D på AVR:en, 7 pinnar.
+
+
+\subsection{Mjukvara}
+Robotens styrbeslut fattas i autonomt läge av sensorenheten.
+
+\subsubsection{AD}
+De 8 mest signifikanta bitarna från ATmegas inbyggda AD omvandlare kommer att användas efter varje omvandling. Alla sensorers data kommer att omvandlas i turordning. När en omvandling är klar läses data ur ADC Data Registers och sparas i ett annat register varefter nästa omvandling startas. En räknare kontrollerar vilken av de tre avståndssensorerna och de 11 linjesensorerna som AD-omvandlas genom att ställa in interna och externa muxar.
+
+\subsubsection{Linjesensor}
+När AD-omvandlaren har gått igenom alla linjesensorer ett varv kommer värdena från linjesensorerna trunkeras. Trunkeringen ska ske så att tejp kommer motsvara en etta och ingen tejp en nolla. Med detta går det att räkna fram hur långt till höger eller vänster roboten befinner sig om linjen. I autonomt läge skickas avståndet till kommunikationsenheten för vidare leverans till styrenheten som reglerdata och till PCn för visning.
+
+Om alla sensorer visar tejp i autonomt linjeläge kommer kommandot "kör rakt fram" skickas till Styrenheten och PCn.
+Om roboten befinner sig i autonomt labyrintläge och läser av en bred svart tejp kommer en intern klocka startas för att mäta hur lång tejpen är. Då roboten ska röra sig i en närmast konstant hastighet i autonomt labyrintläge kan värdet därefter jämföras mot en tabell med data och motsvarande styrkommando sparas. 
+
+I fjärrstyrt läge kommer inte linjesensorerna att användas.
+
+\subsubsection{Avståndsberäkning}
+Vid autonomt labyrintläge kommer det att vara viktigt att mäta avståndet till väggarna i labyrinten.
+Värdena från AD-omvandlingen av avståndssensorernas data omvandlas enligt en tabell till avstånd. Dessa visas på den externa displayen. Avstånden kan sedan användas för att ta fram vart roboten befinner sig relativt mitten av banan. Detta värde skickas därefter till kommunikationsenheten för vidare leverans till styrenheten och PCn.
+
+Om avståndet till en vägg är större än 80 cm så undersöker sensorenheten om det finns ett sparat styrkommando. Om det finns skickas det sparade styrkommandot, annars skickas istället ett svängkommando. Se  figur \ref{fig:labkors} för exempel på hur en labyrint kan se ut, och vad som kommer att uppfattas av avståndssensorerna. 
+
+\begin{figure}[H]
+\includegraphics[angle=0,scale=0.5]{bilder/labkors.png}
+  \caption{Robotens avståndssensorer vid olika typer av labyrint}
+  \label{fig:labkors}
+\end{figure}
+
+\subsubsection{Kommunikation}
+Port B på AVRen kommer användas för SPI-bussen. Sensorenheten kommer skicka en interuptsignal till Kommunikationsenheten för att starta en överföring. För mer information om hur denna kommunikation går till, se \ref{sec:SPI}.
+

@@ -1,0 +1,48 @@
+\section{PC mjukvara}
+PC-mjukvaran har som uppgift att låta användaren kommunicera med roboten via ett
+enkelt gränssnitt. Via PC-mjukvaran kan användaren få intressant information
+från robotens olika moduler, t.ex avstånd till väggar eller vilket styrkommando
+som nu utförs. PC-mjukvaran kommunicerar med roboten via blåtand.
+
+\subsection{Implementation}
+
+Mjukvaran är skriven i programspråket C och använder utöver Cs standardbibliotek
+även gränssnittet BlueZ för att kommunicera via blåtand.
+
+\subsection{Användande}
+
+Användargränssnittet utgörs av ett program som i fjärrstyrt läge låter 
+användaren skriva in önskat styrkommando åt roboten, exempelvis ''fram''. Detta
+kommando kommer sedan utföras av roboten tills dess att användaren skriver in
+ett nytt kommando åt roboten. Gränssnittet kommer även att visa vilket
+styrkommando roboten för tillfället utför samt information från robotens
+sensorer.
+
+Då roboten befinner sig i autonomt läge kommer gränssnittet att kontinuerligt
+uppdateras med de styrkommandon som roboten för tillfället utför samt
+information från robotens sensorer. 
+
+Gränssnittet är enkelt att använda, kommandona logiska och simpla och
+informationen från roboten visas på ett tydligt och lättförståeligt sätt.
+
+% \subsection{Implementation}
+% 
+% Mjukvaran är skriven i programspråken C samt Tcl och använder utöver Cs standardbibliotek
+% även gränssnittet BlueZ för att kommunicera via blåtand.
+% 
+% \subsection{Användande}
+% 
+% Mjukvaran kommer utgöras av ett fönster där användaren kan se information
+% skickad från robotens sensorer och dess styrenhet samt skicka styrkommandon till
+% roboten.
+% 
+% I fjärrstyrt läge kan användaren välja att använda de pilknappar som finns i
+% fönstret för att styra roboten eller så kan användaren använda piltangenterna på
+% tangentbordet.
+% 
+% I autonomt läge kommer gränssnittet visa information från robotens sensorer samt
+% vilket styrkommando som roboten just nu utför.
+% 
+% Gränssnittet är enkelt att använda, kommandona är logiska och simpla och
+% informationen från roboten visas på ett tydligt och lättförståeligt sätt.
+% 
