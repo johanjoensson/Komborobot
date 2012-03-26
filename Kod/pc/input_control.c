@@ -68,40 +68,46 @@ void event_loop()
                                                 break;
 					case SDLK_w:
 						on_w_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Framåt\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_a:
 						on_a_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Rotera vänster\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_s:
 						on_s_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Back\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_d:
 						on_d_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Rotera höger\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_q:
 						on_q_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Fram vänster\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_e:
 						on_e_down(speed);
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Fram höger\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
 					case SDLK_UP:
 						if(speed<15){
 							speed++;
 							//printf("Speed is %d\n", speed);
 						} else {
-							//printf("Max speed\n");
+							printf("Max speed\n");
 						}
 						break;
 					case SDLK_DOWN:
@@ -109,10 +115,12 @@ void event_loop()
 							speed--;
 							//printf("Speed is %d\n", speed);
 						} else {
-							//printf("Min speed\n");
+							printf("Min speed\n");
 						}
 						break;
-						
+					case SDLK_SPACE:
+						printf("Header = %x\n", header);
+						printf("Data = %x\n", data);
                                         default:
                                                 break;
                                 }
@@ -121,33 +129,39 @@ void event_loop()
                                 switch(event.key.keysym.sym){
 					case SDLK_w:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_a:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_s:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_d:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_q:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         case SDLK_e:
 						on_key_up();
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+                                                printf("Stopp\n");
+						//printf("Header = %x\n", header);
+						//printf("Data = %x\n", data);
 						break;
                                         default:
                                                 break;
@@ -196,16 +210,8 @@ void on_key_up()
        data = stop();
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-        if(argc != 3){
-                printf ( "Användning: input_control destination datakod\n" );
-                return 1;
-        }
-        int destination = atoi(argv[1]);
-        int datakod = atoi(argv[2]);
-        header = generate_header(destination, datakod);
-        data = forward(8);
         event_loop();
         printf("Header is 0x%x\n", header);
         printf("Data is 0x%x\n", data);
