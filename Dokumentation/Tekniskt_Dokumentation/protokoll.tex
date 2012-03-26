@@ -15,9 +15,9 @@ skicka data till styrenheten skickar den en headerbyte med styrenhetens adress o
 tolkar headern och skickar headern och databyten till styrenheten.
 \begin{table}[h]
   \centering
-  \begin{tabular}{| c | c |}
+  \begin{tabular}{| c | c | c | c | c | c |}
     \hline
-    Målenhet [3 bitar] & Flaggor [5 bitar]\\
+    Målenhet [3 bitar] & A & B & C & D & E \\
     \hline
   \end{tabular}
   \caption{Bituppdelning av header}
@@ -40,24 +40,39 @@ tolkar headern och skickar headern och databyten till styrenheten.
 
 
 \subsection{PC-mjukvara $\longleftrightarrow$ Kommunikationsenhet}
-PC-mjukvarn kommer generera en header-byte samt en data-byte som sedan skickas
+PC-mjukvaran kommer generera en header-byte samt en data-byte som sedan skickas
 till kommunikationsenheten via blåtand. Kommunikationsenheten kommer därefter
 behandla de två byten precis som alla andra.
 
 Då kommunikationsenheten sänder data till PC-mjukvaran kommer mjukvaran att
 översätta header-byten samt data-byten så att man enkelt kan åskådliggöra
-instruktionen som sändes.
+instruktionen som sändes. När kommunikationsenheten skickar information om hur roboten kör
+så anger C-flaggan om det är sensorinfo (t ex. avstånd till väggen framför) eller styrinfo (t ex svänger höger)
+som anges i databyten. Om C-flaggan är satt så avgör B-flaggan om styrenheten utför vanlig reglering eller om
+den utför ett specialkommando.
 
 \subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
 Sensorenheten skickar data till kommunikationsenheten som ska vidare både till PCn och styrenheten. Detta anges med en header enligt tabell \ref{tab:headerkod}. Efterföljande data är antingen ett styrkommando, se tabell \ref{tab:styrkommando}, eller avstånd och riktning till centrumlinjen.
 
 \subsection{Styrenhet $\longleftrightarrow$ Kommunikationsenhet}
-Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på
-om roboten är i fjärrstyrt eller autonomt läge.
+Kommunikationen mellan styrenheten och kommunikationsenheten kommer att bete sig olika beroende på om E-flaggan
+är satt eller inte, se tabell \ref{tab:eflagga}.
+
 \subsubsection{Fjärrstyrt läge}
 I fjärrstyrt läge så kommer styrenheten att ta emot headers och styrkommandon. I detta läge så 
-innehåller inte headern någon intressant information och kommer att ignoreras. Styrkommandots bituppdelning kan ses i 
+innehåller inte flaggorna i headern någon intressant information och kommer att ignoreras. Styrkommandots bituppdelning kan ses i 
 tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{E} & \textbf{Läge} \\
+    0 & Fjärrstyrt \\
+    1 & Autonomt \\
+  \end{tabular}
+  \caption{E-flaggan}
+  \label{tab:eflagga}
+\end{table}
  
 \begin{table}[h] 
   \centering
@@ -86,12 +101,23 @@ tabell \ref{tab:styrbitar} och dess kodning i tabell \ref{tab:styrkommando}.
 \end{table}
 
 \subsubsection{Autonomt läge}
-I autonomt läge så avgör en bit i headern om efterföljande byte är sensordata som ska användas i regleringen eller
-om det är ett specialkommando som ska utföras utan reglering.
+I autonomt läge så avgör D-flaggan i headern om efterföljande byte är sensordata som ska användas i regleringen eller
+om det är ett specialkommando som ska utföras utan reglering. D-flaggans funktion kan ses tabell \ref{tab:dflagga}.
 Bituppdelning av kommandon ses i tabell \ref{tab:specialbitar} och kodningen i tabell \ref{tab:special}.
 
 Eftersom en SPI-buss används så kommer även styrenheten att skicka data till kommunikationsenheten samtidigt som den tar emot data.
 Detta kommer att användas till att skicka information om körningen, t ex ``Vanlig reglering'' eller ``Svänger vänster''.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{D} & \textbf{Typ av data} \\
+    0 & Sensordata \\
+    1 & Specialkommando \\
+  \end{tabular}
+  \caption{D-flaggan}
+  \label{tab:dflagga}
+\end{table}
 
 \begin{table}[h] 
   \centering
