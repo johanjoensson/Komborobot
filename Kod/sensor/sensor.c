@@ -6,7 +6,7 @@
 
 volatile int a=0;
 
-int main(void){
+                                                                                  int main(void){
 
 		
 		spi_init();	

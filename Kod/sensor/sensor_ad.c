@@ -151,7 +151,7 @@ int convert_to_distance(unsigned char analog_distance)
  */
 int truncate(unsigned char inbyte)
 {
-		if(inbyte < level){
+		if(inbyte > level){
 				return 1;
 		} else {
 				return 0;
