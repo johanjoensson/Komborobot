@@ -24,7 +24,7 @@ int Kd = 3;
 
 signed char regulator(signed char new)
 {
-        new = new >> 3;
+        new = new >> 2;
         int outvalue;
         outvalue = Kp*new; // P-delen
         //outvalue -= Kd*(new-old); // D-delen
@@ -32,13 +32,24 @@ signed char regulator(signed char new)
         outvalue -= Kd*(new-old); // D-delen
         old = old >> 1;
         old += new;
-        // Inför maxvärden
+        // Inför max- och minvärden
         if(outvalue > 127){
                 outvalue = 127;
         } else if(outvalue < -128) {
                 outvalue = -128; 
         }
         return outvalue;
+}
+
+void drive_engines(signed char value)
+{
+        if(value > 0){
+                //TODO
+                //Sväng höger value mycket
+        } else {
+                //TODO
+                // Sväng vänster value mycket
+        }
 }
 
 int main()
