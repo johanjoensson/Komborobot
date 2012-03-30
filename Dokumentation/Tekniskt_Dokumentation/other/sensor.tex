@@ -1,0 +1,65 @@
+\section{Sensormodulen}
+Roboten har olika sensorer för att detektera väggar, sin rörelse och sin
+rotation. 
+
+\subsection{Hårdvara}
+Sensormodulen baseras på en ATMega16, se Appendix \ref{sensor-sch} för
+kopplingsschema.
+
+\subsubsection{Analoga sensorer}
+Vi har valt att använda tre stycken optiska avståndsmätare: en för 20-150 cm i
+fronten och en på vardera sida för 10-80 cm. Deras utsignal är analog och denna
+mäts med den inbyggda AD-omvandlaren i AVR:en.
+
+Roboten har också hjulsensorer som mäter hjulens rotation. Dessa
+sensorer är också inkopplade på AVR:ens AD-omvandlare. 
+
+\subsubsection{Gyro}
+Med ett gyro mäts robotens rotationshastighet. Utsignalen är en
+tidspuls vars längd varierar. Denna signal mäts med hjälp av
+sextonbitarsräknaren och avbrott i AVR:en.
+
+\subsection{Mjukvara}
+AVR:en kör ett minimalt realtidssytem skrivet i C. Efter initering
+av AVR:en börjar en oändlig mätloop. Serieporten gör avbrott i mätloopen när
+mätdata ska skickas varefter den är begärd.
+
+Vid varje givet tillfälle har sensormodulen uppmätta värden från alla sensors,
+och ersätta dem med så nya värden så ofta som möjligt.
+
+\subsubsection{AD-omvandling}
+Vi använder oss av omvandlarens fulla bredd, d.v.s. tio bitar, till
+IR-avståndsmätare och hjulsensorer.
+
+Alla sensorer är kopplade på olika ingångar till den analoga muxen, ADMUX, och
+när ingång byts tar det upp till 125 $\mu$s innan värdet är stabiliserat.
+AD-omvandlarens klocka går att köra i 200 kHz när den gör 10 bitars omvandling.
+Vid första omvandligen tar det 25 AD-klocktick, vilket även det blir 125
+$\mu$s. Det bör innebära en samplingsfrekvens på 4 kHz om alla omvandlingar är
+lika långsamma som den första. Detta är nog för att mäta av alla fem analoga
+sensorer flera hundra gånger per sekund.
+
+\subsubsection{Tidsmätning}
+
+Gyrots signal är som beskrivs i gyrots datablad
+\footnote{\burl{https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/gwspg03_gyro_prel.pdf}}.
+För att mäta en puls ska INT0 vara satt att ge avbrott på fallande flank. När
+det avbrottet kommer ska 16b-räknaren, TCNT1, startas och avbrottskriteriet ska
+ändras till stigande flank. När det nya avbrottet kommer ska räknaren stoppas,
+avläsas och nollställas. Därefter ska avbrottskriteriet återställas till
+fallande flank.
+
+\subsection{Utvärdering och kalibrering}
+För att kunna få bra data på mätfel och individkalibrering av sensorerna så
+skapar vi enkla repeterbara test. Vi testar rotationssensorer, avståndssensorer,
+hjulsensorer.
+
+Rotationssensorer testar vi lämpligen genom att rotera roboten en förutbestämd
+mängd och mäta avvikelsen mellan olika försök.
+
+Avsåndssensorer testas genom att mäta avstånd till en vägg och se hur stort fel
+sensorn har och rotera roboten för att kontrollera hurvida vinkel påverkar 
+storleken på felet.
+
+Hjulsensorerna testas genom att roboten får åka olika streckor och differansen
+mellan uppmätt avstånd och sensorns upfattning därom kontrolleras.

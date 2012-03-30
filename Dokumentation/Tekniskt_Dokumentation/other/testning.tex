@@ -1,0 +1,32 @@
+\section{Testning}
+Integrationstestning görs för att kontrollera att alla gränssnitt fungerar som
+de ska och att delsystemen svarar som förväntat på testdata. Vi kommer att
+mestadels använda black-box testning men vid behov kommer vi att använda 
+grey-box för att testa eventuella tillstånd som är svåra att nå.
+
+Alla projektmedlemmar förväntas att göra sin egen enhetstestning alternativt se 
+till att den blir gjord.
+
+\subsection{Sensor- och kartenhet}
+Sensorenheten är ganska simpel att testa då vi bara kan skicka in ett värde i
+sensoränden och se om vi får ut ett bra värde när vi frågar efter det.
+
+Kartenheten kan kontrolleras genom att skicka in en serie av sensorvärden och
+se hur den omvandlar det till väggar på en karta.
+
+\subsection{Styr- och kartenhet}
+Styrenheten testas genom att alla olika styrkommandon skickas till den och vi
+studerar dess utsignaler.
+
+Bussen är enkelriktad så kartenheten kan inte skicka några meddelanden till
+styrenheten.
+
+\subsection{Robotsystemtest}
+Vi systemtestar roboten genom att koppla ihop hela och se om den beter sig
+specifikationsenligt när vi ger den kommandon, systemtestet är så beroende av
+ett fungerande användargränssnitt i PC-mjukvaran att det inte kan genomföras
+innan det är i alla fall så fullständigt att vi har ett kommandoradsgränssnitt.
+
+\subsection{Systemintegrationstest}
+Testning av hela systemet inklusive labyrint och PC-mjukvara. Vi kör runt
+roboten i labyrinten och ser att kartan ritas korrekt på PC:n.
