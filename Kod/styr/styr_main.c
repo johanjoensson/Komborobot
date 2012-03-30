@@ -14,14 +14,16 @@ int main(void){
 		//PWM vänster, REQ, b5:4 riktning, Spak på INT0
 		SPDR=0x20;
 		SREG = (SREG | 0x80);  //Tillåt globala interrupts
-
-
+		
+		
 
 		while (a<255) {
 				a++;
 				if (a>254) {
 						a = 1;
+						
 				}
+		SPDR=EEDR;
 		}
 		return 0;
 
