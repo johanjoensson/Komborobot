@@ -1,0 +1,23 @@
+\section{Systemet i sin helhet}
+
+Roboten är baserad på det fyrhjuliga chassit ``Terminator''. Dess inbyggda
+strömkälla är stor nog att kunna driva hela roboten. Elektroniken är monterad
+på virkort som sitter fast på robotens ovansida.
+
+Sensorer som används är optiska avståndsmätare, optiska hjulsensorer och gyron.
+
+\subsection{Bussar}
+
+Kart- och kommunikationsmodulen -- refererad till som kartmodulen -- är baserad
+på en Beagleboard xM och är navet i all kommunikation moduler emellan. Alla
+moduler är inkopplade till beagleboarden enligt följande tabell:
+
+\begin{table}[h!]
+	\begin{tabular}{l l}
+		\textbf{Port} & \textbf{Beskrivning} \\
+		Serieport     & Anslutning till sensormodul \\
+		USB$\rightarrow$Serie    & Anslutning till styrmodul \\
+		USB           & Blåtandssticka \\
+		USB           & USB-mus \\
+	\end{tabular}
+\end{table}

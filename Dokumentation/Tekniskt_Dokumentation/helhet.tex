@@ -1,0 +1,16 @@
+\section{Systemet i helhet}
+Robeten byggs på en trehjulig plattform(CarpetRover). På plattformen kommer tre enheter att monteras:
+\begin{itemize}
+        \item Kommunikationsenhet
+        \item Sensorenhet
+        \item Styrenhet
+\end{itemize}
+Varje enhet kommer styras av en egen AVR-processor som klockas av en extern EXO-3 kristalloscillator.
+
+\subsection{Kommunikation}
+All intern kommunikation kommer att ske via en SPI-buss. Kommunikationsenheten kommer att fungera som master på bussen, och all kommunikation kommer att gå via den. När en enhet vill kommunicera med en annan kommer detta att aviseras genom att enheten genererar ett avbrott på kommunikationsenheten. 
+Roboten ska även kunna kommunicera med en PC via bluetooth.
+
+\subsection{Uppgraderbarhet}
+Ett tydligt kommunikationsprotokoll mellan enheterna kommer att användas, för att förenkla modifikationer på enheter. PC-mjukvaran kommer att skicka och ta emot data från kommunikationsenheten via blåtand.
+Mjukvaran kommer att använda ett tydligt protokoll vilket förenklar att utveckla egen, eller uppgradera befintlig, mjukvara.
