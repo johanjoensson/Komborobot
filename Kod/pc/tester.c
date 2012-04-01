@@ -90,6 +90,7 @@ int main(int argc, char** argv)
 	int socket = init();
 	
 	struct sockaddr_rc ffunit = connect_to_firefly(socket);
+	int quit = 0;
 
 	switch(mode){
 		case 0:
@@ -101,11 +102,13 @@ int main(int argc, char** argv)
 			send_msg(socket, inst->data);
 			break;
 		case 1:
-			receive_data(socket, ffunit, &(inst->header));
-			receive_data(socket, ffunit, &(inst->data));
-			printf("Data receiveived:\n\
-					header:\t%X\n\
-					data:\t%X\n", (uint8_t) inst->header, (uint8_t) inst->data);
+			while(!quit){
+				receive_data(socket, ffunit, &(inst->header));
+				receive_data(socket, ffunit, &(inst->data));
+				printf("Data receiveived:\n\
+						header:\t%X\n\
+						data:\t%X\n", (uint8_t) inst->header, (uint8_t) inst->data);
+			}
 			break;
 		default:
 			fprintf(stderr,"Uknown operating mode!\n");
