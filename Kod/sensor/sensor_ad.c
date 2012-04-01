@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "sensor_ad.h"
+#include "sensor_spi.h"
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
@@ -34,19 +35,24 @@ void start_next_ad()
 {
 
 		if (count==0){
-				ADMUX |= (1<<MUX0); 				//byt till PA1
+				ADMUX |= (1<<MUX0); 				//byt till PA1			
 				dist_left=convert_to_distance(ADCH);
+				req_sending();
 		}
 		else if (count==1){
 				ADMUX |= (1<<MUX1);
 				ADMUX &= ~(1<<MUX0);				//byt till PA2
 				dist_right=convert_to_distance(ADCH);
+				data=ADCH;
+				req_sending();
 		}
 		else if (count==2){
 				ADMUX |= (1<<MUX0);					//byt till PA3
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
 				//kanal noll på extern mux/demux
 				dist_front=convert_to_distance(ADCH);
+				data=ADCH;
+				req_sending();
 		}
 		else if (count==3){
 				PORTC |= (1<<PC0);					//välj kanal 1
@@ -88,11 +94,11 @@ void start_next_ad()
 				PORTC |= (1<<PC0);					//kanal 11
 		}
 
-		PORTD = ADCH;
 
 		if (count<13){
 			count++;
 			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
+
 		}
 
 		if ((count>3)&&(count<12)){
@@ -102,6 +108,16 @@ void start_next_ad()
 		else if (count>11){
 				int temp = truncate(ADCH);
 				create_line_array(temp, 2);
+		}
+		if (count==11)
+		{
+				data=line_array_1;
+				req_sending();
+		}
+		else if (count==14)
+		{
+				data=line_array_2;
+				req_sending();
 		}
 }
 

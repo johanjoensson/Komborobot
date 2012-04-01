@@ -22,16 +22,16 @@ int old = 0;
 int Kp = 1;
 int Kd = 3;
 
-signed char regulator(signed char new)
+signed char regulator(signed char new_value)
 {
-        new = new >> 2;
+        new_value = new_value >> 2;
         int outvalue;
-        outvalue = Kp*new; // P-delen
+        outvalue = Kp*new_value; // P-delen
         //outvalue -= Kd*(new-old); // D-delen
         //old = new;
-        outvalue -= Kd*(new-old); // D-delen
+        outvalue -= Kd*(new_value-old); // D-delen
         old = old >> 1;
-        old += new;
+        old += new_value;
         // Inför max- och minvärden
         if(outvalue > 127){
                 outvalue = 127;
@@ -50,22 +50,4 @@ void drive_engines(signed char value)
                 //TODO
                 // Sväng vänster value mycket
         }
-}
-
-int main()
-{
-       printf("Value is %d\n", regulator(125));
-       printf("Value is %d\n", regulator(120));
-       printf("Value is %d\n", regulator(110));
-       printf("Value is %d\n", regulator(89));
-       printf("Value is %d\n", regulator(75));
-       printf("Value is %d\n", regulator(53));
-       printf("Value is %d\n", regulator(42));
-       printf("Value is %d\n", regulator(30));
-       printf("Value is %d\n", regulator(10));
-       printf("Value is %d\n", regulator(0));
-       printf("Value is %d\n", regulator(0));
-       printf("Value is %d\n", regulator(0));
-       printf("Value is %d\n", regulator(0));
-       return 0;
 }
