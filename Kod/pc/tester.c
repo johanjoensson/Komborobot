@@ -91,15 +91,23 @@ int main(int argc, char** argv)
 	
 	struct sockaddr_rc ffunit = connect_to_firefly(socket);
 	int quit = 0;
+	char cont;
 
 	switch(mode){
 		case 0:
-			printf("Prepare to enter header byte!\n");
-			inst->header = get_header();
-			printf("Prepare to enter data byte\n");
-			inst->data = get_data();
-			send_msg(socket, inst->header);
-			send_msg(socket, inst->data);
+			while(!quit){
+				printf("Prepare to enter header byte!\n");
+				inst->header = get_header();
+				printf("Prepare to enter data byte\n");
+				inst->data = get_data();
+				send_msg(socket, inst->header);
+				send_msg(socket, inst->data);
+				printf("Continue sending data? (y/n)\n");
+				scanf("%c", &cont);
+				if(cont == 'n'){
+					quit =1;
+				}
+			}
 			break;
 		case 1:
 			while(!quit){
