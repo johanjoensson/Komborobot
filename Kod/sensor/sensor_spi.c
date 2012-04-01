@@ -2,10 +2,18 @@
 #include <avr/interrupt.h> 
 #include "sensor_spi.h"
 
-int transfer_count=0;
-
 int req_sending()
 {
+		
+		if(auto_mode==1){
+				header=0xC0;	//Om auto_mode är på, skicka till PC och styrenhet
+			
+		}
+		else if(auto_mode==0){
+				header=0x80;	//Om auto_mode är av, skicka bara till PC
+				
+		}
+		
 		SPDR= header;
 		PORTB |= (1<<PB3); //skicka req
 		return 0;
@@ -30,3 +38,18 @@ ISR(SPI_STC_vect) //sensor REQ
 				SPDR=0x00;
 
 }
+
+//*auto_mode beskriver huruvida roboten är i autonomt läge eller ej.
+//INT0 är programmerat för att ge avbrott på förändring på spaken för att byta läge*
+
+ISR(INT0_vect)
+{
+		if(auto_mode==1){
+				auto_mode=0;
+		}
+		else if(auto_mode==0){
+				auto_mode=1;
+		}
+}
+	
+

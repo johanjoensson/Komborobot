@@ -13,14 +13,21 @@
  */
 
 #include <avr/io.h>
-#include <avr/interrupt.h> 
+#include <avr/interrupt.h>
+#include "regulator.h"
+#include "styr_SPI.h"
+#include "motor_test.h"
 
 void init()
  	{
 			TCCR0 |= (1<<WGM00) | (1<<WGM01) | (1<<COM01) | (1<<CS00);
 			TCCR2 |= (1<<WGM20) | (1<<WGM21) | (1<<COM21) | (1<<CS20);
-			DDRD |= (1<<DDD7) | (1<<DDD5) | (1<<DDD4);
+			DDRD |= (1<<DDD7) | (1<<DDD5) | (1<<DDD4) | (1<<DDD2);
 			DDRB |= (1<<DDB3);
+			GICR |= (1<<INT0);		//Tillåt avbrott från spak
+			MCUCR |= (1<<ISC00);	//Spakavbrott triggar på change
+			auto_mode=1;
+		
 	}	
 
 

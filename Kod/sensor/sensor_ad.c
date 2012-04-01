@@ -45,6 +45,7 @@ void start_next_ad()
 				dist_right=convert_to_distance(ADCH);
 				data=ADCH;
 				req_sending();
+			
 		}
 		else if (count==2){
 				ADMUX |= (1<<MUX0);					//byt till PA3

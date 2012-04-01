@@ -4,5 +4,6 @@
 int req_sending();
 unsigned char header;
 unsigned char data;
+int auto_mode;
 
 #endif
