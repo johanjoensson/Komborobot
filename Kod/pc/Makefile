@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -W -pedantic -std=c99 -g
-LDFLAGS = -lbluetooth
+LDFLAGS = -lbluetooth -I/usr/include/bluetooth/
 LIB =  -I/usr/include/bluetooth/
 
 SIMPLE_OBJ = simplescan.o
