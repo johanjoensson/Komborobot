@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 		if(*argv[1] == 'l'){
 			mode = 1;
 		}else if(*argv[1] == 't'){
-			mode ==2;
+			mode = 2;
 		}else{
 			fprintf(stderr, "Uknown argument %s\n", argv[1]);
 			return 1;
