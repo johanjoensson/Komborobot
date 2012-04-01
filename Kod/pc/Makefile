@@ -1,23 +1,22 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -W -pedantic -std=c99 -g
-LIB = -lbluetooth -I/usr/include/bluetooth/ \
-      -lSDL -I/usr/include/SDL
+LDFLAGS = -lbluetooth
+LIB =  -I/usr/include/bluetooth/
 
 SIMPLE_OBJ = simplescan.o
 
 BLUE_PC_OBJ = blue_pc.o
 
-INPUT_OBJ = input_control.o\
-	    header.o\
-	    keypress.o
+TESTER_OBJ = tester.o\
+	     blue_pc.o
+
 
 OBJ = $(SIMPLE_OBJ)\
       $(BLUE_PC_OBJ)\
-      $(INPUT_OBJ)
+      $(TESTER_OBJ)\
 
 EXE = simplescan\
-      blue_pc\
-      input_obj
+      tester
 
 all: $(EXE)
 
@@ -27,11 +26,9 @@ all: $(EXE)
 simplescan : $(SIMPLE_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
-blue_pc : $(BLUE_PC_OBJ)
-	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
-
-input_control: $(INPUT_OBJ)
+tester : $(TESTER_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
 clean :
 	rm *.o $(EXE)
+
