@@ -6,8 +6,7 @@
 
 volatile int a=0;
 
-                                                                                  int main(void){
-
+int main(void){
 		
 		spi_init();	
 		ad_init();
@@ -18,6 +17,7 @@ volatile int a=0;
 						a++;
 						if (a>254) {
 								a = 1;
+								SPDR=EEDR;
 						}
 				}
 		return 0;

@@ -1,8 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include "styr_spi.h"
-
-int transfer_count=0;
+#include "styr_tolka_data.h"
 
 
 
@@ -25,14 +24,13 @@ ISR(SPI_STC_vect) //sensor REQ
 				SPDR=0x00;
 			
 			
-	
+				tolka_data();
 
 }
 
 
-int req_sending()
+void req_sending()
 {
 		SPDR= header;
 		PORTD |= (1<<PD6); //skicka req
-		return 0;
 }

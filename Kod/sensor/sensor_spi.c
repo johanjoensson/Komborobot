@@ -16,21 +16,17 @@ ISR(SPI_STC_vect) //sensor REQ
 		
 
 
-		switch(transfer_count){
-		case 0:
+
 				PORTB &= ~(1<<PB3); 		//REQ low
 				header=SPDR;			//spara mottagen header
 				SPDR=data;				//Välj data för nästa överföring
 				PORTB |= (1<<PB3); 		//REQ high
-				transfer_count=1;
+				while(!(SPSR & (1<<SPIF)))
+				{
+				;
+				}	
 				PORTB &= ~(1<<PB3); 		//REQ low
-				break;
-				
-		case 1:
 				data=SPDR;			//spara mottagen data
 				SPDR=0x00;
-				transfer_count=0;
-				break;
-		}
 
 }
