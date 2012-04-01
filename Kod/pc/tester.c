@@ -80,11 +80,15 @@ int main(int argc, char** argv)
 	int mode = 0;
 
 	if(argc > 1){
-		if(*argv[1] != 'l'){
+		if(*argv[1] == 'l'){
+			mode = 1;
+		}else if(*argv[1] == 't'){
+			mode ==2;
+		}else{
 			fprintf(stderr, "Uknown argument %s\n", argv[1]);
 			return 1;
 		}
-		mode = 1;
+
 	}
 	struct instruction_t *inst = malloc(sizeof(instruction));
 	int socket = init();
@@ -118,6 +122,21 @@ int main(int argc, char** argv)
 						data:\t%X\n", (uint8_t) inst->header, (uint8_t) inst->data);
 			}
 			break;
+		case 2:
+			while(!quit){
+				inst->header = 0x40;
+				printf("Prepare to enter data byte\n");
+				inst->data = get_byte(2);
+				send_msg(socket, inst->header);
+				send_msg(socket, inst->data);
+				printf("Continue sending data? (y/n)\n");
+				scanf("%c", &cont);
+				if(cont == 'n'){
+					quit =1;
+				}
+			}
+			break;
+
 		default:
 			fprintf(stderr,"Uknown operating mode!\n");
 			return 1;
