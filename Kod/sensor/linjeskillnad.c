@@ -1,31 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int calculate_diff(int value);
 int get_first_one(int value);
 
-int main(int argc, char *argv[])
-{
-        if(argc == 1){
-                printf("Användning: linjeskillnad data_från_linejesensor\n");
-                return 1;
-        }
-        int sensorvalue = atoi(argv[1]);
-        int diff = calculate_diff(sensorvalue);
-        printf("Skillnad: %d\n", diff);
-
-        return 0;
-}
 
 // returns a value based on how far away the robot is from the center of the 
 // line. Value is 11 bits that represent the converted values 
 // from the line sensor
-int calculate_diff(int value)
+int calculate_diff(int byte1, int byte2)
 {
+		byte2 &= 0b00000111;
+		int value = (byte1 << 3) + byte2;
         int index = get_first_one(value);
-        printf("Index är %d\n", index);
         if(index == -1){
-                printf("Inga ettor i datat\n");
                 return 0;
         }
         switch(index){

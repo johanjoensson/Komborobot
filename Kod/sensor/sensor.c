@@ -3,6 +3,8 @@
 #include "sensor_spi.h"
 #include "sensor_init.h"
 #include "sensor_ad.h"
+#include "avstandsskillnad.h"
+#include "linjeskillnad.h"
 
 volatile int a=0;
 
@@ -17,7 +19,6 @@ int main(void){
 						a++;
 						if (a>254) {
 								a = 1;
-								SPDR=EEDR;
 						}
 				}
 		return 0;

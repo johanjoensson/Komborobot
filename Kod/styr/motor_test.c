@@ -32,26 +32,37 @@ void stop(unsigned char speed)
 
 void forward(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
-		OCR0 = (speed<<4);
-		OCR2 = (speed<<4);
+		PORTD &= 0xCF;	//ställer riktning framåt
+		OCR0 = 0xCF;	//höger
+		OCR2 = 0xFF;	//vänster
+	/*	OCR0 = (speed<<4);
+		OCR2 = (speed<<4);*/
 	}
 
 void forward_left(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
+		PORTD &= 0xCF;
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<3);
 	}
 
 void forward_right(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
+		PORTD &= 0xCF;
 		OCR0 = (speed<<3);
 		OCR2 = (speed<<4);
 	}
 
 void rotate_left(unsigned char speed)
+	{
+		
+		PORTD &= 0xEF;
+		PORTD |= (1<<PD5);
+		OCR0 = (speed<<4);
+		OCR2 = (speed<<4);
+	}
+
+void rotate_right(unsigned char speed)
 	{
 		PORTD &= 0xDF;
 		PORTD |= (1<<PD4);
@@ -59,17 +70,16 @@ void rotate_left(unsigned char speed)
 		OCR2 = (speed<<4);
 	}
 
-void rotate_right(unsigned char speed)
+void back(unsigned char speed)
 	{
-		PORTD &= 0xEF;
-		PORTD |= (1<<PD5);
+		PORTD |= (1<<PD4) | (1<<PD5);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
 	}
 
-void back(unsigned char speed)
-	{
-		PORTD &= 0xCF;
-		OCR0 = (speed<<4);
-		OCR2 = (speed<<4);
-	}
+/*
+void decide_speed(unsigned char speed)
+{
+		
+}
+*/

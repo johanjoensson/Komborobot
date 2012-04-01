@@ -2,6 +2,9 @@
 #include <avr/interrupt.h>
 #include "sensor_ad.h"
 #include "sensor_spi.h"
+#include "avstandsskillnad.h"
+#include "linjeskillnad.h"
+
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
@@ -36,14 +39,14 @@ void start_next_ad()
 
 		if (count==0){
 				ADMUX |= (1<<MUX0); 				//byt till PA1			
-				dist_left=convert_to_distance(ADCH);
-				req_sending();
+				dist_left=ADCH;
 		}
 		else if (count==1){
 				ADMUX |= (1<<MUX1);
 				ADMUX &= ~(1<<MUX0);				//byt till PA2
-				dist_right=convert_to_distance(ADCH);
-				data=ADCH;
+				dist_right=ADCH;
+				header = 0x81;
+				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
 		}
 		else if (count==2){
@@ -51,6 +54,7 @@ void start_next_ad()
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
 				//kanal noll på extern mux/demux
 				dist_front=convert_to_distance(ADCH);
+				header = 0x82;
 				data=ADCH;
 				req_sending();
 		}
@@ -92,6 +96,7 @@ void start_next_ad()
 		else if (count==13){
 				ADMUX &= ~(1<<MUX0) & ~(1<<MUX1); 	//PA0
 				PORTC |= (1<<PC0);					//kanal 11
+				count++;
 		}
 
 
@@ -105,19 +110,16 @@ void start_next_ad()
 				int temp = truncate(ADCH);
 				create_line_array(temp, 1);
 		}
-		else if (count>11){
+		else if (count<15){
 				int temp = truncate(ADCH);
 				create_line_array(temp, 2);
-		}
-		if (count==11)
-		{
-				data=line_array_1;
-				req_sending();
-		}
-		else if (count==14)
-		{
-				data=line_array_2;
-				req_sending();
+				if (count==14)
+				{
+						data=calculate_diff(line_array_1, line_array_2);
+						header = 0x83;
+						req_sending();
+						create_line_array(0,0);		//Nollställ
+				}
 		}
 }
 
@@ -172,80 +174,4 @@ int truncate(unsigned char inbyte)
 		} else {
 				return 0;
 		}
-}
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  calculate_distance_diff
- *  Description:  Beräknar skillnad i avstånd givet avståndssensorvärden
- * =====================================================================================
- */
-int calculate_distance_diff(unsigned char distance_left, unsigned char distance_right)
-{
-        int diff = distance_left - distance_right;
-        diff = diff >> 1;
-        return diff;
-}
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  calculate_diff
- *  Description:  Input: 11bitar med linjesensorvärde (t ex 00001100000)
- *                Output: Värde som ska regleras på (positivt om roboten är till höger 
- *                och negativt om roboten är till vänster).
- * =====================================================================================
- */
-int calculate_diff(int value)
-{
-        int index = get_first_one(value);
-        //printf("Index är %d\n", index);
-        if(index == -1){
-                //printf("Inga ettor i datat\n");
-                return 0;
-        }
-        switch(index){
-                case 0 :
-                        return -128;
-                case 1:
-                        return -102;
-                case 2:
-                        return -78;
-                case 3:
-                        return -53;
-                case 4:
-                        return -25;
-                case 5:
-                        return 0;
-                case 6:
-                        return 25;
-                case 7:
-                        return 53;
-                case 8:
-                        return 78;
-                case 9:
-                        return 102;
-                case 10:
-                        return 127;
-                default:
-                        return 0;
-        }
-}
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  get_first_one
- *  Description:  Funktion som hittar den första ettan från vänster.
- *                Input: value (11-bitar)
- *                Output: index på första ettan från vänster. -1 om ingen etta.
- * =====================================================================================
- */
-int get_first_one(int value)
-{
-        for(int i=0;i<11;i++){
-                if(value%2 == 1){
-                        return i; 
-                }
-                value = value >> 1;
-        }
-        return -1;
 }

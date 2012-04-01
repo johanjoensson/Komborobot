@@ -24,7 +24,7 @@ int main(void){
 				a++;
 				if (a>254) {
 						a = 1;
-						back(0x08);
+						//forward(0x0F);
 						
 				}
 		}
