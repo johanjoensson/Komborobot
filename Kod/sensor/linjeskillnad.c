@@ -10,7 +10,7 @@ int get_first_one(int value);
 int calculate_diff(int byte1, int byte2)
 {
 		byte2 &= 0b00000111;
-		int value = (byte1 << 3) + byte2;
+		int value = (byte2 << 8) + byte1;
         int index = get_first_one(value);
         if(index == -1){
                 return 0;

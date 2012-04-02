@@ -26,36 +26,38 @@ void tolka_data()
 		}
 		else if(auto_mode==0)				//fjärrstyd
 		{
-				kommando=(data & 0xF0);
+				if(0x00==(header & 0x01)	//data som kommer in är fjärrstyrd
+				{
+						kommando=(data & 0xF0);
 
-				if(0x00==kommando)
-				{
-						stop(data & 0x0F);
+						if(0x00==kommando)
+						{
+								stop(data & 0x0F);
+						}
+						else if(0x10==kommando)
+						{
+								forward(data & 0x0F);
+						}
+						else if(0x20==kommando)
+						{
+								forward_left(data & 0x0F);
+						}
+						else if(0x30==kommando)
+						{
+								forward_right(data & 0x0F);
+						}
+						else if(0x40==kommando)
+						{
+								rotate_left(data & 0x0F);
+						}
+						else if(0x50==kommando)
+						{
+								rotate_right(data & 0x0F);
+						}
+						else if(0x60==kommando)
+						{
+								back(data & 0x0F);
+						}
 				}
-				else if(0x10==kommando)
-				{
-						forward(data & 0x0F);
-				}
-				else if(0x20==kommando)
-				{
-						forward_left(data & 0x0F);
-				}
-				else if(0x30==kommando)
-				{
-						forward_right(data & 0x0F);
-				}
-				else if(0x50==kommando)
-				{
-						rotate_left(data & 0x0F);
-				}
-				else if(0x60==kommando)
-				{
-						rotate_right(data & 0x0F);
-				}
-				else if(0x70==kommando)
-				{
-						back(data & 0x0F);
-				}
-		}
 
 }

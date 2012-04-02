@@ -7,11 +7,10 @@ void spi_init()
 {		
 		DDRB |= (1<<DDB6) | (1<<DDB3); //1=ut bit7=SCLK,1 bit6=MISO,0 bit5=MOSI bit4=SS1
 		SPCR |= (1<<SPIE) | (1<<SPE) | (1<<SPR0);  
-		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave bit3:2 SPI-mode 3, bit1:0 gör inget
-		DDRD |= (1<<DDD2);		//Spak på INT0	
+		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave bit3:2 SPI-mode 3, bit1:0 gör inget	
 		GICR |= (1<<INT0);		//TillŒt avbrott frŒn spak
 		MCUCR |= (1<<ISC00);	//Spakavbrott triggar pŒ change
-		auto_mode=1;
+		decide_mode();
 }
 
 
@@ -25,6 +24,6 @@ void ad_init()
 		PORTC |= (1<<PC0) | (1<<PC1) | (1<<PC6) | (1<<PC7);
 		TIMSK |= (1<<TOV1);			//Tillåt interrupts på timer overflow
 		TCCR1B |= (1<<CS11);		//Prescaler delar med 8, startar räknare
-		level = 0x90;				//Tröskelvärde
+		level = 0xA8;				//Tröskelvärde
 }
 

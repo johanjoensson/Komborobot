@@ -5,15 +5,6 @@
 int req_sending()
 {
 		
-		if(auto_mode==1){
-				header=0xC0;	//Om auto_mode är på, skicka till PC och styrenhet
-			
-		}
-		else if(auto_mode==0){
-				header=0x80;	//Om auto_mode är av, skicka bara till PC
-				
-		}
-		
 		SPDR= header;
 		PORTB |= (1<<PB3); //skicka req
 		return 0;
@@ -44,12 +35,16 @@ ISR(SPI_STC_vect) //sensor REQ
 
 ISR(INT0_vect)
 {
-		if(0x04==(PORTD & 0x04)){
-				auto_mode=1;
-		}
-		else if(0x00==(PORTD & 0x04)){
-				auto_mode=0;
-		}
+		decide_mode();
 }
 	
 
+void decide_mode()
+{
+		if(0x04==(PIND & 0x04)){
+				auto_mode=1;
+		}
+		else if(0x00==(PIND & 0x04)){
+				auto_mode=0;
+		}
+}

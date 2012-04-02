@@ -28,6 +28,10 @@ ISR(SPI_STC_vect) //sensor REQ
 
 }
 
+ISR(INT0_vect)
+{
+		decide_mode();
+}
 
 void req_sending()
 {
@@ -35,13 +39,13 @@ void req_sending()
 		PORTD |= (1<<PD6); //skicka req
 }
 
-ISR(INT0_vect)
+
+void decide_mode()
 {
-		if(0x04==(PORTD & 0x04)){
+		if(0x04==(PIND & 0x04)){
 				auto_mode=1;
 		}
-		else if(0x00==(PORTD & 0x04)){
+		else if(0x00==(PIND & 0x04)){
 				auto_mode=0;
 		}
 }
-

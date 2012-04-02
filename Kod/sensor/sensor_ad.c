@@ -44,7 +44,7 @@ void start_next_ad()
 				ADMUX |= (1<<MUX1);
 				ADMUX &= ~(1<<MUX0);				//byt till PA2
 				dist_right=ADCH;
-				header = 0x80;
+				header = 0x00;
 				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
 			
@@ -54,7 +54,7 @@ void start_next_ad()
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
 				//kanal noll på extern mux/demux
 				dist_front=convert_to_distance(ADCH);
-				header = 0x80;
+				header = 0x00;
 				data=ADCH;
 				req_sending();
 		}
@@ -115,8 +115,8 @@ void start_next_ad()
 				create_line_array(temp, 2);
 				if (count==14)
 				{
-						data=calculate_diff(line_array_1, line_array_2);
-						header = 0x82;
+						data=calculate_diff(line_array_1, line_array_2); 
+						decide_header();
 						req_sending();
 						create_line_array(0,0);		//Nollställ
 				}
@@ -133,12 +133,12 @@ void start_next_ad()
 void create_line_array(int trunc_value, int vect_id)
 {
 		if (vect_id==1){
-				line_array_1 = (line_array_1<<1);
-				line_array_1 |= trunc_value;
+				line_array_1 = (line_array_1>>1);
+				line_array_1 |= (trunc_value<<7);
 		}
 		else if(vect_id == 2){
-				line_array_2 = (line_array_2<<1);
-				line_array_2 |= trunc_value;
+				line_array_2 = (line_array_2>>1);
+				line_array_2 |= (trunc_value<<2);
 		}
 		else{
 				line_array_2 = 0;
@@ -174,4 +174,9 @@ int truncate(unsigned char inbyte)
 		} else {
 				return 0;
 		}
+}
+
+void decide_header()
+{
+		header = 0xC1;		//sätter E-falaggan
 }
