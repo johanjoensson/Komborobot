@@ -21,10 +21,12 @@
 int old = 0;
 int Kp = 1;
 int Kd = 3;
+unsigned char speed = 160;
+
 
 signed char regulator(signed char new_value)
 {
-        new_value = new_value >> 2;
+        new_value = new_value >> 3;
         int outvalue;
         outvalue = Kp*new_value; // P-delen
         //outvalue -= Kd*(new-old); // D-delen
@@ -33,21 +35,26 @@ signed char regulator(signed char new_value)
         old = old >> 1;
         old += new_value;
         // Inför max- och minvärden
-        if(outvalue > 127){
-                outvalue = 127;
-        } else if(outvalue < -128) {
-                outvalue = -128; 
+        if(outvalue > 70){
+                outvalue = 70;
+        } else if(outvalue < -70) {
+                outvalue = -70; 
         }
         return outvalue;
 }
 
 void drive_engines(signed char value)
 {
+        if((value < 10) & (value > -10)){
+                        value = 0;
+        }
         if(value > 0){
-                //TODO
-                //Sväng höger value mycket
+                OCR2 = speed - value; // Vänstermotor
+                OCR0 = speed + value; // Högermotor
         } else {
-                //TODO
-                // Sväng vänster value mycket
+                value = -value;
+
+                OCR2 = speed + value; // Vänstermotor
+                OCR0 = speed - value; // Högermotor
         }
 }
