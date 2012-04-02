@@ -44,7 +44,7 @@ void start_next_ad()
 				ADMUX |= (1<<MUX1);
 				ADMUX &= ~(1<<MUX0);				//byt till PA2
 				dist_right=ADCH;
-				header = 0x81;
+				header = 0x80;
 				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
 			
@@ -54,7 +54,7 @@ void start_next_ad()
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
 				//kanal noll på extern mux/demux
 				dist_front=convert_to_distance(ADCH);
-				header = 0x82;
+				header = 0x80;
 				data=ADCH;
 				req_sending();
 		}
@@ -116,7 +116,7 @@ void start_next_ad()
 				if (count==14)
 				{
 						data=calculate_diff(line_array_1, line_array_2);
-						header = 0x83;
+						header = 0x82;
 						req_sending();
 						create_line_array(0,0);		//Nollställ
 				}

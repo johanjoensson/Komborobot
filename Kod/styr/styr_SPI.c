@@ -37,11 +37,11 @@ void req_sending()
 
 ISR(INT0_vect)
 {
-		if(auto_mode==1){
-				auto_mode=0;
-		}
-		else if(auto_mode==0){
+		if(0x04==(PORTD & 0x04)){
 				auto_mode=1;
+		}
+		else if(0x00==(PORTD & 0x04)){
+				auto_mode=0;
 		}
 }
 
