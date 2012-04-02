@@ -34,3 +34,14 @@ void req_sending()
 		SPDR= header;
 		PORTD |= (1<<PD6); //skicka req
 }
+
+ISR(INT0_vect)
+{
+		if(auto_mode==1){
+				auto_mode=0;
+		}
+		else if(auto_mode==0){
+				auto_mode=1;
+		}
+}
+

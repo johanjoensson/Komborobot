@@ -1,27 +1,19 @@
 /*
-Funktionen läser 
-
-
-
-
+Funktionen läser
 */
-
-
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "regulator.h"
 #include "styr_SPI.h"
 #include "motor_test.h"
 
-int mode;
 
 unsigned char kommando;
 
 void tolka_data()
 {
 		
-		if(mode==1)						//autonom
+		if(auto_mode==1)						//autonom
 		{
 				if(0x02==(header & 0x02))		//D-flagga=1?
 				{
@@ -32,7 +24,7 @@ void tolka_data()
 						drive_engines(regulator(data));
 				}
 		}
-		else if(mode==0)				//fjärrstyd
+		else if(auto_mode==0)				//fjärrstyd
 		{
 				kommando=(data & 0xF0);
 

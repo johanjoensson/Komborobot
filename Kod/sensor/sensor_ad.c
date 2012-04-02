@@ -5,7 +5,6 @@
 #include "avstandsskillnad.h"
 #include "linjeskillnad.h"
 
-
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
 int convert_to_distance(unsigned char analog_distance);
@@ -48,6 +47,7 @@ void start_next_ad()
 				header = 0x81;
 				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
+			
 		}
 		else if (count==2){
 				ADMUX |= (1<<MUX0);					//byt till PA3
