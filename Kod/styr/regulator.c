@@ -50,11 +50,11 @@ void drive_engines(signed char value)
         }
         if(value > 0){
                 OCR2 = speed - value; // Vänstermotor
-                OCR0 = speed + value; // Högermotor
+                OCR0 = speed - 48 + value; // Högermotor
         } else {
                 value = -value;
 
                 OCR2 = speed + value; // Vänstermotor
-                OCR0 = speed - value; // Högermotor
+                OCR0 = speed - 48 - value; // Högermotor
         }
 }
