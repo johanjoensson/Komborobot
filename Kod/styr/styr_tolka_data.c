@@ -19,14 +19,14 @@ void tolka_data()
 				{
 						//kör specialkommando
 				}
-				else
+				else if(0x01==(header & 0x01))
 				{
 						drive_engines(regulator(data));
 				}
 		}
 		else if(auto_mode==0)				//fjärrstyd
 		{
-				if(0x00==(header & 0x01)	//data som kommer in är fjärrstyrd
+				if(0x00==(header & 0x01))	//kollar E-flaggan
 				{
 						kommando=(data & 0xF0);
 
@@ -59,5 +59,6 @@ void tolka_data()
 								back(data & 0x0F);
 						}
 				}
+		}
 
 }

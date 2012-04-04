@@ -24,9 +24,6 @@ void init()
 			TCCR2 |= (1<<WGM20) | (1<<WGM21) | (1<<COM21) | (1<<CS20);
 			DDRD |= (1<<DDD7) | (1<<DDD5) | (1<<DDD4) | (1<<DDD2);
 			DDRB |= (1<<DDB3);
-			GICR |= (1<<INT0);		//Tillåt avbrott från spak
-			MCUCR |= (1<<ISC00);	//Spakavbrott triggar på change
-			auto_mode=1;
 		
 	}	
 
@@ -39,28 +36,28 @@ void stop(unsigned char speed)
 
 void forward(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
+		PORTD &= 0xCF;
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
 	}
 
 void forward_left(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
+		PORTD &= 0xCF;
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<3);
 	}
 
 void forward_right(unsigned char speed)
 	{
-		PORTD |= (1<<PD4) | (1<<PD5);
+		PORTD &= 0xCF;
 		OCR0 = (speed<<3);
 		OCR2 = (speed<<4);
 	}
 
 void rotate_left(unsigned char speed)
 	{
-		PORTD &= 0xDF;
+		PORTD &= 0xEF;
 		PORTD |= (1<<PD4);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
@@ -68,7 +65,7 @@ void rotate_left(unsigned char speed)
 
 void rotate_right(unsigned char speed)
 	{
-		PORTD &= 0xEF;
+		PORTD &= 0xDF;
 		PORTD |= (1<<PD5);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
@@ -76,7 +73,7 @@ void rotate_right(unsigned char speed)
 
 void back(unsigned char speed)
 	{
-		PORTD &= 0xCF;
+		PORTD |= (1<<PD4) | (1<<PD5);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
 	}

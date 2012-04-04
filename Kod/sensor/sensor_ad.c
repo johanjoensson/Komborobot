@@ -115,6 +115,11 @@ void start_next_ad()
 				create_line_array(temp, 2);
 				if (count==14)
 				{
+						//Rå linjedata till PC
+/*						header= (0x80 | line_array_2);
+						data=line_array_1;
+						req_sending();
+*/
 						data=calculate_diff(line_array_1, line_array_2); 
 						decide_header();
 						req_sending();
@@ -178,5 +183,5 @@ int truncate(unsigned char inbyte)
 
 void decide_header()
 {
-		header = 0xC1;		//sätter E-falaggan
+		header = 0x41;		//sätter E-falaggan
 }

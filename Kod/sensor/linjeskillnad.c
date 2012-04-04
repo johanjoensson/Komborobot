@@ -2,6 +2,7 @@
 #include<stdlib.h>
 
 int get_first_one(int value);
+int get_last_one(int index, unsigned char value);
 
 
 // returns a value based on how far away the robot is from the center of the 
@@ -15,15 +16,18 @@ int calculate_diff(int byte1, int byte2)
         if(index == -1){
                 return 0;
         }
+		else{
+		index = ((index + get_last_one(index, value)) >> 1);
+		}
         switch(index){
                 case 0 :
-                        return -128;
+                        return -100;
                 case 1:
-                        return -102;
+                        return -90;
                 case 2:
-                        return -78;
+                        return -75;
                 case 3:
-                        return -53;
+                        return -50;
                 case 4:
                         return -25;
                 case 5:
@@ -31,13 +35,13 @@ int calculate_diff(int byte1, int byte2)
                 case 6:
                         return 25;
                 case 7:
-                        return 53;
+                        return 50;
                 case 8:
-                        return 78;
+                        return 75;
                 case 9:
-                        return 102;
+                        return 90                 ;
                 case 10:
-                        return 127;
+                        return 100;
                 default:
                         return 0;
         }
@@ -54,4 +58,14 @@ int get_first_one(int value)
                 value = value >> 1;
         }
         return -1;
+}
+int get_last_one(int index, unsigned char value)
+{
+		for(int i=10;i>index;i--){
+                if(0x40 == (0x40 & value)){
+                        return i; 
+                }
+                value = value << 1;
+        }
+		return 0;
 }
