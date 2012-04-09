@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdint.h>
+#include<unistd.h>
 
 FILE *init_read(char *path)
 {
@@ -18,10 +20,9 @@ FILE *init_rw(char *path)
 
 void add_to_db(FILE *db, void *data, int n)
 {
-	unsigned char *c = (unsigned char *) data;
-	for(int i = 0; i < n; i++){
-		fprintf(db, "%c", c[i]);
-	}
+	fwrite(data, 1, n, db);
+
+	fflush(db);
 
 	return;
 
@@ -30,19 +31,17 @@ void add_to_db(FILE *db, void *data, int n)
 void read_from_db(FILE *db, void *data, int n)
 {
 
-	fseek(db, n, SEEK_END);
+	fseek(db, -(n + 1), SEEK_END);
 
 	if(n == 0){
 		data = NULL;
 		return;
 	}
 
-	unsigned char c[n];
-	for(int i = 0; i < n; i++){
-		fscanf(db, "%c", &c[i]);
-	}
+	unsigned char c[n + 1];
+	fread(data, 1, n, db);
 
-	data = (void *) c;
+//	data = (void *) c;
 
 	return;
 

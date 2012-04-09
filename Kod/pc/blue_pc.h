@@ -2,6 +2,13 @@
 #define BLUE_PC_H
 
 #include <sys/socket.h>
+#include <stdint.h>
+
+struct instruction_t {
+	unsigned char header;
+	unsigned char data;
+} instruction; 
+
 int init();
 
 struct sockaddr_rc connect_to_firefly(int s);
@@ -12,7 +19,7 @@ void close_socket(int s);
 
 void start_listening(int s);
 
-uint8_t receive_data(int s, struct sockaddr_rc ff, char* buffer);
+void receive_data(int s, struct sockaddr_rc ff, void* buffer);
 
 
 

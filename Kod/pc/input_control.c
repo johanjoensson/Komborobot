@@ -3,15 +3,15 @@
  *
  *       Filename:  input_control.c
  *
- *    Description:  Hanterar input från tangenbord och genererar header och databytes 
+ *    Description:  Hanterar input från tangenbord och genererar instruktion 
  *                  som ska skickas till roboten.
  *
  *        Version:  1.0
  *        Created:  2012-03-25 15:26:34
- *       Revision:  none
+ *       Revision:  2012-04-05 (by Johan Jönsson) 16:58
  *       Compiler:  gcc
  *
- *         Author:  Gustav (), 
+ *         Author:  Gustav (), Johan Jönsson 
  *   Organization:  
  *
  * =====================================================================================
@@ -21,26 +21,25 @@
 #include <SDL/SDL.h>
 #include "header.h"
 #include "keypress.h"
+#include "blue_pc.h"
+#include "db.h"
 
 #define WIDTH 80
 #define HEIGTH 80
 #define BPP 4
 #define DEPTH 32
 
-void event_loop();
-void on_key_up();
-void on_e_down();
-void on_q_down();
-void on_d_down();
-void on_s_down();
-void on_a_down();
-void on_w_down();
-
-unsigned char header;
-unsigned char data;
+void event_loop(struct instruction_t *inst, FILE *db);
+void on_key_up(struct instruction_t *instr);
+void on_e_down(int speed, struct instruction_t *instr);
+void on_q_down(int speed, struct instruction_t *instr);
+void on_d_down(int speed, struct instruction_t *instr);
+void on_s_down(int speed, struct instruction_t *instr);
+void on_a_down(int speed, struct instruction_t *instr);
+void on_w_down(int speed, struct instruction_t *instr);
 
 
-void event_loop()
+void event_loop(struct instruction_t *inst, FILE *db)
 {
 	int speed = 7;
 
@@ -51,7 +50,7 @@ void event_loop()
         } 
         SDL_Surface *screen;
         SDL_Event event;
-        SDL_WM_SetCaption("El centro de control", "El centro de control");
+        SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
 
         screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
 
@@ -67,40 +66,40 @@ void event_loop()
                                                 quit = 1;
                                                 break;
 					case SDLK_w:
-						on_w_down(speed);
+						on_w_down(speed, inst);
                                                 printf("Framåt\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_a:
-						on_a_down(speed);
+						on_a_down(speed, inst);
                                                 printf("Rotera vänster\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_s:
-						on_s_down(speed);
+						on_s_down(speed, inst);
                                                 printf("Back\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_d:
-						on_d_down(speed);
+						on_d_down(speed, inst);
                                                 printf("Rotera höger\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_q:
-						on_q_down(speed);
+						on_q_down(speed, inst);
                                                 printf("Fram vänster\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_e:
-						on_e_down(speed);
+						on_e_down(speed, inst);
                                                 printf("Fram höger\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
 					case SDLK_UP:
 						if(speed<15){
@@ -119,8 +118,8 @@ void event_loop()
 						}
 						break;
 					case SDLK_SPACE:
-						printf("Header = %x\n", header);
-						printf("Data = %x\n", data);
+						printf("Header = %x\n", inst->header);
+						printf("Data = %x\n", inst->data);
                                         default:
                                                 break;
                                 }
@@ -128,40 +127,15 @@ void event_loop()
                         case SDL_KEYUP:
                                 switch(event.key.keysym.sym){
 					case SDLK_w:
-						on_key_up();
+					case SDLK_a:
+					case SDLK_s:
+					case SDLK_d:
+					case SDLK_q:
+					case SDLK_e:
+						on_key_up(inst);
                                                 printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
-						break;
-                                        case SDLK_a:
-						on_key_up();
-                                                printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
-						break;
-                                        case SDLK_s:
-						on_key_up();
-                                                printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
-						break;
-                                        case SDLK_d:
-						on_key_up();
-                                                printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
-						break;
-                                        case SDLK_q:
-						on_key_up();
-                                                printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
-						break;
-                                        case SDLK_e:
-						on_key_up();
-                                                printf("Stopp\n");
-						//printf("Header = %x\n", header);
-						//printf("Data = %x\n", data);
+						//printf("Header = %x\n", inst->header);
+						//printf("Data = %x\n", inst->data);
 						break;
                                         default:
                                                 break;
@@ -169,51 +143,56 @@ void event_loop()
                         default:
                                 break;
                 }
+		add_to_db(db,inst , 2);
         }
 }
 
 
-void on_w_down(int speed)
+void on_w_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = forward(speed);
+       instr->header = generate_header(2,2);
+       instr->data = forward(speed);
 }
-void on_a_down(int speed)
+void on_a_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = rotate_left(speed);
+       instr->header = generate_header(2,2);
+       instr->data = rotate_left(speed);
 }
-void on_s_down(int speed)
+void on_s_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = reverse(speed);
+       instr->header = generate_header(2,2);
+       instr->data = reverse(speed);
 }
-void on_d_down(int speed)
+void on_d_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = rotate_right(speed);
+       instr->header = generate_header(2,2);
+       instr->data = rotate_right(speed);
 }
-void on_q_down(int speed)
+void on_q_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = forward_left(speed);
+       instr->header = generate_header(2,2);
+       instr->data = forward_left(speed);
 }
-void on_e_down(int speed)
+void on_e_down(int speed, struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = forward_right(speed);
+       instr->header = generate_header(2,2);
+       instr->data = forward_right(speed);
 }
 
-void on_key_up()
+void on_key_up(struct instruction_t *instr)
 {
-       header = generate_header(2,2);
-       data = stop();
+       instr->header = generate_header(2,2);
+       instr->data = stop();
 }
 
 int main()
 {
-        event_loop();
-        printf("Header is 0x%x\n", header);
-        printf("Data is 0x%x\n", data);
+	FILE *f = init_write("instr_db");
+	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
+        event_loop(inst, f);
+        printf("Header is 0x%x\n", inst->header);
+        printf("Data is 0x%x\n", inst->data);
+
+	fclose(f);
         return 0;
 }

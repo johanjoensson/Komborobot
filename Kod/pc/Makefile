@@ -9,18 +9,33 @@ BLUE_PC_OBJ = blue_pc.o
 
 INPUT_OBJ = input_control.o\
 	    keypress.o\
-	    header.o
+	    header.o\
+	    blue_pc.o\
+	    db.o
 
 TESTER_OBJ = tester.o\
 	     blue_pc.o
+
+DB_TEST_OBJ = db_test.o\
+	      db.o
+
+SEND_REC_OBJ = blue_pc.o\
+	       db.o\
+	       send_receive.o
 
 
 OBJ = $(SIMPLE_OBJ)\
       $(BLUE_PC_OBJ)\
       $(TESTER_OBJ)\
+      $(INPUT_OBJ)\
+      $(DB_TEST_OBJ)\
+      $(SEND_REC_OBJ)\
 
 EXE = simplescan\
-      tester
+      tester\
+      input_control\
+      db_test\
+      send_receive
 
 all: $(EXE)
 
@@ -34,6 +49,12 @@ tester : $(TESTER_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
 input_control: $(INPUT_OBJ)
+	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
+
+db_test : $(DB_TEST_OBJ)
+	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
+
+send_receive : $(SEND_REC_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
 clean :

@@ -16,6 +16,9 @@
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
+
+#include"blue_pc.h"
+
 /* Initiering av blåtandsenheten
  * Kopplar en socket (int) till blåtandsenheten
  *
@@ -117,7 +120,7 @@ void start_listening(int s)
  *
  * Returvärde:		uint8_t		databyten som mottogs
  */
-uint8_t receive_data(int s, struct sockaddr_rc ff, char* buffer)
+void receive_data(int s, struct sockaddr_rc ff, void* buffer)
 {
 	ba2str(&ff.rc_bdaddr, buffer);
 
@@ -125,11 +128,12 @@ uint8_t receive_data(int s, struct sockaddr_rc ff, char* buffer)
 
 	printf("Receiving data from the Firefly unit\n");
 
-	int msg = recv(s, buffer, 1, 0);
-	if(msg == -1){
+	int nr = recv(s, buffer, 1, 0);
+	//	*buffer = (unsigned char) btohs((short) *buffer);
+	if(nr == -1){
 		fprintf(stderr, "Error, no message received!\n");
 	}
-	return msg;
+	return;
 }
 
 /* Huvudprogrammet.
@@ -139,24 +143,11 @@ uint8_t receive_data(int s, struct sockaddr_rc ff, char* buffer)
  * Inparametrar:	int argc	antalet argument programmet anropas med
  *			char** argv	lista över argumenten
  */
+
+/*
 int main(int argc, char** argv)
 {
-
-	/*
-	int dev_id, sock;
-
-	printf("Finding local Bluetooth adapter\n");
-	dev_id = hci_get_route(NULL);
-
-	printf("Opening BLuetooth socket\n");
-	sock = hci_open_dev( dev_id );
-	if (dev_id < 0 || sock < 0) {
-		perror("opening socket");
-		exit(1);
-	}
-
-	printf("Socket open, local adapter OK!\n");
-	*/
+	struct instruction_t *inst = malloc(sizeof(instruction));
 	uint8_t msg; 
 	if(argc > 1){
 		msg = atoi(argv[1]);
@@ -164,21 +155,26 @@ int main(int argc, char** argv)
 	       msg = 0xA2;
 	}
 
-	char *buf = malloc(sizeof(char));
-	uint8_t data;
-	
+	inst->data = '\0';
+	inst->header = '\0';
+
 	int s = init();
+
+	printf("Socket nr: %d\n", s);
 
 	struct sockaddr_rc ffunit = connect_to_firefly(s);
 
 	send_msg(s,msg);
+	send_msg(s, (uint8_t) 43);
 
 	start_listening(s);
 
-	data = receive_data(s, ffunit, buf);
-		
-	printf("Data received %X\n", data);
+	msg = receive_data(s, ffunit, &(inst->header));
+	msg = receive_data(s, ffunit, &(inst->data));
+
+	printf("Header byte:\t%X\nData byte:\t%c\n", (uint8_t)inst->header, inst->data);
 
 	close_socket(s);
 	return 0;
 }
+*/

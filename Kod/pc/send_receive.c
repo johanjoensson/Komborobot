@@ -28,6 +28,7 @@ int new_data(FILE *db, struct instruction_t *inst)
 		inst->data = tmp->data;
 		return 1;
 	}
+	free(tmp);
 }
 
 void send_inst(int s, struct instruction_t *inst)
@@ -48,23 +49,28 @@ void receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 int main(int argc, char** argv)
 {
 	int socket = init();
+	printf("Socket #%d opened\n", socket);
 
 	//struct sockaddr_rc firefly = connect_to_firefly(socket);
 	int quit = 0;
 	FILE *f = init_read("instr_db");
 	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
-	inst->header = 'b';
-	inst->data = 'b';
 	struct instruction_t *ex_inst = malloc(sizeof(struct instruction_t));
+	inst->header = 'a';
+	inst->data = 'b';
+	int i = 0;
 	while(!quit){
 		if(new_data(f, inst)){
-			printf("Ny data\n");
+			printf("%d: Ny data\n", i);
 			//send_inst(socket, inst);
 		}else{
-			printf("Gammal data\n");
-			quit = 1;
-			//receive_inst(socket, firefly, ex_inst);
+		//	 printf("%d: Gammal data\n", i);
+			// receive_inst(socket, firefly, ex_inst);
 		}
+		i++;
+/*		if(i > 100){
+			quit = 1;
+		}*/
 	}
 
 	fclose(f);
