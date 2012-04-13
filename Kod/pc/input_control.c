@@ -50,7 +50,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
         } 
         SDL_Surface *screen;
         SDL_Event event;
-        SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
+        SDL_WM_SetCaption("Centro de control", "Centro de control");
 
         screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
 
