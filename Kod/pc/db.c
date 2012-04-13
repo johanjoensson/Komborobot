@@ -31,7 +31,7 @@ void add_to_db(FILE *db, void *data, int n)
 void read_from_db(FILE *db, void *data, int n)
 {
 
-	fseek(db, -(n + 1), SEEK_END);
+	fseek(db, n, SEEK_END);
 
 	if(n == 0){
 		data = NULL;

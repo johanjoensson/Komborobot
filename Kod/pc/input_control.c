@@ -67,36 +67,42 @@ void event_loop(struct instruction_t *inst, FILE *db)
                                                 break;
 					case SDLK_w:
 						on_w_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Framåt\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_a:
 						on_a_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Rotera vänster\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_s:
 						on_s_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Back\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_d:
 						on_d_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Rotera höger\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_q:
 						on_q_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Fram vänster\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_e:
 						on_e_down(speed, inst);
+						add_to_db(db,inst , 2);
                                                 printf("Fram höger\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
@@ -133,6 +139,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_q:
 					case SDLK_e:
 						on_key_up(inst);
+						add_to_db(db,inst , 2);
                                                 printf("Stopp\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
@@ -143,7 +150,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
                         default:
                                 break;
                 }
-		add_to_db(db,inst , 2);
+		
         }
 }
 
