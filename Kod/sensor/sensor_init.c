@@ -2,6 +2,7 @@
 #include <avr/interrupt.h> 
 #include "sensor_ad.h"
 #include "sensor_spi.h"
+#include "upptack_tejp.h"
 		
 void spi_init()
 {		
@@ -25,5 +26,14 @@ void ad_init()
 		TIMSK |= (1<<TOV1);			//Tillåt interrupts på timer overflow
 		TCCR1B |= (1<<CS11);		//Prescaler delar med 8, startar räknare
 		level = 0xA8;				//Tröskelvärde
+}
+void upptack_tejp_init()
+{
+		TCCR1B |= (1<<CS12) | (1<<CS10); //LŒt timer gŒ med fosc/1024
+		count_2=0;						 //NollstŠll rŠknare
+		last_value=0;					 //NollstŠll fšrra vŠrdet
+		time1=0x0000;					 //NollstŠll bŒda tiderna
+		time2=0x0000;					 
+		DELTA=200;						 //SŠtt tršskelvŠrde fšr skillnad mellan tejpbitar 
 }
 

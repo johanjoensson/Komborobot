@@ -12,6 +12,7 @@ int main(void){
 		
 		spi_init();	
 		ad_init();
+		upptack_tejp_init();
 		SREG |= (1<<7);				//Globala avbrott	
 
 

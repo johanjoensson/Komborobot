@@ -4,6 +4,7 @@
 #include "sensor_spi.h"
 #include "avstandsskillnad.h"
 #include "linjeskillnad.h"
+//inkludera fšr tejpmarkeringar?
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
