@@ -4,11 +4,11 @@
 #include "sensor_spi.h"
 #include "avstandsskillnad.h"
 #include "linjeskillnad.h"
+#include "sensorvarde_omvandling.h"
 //inkludera fšr tejpmarkeringar?
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
-int convert_to_distance(unsigned char analog_distance);
 void start_next_ad();
 int get_first_one(int value);
 
@@ -46,6 +46,7 @@ void start_next_ad()
 				ADMUX &= ~(1<<MUX0);				//byt till PA2
 				dist_right=ADCH;
 				header = 0x00;
+				//Obs, dum ide! AnvŠnd cm vŠrde
 				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
 			
@@ -54,8 +55,11 @@ void start_next_ad()
 				ADMUX |= (1<<MUX0);					//byt till PA3
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
 				//kanal noll på extern mux/demux
-				dist_front=convert_to_distance(ADCH);
+				dist_front=framomvandling(ADCH);
 				header = 0x00;
+				//OBS skickar inte i cm, om sŒ Šr šnskat:
+				//data=dist_front;
+			
 				data=ADCH;
 				req_sending();
 		}
@@ -152,18 +156,6 @@ void create_line_array(int trunc_value, int vect_id)
 		}
 }
 
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  convert_to_distance
- *  Description:  Input: digital sensorvärde
- *  		  Output: avstånd i cm
- * =====================================================================================
- */
-int convert_to_distance(unsigned char analog_distance)
-{
-		//TODO
-		return 0;
-}
 
 /* 
  * ===  FUNCTION  ======================================================================
