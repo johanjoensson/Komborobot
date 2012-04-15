@@ -66,7 +66,7 @@ int main(void)
 			send_inst(socket, inst);
 		}else{
 			// printf("%d: Gammal data\n", i);
-			receive_inst(socket, firefly, ex_inst);
+			// receive_inst(socket, firefly, ex_inst);
 		}
 		i++;
 	}
