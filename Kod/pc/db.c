@@ -38,7 +38,6 @@ void read_from_db(FILE *db, void *data, int n)
 		return;
 	}
 
-	unsigned char c[n + 1];
 	fread(data, 1, n, db);
 
 //	data = (void *) c;
