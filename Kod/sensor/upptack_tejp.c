@@ -11,36 +11,54 @@
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  Markning
- *  Description:  Tar emot nuvarande vÃ¤rde pÃ¥ mittensensorn
- *	Input:			Nuvarande vÃ¤rde pÃ¥ nÃ¥gon av de mittre sensorerna, 1 fÃ¶r tejp 0 annars
- *	Output:			1 om markering fÃ¶r hÃ¶gersvÃ¤ng upptÃ¤ckts, 2 om vÃ¤nstersvÃ¤ng upptÃ¤ckts, 3 om rakt fram upptÃ¤ckts, 0 annars
+ *  Description:  Tar emot nuvarande värde på mittensensorn
+ *	Input:			Nuvarande värde på någon av de mittre sensorerna, 1 för tejp 0 annars
+ *	Output:			1 om markering för högersväng upptäckts, 2 om vänstersväng upptäckts, 3 om rakt fram upptäckts, 0 annars
  * =====================================================================================
  */
+int count_2;
+int last_value;
+unsigned int time1;
+unsigned int time2;
+
+//anropa med markning(find_ones(line_array_1));
+
+int find_ones(unsigned char array)
+{
+		if((array & 0x70) == 0x70){
+			return 1;
+		}
+		else {
+			return 0;
+		}
+
+}
+
 int markning(int now_value){
 	
 	
 	
 	
-	//Om gÃ¥r frÃ¥n ingen tejpmarkering till Tejp, sÃ¤tt pÃ¥ timer
+	//Om går från ingen tejpmarkering till Tejp, sätt på timer
 	if(last_value==0 && now_value==1 && count_2==0){
 		TCNT1=0x0000;
 		count_2++;
 	}
 	
-	//Om gÃ¥r frÃ¥n Tejp till ingen Tejp, slÃ¥ av timer och spara vÃ¤rde i time1
+	//Om går från Tejp till ingen Tejp, slå av timer och spara värde i time1
 	if(last_value==1 && now_value==0 && count_2==1){
 		time1 = (int)TCNT1;
 		count_2++;
 		
 	}
 	
-	//NÃ¤r gÃ¥r frÃ¥n ingen tejp till tejp, slÃ¥ pÃ¥ timer
+	//När går från ingen tejp till tejp, slå på timer
 	if(last_value==0 && now_value==1 && count_2==2){
 		//reset timer
 		TCNT1=0x0000;
 		count_2++;
 	}
-	//NÃ¤r gÃ¥r frÃ¥n tejp till ingen tejp, slÃ¥ av timer och spara vÃ¤rde i time2
+	//När går från tejp till ingen tejp, slå av timer och spara värde i time2
 	if(last_value==1 && now_value==0 && count_2==3){
 		time2 = (int)TCNT1;
 	
@@ -50,17 +68,17 @@ int markning(int now_value){
 		int diff2 = time2 - time1;
 		count_2=0;
 		if(diff1>DELTA){
-			//SvÃ¤ng hÃ¶ger
+			//Sväng höger
 			return 1;
 			
 		}
 		else if(diff2>DELTA){
-			//SvÃ¤ng vÃ¤nster
-			return 2;			
+			//Sväng vänster
+			return 2;
 			
 		}
 		else{
-			//KÃ¶r rakt fram
+			//Kör rakt fram
 			return 3;
 		}
 	
@@ -72,3 +90,4 @@ int markning(int now_value){
 
 	return 0;
 }
+
