@@ -3,5 +3,6 @@
 
 void spi_init();
 void ad_init();
+void upptack_tejp_init();
 
 #endif
