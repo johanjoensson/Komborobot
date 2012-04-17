@@ -92,8 +92,8 @@ void send_special_command(unsigned char command)
         if(command == 0xE0){
                 return;
         } else {
-                unsigned char header = 0xCF;
-                unsigned char data = command;
+                header = 0xCF;
+                data = command;
 		//printf("Header is %x\n", header);
 		//printf("Data is %x\n", data);
                 req_sending();
