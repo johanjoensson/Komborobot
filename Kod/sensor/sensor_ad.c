@@ -33,7 +33,8 @@ ISR(TIMER1_OVF_vect)
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  start_next_ad
- *  Description:  Styr muxar, ad och anropar omvandlingar
+ *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen för att
+ *				  skicka data.
  * =====================================================================================
  */
 void start_next_ad()
@@ -41,41 +42,48 @@ void start_next_ad()
 		int state=control_mux();
 
 		if (state==1){				//left&right klara
-				header = 0x00;
-				//Obs, dum ide! AnvŠnd cm vŠrde
-				data=calculate_distance_diff(dist_left, dist_right);
-				req_sending();
+				if(maze_mode==1){
+						header = 0x41;	//Skicka till styr med E-flagga
+						//data=calculate_distance_diff(dist_left, dist_right);
+						req_sending();
+				}
 		}
 		else if(state==2){			//front klar
-
+				//visa på display
 		}
-		else if(state==3){			//linjesensor 0-7 klara
-				int temp = truncate(ADCH);
-				create_line_array(temp, 1);
+		else if(state==3){			//linjesensor 0-7 pågår 
+				create_line_array(truncate(ADCH), 1);
 		}
-		else if(state==4){			//
-				int temp = truncate(ADCH);
-				create_line_array(temp, 2);
+		else if(state==4){			//linjesensor 8-10 pågår
+				create_line_array(truncate(ADCH), 2);
 		}
 		else {
 				;
 		}
 				
 
-		if (count==13){
+		if (count==13){				//alla linjesensorer omvandlade
 				if (maze_mode==0){
 						data=calculate_diff(line_array_1, line_array_2); 
-						decide_header();
+						header=0x41; 	//Skicka till styr med E-flagga
 						req_sending();
+						
+						//inga linjer? byt till maze_mode=1 om väggar finns 
+						if(line_array_1==0 && line_array_2==0) {
+								decide_maze_mode(1);
+						}
 				}
 				else if(maze_mode==1){
-						EEDR=markning(find_ones(line_array_1));
+						
+						/*Grulfens kod som jag inte är insatt i(*/markning(find_ones(line_array_1));
+
+						//linjer? byt till maze_mode=0 om inga väggar finns
+						if(line_array_1!=0 && line_array_2!=0) {
+								decide_maze_mode(0);
+						}
 				}
 
 
-				if(line_array_1==0 && line_array_2==0) {
-						decide_maze_mode(1);
-				}
 
 				create_line_array(0,0);		//Nollställ
 
@@ -85,7 +93,6 @@ void start_next_ad()
 			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
 		}
 
-
 						//Rå linjedata till PC
 /*						header= (0x80 | line_array_2);
 						data=line_array_1;
@@ -94,6 +101,14 @@ void start_next_ad()
 
 
 }
+
+
+ /***************************************************************************\
+|	Namn: control_mux														  |
+|	Beskr: Ställer om interna och externa muxar samt anropar omvandlingar,	  |
+|		   returnerar ett värde beroende på muxarnas inställning.			  |
+ \***************************************************************************/
+
 
 int control_mux()
 {
@@ -197,10 +212,5 @@ int truncate(unsigned char inbyte)
 		} else {
 				return 0;
 		}
-}
-
-void decide_header()
-{
-		header = 0x41;		//sätter E-falaggan
 }
 
