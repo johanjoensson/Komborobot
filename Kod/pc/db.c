@@ -20,7 +20,7 @@ FILE *init_rw(char *path)
 
 void add_to_db(FILE *db, void *data, int n)
 {
-	fwrite(data, 1, n, db);
+	fwrite(data, n, 1, db);
 
 	fflush(db);
 
@@ -31,14 +31,14 @@ void add_to_db(FILE *db, void *data, int n)
 void read_from_db(FILE *db, void *data, int n)
 {
 
-	fseek(db, n, SEEK_END);
+//	fseek(db, n, SEEK_END);
 
 	if(n == 0){
 		data = NULL;
 		return;
 	}
 
-	fread(data, 1, n, db);
+	fread(data, n , 1, db);
 
 //	data = (void *) c;
 

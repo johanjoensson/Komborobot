@@ -15,6 +15,10 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 
+enum data_type_t{
+	SENSORDATA,
+	STYRKOMMANDO
+} data_type;
 
 int new_data(FILE *db, struct instruction_t *inst)
 {
@@ -34,7 +38,9 @@ int new_data(FILE *db, struct instruction_t *inst)
 void send_inst(int s, struct instruction_t *inst)
 {
 	send_msg(s, inst->header);
+	printf("Header sent\n");
 	send_msg(s, inst->data);
+	printf("Data sent\n");
 	return;
 }
 
@@ -43,6 +49,16 @@ void receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 
 	receive_data(s, ff, &inst->header);
 	receive_data(s, ff, &inst->data);
+
+	return;
+}
+
+enum data_type_t type_of_instr(struct instruction_t *inst)
+{
+	return SENSORDATA;
+}
+void display_inst(struct instruction_t *inst)
+{
 
 	return;
 }
@@ -62,11 +78,13 @@ int main(void)
 	int i = 0;
 	while(!quit){
 		if(new_data(f, inst)){
-			//printf("%d: Ny data\n", i);
+			printf("Ny data\n");
 			send_inst(socket, inst);
 		}else{
-			// printf("%d: Gammal data\n", i);
+//			printf("gammal data\n");
+
 			// receive_inst(socket, firefly, ex_inst);
+			// display_inst(ex_inst);
 		}
 		i++;
 	}
