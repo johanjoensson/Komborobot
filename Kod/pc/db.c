@@ -15,12 +15,14 @@ FILE *init_write(char *path)
 
 FILE *init_rw(char *path)
 {
-	return fopen(path, "rw");
+	return fopen(path, "w+");
 }
 
 void add_to_db(FILE *db, void *data, int n)
 {
-	fwrite(data, n, 1, db);
+	fseek(db, -n, SEEK_END);
+
+	fwrite(data, 1, n, db);
 
 	fflush(db);
 
@@ -31,16 +33,14 @@ void add_to_db(FILE *db, void *data, int n)
 void read_from_db(FILE *db, void *data, int n)
 {
 
-//	fseek(db, n, SEEK_END);
-
+	fseek(db, -n, SEEK_END);
 	if(n == 0){
 		data = NULL;
 		return;
 	}
 
-	fread(data, n , 1, db);
-
-//	data = (void *) c;
+	fread(data, 1, n, db);
+	fflush(db);
 
 	return;
 
