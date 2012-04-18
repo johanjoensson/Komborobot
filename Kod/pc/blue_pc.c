@@ -79,11 +79,8 @@ struct sockaddr_rc connect_to_firefly(int s)
 void send_msg(int s, uint8_t msg)
 {
 	int chk_msg = send(s, &msg, 1, 0);
-	printf("Sending message: %X to Firfly unit\n", msg);
 	if(chk_msg == -1){
 		fprintf(stderr, "Error, message not sent!\n");
-	}else{
-		printf("Sent %d byte to Firefly unit\n", chk_msg);
 	}
 }
 
@@ -108,7 +105,6 @@ void close_socket(int s)
  */
 void start_listening(int s)
 {
-		printf("Start listening to the Firefly unit\n");
 		listen(s,1);
 }
 
@@ -126,7 +122,6 @@ void receive_data(int s, struct sockaddr_rc ff, void* buffer)
 
 	memset(buffer, 0, sizeof(buffer));
 
-	printf("Receiving data from the Firefly unit\n");
 
 	int nr = recv(s, buffer, 1, 0);
 	//	*buffer = (unsigned char) btohs((short) *buffer);
