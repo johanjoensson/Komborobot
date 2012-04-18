@@ -4,13 +4,15 @@
 #include "sensor_spi.h"
 #include "avstandsskillnad.h"
 #include "linjeskillnad.h"
+#include "upptack_tejp.h"
+#include "sensorvarde_omvandling.h"
 //inkludera fšr tejpmarkeringar?
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
-int convert_to_distance(unsigned char analog_distance);
 void start_next_ad();
 int get_first_one(int value);
+int control_mux();
 
 
 
@@ -36,97 +38,124 @@ ISR(TIMER1_OVF_vect)
  */
 void start_next_ad()
 {
+		int state=control_mux();
 
-		if (count==0){
-				ADMUX |= (1<<MUX0); 				//byt till PA1			
-				dist_left=ADCH;
-		}
-		else if (count==1){
-				ADMUX |= (1<<MUX1);
-				ADMUX &= ~(1<<MUX0);				//byt till PA2
-				dist_right=ADCH;
+		if (state==1){				//left&right klara
 				header = 0x00;
+				//Obs, dum ide! AnvŠnd cm vŠrde
 				data=calculate_distance_diff(dist_left, dist_right);
 				req_sending();
-			
 		}
-		else if (count==2){
-				ADMUX |= (1<<MUX0);					//byt till PA3
-				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
-				//kanal noll på extern mux/demux
-				dist_front=convert_to_distance(ADCH);
-				header = 0x00;
-				data=ADCH;
-				req_sending();
-		}
-		else if (count==3){
-				PORTC |= (1<<PC0);					//välj kanal 1
-		}
-		else if (count==4){
-				PORTC |= (1<<PC1);
-				PORTC &= ~(1<<PC0);					//kanal 2
-		}
-		else if (count==5){
-				PORTC |= (1<<PC0);					//kanal 3
-		}
-		else if (count==6){
-				PORTC |= (1<<PC6);
-				PORTC &= ~(1<<PC0) & ~(1<<PC1);		//kanal 4
-		}
-		else if (count==7){
-				PORTC |= (1<<PC0);					//kanal 5
-		}
-		else if (count==8){
-				PORTC |= (1<<PC1);
-				PORTC &= ~(1<<PC0);					//kanal 6
-		}
-		else if (count==9){
-				PORTC |= (1<<PC0);					//kanal 7
-		}
-		else if (count==10){
-				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6);
-				PORTC |= (1<<PC7);					//kanal 8
-		}
-		else if (count==11){
-				PORTC |= (1<<PC0);					//kanal 9
-		}
-		else if (count==12){
-				PORTC |= (1<<PC1);
-				PORTC &= ~(1<<PC0);					//kanal 10
-		}
-		else if (count==13){
-				ADMUX &= ~(1<<MUX0) & ~(1<<MUX1); 	//PA0
-				PORTC |= (1<<PC0);					//kanal 11
-				count++;
-		}
-
-
-		if (count<13){
-			count++;
-			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
+		else if(state==2){			//front klar
 
 		}
-
-		if ((count>3)&&(count<12)){
+		else if(state==3){			//linjesensor 0-7 klara
 				int temp = truncate(ADCH);
 				create_line_array(temp, 1);
 		}
-		else if (count<15){
+		else if(state==4){			//
 				int temp = truncate(ADCH);
 				create_line_array(temp, 2);
-				if (count==14)
-				{
+		}
+		else {
+				;
+		}
+				
+
+		if (count==13){
+				if (maze_mode==0){
+						data=calculate_diff(line_array_1, line_array_2); 
+						decide_header();
+						req_sending();
+				}
+				else if(maze_mode==1){
+						EEDR=markning(find_ones(line_array_1));
+				}
+
+
+				if(line_array_1==0 && line_array_2==0) {
+						decide_maze_mode(1);
+				}
+
+				create_line_array(0,0);		//Nollställ
+
+		}
+		else if (count<13){
+			count++;
+			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
+		}
+
+
 						//Rå linjedata till PC
 /*						header= (0x80 | line_array_2);
 						data=line_array_1;
 						req_sending();
 */
-						data=calculate_diff(line_array_1, line_array_2); 
-						decide_header();
-						req_sending();
-						create_line_array(0,0);		//Nollställ
-				}
+
+
+}
+
+int control_mux()
+{
+		switch (count){
+		case(0):
+				ADMUX |= (1<<MUX0); 				//byt till PA1			
+				dist_left=vansteromvandling(ADCH);
+				return 0;
+		case(1):
+				ADMUX |= (1<<MUX1);
+				ADMUX &= ~(1<<MUX0);				//byt till PA2
+				dist_right=vansteromvandling(ADCH);
+				return 1;
+		case(2):
+				ADMUX |= (1<<MUX0);					//byt till PA3
+				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
+				//kanal noll på extern mux/demux
+				dist_front=framomvandling(ADCH);
+				return 2;
+		case(3):
+				PORTC |= (1<<PC0);					//välj kanal 1
+				return 3;
+		case(4):
+				PORTC |= (1<<PC1);
+				PORTC &= ~(1<<PC0);					//kanal 2
+				return 3;
+		case(5):
+				PORTC |= (1<<PC0);					//kanal 3
+				return 3;
+		case(6):
+				PORTC |= (1<<PC6);
+				PORTC &= ~(1<<PC0) & ~(1<<PC1);		//kanal 4
+				return 3;
+		case(7):
+				PORTC |= (1<<PC0);					//kanal 5
+				return 3;
+		case(8):
+				PORTC |= (1<<PC1);
+				PORTC &= ~(1<<PC0);					//kanal 6
+				return 3;
+		case(9):
+				PORTC |= (1<<PC0);					//kanal 7
+				return 3;
+		case(10):
+				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6);
+				PORTC |= (1<<PC7);					//kanal 8
+				return 3;
+		case(11):
+				PORTC |= (1<<PC0);					//kanal 9
+				return 4;
+		case(12):
+				PORTC |= (1<<PC1);
+				PORTC &= ~(1<<PC0);					//kanal 10
+				return 4;
+		case(13):
+				ADMUX &= ~(1<<MUX0) & ~(1<<MUX1); 	//PA0
+				PORTC |= (1<<PC0);					//kanal 11
+				return 4;
+		default:
+				return 0;
 		}
+				
 }
 
 
@@ -152,18 +181,6 @@ void create_line_array(int trunc_value, int vect_id)
 		}
 }
 
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  convert_to_distance
- *  Description:  Input: digital sensorvärde
- *  		  Output: avstånd i cm
- * =====================================================================================
- */
-int convert_to_distance(unsigned char analog_distance)
-{
-		//TODO
-		return 0;
-}
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -186,3 +203,4 @@ void decide_header()
 {
 		header = 0x41;		//sätter E-falaggan
 }
+

@@ -1,11 +1,9 @@
-#ifndef testbech_H
-#define testbech_H
+#ifndef UPPTACK_TEJP_H
+#define UPPTACK_TEJP_H
 
-int markning();
-int count_2;
-int last_value;
-unsigned int time1;
-unsigned int time2;
-int DELTA;
+int markning(int now_value);
+int find_ones(unsigned char array);
+int maze_mode;
+void decide_maze_mode();
 
 #endif

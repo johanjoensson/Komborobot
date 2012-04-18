@@ -1,6 +1,7 @@
 \section{Kommunikationsenhet}
-Kommunikationsenheten ansvarar för att förmedla information mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en Fireflymodul. 
-Kommunikationen mellan PCn och roboten kommer att ske via blåtand. Kommunikation mellan de olika delsystemen på roboten kommer att ske med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}. Hur de olika pinnarna på processorn ska anslutas kan betraktas i figur \ref{fig:PINkomm}.
+Kommunikationsenheten ansvarar för att förmedla diverse olika sorters information mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en Fireflymodul. Processorn klockas av en 4 MHz klocka som också klockar resten av systemet. 
+
+Kommunikationen mellan PCn och roboten sker via blåtand. Kommunikation mellan de olika delsystemen på roboten sker med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}. Hur de olika pinnarna på processorn är anslutna kan betraktas i figur \ref{fig:PINkomm}.
 
 \begin{figure}[H]
   \centering
@@ -40,52 +41,45 @@ header.
 
 \subsection{SPI}
 \label{sec:SPI}
-SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I roboten kommer kommunikationsenheten att vara ensam Master. Systemet kommer att ha två slavar i form av styrenheten och sensorenheten.
-Detta betyder att all kommunikation kommer att behöva gå via kommunikationsenheten. SPI-bussen arbetar alltid i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Således kan 2 bits skickas via SPI-bussen på 1 klockcykel. 
+SPI bussen är ett kommunikationssystem som använder ett så kallat Master-Slav system. I robotens system är kommunikationsenheten ensam Master. Systemet har två slavar i form av styrenheten och sensorenheten.
+Detta betyder att all kommunikation behöver gå via kommunikationsenheten. SPI-bussen arbetar alltid i så kallat full duplex läge vilket betyder att överföringar kan ske i två riktningar samtidigt. Alla överföringar i systemet sker med två bytes åt gången, en headerbyte som bland annat innehåller adressen och en databyte. För med information om detta, se \ref{sec:Protokoll}. När kommunikationsenheten avslutat en överföring så analyseras alltid headerbyten, som mottagits genom tvåvägskommunikationen, innan nästa externa överföringsefterfrågan behandlas.
 
-Robotens kommunikationssystem kommer att fungera så att styr- och sensorenheten har möjlighet att ta initiativ till överföringar till och från kommunikationsenheten. Detta är inte standard på SPI-bussen utan löses med två stycken extrasignaler vi kommer att kalla för REQ-signaler. Alla sorters kommunikation kommer att styras med hjälp av avbrott, vilket är ett utmärkt sätt att hantera plötsliga externa kommandon. REQ signalen kommer att generera ett avbrott hos mastern som i sin tur kommer att generera ett avbrott på enheten som skickat REQ signalen. Då mastern initierar kontakten kommer ett avbrott att genereras på den valda enheten. Alla SPI-överföringar avslutas med att en speciell avbrottsflagga, kallad SPIF, sätts.
+Robotens kommunikationssystem fungerar så att styr- och sensorenheten har möjlighet att ta initiativ till överföringar till och från kommunikationsenheten. Detta är inte standard på SPI-bussen utan löses med två stycken extrasignaler, så kallade REQ-signaler. Alla sorters kommunikation kommer att styras med hjälp av avbrott, vilket är ett utmärkt sätt att hantera plötsliga externa kommandon. Då någon av slavarna vill påbörja en överföring sätts enhetens REQ signal hög, vilket genererar ett avbrott hos mastern. Är mastern upptagen då en hög REQ signal skickas så får enheten vänta på att mastern avslutat den pågående överföringen. Efter att mastern blivit uppmärksammad om att en överföring efterfrågas sätts SS-signalen till den berörda enheten låg. Överföringen startas i det ögonblick som mastern skriver något till det temporära SPI-registret, SPDR. I detta ögonblick så börjar mastern också dela ut en klockpuls för överföringen till slavarna. I detta läge och framåt görs ingen skillnad på huruvida det var slaven eller mastern som initierade överföringen. Alla SPI-överföringar avslutas med att en speciell avbrottsflagga, kallad SPIF, sätts. När detta sker kommer båda parterna i överföringen att spara undan den mottagna datan. Då alla SPI överföringar sker med 8 bitar upprepas denna procedur två gånger för varje överföring.
 
-För att klargöra vart informationen som skickas till kommunikationsenheten ska sändas vidare kommer det att användas en så kallad header. Detta är en byte med information som specificerar vilken typ av information som skickas och vad som är målet mer. Mer information om denna hittas under \ref{sec:Protokoll}.
+Nedan följer klargöranden om hur de olika portarna i SPI-bussen. 
 
-Nedan följer klargöranden om hur projektgruppen ämnar använda de olika portarna i SPI-bussen. 
+\subsubsection{SCK}
 
-
-\subsubsection{CLK}
-
-CLK porten är en port som förmedlar en klocka med en viss frekvens från mastern till de två slavarna. Denna signal bestämmer hur snabbt överföringen ska ske. Denna klockfrekvens har en övre begränsning till halva frekvensen hos masterenhetens arbetsklocka.
+SCK porten är en port som förmedlar en klocka med en viss frekvens från mastern till de två slavarna. Denna signal bestämmer hur snabbt överföringen ska ske. Klockan kommer börjar skickas då mastern skriver något till dess temporära SPI dataregister, SPDR. När detta skett skickas totalt 8 pulser vilket överför 8 bitar i båda riktningar. Mastern och slaven är konfigurerade för att överföringens olika skeden ska ske samtidigt i klockcykeln. I robotens system används frekvensen 250 kHz, det vill säga 1/16-del av arbetsklockan på 4 MHz för överföringar. Detta är inte den snabbast möjlig överföringshastigheten och kan enkelt förändras vid behov av snabbare överföringar. Den övre begränsningen i överföringshastighet är hälften av arbetsklockan, det vill säga 2 MHz.
 
 
 \subsubsection{MOSI}
-MOSI porten är den port som används när kommunikationsenheten ska förmedla
+MOSI porten är den port som används när kommunikationsenheten ska skicka 
 information till styrenheten och sensorenheten. Den kommer alltså att användas som
-input för slavarna och output för mastern. Den information som kommer att
-skickas beror på i vilket läge roboten arbetar i. I fjärrstyrt läge kommer det
-genom MOSI portarna förmedlas styrinformation till styrenheten som
-kommunikationsenheten i sin tur får från en PC via blåtand. I autonomt läge
-kommer här t.ex. att skickas data som sensorenheten använder vid
-reglering av de två hjulens hastigheter. Annan information som kommer att skickas via MOSI är
-specialbeslut, till exempel om roboten måste svänga 90\degree i en labyrint.
+input för slavarna och output för mastern. Exempel på information som skickas här är data, med tillhörande header, som skickas till styrenheten från sensorenheten för att reglera de båda hjulens hastighet.
 
 \subsubsection{MISO}
-MISO porten kommer användas då kommunikationsenheten hämtar information från styr- och sensorenheten. Den kommer alltså att vara en input för mastern och output för båda slavarna. Exempel på information som ska skickas med MISO är data som skickas från sensorenheten för vidare transport till styrenheten.
-Då all kommunikation med SPI är tvåsidig kommer även MOSI porten att användas varje gång MISO porten används och viceversa. Finns det inget intresse av dubbelsidig kommunikation finns möjligheten att ignorera skickad data.
+MISO porten används då kommunikationsenheten hämtar information från styr- och sensorenheten. Den är alltså att vara en input för mastern och output för båda slavarna. Exempel på information som skickas med MISO är information om att ett speciellt beslut tagits i sensorenheten. Den header som alltid skickas med specificerar adressen för datat, i detta fall både PCn och styrenheten.
+Då all kommunikation med SPI är tvåsidig används även MOSI porten varje gång MISO porten används och viceversa.
 
 \subsubsection{SS}
-SS portarna skickar eller tar emot en variant på en chip-select signal. Den SS signal som är låg väljer vilken av slavarna som mastern ska kommunicera med. Endast en av de två SS signalerna kan vara låg samtidigt. Dessa portar kommer att vara output på kommunikationsenheten och input på styr- och sensorenheten.
-När SS signalen till en av slavarna är låg betyder det alltså att slavens SPI är aktiverad. Ett avbrott kommer att göras på den valda slaven och när olika konfigurationer utförts, och en klockfrekvens levererats från masterenheten, kommer information att börja skickas till den enhet som har en låg SS signal. Den enhet som får en hög SS signal kommer att ha sin SPI inaktiv och kommer inte att påverkas av denna överföring.
-När sändningen är klar sätts SPI avbrottsflaggan (SPIF) i både mastern(kommunikationsenheten) och slaven(någon av styr- eller sensorenheten). Denna flagga bekräftar att överföringen är färdig och SS signalen kan åter sättas hög av kommunikationsenheten.
+SS portarna skickar eller tar emot en variant på en chip-select signal. Den SS signal som är låg väljer vilken av slavarna som mastern ska kommunicera med. Endast en av de två SS signalerna får vara låg samtidigt för att undvika busskonflikter. Dessa portar kommer att vara output på kommunikationsenheten och input på styr- och sensorenheten.
+En låg SS signal hos någon av slavarna är låg betyder att slavens SPI är aktiverad, förutsatt att nödvändiga bitar satts i slavens SPI-kontrollregister. Överöringens start genererar inget avbrott hos slaven, utan sker istället parallellt med övrig aktivitet hos slaven. Då överföringen avslutats genereras ett avbrott där slaven sparar undan den skickade byten. Är det den första byten i överföringen som skickats får efter det att kommunikationsenheten sparat undan datan och genom en hög REQ signal fått bekräftelse att den berörda slaven gjort detsamma. En enhet som får en hög SS signal kommer att ha sin SPI inaktiv och kommer inte att påverkas av överföringar på bussen.
+Efter att två bytes överförts sätts SS signalen åter hög och mastern påbörjar en analys av den skickade headern och om denna specificerar att den mottagna datan ska skickas någonstans.
 
 \subsubsection{REQ}
-REQ portarna används av styr- och sensorenheten för att uppmärksamma kommunikationsenheten om att dem har ny information att förmedla. När kommunikationsenheten tar emot en signal på någon av REQ portarna kommer det att generera ett avbrott. Under avbrottet kommer SS signalen till enheten som begärt kommunikation att sättas låg och kommunikationen påbörjas.  REQ portarna kommer att ha en avbrottsnivå som understiger det avbrott som är aktivt vid pågående kommunikation.
+REQ portarna används av styr- och sensorenheten för att uppmärksamma kommunikationsenheten om att de har ny information att förmedla. När kommunikationsenheten tar emot en signal på någon av REQ portarna kommer det att generera ett avbrott. Under avbrottet kommer SS signalen till enheten som begärt kommunikation att sättas låg och kommunikationen påbörjas. Då mastern kan vara upptagen i det ögonblick då den mottar en hög REQ-signal så låter slavarna REQ-signalen vara hög tills dess att överföringen är färdig då den sätts låg. 
+
+REQ signalen används också för att bekräfta att slavarna sparat undan en headerbyte och är redo att ta emot en databyte.
 
 \subsubsection{Synkronisering}
-För att överföringar i systemet ska fungera är det viktigt att masterenhetens och slavenheterernas SPI har samma konfiguration i vissa avseenden. Den kanske viktigaste konfigurationen är vilka moment i överföringen som ska ske på stigande och fallande flank i klockpulsen. I robotens hårdvara finns 4 olika konfigurationslägen. Vilket läge som används kontrolleras av två bitar i ett kontrollregister till respektive enhets SPI. Det är av yttersta vikt att alla enheter i roboten som använder SPI är inställda på samma läge.
+För att överföringar i systemet ska fungera är det viktigt att masterenhetens och slavenheterernas SPI har samma konfiguration i vissa avseenden. Den kanske viktigaste konfigurationen är vilka moment i överföringen som ska ske på stigande och fallande flank i klockpulsen. I robotens hårdvara finns 4 olika konfigurationslägen. Vilket läge som används kontrolleras av två bitar i ett kontrollregister till respektive enhets SPI. I roboten sätts inte någon av dessa bitar i någon av enheterna.
 
 \subsubsection{Exempel}
 
-När roboten befinner sig i labyrint-läge har sensorenheten gjort en ny avläsning som resulterar i beslutet att en 90\degree kurva är nödvändig. Den vill distribuera denna information vidare. Sensorenheten sätter då en hög utsignal på sin REQ port vilket resulterar i ett avbrott på kommunikationsenheten. Kommunikationsenheten för närvarande är för närvarande upptagen med överföring av reglerdata till styrenheten, så avbrottet kommer att få vänta tills denna överföring är klar.
+När roboten befinner sig i labyrint-läge har sensorenheten gjort en ny avläsning som resulterar i beslutet att en 90\degree kurva är nödvändig. Den vill distribuera denna information vidare. Sensorenheten sätter då en hög utsignal på sin REQ port vilket resulterar i ett avbrott på kommunikationsenheten. Kommunikationsenheten för närvarande är för närvarande upptagen med överföring av reglerdata till styrenheten, så avbrottet får vänta tills denna överföring är klar. Under denna väntan är sensorenhetens REQ signal fortsatt hög.
 
-I avbrottet på kommunikationsenheten så sätts SS signalen till sensorenheten låg, och därefter förmedlar kommunikationsenheten en klockpuls till sensorenheten. När två bytes överförts, en headerbyte och en databyte, så avslutas överföringen och SS signalen till sensorenheten sätts åter hög. Efter att ha tolkat headerbyten så sätter kommunikationsenheten SS signalen till styrenheten låg, samt genererar en klockpuls till styrenheten. Detta genererar ett avbrott i styrenheten som tar emot de två byten som härstammar från sensorenheten. När överföringen är färdig sätts SS signalen till styrenheten återigen hög vilket avslutar överföringen. 
+I avbrottet på kommunikationsenheten så sätts SS signalen till sensorenheten låg, och därefter förmedlar kommunikationsenheten en klockpuls till sensorenheten. När två bytes överförts, en headerbyte och en databyte, så avslutas överföringen och SS signalen till sensorenheten sätts åter hög. Efter att headerbyten tolkats så sätter kommunikationsenheten SS signalen till styrenheten låg, samt genererar en klockpuls till styrenheten. När överföringen av två bytes är färdig sätts SS signalen till styrenheten återigen hög vilket avslutar överföringen. 
 
 Då headerbyten innehöll information om att detta var ett styrbeslut så ska kommunikationsenheten också skicka detta till PCn. Detta görs via en UART port på kommunikationsenheten.
 
@@ -94,7 +88,7 @@ De olika enheternas roll i detta exempel åskådliggörs nedan i ett schema, se 
 
 \begin{figure}[H]
  \centering
-\includegraphics[angle=0,scale=0.7]{bilder/Schema_exempel.png}
+\includegraphics[angle=0,scale=0.7]{bilder/schema_exempel.jpg}
   \caption{Schema över de olika enheternas metodik vid exempelöverföringen}
   \label{fig:schema}
 \end{figure}
