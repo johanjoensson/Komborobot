@@ -3,6 +3,7 @@
  * Datum: 27/3 2012
  * Klockan: 16:03
  */
+#define DEBUG
 
 #include "blue_pc.h"
 #include "db.h"
@@ -38,9 +39,7 @@ int new_data(FILE *db, struct instruction_t *inst)
 void send_inst(int s, struct instruction_t *inst)
 {
 	send_msg(s, inst->header);
-	printf("Header sent\n");
 	send_msg(s, inst->data);
-	printf("Data sent\n");
 	return;
 }
 
@@ -66,7 +65,6 @@ void display_inst(struct instruction_t *inst)
 int main(void)
 {
 	int socket = init();
-	//printf("Socket #%d opened\n", socket);
 
 	struct sockaddr_rc firefly = connect_to_firefly(socket);
 	int quit = 0;
@@ -78,13 +76,12 @@ int main(void)
 	int i = 0;
 	while(!quit){
 		if(new_data(f, inst)){
-			printf("Ny data\n");
 			send_inst(socket, inst);
 		}else{
-//			printf("gammal data\n");
-
-			// receive_inst(socket, firefly, ex_inst);
-			// display_inst(ex_inst);
+#ifndef DEBUG
+			receive_inst(socket, firefly, ex_inst);
+			display_inst(ex_inst);
+#endif
 		}
 		i++;
 	}
