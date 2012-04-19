@@ -3,6 +3,7 @@
  * Datum: 27/3 2012
  * Klockan: 16:03
  */
+#define DEBUG
 
 #include "blue_pc.h"
 #include "db.h"
@@ -64,7 +65,6 @@ void display_inst(struct instruction_t *inst)
 int main(void)
 {
 	int socket = init();
-	//printf("Socket #%d opened\n", socket);
 
 	struct sockaddr_rc firefly = connect_to_firefly(socket);
 	int quit = 0;
@@ -78,10 +78,10 @@ int main(void)
 		if(new_data(f, inst)){
 			send_inst(socket, inst);
 		}else{
-//			printf("gammal data\n");
-
-			// receive_inst(socket, firefly, ex_inst);
-			// display_inst(ex_inst);
+#ifndef DEBUG
+			receive_inst(socket, firefly, ex_inst);
+			display_inst(ex_inst);
+#endif
 		}
 		i++;
 	}

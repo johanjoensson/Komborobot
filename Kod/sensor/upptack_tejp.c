@@ -6,7 +6,7 @@
 #include "avstandsskillnad.h"
 #include "linjeskillnad.h"
 
-#define DELTA 200
+#define DELTA 2
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -37,7 +37,7 @@ int find_ones(unsigned char array)
 int markning(int now_value){
 	
 		
-	//Om är på första Tejp, öka antalet iterationer
+	//Om är på Tejp, öka antalet iterationer
 	if(now_value==1){
 		iterations++;
 	}	//Spara antalet iterationer när går av första markeringen	
@@ -53,13 +53,13 @@ int markning(int now_value){
 		iterations=0;
 		count_2=0;
 
-		if(time1>2 && time2<3){
+		if(time1-time2>DELTA){
 			//Sväng höger
 			EEDR=0x07;
 			return 1;
 			
 		}
-		else if(time1<3 && time2>2){
+		else if(time2-time1>DELTA){
 			//Sväng vänster
 			EEDR=0x07;
 			return 2;
