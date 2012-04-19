@@ -38,9 +38,7 @@ int new_data(FILE *db, struct instruction_t *inst)
 void send_inst(int s, struct instruction_t *inst)
 {
 	send_msg(s, inst->header);
-	printf("Header sent\n");
 	send_msg(s, inst->data);
-	printf("Data sent\n");
 	return;
 }
 
@@ -78,7 +76,6 @@ int main(void)
 	int i = 0;
 	while(!quit){
 		if(new_data(f, inst)){
-			printf("Ny data\n");
 			send_inst(socket, inst);
 		}else{
 //			printf("gammal data\n");

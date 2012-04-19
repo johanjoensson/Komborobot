@@ -103,7 +103,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 						on_q_down(speed, inst);
 						add_to_db(db,inst , 2);
 //						add_to_db(db,"q" , 2);
-                                                printf("Fram vänster\n");
+//	                                        printf("Fram vänster\n");
 						//printf("Header = %x\n", inst->header);
 						//printf("Data = %x\n", inst->data);
 						break;
@@ -136,8 +136,8 @@ void event_loop(struct instruction_t *inst, FILE *db)
 
 						trim_right(inst, speed);
 						add_to_db(db, inst, 2);
-						inst = old_inst;
-						add_to_db(db, inst, 2);
+//						inst = old_inst;
+//						add_to_db(db, inst, 2);
 
 //						add_to_db(db, "r", 2);
 
@@ -148,8 +148,8 @@ void event_loop(struct instruction_t *inst, FILE *db)
 
 						trim_left(inst, speed);
 						add_to_db(db, inst, 2);
-						inst = old_inst;
-						add_to_db(db, inst, 2);
+//						inst = old_inst;
+//						add_to_db(db, inst, 2);
 						
 //						add_to_db(db, "l", 2);
 						break;
@@ -157,13 +157,17 @@ void event_loop(struct instruction_t *inst, FILE *db)
 
 
 					case SDLK_SPACE:
+						
 						printf("Header = %x\n", inst->header);
 						printf("Data = %x\n", inst->data);
+						on_key_up(inst);
+						add_to_db(db, inst, 2);
+						
                                         default:
                                                 break;
                                 }
                                 break;
-                        case SDL_KEYUP:
+/*                        case SDL_KEYUP:
                                 switch(event.key.keysym.sym){
 					case SDLK_w:
 					case SDLK_a:
@@ -181,7 +185,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_LEFT:
                                         default:
                                                 break;
-				}
+				} */
                         default:
                                 break;
                 }
@@ -200,7 +204,7 @@ void on_w_down(int speed, struct instruction_t *instr)
 void on_a_down(int speed, struct instruction_t *instr)
 {
        instr->header = generate_header(2,2);
-       instr->data = forward(speed);
+       instr->data = rotate_left(speed);
 //       instr->data = rotate_left(speed);
 }
 void on_s_down(int speed, struct instruction_t *instr)
@@ -248,8 +252,8 @@ int main()
 	FILE *f = init_write("instr_db");
 	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
         event_loop(inst, f);
-        printf("Header is 0x%x\n", inst->header);
-        printf("Data is 0x%x\n", inst->data);
+//        printf("Header is 0x%x\n", inst->header);
+//       printf("Data is 0x%x\n", inst->data);
 
 	fclose(f);
         return 0;
