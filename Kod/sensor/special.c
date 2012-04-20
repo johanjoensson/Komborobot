@@ -21,12 +21,12 @@
 
 unsigned char next_special_command = 0xE0;
 
-//int main(int argc, char *argv[])
-//{
-//        set_next_special_command(generate_special_command(atoi(argv[1])));
-//	send_special_command(get_next_special_command());
-//        return 0;
-//}
+int main(int argc, char *argv[])
+{
+        generate_special_command(atoi(argv[1]));
+	send_special_command(get_next_special_command());
+        return 0;
+}
 
 /*-----------------------------------------------------------------------------
  *  set_next_special_command 
@@ -53,29 +53,32 @@ unsigned char get_next_special_command()
 
 /*-----------------------------------------------------------------------------
  *  generate_special_command
+ *      Sätter next_special_command om command_code är 1-4, annars inget
  *      input:  command_code 0 för inget specialkommando
  *                           1 för sväng höger
  *                           2 för sväng vänster
  *                           3 för kör rakt fram
  *                           4 för återuppta vanlig reglering
- *      output: ett specialkommando
+ *      
  *-----------------------------------------------------------------------------*/
-unsigned char generate_special_command(unsigned char command_code)
+void generate_special_command(unsigned char command_code)
 {
         unsigned char special_command = 0xE0;
         switch(command_code){
                 case 1:         special_command = 0x60;
+                                set_next_special_command(special_command);
                                 break;
                 case 2:         special_command = 0x40;
+                                set_next_special_command(special_command);
                                 break;
                 case 3:         special_command = 0x20;
+                                set_next_special_command(special_command);
                                 break;
                 case 4:         special_command = 0x00;
+                                set_next_special_command(special_command);
                                 break;
-                default:        special_command = 0xE0;
-                                break;
+                default:        break;
         }
-	return special_command;
 }
 
 
@@ -94,8 +97,8 @@ void send_special_command(unsigned char command)
         } else {
                 header = 0xCF;
                 data = command;
-		//printf("Header is %x\n", header);
-		//printf("Data is %x\n", data);
-                req_sending();
+		printf("Header is %x\n", header);
+		printf("Data is %x\n", data);
+                //req_sending();
         }
 }
