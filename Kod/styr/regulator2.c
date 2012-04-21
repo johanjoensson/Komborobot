@@ -32,7 +32,7 @@ unsigned char speed = 110;
  *              left: avstånd till vänster (20 --- 120)
  *              right: avstånd till höger (20 --- 120)
  *      output: 
- *              värde att reglera på (-70 --- 70)
+ *              värde som ska styra motorer (-70 --- 70)
  *-----------------------------------------------------------------------------*/
 signed char distance_regulator(unsigned char left, unsigned char right)
 {
@@ -52,6 +52,19 @@ signed char distance_regulator(unsigned char left, unsigned char right)
         return outvalue;
 }
 
+
+/*-----------------------------------------------------------------------------
+ *  line_regulator
+ *  	input: 
+ *	   	new_value värde att reglera på
+ *  	output: 
+ *              värde som ska styra motorer (-70 --- 70)
+ *-----------------------------------------------------------------------------*/
+signed char line_regulator(signed char new_value)
+{
+	// Kod här
+	return 0;
+}
 
 /*-----------------------------------------------------------------------------
  *  drive_engines styr motorerna beroende på value
