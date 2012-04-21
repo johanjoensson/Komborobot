@@ -31,6 +31,8 @@ int main(void){
 				if (a>254) {
 						a = 1;
 						//forward(0x0F);
+						specialkommando();
+						stop(0);
 						
 				}
 		}

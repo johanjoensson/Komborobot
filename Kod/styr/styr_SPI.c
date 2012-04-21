@@ -2,7 +2,7 @@
 #include <avr/interrupt.h> 
 #include "styr_spi.h"
 #include "styr_tolka_data.h"
-
+#include "motor_test.h"
 
 
 ISR(SPI_STC_vect) //sensor REQ
@@ -44,8 +44,11 @@ void decide_mode()
 {
 		if(0x04==(PIND & 0x04)){
 				auto_mode=1;
+				stop(0x00);
+
 		}
 		else if(0x00==(PIND & 0x04)){
 				auto_mode=0;
+				stop(0x00);
 		}
 }

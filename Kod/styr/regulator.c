@@ -22,7 +22,7 @@
 
 int old = 0;
 int Kp = 1;
-int Kd = 3;
+int Kd = 1;
 unsigned char speed = 110;
 
 
@@ -31,11 +31,9 @@ signed char regulator(signed char new_value)
         new_value = new_value >> 2;
         int outvalue;
         outvalue = Kp*new_value; // P-delen
-        //outvalue -= Kd*(new-old); // D-delen
-        //old = new;
-        //outvalue -= Kd*(new_value-old); // D-delen
-        //old = old >> 1;
-        //old += new_value;
+
+        outvalue -= Kd*(new_value-old); // D-delen
+		old = new_value;
         // Inför max- och minvärden
         if(outvalue > 70){
                 outvalue = 70;

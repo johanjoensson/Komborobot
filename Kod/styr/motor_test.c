@@ -58,7 +58,7 @@ void forward_right(unsigned char speed)
 void rotate_left(unsigned char speed)
 	{
 		PORTD &= 0xEF;
-		PORTD |= (1<<PD4);
+		PORTD |= (1<<PD5);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
 	}
@@ -66,7 +66,7 @@ void rotate_left(unsigned char speed)
 void rotate_right(unsigned char speed)
 	{
 		PORTD &= 0xDF;
-		PORTD |= (1<<PD5);
+		PORTD |= (1<<PD4);
 		OCR0 = (speed<<4);
 		OCR2 = (speed<<4);
 	}
