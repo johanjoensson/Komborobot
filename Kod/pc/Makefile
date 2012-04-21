@@ -24,35 +24,35 @@ SEND_REC_OBJ = blue_pc.o\
 	       send_receive.o
 
 
-OBJ = $(SIMPLE_OBJ)\
-      $(BLUE_PC_OBJ)\
-      $(TESTER_OBJ)\
-      $(INPUT_OBJ)\
-      $(DB_TEST_OBJ)\
+OBJ = $(INPUT_OBJ)\
       $(SEND_REC_OBJ)\
+#       $(SIMPLE_OBJ)\
+#       $(BLUE_PC_OBJ)\
+#       $(TESTER_OBJ)\
+#       $(DB_TEST_OBJ)\
 
-EXE = simplescan\
-      tester\
-      input_control\
-      db_test\
-      send_receive
+EXE = input_control\
+      send_receive\
+#       simplescan\
+#       tester\
+#       db_test\
 
 all: $(EXE)
 
 %.o : %.c
 	$(CC) -c $(CFLAGS) $< $(LDFLAGS) -o $@
 
-simplescan : $(SIMPLE_OBJ)
-	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
-
-tester : $(TESTER_OBJ)
-	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
+# simplescan : $(SIMPLE_OBJ)
+# 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
+# 
+# tester : $(TESTER_OBJ)
+# 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
 input_control: $(INPUT_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
-db_test : $(DB_TEST_OBJ)
-	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
+# db_test : $(DB_TEST_OBJ)
+# 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
 
 send_receive : $(SEND_REC_OBJ)
 	$(CC) $(CFLAGS) $(LIB) $^ $(LDFLAGS) -o $@
