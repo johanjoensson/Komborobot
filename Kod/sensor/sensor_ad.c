@@ -6,7 +6,7 @@
 #include "linjeskillnad.h"
 #include "upptack_tejp.h"
 #include "sensorvarde_omvandling.h"
-//inkludera fšr tejpmarkeringar?
+#include "special.h"
 
 void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
@@ -28,6 +28,14 @@ ISR(TIMER1_OVF_vect)
 		count=0;			//starta om
 }
 
+ISR(TIMER1_COMPB_vect)
+{
+		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
+		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
+		count=3;
+		ADCSRA |= (1<<ADSC);
+}
+
 
 
 /* 
@@ -42,9 +50,9 @@ void start_next_ad()
 		int state=control_mux();
 
 		if (state==1){				//left&right klara
-				if(maze_mode==1){
+				if(maze_mode==1 && auto_mode==1){
 						header = 0x41;	//Skicka till styr med E-flagga
-						//data=calculate_distance_diff(dist_left, dist_right);
+						data=calculate_distance_diff(dist_left, dist_right);
 						req_sending();
 				}
 		}
@@ -63,7 +71,7 @@ void start_next_ad()
 				
 
 		if (count==13){				//alla linjesensorer omvandlade
-				if (maze_mode==0){
+				if (maze_mode==0 && auto_mode==1){
 						data=calculate_diff(line_array_1, line_array_2); 
 						header=0x41; 	//Skicka till styr med E-flagga
 						req_sending();
@@ -73,9 +81,11 @@ void start_next_ad()
 								decide_maze_mode(1);
 						}
 				}
-				else if(maze_mode==1){
+				else if(maze_mode==1 && auto_mode==1){
 						
-						/*Grulfens kod som jag inte är insatt i(*/markning(find_ones(line_array_1));
+						generate_special_command(markning(find_ones(line_array_1)));
+
+						//kod för att hitta korsningar och kör specialkommando in här
 
 						//linjer? byt till maze_mode=0 om inga väggar finns
 						if(line_array_1!=0 && line_array_2!=0) {

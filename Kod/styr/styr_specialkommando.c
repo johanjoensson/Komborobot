@@ -5,7 +5,7 @@
 
 void specialkommando()
 {
-        unsigned char kommando_kod = data & 0xE0;
+        unsigned char kommando_kod = 0x40;//data & 0xE0;
 
 		if(0x40 == kommando_kod)
 		{
@@ -18,7 +18,7 @@ void specialkommando()
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
                                                         // och startar klockan
-                        forward(8);
+                        forward(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
@@ -26,19 +26,19 @@ void specialkommando()
 
                         TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
                         TCNT1 = 0;                      //Nollställ klockan
-                        OCR1A = 0x0FA0;                 // ställer in klockan på 0.25s
+                        OCR1A = 0x0FFF;                 // ställer in klockan på 0.25s
                         TCCR1B = (1<<CS12) | (1<<CS10);  //starta klockan
-                        rotate_left(9);
+                        rotate_left(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
                         stop(0);
-                        CCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
                         TCNT1 = 0;                      //Nollställ klockan
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
                                                         // och startar klockan
-                        forward(8);
+                        forward(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
@@ -53,7 +53,7 @@ void specialkommando()
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
                                                         // och startar klockan
-                        forward(8);
+                        forward(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
@@ -63,7 +63,7 @@ void specialkommando()
                         TCNT1 = 0;                      //Nollställ klockan
                         OCR1A = 0x0FA0;                 // ställer in klockan på 0.25s
                         TCCR1B = (1<<CS12) | (1<<CS10);  //starta klockan
-                        rotate_right(9);
+                        rotate_right(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
@@ -72,8 +72,8 @@ void specialkommando()
                         TCNT1 = 0;                      //Nollställ klockan
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
-                                                         // och startar klockan
-                        forward(8);
+                                                        // och startar klockan
+                        forward(0x0A);
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }

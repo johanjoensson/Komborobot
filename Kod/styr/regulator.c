@@ -21,7 +21,7 @@
 #include <avr/interrupt.h>
 
 int old = 0;
-int Kp = 2;
+int Kp = 1;
 int Kd = 1;
 unsigned char speed = 110;
 
@@ -33,7 +33,6 @@ signed char regulator(signed char new_value)
         outvalue = Kp*new_value; // P-delen
         outvalue -= Kd*(new_value-old); // D-delen
         old = new_value;
-        
         // Inför max- och minvärden
         if(outvalue > 70){
                 outvalue = 70;

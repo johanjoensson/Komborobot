@@ -21,12 +21,14 @@
 
 unsigned char next_special_command = 0xE0;
 
+/*
 int main(int argc, char *argv[])
 {
         generate_special_command(atoi(argv[1]));
 	send_special_command(get_next_special_command());
         return 0;
 }
+*/
 
 /*-----------------------------------------------------------------------------
  *  set_next_special_command 
