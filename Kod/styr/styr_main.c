@@ -22,8 +22,10 @@ int main(void){
 		decide_mode();
 		init();				//init motorer
 
+		TIMSK |= (1<<OCIE1A); // avbrott från 16-bits klocka aktiveras
+
 		SREG = (SREG | 0x80);  //Tillåt globala interrupts
-		
+
 		
 
 		while (a<255) {

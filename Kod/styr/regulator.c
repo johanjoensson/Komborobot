@@ -21,21 +21,19 @@
 #include <avr/interrupt.h>
 
 int old = 0;
-int Kp = 1;
-int Kd = 3;
+int Kp = 2;
+int Kd = 1;
 unsigned char speed = 110;
 
 
 signed char regulator(signed char new_value)
 {
-        new_value = new_value >> 2;
+        new_value = new_value >> 1;
         int outvalue;
         outvalue = Kp*new_value; // P-delen
-        //outvalue -= Kd*(new-old); // D-delen
-        //old = new;
-        //outvalue -= Kd*(new_value-old); // D-delen
-        //old = old >> 1;
-        //old += new_value;
+        outvalue -= Kd*(new_value-old); // D-delen
+        old = new_value;
+        
         // Inför max- och minvärden
         if(outvalue > 70){
                 outvalue = 70;
@@ -47,16 +45,13 @@ signed char regulator(signed char new_value)
 
 void drive_engines(signed char value)
 {
-/*        if((value < 10) & (value > -10)){
-                        value = 0;
-        }
-*/        if(value > 0){
-                OCR2 = speed + 0 - value; // Vänstermotor
-                OCR0 = speed + 2 + value; // Högermotor
+        if(value > 0){
+                OCR2 = speed - value; // Vänstermotor
+                OCR0 = speed + value; // Högermotor
         } else {
                 value = -value;
 
-                OCR2 = speed + 0 + value; // Vänstermotor
-                OCR0 = speed + 2 - value; // Högermotor
+                OCR2 = speed + value; // Vänstermotor
+                OCR0 = speed - value; // Högermotor
         }
 }

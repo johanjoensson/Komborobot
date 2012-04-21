@@ -33,10 +33,17 @@ void specialkommando()
                                ;  
                         }
                         stop(0);
+                        CCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCNT1 = 0;                      //Nollställ klockan
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
                                                         // och startar klockan
                         forward(8);
+                        while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
+                               ;  
+                        }
+                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCNT1 = 0;                      //Nollställ klockan
                         return;
 
 		}
@@ -61,10 +68,17 @@ void specialkommando()
                                ;  
                         }
                         stop(0);
+                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCNT1 = 0;                      //Nollställ klockan
                         OCR1A = 0x3E80;                  // ställer in klockan på 1 sek
                         TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler på 16-bits klocka till 1024 
-                                                        // och startar klockan
+                                                         // och startar klockan
                         forward(8);
+                        while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
+                               ;  
+                        }
+                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCNT1 = 0;                      //Nollställ klockan
                         return;
 		}
 		else if(0x20==kommando_kod)
@@ -77,6 +91,8 @@ void specialkommando()
                         while(!(TIFR & (1<<OCF1A))){    // Vänta tills klockan räknat klart
                                ;  
                         }
+                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+                        TCNT1 = 0;                      //Nollställ klockan
                         return;
 		}
 }
