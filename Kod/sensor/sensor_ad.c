@@ -49,10 +49,17 @@ void start_next_ad()
 {
 		int state=control_mux();
 
-		if (state==1){				//left&right klara
+		if (state==1){				//left klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0x41;	//Skicka till styr med E-flagga
-						data=calculate_distance_diff(dist_left, dist_right);
+						data=dist_right;
+						req_sending();
+				}
+		}
+		else if (state==5){			//right klar
+				if(maze_mode==1 && auto_mode==1){
+						header = 0x41;	//Skicka till styr med E-flagga
+						data=0x80 | dist_left;
 						req_sending();
 				}
 		}
@@ -73,7 +80,7 @@ void start_next_ad()
 		if (count==13){				//alla linjesensorer omvandlade
 				if (maze_mode==0 && auto_mode==1){
 						data=calculate_diff(line_array_1, line_array_2); 
-						header=0x41; 	//Skicka till styr med E-flagga
+						header=0x51; 	//Skicka till styr med A- och E-flagga
 						req_sending();
 						
 						//inga linjer? byt till maze_mode=1 om väggar finns 
@@ -126,7 +133,7 @@ int control_mux()
 		case(0):
 				ADMUX |= (1<<MUX0); 				//byt till PA1			
 				dist_left=vansteromvandling(ADCH);
-				return 0;
+				return 5;
 		case(1):
 				ADMUX |= (1<<MUX1);
 				ADMUX &= ~(1<<MUX0);				//byt till PA2

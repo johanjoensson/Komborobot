@@ -93,18 +93,18 @@ void set_speed_right(unsigned char speed)
 void trim_left()		// ökar höger speed och minskar vänster speed med 1
 	{
 		if(trim>-16){
-			trim=trim-1
+			trim=trim-1;
 		}
 	}
 void trim_right()		//ökar höger speed och minskar vänster speed med 1
 	{
 		if(trim<16){
-			trim=trim+1
+			trim=trim+1;
 		}
 	}
 void trim_zero()		//nollställer trimning
 	{
-		trim=0
+		trim=0;
 	}
 /*
 void decide_speed(unsigned char speed)

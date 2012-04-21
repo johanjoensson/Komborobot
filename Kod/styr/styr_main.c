@@ -2,7 +2,6 @@
 #include <avr/interrupt.h> 
 #include "styr_spi.h"
 #include "styr_tolka_data.h"
-#include "regulator.h"
 #include "motor_test.h"
 #include "styr_specialkommando.h"
 
@@ -16,16 +15,14 @@ int main(void){
 		SPCR |= (1<<SPIE) | (1<<SPE) | (1<<SPR0);  
 		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave 
 		//bit3:2 SPI-mode 3, bit1:0 gör inget
-		DDRD |= (1<<DDD6); //REQ
+		DDRD |= (1<<DDD6); 	//REQ
 		MCUCR |= (1<<ISC00);	//interrupt när man drar i spaken.
 		GICR |= (1<<INT0);	//tillåt spaken att fungerar
 		decide_mode();
 		init();				//init motorer
 
-		TIMSK |= (1<<OCIE1A); // avbrott från 16-bits klocka aktiveras
-
 		SREG = (SREG | 0x80);  //Tillåt globala interrupts
-
+		
 		
 
 		while (a<255) {
@@ -33,8 +30,8 @@ int main(void){
 				if (a>254) {
 						a = 1;
 						//forward(0x0F);
-						specialkommando();
-						stop(0);
+						//specialkommando();
+						//stop(0);
 						
 				}
 		}

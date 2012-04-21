@@ -1,5 +1,5 @@
-#ifndef REGULATOR_H
-#define REGULATOR_H
+#ifndef REGULATOR2_H
+#define REGULATOR2_H
 
 void drive_engines(signed char value);
 signed char distance_regulator(unsigned char left, unsigned char right);

@@ -9,9 +9,9 @@ void forward_right(unsigned char speed);
 void rotate_left(unsigned char speed);
 void rotate_right(unsigned char speed);
 void back(unsigned char speed);
-void trim_left(unsigned char speed);
-void trim_right(unsigned char speed);
-void trim_zero
+void trim_left();
+void trim_right();
+void trim_zero();
 void set_speed_left(unsigned char speed);
 void set_speed_right(unsigned char speed);
 #endif

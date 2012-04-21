@@ -3,12 +3,13 @@ Funktionen läser
 */
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "regulator.h"
 #include "styr_SPI.h"
 #include "motor_test.h"
+#include "regulator.h"
 
 
 unsigned char kommando;
+unsigned char dist_left;
 
 void tolka_data()
 {
@@ -19,9 +20,16 @@ void tolka_data()
 				{
 						//kör specialkommando
 				}
-				else
-				{
-						drive_engines(regulator(data));
+				else if(0x11==(header & 0x11)){		//linjeläge
+						drive_engines(line_regulator(data));
+				}
+				else if(0x01==(header & 0x11)){		//avståndsläge
+						if(0x80==(data & 0x80)){
+								dist_left=data;
+						}
+						else {
+								drive_engines(distance_regulator(dist_left, data));
+						}
 				}
 		}
 		else if(auto_mode==0)				//fjärrstyrd
@@ -66,14 +74,16 @@ void tolka_data()
 				}
 				else if(0x90==kommando)			//Trim-funktionerna ska köras en gång, sedan skall föregående kommando fortsätta.
 				{
-						trim_left(data & 0x0F);
+						trim_left();
 				}
 				else if(0xA0==kommando)
 				{
-						trim_right(data & 0x0F);
+						trim_right();
+				}
 				else if(0xB0==kommando)
 				{
-						trim_zero(data & 0x0F);
+						trim_zero();
+				}
 		}
 
 }
