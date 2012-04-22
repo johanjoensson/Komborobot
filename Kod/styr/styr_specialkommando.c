@@ -3,96 +3,78 @@
 #include "styr_SPI.h"
 #include "motor_test.h"
 
+/*
+ *	Hj√§lpfunktion som tar time, speed och command som argument och 
+ *	k√∂r kommandot: 
+ *			command		kommando
+ *			0			forward
+ *			1			rotate_left
+ *			2			rotate_right
+ *			*			stop
+ *	med hastighet speed i tiden time*1024 klockpulser
+ */
+void special_help(int time, unsigned char speed, unsigned char command)
+{
+		OCR1A = time;                  // st√§ller in klockan p√• 1 sek
+        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler p√• 16-bits klocka till 1024 
+                                                        // och startar klockan
+        if(command == 0){
+			forward(speed);
+		} else if(command == 1){
+			rotate_left(speed);
+		} else if(command == 2){
+			rotate_right(speed);
+		} else{
+			stop(speed);
+		}
+
+        while(!(TIFR & (1<<OCF1A))){    // V√§nta tills klockan r√§knat klart
+                               ;  
+        }
+        stop(0);
+        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
+        TCNT1 = 0;                      //Nollst√§ll klockan
+		TIFR = 0x10;					// Nollst√§ll avbrottsflagga
+		return;
+}
+
 void specialkommando()
 {
         unsigned char kommando_kod = 0x40;//data & 0xE0;
 
 		if(0x40 == kommando_kod)
 		{
-                        /*Sv‰ng v‰nster 90 grader
-                        Fˆrslag: slÂ pÂ timer och lÂt roboten kˆra rakt fram <tid>,
-                        rotera v‰nster <tid>, kˆr fram <tid>. jag tror det ‰r enklast
-                        att anv‰nda flaggan fˆr uppfyllt tidskrav h‰r (man v‰ntar pÂ
-                        att den ‰r lika med 1)
+                        /*Sv√§ng v√§nster 90 grader
+                        F√∂rslag: sl√• p√• timer och l√•t roboten k√∂ra rakt fram <tid>,
+                        rotera v√§nster <tid>, k√∂r fram <tid>. jag tror det √§r enklast
+                        att anv√§nda flaggan f√∂r uppfyllt tidskrav h√§r (man v√§ntar p√•
+                        att den √§r lika med 1)
                         */
-                        OCR1A = 0x3E80;                  // st‰ller in klockan pÂ 1 sek
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler pÂ 16-bits klocka till 1024 
-                                                        // och startar klockan
-                        forward(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        stop(0);
-
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
-                        OCR1A = 0x0FFF;                 // st‰ller in klockan pÂ 0.25s
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //starta klockan
-                        rotate_left(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        stop(0);
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
-                        OCR1A = 0x3E80;                  // st‰ller in klockan pÂ 1 sek
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler pÂ 16-bits klocka till 1024 
-                                                        // och startar klockan
-                        forward(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
+						special_help(0x2900, 0x08, 0);    // K√∂r fram i en sekund
+						special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+						special_help(0x2000, 0x07,1);     // Rotera v√§nster ca en 1/3 sekund
+						special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+						special_help(0x2900, 0x08, 0);    // K√∂r fram i en sekund
+						special_help(0x2000, 0, 3);   
                         return;
 
 		}
 		else if(0x60==kommando_kod)
 		{
-                        //sv‰ng hˆger 90 grader
-                        OCR1A = 0x3E80;                  // st‰ller in klockan pÂ 1 sek
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler pÂ 16-bits klocka till 1024 
-                                                        // och startar klockan
-                        forward(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        stop(0);
-
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
-                        OCR1A = 0x0FA0;                 // st‰ller in klockan pÂ 0.25s
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //starta klockan
-                        rotate_right(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        stop(0);
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
-                        OCR1A = 0x3E80;                  // st‰ller in klockan pÂ 1 sek
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler pÂ 16-bits klocka till 1024 
-                                                        // och startar klockan
-                        forward(0x0A);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
+                        //sv√§ng h√∂ger 90 grader
+						special_help(0x2900, 0x08, 0);    // K√∂r fram i en sekund
+						special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+						special_help(0x2000, 0x07,2);     // Rotera h√∂ger ca en 1/3 sekund
+						special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+						special_help(0x2900, 0x08, 0);    // K√∂r fram i en sekund
+						special_help(0x2000, 0, 3);   
                         return;
 		}
 		else if(0x20==kommando_kod)
 		{
-                        //kˆr rakt fram
-                        OCR1A = 0xBB80;                  // st‰ller in klockan pÂ 1 sek
-                        TCCR1B = (1<<CS12) | (1<<CS10);  //prescaler pÂ 16-bits klocka till 1024 
-                                                        // och startar klockan
-                        forward(8);
-                        while(!(TIFR & (1<<OCF1A))){    // V‰nta tills klockan r‰knat klart
-                               ;  
-                        }
-                        TCCR1B = (0<<CS12) | (0<<CS11) | (0<<CS10); //Stanna klockan
-                        TCNT1 = 0;                      //Nollst‰ll klockan
+                        //k√∂r rakt fram
+						special_help(0x5200, 0x08, 0);    // K√∂r fram i ett tag (ca 2 sek)
+						special_help(0x2000, 0, 3);   	  // Stanna
                         return;
 		}
 }
