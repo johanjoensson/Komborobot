@@ -50,31 +50,31 @@ void specialkommando()
                         att använda flaggan för uppfyllt tidskrav här (man väntar på
                         att den är lika med 1)
                         */
-						special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
-						special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-						special_help(0x2000, 0x07,1);     // Rotera vänster ca en 1/3 sekund
-						special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-						special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
-						special_help(0x2000, 0, 3);   
+                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x2000, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x2000, 0, 3);   
                         return;
 
 		}
 		else if(0x60==kommando_kod)
 		{
                         //sväng höger 90 grader
-						special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
-						special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-						special_help(0x2000, 0x07,2);     // Rotera höger ca en 1/3 sekund
-						special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-						special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
-						special_help(0x2000, 0, 3);   
+                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x2000, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x2000, 0, 3);   
                         return;
 		}
 		else if(0x20==kommando_kod)
 		{
                         //kör rakt fram
-						special_help(0x5200, 0x08, 0);    // Kör fram i ett tag (ca 2 sek)
-						special_help(0x2000, 0, 3);   	  // Stanna
+                        special_help(0x5200, 0x08, 0);    // Kör fram i ett tag (ca 2 sek)
+                        special_help(0x2000, 0, 3);   	  // Stanna
                         return;
 		}
 }

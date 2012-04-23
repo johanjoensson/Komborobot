@@ -17,6 +17,7 @@
  */
 #include"special.h"
 #include"sensor_spi.h"
+#include"sensor_ad.h"
 #include<stdio.h>
 
 unsigned char next_special_command = 0xE0;
@@ -99,8 +100,24 @@ void send_special_command(unsigned char command)
         } else {
                 header = 0xCF;
                 data = command;
-		printf("Header is %x\n", header);
-		printf("Data is %x\n", data);
-                //req_sending();
+		//printf("Header is %x\n", header);
+		//printf("Data is %x\n", data);
+                req_sending();
         }
+}
+/*-----------------------------------------------------------------------------
+ *  search_for_crossroads returnerar 1 om en korsning påträffats
+ *      input: void
+ *		output: 1 om korsning upptäckts, 0 annars
+ *-----------------------------------------------------------------------------*/
+
+int search_for_crossroad(){
+
+
+		if(dist_right+dist_left>=90){
+				return 1;
+		}
+		else{
+				return 0;
+		}
 }

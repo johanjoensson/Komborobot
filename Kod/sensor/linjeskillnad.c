@@ -39,7 +39,7 @@ int calculate_diff(int byte1, int byte2)
                 case 8:
                         return 75;
                 case 9:
-                        return 90                 ;
+                        return 90;
                 case 10:
                         return 100;
                 default:
