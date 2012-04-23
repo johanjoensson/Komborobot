@@ -104,3 +104,19 @@ void send_special_command(unsigned char command)
                 //req_sending();
         }
 }
+/*-----------------------------------------------------------------------------
+ *  search_for_crossroads returnerar 1 om en korsning påträffats
+ *      input: void
+ *		output: 1 om korsning upptäckts, 0 annars
+ *-----------------------------------------------------------------------------*/
+
+int search_for_crossroad()
+
+
+if(dist_right+dist_left>=90){
+	return 1;
+}
+else{
+	return 0;
+}
+

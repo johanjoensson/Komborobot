@@ -91,7 +91,16 @@ void start_next_ad()
 				else if(maze_mode==1 && auto_mode==1){
 						
 						generate_special_command(markning(find_ones(line_array_1)));
-
+						
+					
+						if(search_for_crossroad()){
+							//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
+							send_special_command(get_next_special_command());
+							//Resetar den globala variabeln next_special_command for att forma roboten att uppna vanlig reglering
+							generate_special_command(4);
+						}
+						
+					
 						//kod för att hitta korsningar och kör specialkommando in här
 
 						//linjer? byt till maze_mode=0 om inga väggar finns
