@@ -4,9 +4,12 @@
  * Klockan: 16:03
  */
 #define DEBUG
+#define NO_BLUE
 
 #include "blue_pc.h"
 #include "db.h"
+#include "display.h"
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -16,10 +19,9 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 
-enum data_type_t{
-	SENSORDATA,
-	STYRKOMMANDO
-} data_type;
+FILE *f;	/* Härvid är jag af nöden tvungen!
+		   Annars kan jag inte stänga filen när programmet avslutas
+		*/
 
 int new_data(FILE *db, struct instruction_t *inst)
 {
@@ -51,41 +53,49 @@ void receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 
 	return;
 }
-
-enum data_type_t type_of_instr(struct instruction_t *inst)
+void exit_program()
 {
-	return SENSORDATA;
-}
-void display_inst(struct instruction_t *inst)
-{
+	exit_curses();
+	fclose(f);
+	exit(0);
 
-	return;
 }
-
 int main(void)
 {
 	int socket = init();
+	signal(SIGINT, exit_program);
+	
 
+#ifndef NO_BLUE
 	struct sockaddr_rc firefly = connect_to_firefly(socket);
+#endif /* NO_BLUE */
+	init_curses();
+
 	int quit = 0;
-	FILE *f = init_read("instr_db");
+	f = init_read("instr_db");
 	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
 	struct instruction_t *ex_inst = malloc(sizeof(struct instruction_t));
 	inst->header = 'a';
 	inst->data = 'b';
-	int i = 0;
+#ifdef DEBUG
+	ex_inst->header = (unsigned char) 0x1C;
+	ex_inst->data = (unsigned char) 0x00;
+#endif /* DEBUG */
 	while(!quit){
 		if(new_data(f, inst)){
+			update_speed(inst);
+#ifndef NO_BLUE
 			send_inst(socket, inst);
+#endif /* NO_BLUE */
 		}else{
 #ifndef DEBUG
+#ifndef NO_BLUE
 			receive_inst(socket, firefly, ex_inst);
+#endif /* NO_BLUE */
+#endif /* DEBUG */
 			display_inst(ex_inst);
-#endif
 		}
-		i++;
 	}
 
-	fclose(f);
 	return 0;
 }

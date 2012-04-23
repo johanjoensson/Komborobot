@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -W -pedantic -std=c99 -g
-LDFLAGS = -lbluetooth -I/usr/include/bluetooth/ -lSDL -I/usr/include/SDL
+LDFLAGS = -lbluetooth -I/usr/include/bluetooth/ -lSDL -I/usr/include/SDL -lncurses
 LIB =  -I/usr/include/bluetooth/ -I/usr/include/SDL
 
 SIMPLE_OBJ = simplescan.o
@@ -21,6 +21,7 @@ DB_TEST_OBJ = db_test.o\
 
 SEND_REC_OBJ = blue_pc.o\
 	       db.o\
+	       display.o\
 	       send_receive.o
 
 

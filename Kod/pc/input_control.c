@@ -38,6 +38,12 @@ void on_s_down(int speed, struct instruction_t *instr);
 void on_a_down(int speed, struct instruction_t *instr);
 void on_w_down(int speed, struct instruction_t *instr);
 
+void set_left(int speed, struct instruction_t *instr);
+void set_right(int speed, struct instruction_t *instr);
+
+void trim_left(struct instruction_t *instr);
+void trim_right(struct instruction_t *instr);
+void no_trim(struct instruction_t *instr);
 
 void event_loop(struct instruction_t *inst, FILE *db)
 {
@@ -110,11 +116,24 @@ void event_loop(struct instruction_t *inst, FILE *db)
                                         case SDLK_e:
 						on_e_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db,"e" , 2);
-//                                                printf("Fram höger\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
+	
+					case SDLK_k:
+						set_left(speed, inst);
+						add_to_db(db,inst , 2);
+						break;
+
+					case SDLK_l:
+						set_right(speed, inst);
+						add_to_db(db,inst , 2);
+						break;
+
+					case SDLK_o:
+						no_trim(inst);
+						add_to_db(db,inst , 2);
+						break;
+
+
 					case SDLK_UP:
 						if(speed<15){
 							speed++;
@@ -134,32 +153,28 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_RIGHT:
 						old_inst = inst;
 
-						trim_right(inst, speed);
+						trim_right(inst);
 						add_to_db(db, inst, 2);
-//						inst = old_inst;
-//						add_to_db(db, inst, 2);
+						inst = old_inst;
+						add_to_db(db, inst, 2);
 
-//						add_to_db(db, "r", 2);
 
 						break;
 
 					case SDLK_LEFT:
 						old_inst = inst;
 
-						trim_left(inst, speed);
+						trim_left(inst);
 						add_to_db(db, inst, 2);
-//						inst = old_inst;
-//						add_to_db(db, inst, 2);
+						inst = old_inst;
+						add_to_db(db, inst, 2);
 						
-//						add_to_db(db, "l", 2);
 						break;
 
 
 
 					case SDLK_SPACE:
 						
-						printf("Header = %x\n", inst->header);
-						printf("Data = %x\n", inst->data);
 						on_key_up(inst);
 						add_to_db(db, inst, 2);
 						
@@ -228,18 +243,35 @@ void on_e_down(int speed, struct instruction_t *instr)
        instr->data = forward_right(speed);
 }
 
-void trim_left(struct instruction_t *instr, int speed)
+void set_left(int speed, struct instruction_t *instr)
 {
 	instr->header = generate_header(2,2);
-	instr->data = (unsigned char) 0x7 + speed;
+	instr->data = (unsigned char) 0x70 + speed;
 }
 
-void trim_right(struct instruction_t *instr, int speed)
+void set_right(int speed, struct instruction_t *instr) 
 {
 	instr->header = generate_header(2,2);
-	instr->data = (unsigned char) 0x8 + speed;
+	instr->data = (unsigned char) 0x80 + speed;
 }
 
+void trim_left(struct instruction_t *instr)
+{
+	instr->header = generate_header(2,2);
+	instr->data = (unsigned char) 0x90;
+}
+
+void trim_right(struct instruction_t *instr)
+{
+	instr->header = generate_header(2,2);
+	instr->data = (unsigned char) 0xA0;
+}
+
+void no_trim(struct instruction_t *instr)
+{
+	instr->header = generate_header(2,2);
+	instr->data = (unsigned char) 0xB0;
+}
 
 void on_key_up(struct instruction_t *instr)
 {
