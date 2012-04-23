@@ -20,10 +20,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-int old = 0;
-int Kp = 1;
-int Kd = 8;
 unsigned char speed = 110;
+int old = 0;
 
 
 /*-----------------------------------------------------------------------------
@@ -36,14 +34,19 @@ unsigned char speed = 110;
  *-----------------------------------------------------------------------------*/
 signed char distance_regulator(unsigned char left, unsigned char right)
 {
+        int Kp = 1;
+        int Kd = 10;
+
         signed char outvalue;
 
         signed char difference = right - left;
+
         outvalue = Kp*difference;               // P-delen
 
         outvalue += Kd*(difference - old);      // D-delen
         old = difference;
 
+        // sätter max- och minvärden på utvärdet
         if(outvalue > 70){
                 outvalue = 70;
         } else if(outvalue < -70){
@@ -62,8 +65,19 @@ signed char distance_regulator(unsigned char left, unsigned char right)
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-	// Kod här
-	return 0;
+        int Kp = 1;
+        signed char outvalue;
+
+        outvalue = Kp*new_value;
+
+        // sätter max- och minvärden på utvärdet
+        if(outvalue > 60){
+                outvalue = 60;
+        } else if(outvalue < -60){
+                outvalue = -60;
+        }
+
+        return outvalue;
 }
 
 /*-----------------------------------------------------------------------------
