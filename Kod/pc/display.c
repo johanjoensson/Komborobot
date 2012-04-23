@@ -5,7 +5,7 @@
 
 int width, height;
 
-WINDOW *mode, *spec_komm, *lsensor, *rsensor, *speed, *ltrim, *rtrim;
+WINDOW *mode, *spec_komm, *lsensor, *rsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
 
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
 {
@@ -59,6 +59,11 @@ void remove_win(int win)
 void init_curses()
 {
 	initscr();
+	start_color();
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(3, COLOR_RED, COLOR_BLACK);
+
 	noecho();
 	getmaxyx(stdscr, height, width);
 
@@ -70,7 +75,9 @@ void init_curses()
 	ltrim = create_win(height/3 , width/6, width/3, height/3 << 1, '#', '=', '/');
 	rtrim = create_win(height/3 , width/6, width >> 1, height/3 << 1, '#', '=', '/');
 	
-
+	speed_back = speed;
+	ltrim_back = ltrim;
+	rtrim_back = rtrim;
 	return;
 
 }
@@ -248,10 +255,10 @@ int is_trim(struct instruction_t *inst)
 
 int has_speed(struct instruction_t *inst)
 {
-	switch(inst->data & 0xF0 >> 4){
-		case 7:
-		case 8:
-		case 9:
+	switch((inst->data & 0xF0) >> 4){
+		case 0x7:
+		case 0x8:
+		case 0x9:
 		case 0xA:
 		case 0xB:
 			return 0;
@@ -265,20 +272,37 @@ int has_speed(struct instruction_t *inst)
 
 void display_speed(struct instruction_t *inst)
 {
+//	speed = speed_back;
+//	wrefresh(speed);
 	int x,y;
-	unsigned int cur_speed = inst->data & 0x0F;
-	getmaxyx(speed, y, x);
+	int c = 1;
+	int cur_speed = inst->data & 0x0F;
 
-	for(int i = x >> 4; i < x ; i++){
+	getmaxyx(speed, y, x);
+		
+	wattron(speed, COLOR_PAIR(c));
+
+	for(int i = 1; i < x ; i++){
 		mvwaddch(speed, y >> 1, i, ' ');
 	}
 	wrefresh(speed);
 
 	for(int j = 0; j < cur_speed; j++){
-			mvwaddch(speed, y >> 1, (x >> 4) + j, '|');
-			}	
+	
+		if(j < 7){
+			c = 1;
+		}else if(j < 11){
+			c = 2;
+		} else{
+			c = 3;
+		}
+
+		wattron(speed,COLOR_PAIR(c));
+		mvwaddch(speed, y >> 1, (x >> 4) + j, '|');
+	}	
 
 	wrefresh(speed);
+	wattroff(speed, COLOR_PAIR(c));
 	return;
 }
 
