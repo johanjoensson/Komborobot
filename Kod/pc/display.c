@@ -5,6 +5,8 @@
 
 int width, height;
 
+int trim = 0;
+
 WINDOW *mode, *spec_komm, *lsensor, *rsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
 
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
@@ -126,10 +128,10 @@ void display_mode(struct instruction_t *inst)
 	getmaxyx(mode, y, x);
 	switch(run_mode(inst)){
 		case LABYRINT:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Kör i labyrint\n");
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Kör i labyrint");
 			break;
 		case LINJE:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Följer linjen\n");
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Följer linjen");
 			break;
 		default:
 			display_error(inst);
@@ -241,7 +243,7 @@ void display_spec(struct instruction_t *inst)
 
 int is_trim(struct instruction_t *inst)
 {
-	switch(inst->data & 0xF0 >> 4){
+	switch((inst->data & 0xF0) >> 4){
 		case 9:
 		case 0xA:
 		case 0xB:
@@ -272,8 +274,6 @@ int has_speed(struct instruction_t *inst)
 
 void display_speed(struct instruction_t *inst)
 {
-//	speed = speed_back;
-//	wrefresh(speed);
 	int x,y;
 	int c = 1;
 	int cur_speed = inst->data & 0x0F;
@@ -282,7 +282,7 @@ void display_speed(struct instruction_t *inst)
 		
 	wattron(speed, COLOR_PAIR(c));
 
-	for(int i = 1; i < x ; i++){
+	for(int i = 1; i < x - 1 ; i++){
 		mvwaddch(speed, y >> 1, i, ' ');
 	}
 	wrefresh(speed);
@@ -306,8 +306,67 @@ void display_speed(struct instruction_t *inst)
 	return;
 }
 
+void print_trim(WINDOW *win, int spd)
+{
+	int x,y, i;
+	int c = 1;
+	getmaxyx(win, y, x);
+
+	for(i = 2; i < y; i++){
+		mvwaddch(win, y-i, x >> 1, ' ');
+	}
+	wrefresh(win);
+	for(i = 0; i < ((8 + spd) >> 1); i++){
+		if(i < 4){
+			c = 1;
+		}else if(i < 6){
+			c = 2;
+		}else{
+			c = 3;
+		}
+
+		wattron(win, COLOR_PAIR(c));
+		mvwaddch(win, (y - 2) - i, x >> 1, '=');
+	}
+	if((8 + spd) % 2){
+		mvwaddch(win, (y - 3) - i, x >> 1, '_');
+	}
+
+	wrefresh(win);
+
+	wattroff(win, COLOR_PAIR(c));
+	return;
+}
 void display_trim(struct instruction_t *inst)
 {
+
+	switch((inst->data & 0xF0) >> 4){
+	case 0x9:
+		if(trim < 8){
+			trim++;
+		}
+		print_trim(ltrim, trim);
+		print_trim(rtrim, -trim);
+		break;
+
+	case 0xA:
+		if(trim > -8){
+			trim--;
+		}
+		print_trim(ltrim, trim);
+		print_trim(rtrim, -trim);
+		break;
+
+
+	case 0xB:
+		trim = 0;
+		print_trim(ltrim, trim);
+		print_trim(rtrim, -trim);
+		break;
+
+
+	}
+
 	return;
 }
 
