@@ -100,9 +100,9 @@ void send_special_command(unsigned char command)
         } else {
                 header = 0xCF;
                 data = command;
-		printf("Header is %x\n", header);
-		printf("Data is %x\n", data);
-                //req_sending();
+		//printf("Header is %x\n", header);
+		//printf("Data is %x\n", data);
+                req_sending();
         }
 }
 /*-----------------------------------------------------------------------------
