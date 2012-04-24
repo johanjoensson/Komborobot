@@ -9,7 +9,7 @@
 #include"sensorvarde_omvandling.h"
 
 
-int hogeromvandling(int sensorvarde){
+int hogeromvandling_20150(int sensorvarde){
 	
 	int cmvarde;
 
@@ -32,7 +32,13 @@ int hogeromvandling(int sensorvarde){
 	return cmvarde;
 }
 
-int vansteromvandling(int sensorvarde){
+int hogeromvandling_1080(int sensorvarde)
+{
+		return 0;
+}
+
+
+int vansteromvandling_20150(int sensorvarde){
 	
 	int cmvarde;
 
@@ -53,6 +59,11 @@ int vansteromvandling(int sensorvarde){
 		cmvarde=120;
 	}
 	return cmvarde;
+}
+
+int vansteromvandling_1080(int sensorvarde)
+{
+		return 0;
 }
 
 int framomvandling(int sensorvarde){

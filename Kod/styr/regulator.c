@@ -27,24 +27,27 @@ int old = 0;
 /*-----------------------------------------------------------------------------
  *  distance_regulator   
  *      input:  
- *              left: avstånd till vänster (20 --- 120)
- *              right: avstånd till höger (20 --- 120)
+ *              left_fron: avstånd till vänster (20 --- 120)
+ *              right_front: avstånd till höger (20 --- 120)
+ *              left_back: avstånd bak till vänster bak (10 --- 80)
+ *              right_back: avstånd bak till vänster bak (10 --- 80)
  *      output: 
  *              värde som ska styra motorer (-70 --- 70)
  *-----------------------------------------------------------------------------*/
-signed char distance_regulator(unsigned char left, unsigned char right)
+signed char distance_regulator(unsigned char left_front, unsigned char left_back,
+                unsigned char right_front, unsigned char right_back)
 {
         int Kp = 1;
         int Kd = 10;
 
         signed char outvalue;
 
-        signed char difference = right - left;
+        signed char difference = left_front - left_back;
 
         outvalue = Kp*difference;               // P-delen
 
-        outvalue += Kd*(difference - old);      // D-delen
-        old = difference;
+        //outvalue += Kd*(difference - old);      // D-delen
+        //old = difference;
 
         // sätter max- och minvärden på utvärdet
         if(outvalue > 70){
