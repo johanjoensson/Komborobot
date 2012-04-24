@@ -28,7 +28,7 @@
 #define HEIGTH 80
 #define BPP 4
 #define DEPTH 32
-
+int trim = 0;
 void event_loop(struct instruction_t *inst, FILE *db);
 void on_key_up(struct instruction_t *instr);
 void on_e_down(int speed, struct instruction_t *instr);
@@ -58,7 +58,9 @@ void event_loop(struct instruction_t *inst, FILE *db)
         } 
         SDL_Surface *screen;
         SDL_Event event;
-        SDL_WM_SetCaption("Centro de control", "Centro de control");
+
+        SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
+//        SDL_WM_SetCaption("Centro de control", "Centro de control");
 
         screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
 
@@ -139,7 +141,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 							speed++;
 							//printf("Speed is %d\n", speed);
 						} else {
-							printf("Max speed\n");
+//							printf("Max speed\n");
 						}
 						break;
 					case SDLK_DOWN:
@@ -147,7 +149,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 							speed--;
 							//printf("Speed is %d\n", speed);
 						} else {
-							printf("Min speed\n");
+//							printf("Min speed\n");
 						}
 						break;
 					case SDLK_RIGHT:
@@ -220,7 +222,6 @@ void on_a_down(int speed, struct instruction_t *instr)
 {
        instr->header = generate_header(2,2);
        instr->data = rotate_left(speed);
-//       instr->data = rotate_left(speed);
 }
 void on_s_down(int speed, struct instruction_t *instr)
 {
@@ -258,13 +259,15 @@ void set_right(int speed, struct instruction_t *instr)
 void trim_left(struct instruction_t *instr)
 {
 	instr->header = generate_header(2,2);
-	instr->data = (unsigned char) 0x90;
+	instr->data = (unsigned char) 0x90 + trim;
+	trim = 1 - trim;
 }
 
 void trim_right(struct instruction_t *instr)
 {
 	instr->header = generate_header(2,2);
-	instr->data = (unsigned char) 0xA0;
+	instr->data = (unsigned char) 0xA0 + trim;
+	trim = 1 - trim;
 }
 
 void no_trim(struct instruction_t *instr)
@@ -284,8 +287,6 @@ int main()
 	FILE *f = init_write("instr_db");
 	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
         event_loop(inst, f);
-//        printf("Header is 0x%x\n", inst->header);
-//       printf("Data is 0x%x\n", inst->data);
 
 	fclose(f);
         return 0;
