@@ -114,7 +114,7 @@ void send_special_command(unsigned char command)
 int search_for_crossroad(){
 
 
-		if(dist_right+dist_left>=90){
+		if((dist_right>=60 && dist_left>=60) || (dist_front>=60 && dist_left>=60) || (dist_front>=60 && dist_right>=60)){
 				return 1;
 		}
 		else{
