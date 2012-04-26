@@ -21,7 +21,9 @@
 #include <avr/interrupt.h>
 
 unsigned char speed = 110;
-int old = 0;
+int old_distance = 0;
+int old_line = 0;
+int angle = 0;
 
 
 /*-----------------------------------------------------------------------------
@@ -47,7 +49,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
         outvalue = Kp*difference;               // P-delen
 
         //outvalue += Kd*(difference - old);      // D-delen
-        //old = difference;
+        //old_distance = difference;
 
         // sätter max- och minvärden på utvärdet
         if(outvalue > 70){
@@ -71,7 +73,38 @@ signed char line_regulator(signed char new_value)
         int Kp = 1;
         signed char outvalue;
 
-        outvalue = Kp*new_value;
+        //Kollar om roboten rör sig åt höger eller vänster
+        if(new_value > old_line){
+                angle = -1; // roboten går åt höger
+        } else if(new_value < old_line){
+                angle = 1; // roboten går åt vänster
+        }
+
+        switch(angle){
+                case 1:
+                        if(new_value < 0){   // roboten går åt vänster och är på 
+                                             // vänstra sidan om tejpen
+                                outvalue = Kp*new_value;
+                        } else{              // roboten går åt höger, men är på
+                                             // högra sidan om tejpen
+                                outvalue = (Kp*new_value) >> 2;
+                        }
+                        break;
+                case -1:  
+                        if(new_value <= 0){   // roboten går åt höger och är på 
+                                             // vänstra sidan om tejpen
+                                outvalue = (Kp*new_value) >> 2;
+                        } else{              // roboten går åt höger och är på
+                                             // högra sidan om tejpen
+                                outvalue = (Kp*new_value)
+                        }
+                        break;
+                default:
+                        outvalue = Kp*new_value;
+                        break;
+        }
+
+        old_line = new_value;
 
         // sätter max- och minvärden på utvärdet
         if(outvalue > 60){
@@ -92,11 +125,11 @@ void drive_engines(signed char value)
 {
         if(value > 0){
                 OCR2 = speed - value; // Vänstermotor
-                OCR0 = speed + value; // Högermotor
+                //OCR0 = speed + value; // Högermotor
         } else {
                 value = -value;
 
-                OCR2 = speed + value; // Vänstermotor
+                //OCR2 = speed + value; // Vänstermotor
                 OCR0 = speed - value; // Högermotor
         }
 }
