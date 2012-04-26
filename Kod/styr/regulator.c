@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "styr_spi.h"
 
 unsigned char speed = 110;
 int old_distance = 0;
@@ -40,7 +41,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
                 unsigned char right_front, unsigned char right_back)
 {
         int Kp = 1;
-        int Kd = 10;
+        //int Kd = 10;
 
         signed char outvalue;
 
@@ -84,19 +85,19 @@ signed char line_regulator(signed char new_value)
                 case 1:
                         if(new_value < 0){   // roboten går åt vänster och är på 
                                              // vänstra sidan om tejpen
-                                outvalue = Kp*new_value;
+                                outvalue = (Kp*new_value) / 2;
                         } else{              // roboten går åt höger, men är på
                                              // högra sidan om tejpen
-                                outvalue = (Kp*new_value) >> 2;
+                                outvalue = (Kp*new_value) / 4;
                         }
                         break;
                 case -1:  
                         if(new_value <= 0){   // roboten går åt höger och är på 
                                              // vänstra sidan om tejpen
-                                outvalue = (Kp*new_value) >> 2;
+                                outvalue = (Kp*new_value) / 4;
                         } else{              // roboten går åt höger och är på
                                              // högra sidan om tejpen
-                                outvalue = (Kp*new_value)
+                                outvalue = (Kp*new_value) / 2;
                         }
                         break;
                 default:
@@ -113,6 +114,9 @@ signed char line_regulator(signed char new_value)
                 outvalue = -60;
         }
 
+		header = 0x80;
+		data = new_value;
+		req_sending();
         return outvalue;
 }
 
@@ -125,11 +129,11 @@ void drive_engines(signed char value)
 {
         if(value > 0){
                 OCR2 = speed - value; // Vänstermotor
-                //OCR0 = speed + value; // Högermotor
+                OCR0 = speed; // + value; // Högermotor
         } else {
                 value = -value;
 
-                //OCR2 = speed + value; // Vänstermotor
+                OCR2 = speed; //+ value; // Vänstermotor
                 OCR0 = speed - value; // Högermotor
         }
 }

@@ -12,8 +12,8 @@ ISR(SPI_STC_vect) //sensor REQ
 	
 				PORTD &= ~(1<<PD6); 	//REQ low
 				header=SPDR;		//spara mottagen header
-				SPDR=data;			//Välj data för nästa överföring
-				PORTD = (1<<PD6); 	//REQ high
+				SPDR=data;			//V?lj data f?r n?sta ?verf?ring
+				PORTD |= (1<<PD6); 	//REQ high
 				
 				while(!(SPSR & (1<<SPIF))){
 				;

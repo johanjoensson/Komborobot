@@ -1,5 +1,5 @@
 /*
-Funktionen läser
+Funktionen lÃ¤ser
 */
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -9,7 +9,8 @@ Funktionen läser
 
 
 unsigned char kommando;
-unsigned char dist_left;
+unsigned char dist_left_front, dist_left_back, dist_right_front;
+unsigned char count;
 
 void tolka_data()
 {
@@ -18,21 +19,32 @@ void tolka_data()
 		{
 				if(0x02==(header & 0x02))		//D-flagga=1?
 				{
-						//kör specialkommando
+						//kÃ¶r specialkommando
 				}
-				else if(0x11==(header & 0x11)){		//linjeläge
+				else if(0x11==(header & 0x11)){		//linjelÃ¤ge
 						drive_engines(line_regulator(data));
 				}
-				else if(0x01==(header & 0x11)){		//avståndsläge
+				else if(0x01==(header & 0x11)){		//avstÃ¥ndslÃ¤ge
 						if(0x80==(data & 0x80)){
-								dist_left=data;
-						}
-						else {
-								drive_engines(distance_regulator(dist_left, data));
+								dist_left_front=data;
+								count++;
+						} else {
+								if (count==1){
+										dist_left_back=data;
+										count++;
+								} else if(count==2){
+										dist_right_front=data;
+										count++;
+								} else {
+										count=0;								
+										drive_engines(distance_regulator(
+										dist_left_front, dist_left_back, 
+										dist_right_front, data));
+								}
 						}
 				}
 		}
-		else if(auto_mode==0)				//fjärrstyrd
+		else if(auto_mode==0 && (header & 0x01) == 0)				//fjÃ¤rrstyrd
 		{
 				kommando=(data & 0xF0);
 
@@ -72,7 +84,7 @@ void tolka_data()
 				{
 						set_speed_right(data & 0x0F);
 				}
-				else if(0x90==kommando)			//Trim-funktionerna ska köras en gång, sedan skall föregående kommando fortsätta.
+				else if(0x90==kommando)			//Trim-funktionerna ska kÃ¶ras en gÃ¥ng, sedan skall fÃ¶regÃ¥ende kommando fortsÃ¤tta.
 				{
 						trim_left();
 				}

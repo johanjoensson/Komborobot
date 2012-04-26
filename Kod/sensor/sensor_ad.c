@@ -56,13 +56,14 @@ void start_next_ad()
 						req_sending();
 				}
 		}
-		else if (state==2){			//left_back klar
+		 else if (state==2){			//left_back klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0x41;	//Skicka till styr med E-flagga
 						data= dist_left_back;
 						req_sending();
 				}
 		}
+		
 		else if (state==3){			//right_front klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0x41;	//Skicka till styr med E-flagga
@@ -70,8 +71,10 @@ void start_next_ad()
 						req_sending();
 				}
 		}
+
+		
 		else if (state==4){			//right_back klar
-				if(maze_mode==1 && auto_mode==1){
+				if(1){//maze_mode==1 && auto_mode==1){
 						header = 0x41;	//Skicka till styr med E-flagga
 						data= dist_right_back;
 						req_sending();
@@ -109,7 +112,7 @@ void start_next_ad()
 					
 						if(search_for_crossroad()){
 							//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
-							send_special_command(get_next_special_command());
+ 							send_special_command(get_next_special_command());
 							//Resetar den globala variabeln next_special_command for att forma roboten att uppna vanlig reglering
 							generate_special_command(4);
 						}
@@ -153,21 +156,22 @@ int control_mux()
 		switch (count){
 		case(0):
 				ADMUX |= (1<<MUX2); 					//byt till PA4			
-				dist_left_front=vansteromvandling_20150(ADCH);
+				dist_left_front=vansteromvandling_front(ADCH);
 				return 1;
 		case(1):
 				ADMUX |= (1<<MUX0);					//byt till PA1
 				ADMUX &= ~(1<<MUX2);
-				dist_left_back=vansteromvandling_1080(ADCH);
+				dist_left_back=vansteromvandling_back(ADCH);
 				return 2;
 		case(2):
 				ADMUX |= (1<<MUX2) | (1<<MUX0);		//byt till PA5
-				dist_right_front=vansteromvandling_20150(ADCH);
+				
+				dist_right_front=hogeromvandling_front(ADCH);
 				return 3;
 		case(3):
 				ADMUX |= (1<<MUX1);					//byt till PA2
 				ADMUX &= ~(1<<MUX0) & ~(1<<MUX2);
-				dist_right_back=hogeromvandling_20150(ADCH);
+				dist_right_back=hogeromvandling_back(ADCH);
 				return 4;
 		case(4):
 				ADMUX |= (1<<MUX0);					//byt till PA3

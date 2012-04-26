@@ -10,10 +10,10 @@
 #ifndef sensorvarde_omvandling_H
 #define sensorvarde_omvandling_H
 
-int hogeromvandling_20150(int sensorvarde);
-int hogeromvandling_1080(int sensorvarde);
-int vansteromvandling_20150(int sensorvarde);
-int vansteromvandling_1080(int sensorvarde);
+int hogeromvandling_front(int sensorvarde);
+int hogeromvandling_back(int sensorvarde);
+int vansteromvandling_front(int sensorvarde);
+int vansteromvandling_back(int sensorvarde);
 int framomvandling(int sensorvarde);
 
 #endif
