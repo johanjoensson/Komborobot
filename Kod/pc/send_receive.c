@@ -6,6 +6,8 @@
 #define DEBUG
 #define NO_BLUE
 
+#undef NO_BLUE
+
 #include "blue_pc.h"
 #include "db.h"
 #include "display.h"
