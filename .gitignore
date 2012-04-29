@@ -13,5 +13,8 @@
 # Bygg egna .pdf filer  ni snälla:
 *.pdf
 
+# Ta inte med "databasen" för kommandona
+Kod/pc/instr_db
+
 
 Dokumentation/Konventioner/*
