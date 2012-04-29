@@ -7,7 +7,7 @@ int width, height;
 
 int trim = 0;
 
-WINDOW *mode, *spec_komm, *lsensor, *rsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
+WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
 
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
 {
@@ -33,10 +33,10 @@ void remove_win(int win)
 			local_win = spec_komm;
 			break;
 		case 2:
-			local_win = lsensor;
+			local_win = lusensor;
 			break;
 		case 3:
-			local_win = rsensor;
+			local_win = rusensor;
 			break;
 		case 4:
 			local_win = speed;
@@ -47,6 +47,13 @@ void remove_win(int win)
 		case 6:
 			local_win = rtrim;
 			break;
+		case 7:
+			local_win = llsensor;
+			break;
+		case 8:
+			local_win = rlsensor;
+			break;
+
 		default:
 			local_win = NULL;
 	}
@@ -71,8 +78,10 @@ void init_curses()
 
 	mode = create_win(height/6, width, 0, 0, '#', '=', '/');
 	spec_komm = create_win(height/6, width/3, width/3, height/6, '#', '=', '/');
-	lsensor = create_win(height >> 1, width/3, 0, height/6, '#', '=', '/');
-	rsensor = create_win(height >> 1, width/3, width/3 << 1, height/6, '#', '=', '/');
+	lusensor = create_win(height >> 2, width/3, 0, height/6, '#', '=', '/');
+	llsensor = create_win(height >> 2, width/3, 0, (height/6) << 2, '#', '=', '/');
+	rusensor = create_win(height >> 2, width/3, width/3 << 1, height/6, '#', '=', '/');
+	rlsensor = create_win(height >> 2, width/3, width/3 << 1, (height/6) << 2, '#', '=', '/');
 	speed = create_win((height >> 1) - height/6, width/3, width/3, height/6 << 1, '#', '=', '/');
 	ltrim = create_win(height/3 , width/6, width/3, height/3 << 1, '#', '=', '/');
 	rtrim = create_win(height/3 , width/6, width >> 1, height/3 << 1, '#', '=', '/');
@@ -96,8 +105,10 @@ void exit_curses()
 
 	delwin(mode);
 	delwin(spec_komm);
-	delwin(lsensor);
-	delwin(rsensor);
+	delwin(lusensor);
+	delwin(llsensor);
+	delwin(rusensor);
+	delwin(rlsensor);
 	delwin(speed);
 	delwin(ltrim);
 	delwin(rtrim);
