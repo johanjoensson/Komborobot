@@ -2,7 +2,7 @@
 #include <avr/interrupt.h> 
 #include "styr_spi.h"
 #include "styr_tolka_data.h"
-#include "motor_test.h"
+#include "motor_styrning.h"
 #include "styr_specialkommando.h"
 
 volatile int a=0;

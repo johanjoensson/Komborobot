@@ -4,7 +4,7 @@ Funktionen läser
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "styr_SPI.h"
-#include "motor_test.h"
+#include "motor_styrning.h"
 #include "regulator.h"
 
 
