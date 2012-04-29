@@ -6,6 +6,8 @@
 #define DEBUG
 #define NO_BLUE
 
+//#undef NO_BLUE
+
 #include "blue_pc.h"
 #include "db.h"
 #include "display.h"
@@ -78,8 +80,8 @@ int main(void)
 	inst->header = 'a';
 	inst->data = 'b';
 #ifdef DEBUG
-	ex_inst->header = (unsigned char) 0x1C;
-	ex_inst->data = (unsigned char) 0x00;
+	ex_inst->header = (unsigned char) 0x00;
+	ex_inst->data = (unsigned char) 0xC0;
 #endif /* DEBUG */
 	while(!quit){
 		if(new_data(f, inst)){

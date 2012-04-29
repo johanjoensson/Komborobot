@@ -7,6 +7,15 @@ int width, height;
 
 int trim = 0;
 
+enum sensors{
+	LEFT_BACK = 0,
+	LEFT_FRONT = 1,
+	RIGHT_BACK = 2,
+	RIGHT_FRONT = 3
+};
+
+enum sensors cur_sensor = 0;
+
 WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
 
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
@@ -155,7 +164,7 @@ void display_mode(struct instruction_t *inst)
 enum data_type_t type_of_inst(struct instruction_t *inst)
 {
 
-	switch( (inst->header >> 2) % 4 ){ // maska fram B och C flaggorna
+	switch( (inst->header & 0x0C) >> 2 ){ // maska fram B och C flaggorna
 		/* C = 0
 		 * Alltså sensorinfo
 		 */
@@ -204,13 +213,60 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 	return UNKNOWN_COMMAND;
 }
 
+enum sensors next_sensor()
+{
+	if(cur_sensor < 4){
+		return cur_sensor + 1;
+	} else {
+		return LEFT_BACK;
+	}
+}
+WINDOW* get_sensor_window(enum sensors sensor)
+{
+	switch(sensor){
+		case LEFT_BACK:
+			return llsensor;
+		case LEFT_FRONT:
+			return lusensor;
+		case RIGHT_FRONT:
+			return rusensor;
+		case RIGHT_BACK:
+			return rlsensor;
+	}
+
+	return NULL;
+}
+void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
+{
+	int y,x;
+	WINDOW *cur_win = get_sensor_window(sensor);
+
+	getmaxyx(cur_win,y,x);
+
+	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen", (int) (inst->data & 0xEF));
+	wrefresh(cur_win);
+
+	return;
+}
+
+int new_cycle(struct instruction_t *inst)
+{
+	if(inst->data & 0x80){
+		return 1;
+	}
+	return 0;
+}
 
 void display_sensor(struct instruction_t *inst)
 {
-	int y, x;
-	getmaxyx(mode, y, x);
+	if(new_cycle(inst)){
+		cur_sensor = 0;
+	}
 
-	fprintf(stdout, "Avstånd till vägg:\t%d", inst->data);
+	display_sensor_data(inst, cur_sensor);
+
+	cur_sensor = next_sensor();
+
 	return;
 }
 
