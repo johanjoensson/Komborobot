@@ -1,9 +1,9 @@
 #ifndef MOTOR_TEST_H
 #define MOTOR_TEST_H
-
+/*
 int speed_right;
 int speed_left;
-
+*/
 void init();
 void stop(unsigned char speed);
 void forward(unsigned char speed);
