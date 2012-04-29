@@ -9,21 +9,21 @@
 #include"sensorvarde_omvandling.h"
 
 
-int hogeromvandling(int sensorvarde){
+int hogeromvandling_front(int sensorvarde){
 	
 	int cmvarde;
 
-	if(sensorvarde<=123 && sensorvarde>=94){
-		cmvarde=round((151-sensorvarde)/1.44);
+	if(sensorvarde<=125 && sensorvarde>=75){
+		cmvarde=round((177-sensorvarde)/2.62);
 
 	}
-	else if(sensorvarde<=93 && sensorvarde>=82){
-		cmvarde=round((121-sensorvarde)/0.68);
+	else if(sensorvarde<75 && sensorvarde>=50){
+		cmvarde=round((123-sensorvarde)/1.25);
 	}
-	else if(sensorvarde<=81 && sensorvarde>=66){
-		cmvarde=round((91-sensorvarde)/0.21);
+	else if(sensorvarde<50 && sensorvarde>=25){
+		cmvarde=round((70-sensorvarde)/0.39);
 	}
-	else if(sensorvarde>=124){
+	else if(sensorvarde>125){
 		cmvarde=20;
 	}
 	else{
@@ -32,7 +32,37 @@ int hogeromvandling(int sensorvarde){
 	return cmvarde;
 }
 
-int vansteromvandling(int sensorvarde){
+int hogeromvandling_back(int sensorvarde)
+{		
+	int cmvarde;
+
+	if(sensorvarde<=127 && sensorvarde>=74){
+		cmvarde=round((181-sensorvarde)/2.71);
+
+	}
+
+
+
+	else if(sensorvarde<74 && sensorvarde>=50){
+		cmvarde=round((121-sensorvarde)/1.21);
+	}
+	else if(sensorvarde<50 && sensorvarde>=31){
+		cmvarde=round((86-sensorvarde)/0.62);
+	}
+	else if(sensorvarde<31 && sensorvarde>=24){
+		cmvarde=round((49-sensorvarde)/0.22);
+	}
+	else if(sensorvarde>127){
+		cmvarde=20;
+	}
+	else{
+		cmvarde=120;
+	}
+	return cmvarde;
+}
+
+
+int vansteromvandling_front(int sensorvarde){
 	
 	int cmvarde;
 
@@ -46,13 +76,37 @@ int vansteromvandling(int sensorvarde){
 	else if(sensorvarde<=45 && sensorvarde>=24){
 		cmvarde=round((72-sensorvarde)/0.4);
 	}
-	else if(sensorvarde>=126){
+	else if(sensorvarde>125){
 		cmvarde=20;
 	}
 	else{
 		cmvarde=120;
 	}
 	return cmvarde;
+}
+
+int vansteromvandling_back(int sensorvarde)
+{
+	int cmvarde;
+
+	if(sensorvarde<=121 && sensorvarde>=75){
+		cmvarde=round((171-sensorvarde)/2.44);
+
+	}
+	else if(sensorvarde<75 && sensorvarde>=50){
+		cmvarde=round((120-sensorvarde)/1.17);
+	}
+	else if(sensorvarde<50 && sensorvarde>=23){
+		cmvarde=round((73-sensorvarde)/0.4);
+	}
+	else if(sensorvarde>121){
+		cmvarde=20;
+	}
+	else{
+		cmvarde=120;
+	}
+	return cmvarde;
+		
 }
 
 int framomvandling(int sensorvarde){

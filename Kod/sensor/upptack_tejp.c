@@ -11,9 +11,9 @@
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  Markning
- *  Description:  Tar emot nuvarande v‰rde pÂ mittensensorn
- *	Input:			Nuvarande v‰rde pÂ nÂgon av de mittre sensorerna, 1 fˆr tejp 0 annars
- *	Output:			1 om markering fˆr hˆgersv‰ng uppt‰ckts, 2 om v‰nstersv‰ng uppt‰ckts, 3 om rakt fram uppt‰ckts, 0 annars
+ *  Description:  Tar emot nuvarande v√§rde p√• mittensensorn
+ *	Input:			Nuvarande v√§rde p√• n√•gon av de mittre sensorerna, 1 f√∂r tejp 0 annars
+ *	Output:			1 om markering f√∂r h√∂gersv√§ng uppt√§ckts, 2 om v√§nstersv√§ng uppt√§ckts, 3 om rakt fram uppt√§ckts, 0 annars
  * =====================================================================================
  */
 int count_2;
@@ -37,36 +37,36 @@ int find_ones(unsigned char array)
 int markning(int now_value){
 	
 		
-	//Om ‰r pÂ Tejp, ˆka antalet iterationer
+	//Om √§r p√• Tejp, √∂ka antalet iterationer
 	if(now_value==1){
 		iterations++;
-	}	//Spara antalet iterationer n‰r gÂr av fˆrsta markeringen	
+	}	//Spara antalet iterationer n√§r g√•r av f√∂rsta markeringen	
 	else if(iterations > 0 && now_value==0 && count_2==0){
 		time1 = iterations;
 		iterations=0;
 		count_2++;
 
 		
-	}	//N‰r gÂr frÂn tejp till ingen tejp, slÂ av timer och spara v‰rde i time2
+	}	//N√§r g√•r fr√•n tejp till ingen tejp, sl√• av timer och spara v√§rde i time2
 	else if(iterations > 0 && now_value==0 && count_2==1){
 		time2 = iterations;
 		iterations=0;
 		count_2=0;
 
 		if(time1-time2>DELTA){
-			//Sv‰ng hˆger
+			//Sv√§ng h√∂ger
 			EEDR=0x07;
 			return 1;
 			
 		}
 		else if(time2-time1>DELTA){
-			//Sv‰ng v‰nster
+			//Sv√§ng v√§nster
 			EEDR=0x07;
 			return 2;
 			
 		}
 		else{
-			//Kˆr rakt fram
+			//K√∂r rakt fram
 			EEDR=0x07;
 			return 3;
 		}
@@ -80,19 +80,19 @@ int markning(int now_value){
 }
 
 /*
-S‰tter maze_mode=1 om roboten befinner sig i en labyrint, annars s‰tts
+S√§tter maze_mode=1 om roboten befinner sig i en labyrint, annars s√§tts
 maze_mode=0
 */
 
 void decide_maze_mode(int no_tape)
 {
 		if(maze_mode==0){
-				if((no_tape==1) && (dist_left < 60) && (dist_right < 60)) {
+				if((no_tape==1) && (dist_left_front < 60) && (dist_right_front < 60)) {
 						maze_mode=1;
 				}
 		}
 		else {
-				if((no_tape==0) && (dist_left > 60) && (dist_right > 60)) {
+				if((no_tape==0) && (dist_left_front > 60) && (dist_right_front > 60)) {
 						maze_mode=0;
 				}
 		}

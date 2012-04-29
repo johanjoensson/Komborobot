@@ -19,32 +19,38 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "styr_spi.h"
 
 unsigned char speed = 110;
-int old = 0;
+int old_distance = 0;
+int old_line = 0;
+int angle = 0;
 
 
 /*-----------------------------------------------------------------------------
  *  distance_regulator   
  *      input:  
- *              left: avstånd till vänster (20 --- 120)
- *              right: avstånd till höger (20 --- 120)
+ *              left_fron: avstånd till vänster (20 --- 120)
+ *              right_front: avstånd till höger (20 --- 120)
+ *              left_back: avstånd bak till vänster bak (10 --- 80)
+ *              right_back: avstånd bak till vänster bak (10 --- 80)
  *      output: 
  *              värde som ska styra motorer (-70 --- 70)
  *-----------------------------------------------------------------------------*/
-signed char distance_regulator(unsigned char left, unsigned char right)
+signed char distance_regulator(unsigned char left_front, unsigned char left_back,
+                unsigned char right_front, unsigned char right_back)
 {
         int Kp = 1;
-        int Kd = 10;
+        //int Kd = 10;
 
         signed char outvalue;
 
-        signed char difference = right - left;
+        signed char difference = left_front - left_back;
 
         outvalue = Kp*difference;               // P-delen
 
-        outvalue += Kd*(difference - old);      // D-delen
-        old = difference;
+        //outvalue += Kd*(difference - old);      // D-delen
+        //old_distance = difference;
 
         // sätter max- och minvärden på utvärdet
         if(outvalue > 70){
@@ -68,7 +74,38 @@ signed char line_regulator(signed char new_value)
         int Kp = 1;
         signed char outvalue;
 
-        outvalue = Kp*new_value;
+        //Kollar om roboten rör sig åt höger eller vänster
+        if(new_value > old_line){
+                angle = -1; // roboten går åt höger
+        } else if(new_value < old_line){
+                angle = 1; // roboten går åt vänster
+        }
+
+        switch(angle){
+                case 1:
+                        if(new_value < 0){   // roboten går åt vänster och är på 
+                                             // vänstra sidan om tejpen
+                                outvalue = (Kp*new_value) / 2;
+                        } else{              // roboten går åt höger, men är på
+                                             // högra sidan om tejpen
+                                outvalue = (Kp*new_value) / 4;
+                        }
+                        break;
+                case -1:  
+                        if(new_value <= 0){   // roboten går åt höger och är på 
+                                             // vänstra sidan om tejpen
+                                outvalue = (Kp*new_value) / 4;
+                        } else{              // roboten går åt höger och är på
+                                             // högra sidan om tejpen
+                                outvalue = (Kp*new_value) / 2;
+                        }
+                        break;
+                default:
+                        outvalue = Kp*new_value;
+                        break;
+        }
+
+        old_line = new_value;
 
         // sätter max- och minvärden på utvärdet
         if(outvalue > 60){
@@ -77,6 +114,9 @@ signed char line_regulator(signed char new_value)
                 outvalue = -60;
         }
 
+		header = 0x80;
+		data = new_value;
+		req_sending();
         return outvalue;
 }
 
@@ -89,11 +129,11 @@ void drive_engines(signed char value)
 {
         if(value > 0){
                 OCR2 = speed - value; // Vänstermotor
-                OCR0 = speed + value; // Högermotor
+                OCR0 = speed; // + value; // Högermotor
         } else {
                 value = -value;
 
-                OCR2 = speed + value; // Vänstermotor
+                OCR2 = speed; //+ value; // Vänstermotor
                 OCR0 = speed - value; // Högermotor
         }
 }
