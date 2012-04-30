@@ -1,6 +1,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include "sensor_spi.h"
+#include "sensor_ad.h"
+
+void tolka_data();
 
 int req_sending()
 {
@@ -28,7 +31,22 @@ ISR(SPI_STC_vect) //sensor REQ
 				data=SPDR;			//spara mottagen data
 				SPDR=0x00;
 
+				tolka_data();
+
 }
+
+/*****************************************************************************\
+	Skicka header 0x2F till sensorenheten för att ställa in linjesensorernas
+	trösklingsnivå (nivån skickas som data).
+\*****************************************************************************/
+
+void tolka_data()
+{
+		if(header==0x2F){		//ställ in tröskelnivå direkt
+				level=data;
+		}
+}
+
 
 //*auto_mode beskriver huruvida roboten Šr i autonomt lŠge eller ej.
 //INT0 Šr programmerat fšr att ge avbrott pŒ fšrŠndring pŒ spaken fšr att byta lŠge*

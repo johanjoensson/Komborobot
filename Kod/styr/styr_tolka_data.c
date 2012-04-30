@@ -26,7 +26,7 @@ void tolka_data()
 				}
 				else if(0x01==(header & 0x11)){		//avståndsläge
 						if(0x80==(data & 0x80)){
-								dist_left_front=data;
+								dist_left_front= (data;
 								count++;
 						} else {
 								if (count==1){

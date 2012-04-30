@@ -12,7 +12,7 @@ void create_line_array(int trunc_value, int vect_id);
 int truncate(unsigned char inbyte);
 void start_next_ad();
 int get_first_one(int value);
-int control_mux();
+unsigned char control_mux();
 
 
 
@@ -42,23 +42,24 @@ ISR(TIMER1_COMPB_vect)
  * ===  FUNCTION  ======================================================================
  *         Name:  start_next_ad
  *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen f√∂r att
- *				  skicka data.
+ *				  skicka data. Det h‰r kan ses som sensorenhetens huvudprogram dÂ alla
+ *				  andra funktioner anropas h‰rifrÂn.
  * =====================================================================================
  */
 void start_next_ad()
 {
-		int state=control_mux();
+		unsigned char state=control_mux();
 
 		if (state==1){				//left_front klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0x41;	//Skicka till styr med E-flagga
+						header = 0xC1;	//Skicka till styr&pc med E-flagga
 						data=0x80 | dist_left_front;
 						req_sending();
 				}
 		}
 		 else if (state==2){			//left_back klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0x41;	//Skicka till styr med E-flagga
+						header = 0xC1;	//Skicka till styr&pc med E-flagga
 						data= dist_left_back;
 						req_sending();
 				}
@@ -66,7 +67,7 @@ void start_next_ad()
 		
 		else if (state==3){			//right_front klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0x41;	//Skicka till styr med E-flagga
+						header = 0xC1;	//Skicka till styr&pc med E-flagga
 						data= dist_right_front;
 						req_sending();
 				}
@@ -75,7 +76,7 @@ void start_next_ad()
 		
 		else if (state==4){			//right_back klar
 				if(1){//maze_mode==1 && auto_mode==1){
-						header = 0x41;	//Skicka till styr med E-flagga
+						header = 0xC1;	//Skicka till styr&pc med E-flagga
 						data= dist_right_back;
 						req_sending();
 				}
@@ -145,13 +146,13 @@ void start_next_ad()
 
 
  /***************************************************************************\
-|	Namn: control_mux														  |
-|	Beskr: St√§ller om interna och externa muxar samt anropar omvandlingar,	  |
-|		   returnerar ett v√§rde beroende p√• muxarnas inst√§llning.			  |
+	Namn: control_mux														  
+	Beskr: St√§ller om interna och externa muxar samt anropar omvandlingar,
+		   returnerar ett v‰rde beroende pÂ muxarnas inst‰llning.
  \***************************************************************************/
 
 
-int control_mux()
+unsigned char control_mux()
 {
 		switch (count){
 		case(0):

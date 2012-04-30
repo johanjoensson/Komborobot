@@ -12,7 +12,7 @@ int main(void){
 
 
 		DDRB |= (1<<DDB6); //1=ut bit7=SCLK,1 bit6=MISO,0 bit5=MOSI bit4=SS
-		SPCR |= (1<<SPIE) | (1<<SPE) | (1<<SPR0);  
+		SPCR |= (1<<SPIE) | (1<<SPE);  
 		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave 
 		//bit3:2 SPI-mode 3, bit1:0 gör inget
 		DDRD |= (1<<DDD6); 	//REQ

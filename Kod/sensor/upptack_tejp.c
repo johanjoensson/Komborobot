@@ -55,19 +55,16 @@ int markning(int now_value){
 
 		if(time1-time2>DELTA){
 			//Sväng höger
-			EEDR=0x07;
 			return 1;
 			
 		}
 		else if(time2-time1>DELTA){
 			//Sväng vänster
-			EEDR=0x07;
 			return 2;
 			
 		}
 		else{
 			//Kör rakt fram
-			EEDR=0x07;
 			return 3;
 		}
 	

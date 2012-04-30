@@ -9,7 +9,7 @@ int komm_init()
 				//bit4=SS1(styr) bit3=SS2(sens) bit2=REQ(sens)
 				DDRD |= (1<<DDD6) ; //bit3=REQ(styr) bit2=spak 
 				//bit1=blue(trans) bit0=blue(read)
-				SPCR |= (1<<SPE) | (1<<MSTR)| (1<<SPR0);
+				SPCR |= (1<<SPE) | (1<<MSTR);
 				MCUCR |=  (1<<ISC11) | (1<<ISC10) | (1<<ISC00); 
 				//Interrupts på rising edge för INT1, INT0 triggar på change.
 				MCUCSR |= (1<<ISC2);						//interrupts på rising för INT2
