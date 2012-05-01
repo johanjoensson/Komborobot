@@ -41,7 +41,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
                 unsigned char right_front, unsigned char right_back)
 {
         // Ta bort ettan längst fram på left_front
-        left_front = (0x80 & left_front);
+        left_front = (0x7f & left_front);
         int Kp = 1;
         //int Kd = 10;
 
