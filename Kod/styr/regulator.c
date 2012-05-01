@@ -21,7 +21,7 @@
 #include <avr/interrupt.h>
 #include "styr_spi.h"
 
-unsigned char speed = 110;
+unsigned char speed = 105;
 int old_distance = 0;
 int old_line = 0;
 int angle = 0;
@@ -42,6 +42,10 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 {
         int Kp = 1;
         //int Kd = 10;
+
+		header = 0x80;
+		data = left_front;
+		req_sending();
 
         signed char outvalue;
 
@@ -82,22 +86,22 @@ signed char line_regulator(signed char new_value)
         }
 
         switch(angle){
-                case 1:
-                        if(new_value < 0){   // roboten går åt vänster och är på 
+                case 1:                      
+					    if(new_value < 0){   // roboten går åt vänster och är på 
                                              // vänstra sidan om tejpen
-                                outvalue = (Kp*new_value) / 2;
+                                outvalue = (Kp*new_value) >> 1;
                         } else{              // roboten går åt höger, men är på
                                              // högra sidan om tejpen
-                                outvalue = (Kp*new_value) / 4;
+                                outvalue = -(Kp*new_value) >> 2;
                         }
                         break;
-                case -1:  
+                case -1: 
                         if(new_value <= 0){   // roboten går åt höger och är på 
                                              // vänstra sidan om tejpen
-                                outvalue = (Kp*new_value) / 4;
+                                outvalue = -(Kp*new_value) >> 2;
                         } else{              // roboten går åt höger och är på
                                              // högra sidan om tejpen
-                                outvalue = (Kp*new_value) / 2;
+                                outvalue = (Kp*new_value) >> 1;
                         }
                         break;
                 default:
@@ -114,9 +118,6 @@ signed char line_regulator(signed char new_value)
                 outvalue = -60;
         }
 
-		header = 0x80;
-		data = new_value;
-		req_sending();
         return outvalue;
 }
 
