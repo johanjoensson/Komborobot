@@ -40,7 +40,7 @@ int angle = 0;
 signed char distance_regulator(unsigned char left_front, unsigned char left_back,
                 unsigned char right_front, unsigned char right_back)
 {
-        int Kp = 1;
+        int Kp = 3;
         //int Kd = 10;
 
 		header = 0x80;
