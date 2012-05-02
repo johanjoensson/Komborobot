@@ -121,7 +121,7 @@ void trim_zero()		//nollställer trimning
 	}
 void set_speed(speed)
 	{
-		speed = (speed << 2);		// speed som kommer in ligger 0-F, dubblar det til 0-1E
+		speed = (speed << 1);		// speed som kommer in ligger 0-F, dubblar det til 0-1E
 		speed = 0x6A + speed;		// sŠtter lŠgsta hastigheten till 6A och hšgsta till 88
 		if (trim > 0)
 		{
