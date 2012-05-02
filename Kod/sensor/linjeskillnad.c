@@ -16,7 +16,7 @@ int calculate_diff(int byte1, int byte2)
 		int index = find_index(value);
         switch(index){
                 case 0 :
-                        return -100;
+                        return -110;
                 case 1:
                         return -90;
                 case 2:
@@ -36,7 +36,7 @@ int calculate_diff(int byte1, int byte2)
                 case 9:
                         return 90;
                 case 10:
-                        return 100;
+                        return 110;
                 default:
                         return 0;
         }
