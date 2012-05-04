@@ -7,6 +7,7 @@
 #define NO_BLUE
 
 #undef NO_BLUE
+#undef DEBUG
 
 #include "blue_pc.h"
 #include "db.h"
@@ -74,7 +75,6 @@ int main(void)
 	struct sockaddr_rc firefly = connect_to_firefly(socket);
 #endif /* NO_BLUE */
 	init_curses();
-
 	int quit = 0;
 	f = init_read("instr_db");
 
