@@ -21,6 +21,8 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 
+	
+
 FILE *f;	/* Härvid är jag af nöden tvungen!
 		   Annars kan jag inte stänga filen när programmet avslutas
 		*/
@@ -75,6 +77,7 @@ int main(void)
 
 	int quit = 0;
 	f = init_read("instr_db");
+
 	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
 	struct instruction_t *ex_inst = malloc(sizeof(struct instruction_t));
 	inst->header = 'a';

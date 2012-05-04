@@ -60,7 +60,6 @@ void event_loop(struct instruction_t *inst, FILE *db)
         SDL_Event event;
 
         SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
-//        SDL_WM_SetCaption("Centro de control", "Centro de control");
 
         screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
 
@@ -78,42 +77,22 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_w:
 						on_w_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db, "w" , 2);
-//                                                printf("Framåt\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_a:
 						on_a_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db,"a" , 2);
-//                                                printf("Rotera vänster\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_s:
 						on_s_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db,"s" , 2);
-//                                              printf("Back\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_d:
 						on_d_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db,"d" , 2);
-//                                                printf("Rotera höger\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_q:
 						on_q_down(speed, inst);
 						add_to_db(db,inst , 2);
-//						add_to_db(db,"q" , 2);
-//	                                        printf("Fram vänster\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
                                         case SDLK_e:
 						on_e_down(speed, inst);
@@ -139,17 +118,11 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_UP:
 						if(speed<15){
 							speed++;
-							//printf("Speed is %d\n", speed);
-						} else {
-//							printf("Max speed\n");
-						}
+						{
 						break;
 					case SDLK_DOWN:
 						if(speed>2){
 							speed--;
-							//printf("Speed is %d\n", speed);
-						} else {
-//							printf("Min speed\n");
 						}
 						break;
 					case SDLK_RIGHT:
@@ -194,9 +167,6 @@ void event_loop(struct instruction_t *inst, FILE *db)
 					case SDLK_e:
 						on_key_up(inst);
 						add_to_db(db, inst, 2);
-//                                                printf("Stopp\n");
-						//printf("Header = %x\n", inst->header);
-						//printf("Data = %x\n", inst->data);
 						break;
 					case SDLK_RIGHT:
 					case SDLK_LEFT:
@@ -280,6 +250,13 @@ void on_key_up(struct instruction_t *instr)
 {
        instr->header = generate_header(2,2);
        instr->data = stop();
+}
+
+void calibrate_sensors(struct instruction_t *inst)
+{
+	instr->header = genarate_header(2,F);
+	inst->data = 125;
+	return;
 }
 
 int main()
