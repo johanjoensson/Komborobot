@@ -6,8 +6,8 @@
 #define DEBUG
 #define NO_BLUE
 
-#undef NO_BLUE
-#undef DEBUG
+//#undef NO_BLUE
+//#undef DEBUG
 
 #include "blue_pc.h"
 #include "db.h"
@@ -83,8 +83,8 @@ int main(void)
 	inst->header = 'a';
 	inst->data = 'b';
 #ifdef DEBUG
-	ex_inst->header = (unsigned char) 0x00;
-	ex_inst->data = (unsigned char) 0xC0;
+	ex_inst->header = (unsigned char) 0x02;		// Speckomm 
+	ex_inst->data = (unsigned char) 0x2F;		// vänster fram, 15 cm
 #endif /* DEBUG */
 	while(!quit){
 		if(new_data(f, inst)){
