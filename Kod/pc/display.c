@@ -3,21 +3,23 @@
 #include "display.h"
 #include "blue_pc.h"
 
+#define DEBUG
+#undef DEBUG
 int width, height;
 
 int trim = 0;
 
 enum sensors{
-	LEFT_BACK = 0,
-	LEFT_FRONT = 1,
-	RIGHT_BACK = 2,
-	RIGHT_FRONT = 3
+	LEFT_FRONT = 0,
+	LEFT_BACK = 1,
+	RIGHT_FRONT = 2,
+	RIGHT_BACK = 3,
+	NONE = 4
 };
 
-enum sensors cur_sensor = 0;
+enum sensors cur_sensor;
 
 WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
-
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
 {
 	WINDOW *local_win;
@@ -126,12 +128,12 @@ void exit_curses()
 
 void display_error(struct instruction_t *inst)
 {
-	fprintf(stderr, "Something is seriously wrong with you!\n%X;%X is supposed to be what?\n", inst->header, inst->data);
+//	fprintf(stderr, "Something is seriously wrong with you!\n%X;%X is supposed to be what?\n", inst->header, inst->data);
 	return;
 }
 enum mode run_mode(struct instruction_t *inst)
 {
-	switch((inst->header >> 4) % 2){
+	switch((inst->header & 0x10) >> 4){
 		case 0:
 			return LABYRINT;
 		case 1:
@@ -146,6 +148,10 @@ void display_mode(struct instruction_t *inst)
 {
 	int y, x;
 	getmaxyx(mode, y, x);
+#ifndef DEBUG
+	for(int i = 2; i < x-1; i++){
+		mvwaddch(mode, y >> 1, i, ' ');
+	}
 	switch(run_mode(inst)){
 		case LABYRINT:
 			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Kör i labyrint");
@@ -158,13 +164,15 @@ void display_mode(struct instruction_t *inst)
 	}
 
 	wrefresh(mode);
+#endif
 	return;
 }
 
 enum data_type_t type_of_inst(struct instruction_t *inst)
 {
 
-	switch( (inst->header & 0x0C) >> 2 ){ // maska fram B och C flaggorna
+	switch( (inst->header & 0x02) >> 1 ){ // maska fram D flaggan
+#if 0
 		/* C = 0
 		 * Alltså sensorinfo
 		 */
@@ -185,6 +193,13 @@ enum data_type_t type_of_inst(struct instruction_t *inst)
 		
 		/* Något är väldigt fel
 		 */ 
+#endif
+		case 1:
+			return SPECKOMMANDO;
+		case 0:
+			return SENSORDATA;
+
+
 		default:
 			return UNKNOWN_COMMAND;
 	}
@@ -215,14 +230,22 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 
 enum sensors next_sensor()
 {
-	if(cur_sensor < 4){
-		return cur_sensor + 1;
-	} else {
-		return LEFT_BACK;
+	switch(cur_sensor){
+		case LEFT_FRONT:
+			return LEFT_BACK;
+		case LEFT_BACK:
+			return RIGHT_FRONT;
+		case RIGHT_FRONT:
+			return RIGHT_BACK;
+		default:
+			return	NONE;
 	}
+	return cur_sensor;
 }
+
 WINDOW* get_sensor_window(enum sensors sensor)
 {
+#ifndef DEBUG
 	switch(sensor){
 		case LEFT_BACK:
 			return llsensor;
@@ -232,26 +255,33 @@ WINDOW* get_sensor_window(enum sensors sensor)
 			return rusensor;
 		case RIGHT_BACK:
 			return rlsensor;
+		default:
+			return NULL;
 	}
+#endif
 
 	return NULL;
 }
 void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 {
+#ifndef DEBUG
 	int y,x;
 	WINDOW *cur_win = get_sensor_window(sensor);
 
 	getmaxyx(cur_win,y,x);
 
-	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen", (int) (inst->data & 0xEF));
+	for(int i = x >> 4; i < x-1; i++){
+		mvwaddch(cur_win, y >> 1, i, ' ');
+	}
+	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen", (int) (inst->data & 0x7F));
 	wrefresh(cur_win);
-
+#endif
 	return;
 }
 
 int new_cycle(struct instruction_t *inst)
 {
-	if(inst->data & 0x80){
+	if((inst->data & 0x80) != 0){
 		return 1;
 	}
 	return 0;
@@ -260,7 +290,9 @@ int new_cycle(struct instruction_t *inst)
 void display_sensor(struct instruction_t *inst)
 {
 	if(new_cycle(inst)){
-		cur_sensor = 0;
+		cur_sensor = LEFT_FRONT;
+	}else if(cur_sensor == NONE){
+		return;
 	}
 
 	display_sensor_data(inst, cur_sensor);
@@ -272,9 +304,10 @@ void display_sensor(struct instruction_t *inst)
 
 void display_reg(struct instruction_t *inst)
 {
+#ifndef DEBUF
 	int y, x;
 	getmaxyx(mode, y, x);
-
+#endif
 	return;
 }
 
@@ -282,8 +315,13 @@ void display_reg(struct instruction_t *inst)
 
 void display_spec(struct instruction_t *inst)
 {
+#ifndef DEBUG
 	int y, x;
 	getmaxyx(spec_komm, y, x);
+
+	for(int i = 2; i < x-1; i++){
+		mvwaddch(spec_komm, y >> 1, i, ' ');
+	}
 
 	switch(type_of_command(inst)){
 		case REGLER:
@@ -304,7 +342,7 @@ void display_spec(struct instruction_t *inst)
 	}
 
 	wrefresh(spec_komm);
-
+#endif
 	return;
 }
 
@@ -341,6 +379,7 @@ int has_speed(struct instruction_t *inst)
 
 void display_speed(struct instruction_t *inst)
 {
+#ifndef DEBUG
 	int x,y;
 	int c = 1;
 	int cur_speed = inst->data & 0x0F;
@@ -370,11 +409,13 @@ void display_speed(struct instruction_t *inst)
 
 	wrefresh(speed);
 	wattroff(speed, COLOR_PAIR(c));
+#endif
 	return;
 }
 
 void print_trim(WINDOW *win, int spd)
 {
+#ifndef DEBUG
 	int x,y, i;
 	int c = 1;
 	getmaxyx(win, y, x);
@@ -402,6 +443,7 @@ void print_trim(WINDOW *win, int spd)
 	wrefresh(win);
 
 	wattroff(win, COLOR_PAIR(c));
+#endif
 	return;
 }
 void display_trim(struct instruction_t *inst)
