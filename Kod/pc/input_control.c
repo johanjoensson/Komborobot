@@ -51,74 +51,69 @@ void event_loop(struct instruction_t *inst, FILE *db)
 
 	struct instruction_t *old_inst = malloc(sizeof(struct instruction_t));
 
-        int error = SDL_Init(SDL_INIT_EVERYTHING);
-        if(error == -1){
-                printf("SDL error");
-                exit(1);
-        } 
-        SDL_Surface *screen;
-        SDL_Event event;
+	int error = SDL_Init(SDL_INIT_EVERYTHING);
+	if(error == -1){
+		printf("SDL error");
+		exit(1);
+	} 
+	SDL_Surface *screen;
+	SDL_Event event;
 
-        SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
+	SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
 
-        screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
+	screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
 
-        int quit = 0;
-        while((quit == 0) && (SDL_WaitEvent(&event))){
-                switch(event.type){
-                        case SDL_QUIT:
-                                quit = 1;
-                                break;
-                        case SDL_KEYDOWN:
-                                switch(event.key.keysym.sym){
-                                        case SDLK_ESCAPE:
-                                                quit = 1;
-                                                break;
+	int quit = 0;
+	while((quit == 0) && (SDL_WaitEvent(&event))){
+		switch(event.type){
+			case SDL_QUIT:
+				quit = 1;
+				break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_ESCAPE:
+						quit = 1;
+						break;
 					case SDLK_w:
 						on_w_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-                                        case SDLK_a:
+					case SDLK_a:
 						on_a_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-                                        case SDLK_s:
+					case SDLK_s:
 						on_s_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-                                        case SDLK_d:
+					case SDLK_d:
 						on_d_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-                                        case SDLK_q:
+					case SDLK_q:
 						on_q_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-                                        case SDLK_e:
+					case SDLK_e:
 						on_e_down(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-	
 					case SDLK_k:
 						set_left(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-
 					case SDLK_l:
 						set_right(speed, inst);
 						add_to_db(db,inst , 2);
 						break;
-
 					case SDLK_o:
 						no_trim(inst);
 						add_to_db(db,inst , 2);
 						break;
-
-
 					case SDLK_UP:
 						if(speed<15){
 							speed++;
-						{
+						}
 						break;
 					case SDLK_DOWN:
 						if(speed>2){
@@ -127,57 +122,47 @@ void event_loop(struct instruction_t *inst, FILE *db)
 						break;
 					case SDLK_RIGHT:
 						old_inst = inst;
-
 						trim_right(inst);
 						add_to_db(db, inst, 2);
 						inst = old_inst;
 						add_to_db(db, inst, 2);
-
-
 						break;
-
 					case SDLK_LEFT:
 						old_inst = inst;
-
 						trim_left(inst);
 						add_to_db(db, inst, 2);
 						inst = old_inst;
 						add_to_db(db, inst, 2);
-						
 						break;
-
-
 
 					case SDLK_SPACE:
-						
 						on_key_up(inst);
 						add_to_db(db, inst, 2);
-						
-                                        default:
-                                                break;
-                                }
-                                break;
-/*                        case SDL_KEYUP:
-                                switch(event.key.keysym.sym){
-					case SDLK_w:
-					case SDLK_a:
-					case SDLK_s:
-					case SDLK_d:
-					case SDLK_q:
-					case SDLK_e:
-						on_key_up(inst);
-						add_to_db(db, inst, 2);
+					default:
 						break;
-					case SDLK_RIGHT:
-					case SDLK_LEFT:
-                                        default:
-                                                break;
-				} */
-                        default:
-                                break;
-                }
-		
-        }
+				}
+				break;
+				/*                        case SDL_KEYUP:
+							  switch(event.key.keysym.sym){
+							  case SDLK_w:
+							  case SDLK_a:
+							  case SDLK_s:
+							  case SDLK_d:
+							  case SDLK_q:
+							  case SDLK_e:
+							  on_key_up(inst);
+							  add_to_db(db, inst, 2);
+							  break;
+							  case SDLK_RIGHT:
+							  case SDLK_LEFT:
+							  default:
+							  break;
+							  } */
+			default:
+				break;
+		}
+
+	}
 
 	free(old_inst);
 }
@@ -254,9 +239,8 @@ void on_key_up(struct instruction_t *instr)
 
 void calibrate_sensors(struct instruction_t *inst)
 {
-	instr->header = genarate_header(2,F);
+	inst->header = generate_header(2,0xF);
 	inst->data = 125;
-	return;
 }
 
 int main()
