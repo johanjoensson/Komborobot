@@ -16,8 +16,9 @@ int main(void){
 		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave 
 		//bit3:2 SPI-mode 3, bit1:0 gör inget
 		DDRD |= (1<<DDD6); 	//REQ
-		MCUCR |= (1<<ISC00);	//interrupt när man drar i spaken.
-		GICR |= (1<<INT0);	//tillåt spaken att fungerar
+		MCUCR |= (1<<ISC00) | (1<<ISC11);	//interrupt när man drar i spaken
+										//eller när man släpper knappen
+		GICR |= (1<<INT0) | (1<<INT1);	//tillåt spaken att fungera
 		decide_mode();
 		init();				//init motorer
 

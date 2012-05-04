@@ -1,5 +1,5 @@
-#ifndef MOTOR_TEST_H
-#define MOTOR_TEST_H
+#ifndef MOTOR_STYRNING_H
+#define MOTOR_STYRNING_H
 /*
 int speed_right;
 int speed_left;
@@ -17,4 +17,5 @@ void trim_right();
 void trim_zero();
 void set_speed_left(unsigned char speed);
 void set_speed_right(unsigned char speed);
+void set_speed(unsigned char speed);
 #endif

@@ -41,14 +41,10 @@ int angle = 0;
 signed char distance_regulator(unsigned char left_front, unsigned char left_back,
                 unsigned char right_front, unsigned char right_back)
 {
-		speed = 110;
+		speed = 120;
         int Kp = 3;
 		int Ka = 1;
         int Kd = 8;
-
-		header = 0x80;
-		data = left_front;
-		req_sending();
 
         signed char outvalue;
 
@@ -82,6 +78,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 signed char line_regulator(signed char new_value)
 {
         int Kp = 1;
+		speed = 104;
         signed char outvalue;
 
         //Kollar om roboten rör sig åt höger eller vänster
@@ -96,13 +93,17 @@ signed char line_regulator(signed char new_value)
 					    if(new_value < 0){   // roboten går åt vänster och är på 
                                              // vänstra sidan om tejpen
                                 outvalue += (Kp*new_value) >> 2;
+						} else if (new_value >= 90){
+								outvalue = 0;
 						} else {              // roboten går åt höger, men är på
                                              // högra sidan om tejpen
                                 outvalue -= (Kp*new_value) >> 1;
                         }
                         break;
                 case -1: 
-                        if(new_value <= 0){   // roboten går åt höger och är på 
+						if(new_value <= -90){
+								outvalue = 0;
+                        } else if(new_value <= 0){   // roboten går åt höger och är på 
                                              // vänstra sidan om tejpen
                                 outvalue -= (Kp*new_value) >> 1;
                         } else{              // roboten går åt höger och är på
@@ -144,3 +145,4 @@ void drive_engines(signed char value)
                 OCR0 = speed - value; // Högermotor
         }
 }
+

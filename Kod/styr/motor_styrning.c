@@ -13,7 +13,8 @@
  */
 
 #include <avr/io.h>
-#include <avr/interrupt.h> 
+#include <avr/interrupt.h>
+#include "motor_styrning.h" 
 int trim;
 int speed_right;
 int speed_left;
@@ -119,7 +120,7 @@ void trim_zero()		//nollställer trimning
 	{
 		trim=0;
 	}
-void set_speed(speed)
+void set_speed(unsigned char speed)
 	{
 		speed = (speed << 1);		// speed som kommer in ligger 0-F, dubblar det til 0-1E
 		speed = 0x6A + speed;		// sŠtter lŠgsta hastigheten till 6A och hšgsta till 88
@@ -141,3 +142,5 @@ void decide_speed(unsigned char speed)
 		
 }
 */
+
+

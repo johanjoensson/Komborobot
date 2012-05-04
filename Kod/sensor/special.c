@@ -20,7 +20,7 @@
 #include"sensor_ad.h"
 #include<stdio.h>
 
-unsigned char next_special_command = 0xE0;
+unsigned char next_special_command; //= 0xE0;
 
 /*
 int main(int argc, char *argv[])
@@ -77,7 +77,7 @@ void generate_special_command(unsigned char command_code)
                 case 3:         special_command = 0x20;
                                 set_next_special_command(special_command);
                                 break;
-                case 4:         special_command = 0x00;
+                case 4:         special_command = 0x80;
                                 set_next_special_command(special_command);
                                 break;
                 default:        break;
@@ -96,9 +96,10 @@ void generate_special_command(unsigned char command_code)
 void send_special_command(unsigned char command)
 {
         if(command == 0xE0){
+
                 return;
         } else {
-                header = 0xCF;
+                header = 0xC3;
                 data = command;
 		//printf("Header is %x\n", header);
 		//printf("Data is %x\n", data);
@@ -116,6 +117,12 @@ int search_for_crossroad(){
 
 		if((dist_right_front>=60 && dist_left_front>=60) || (dist_front>=60 && dist_left_front>=60) || (dist_front>=60 && dist_right_front>=60)){
 				return 1;
+		}
+		else if(dist_right_front >= 60){
+				return 2;
+		}
+		else if(dist_left_front >= 60){
+				return 3;
 		}
 		else{
 				return 0;

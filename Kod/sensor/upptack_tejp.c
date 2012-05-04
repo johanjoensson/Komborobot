@@ -17,11 +17,10 @@
  * =====================================================================================
  */
 int count_2;
-unsigned int time1;
-unsigned int time2;
+int time1;
+int time2;
 int iterations;
 
-//anropa med markning(find_ones(line_array_1));
 
 int find_ones(unsigned char array)
 {
@@ -53,6 +52,7 @@ int markning(int now_value){
 		iterations=0;
 		count_2=0;
 
+	
 		if(time1-time2>DELTA){
 			//Sväng höger
 			return 1;

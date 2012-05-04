@@ -27,9 +27,3 @@ void ad_init()
 		level = 0xA8;				//Tröskelvärde
 }
 
-//void upptack_tejp_init()
-//{
-//		TCCR1B |= (1<<CS12) | (1<<CS10); //LŒt timer gŒ med fosc/1024					 
-//
-//}
-
