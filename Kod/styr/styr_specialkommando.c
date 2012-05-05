@@ -79,6 +79,11 @@ void specialkommando(unsigned char kommando_kod)
                         special_help(0x2000, 0, 3);   	  // Stanna
                         return;
 		}
+		else if((0xC0==kommando_kod){
+						stop(0);
+						start=0;
+						return;
+		}
 
 }
 

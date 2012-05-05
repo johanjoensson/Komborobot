@@ -14,7 +14,7 @@ int calculate_diff(int byte1, int byte2)
 		byte2 &= 0b00000111;
 		int value = (byte2 << 8) + byte1;
 		int index = find_index(value);
-        switch(index){
+		switch(index){
                 case 0 :
                         return -110;
                 case 1:
@@ -37,7 +37,9 @@ int calculate_diff(int byte1, int byte2)
                         return 90;
                 case 10:
                         return 110;
-                default:
+				case 20;
+						return 192;	//Felkod
+				default:
                         return 0;
         }
 }
@@ -49,20 +51,35 @@ int find_index(int value)
 		int found_one = 0;
 		int one_index = 0;
 		int zero_index = 10;
+		int found_first_zero=0;
 		for(int i=0;i<11; i++){
 				if(!found_one){
 						if(value%2 == 1){
 								one_index = i;
 								found_one = 1;
-						}
-						value = value >> 1;
-				} else {
-						if(value%2 == 0){
+							}
+						
+				} else{
+						if(value%2 == 0 && found_first_zero = 0){
 								zero_index = i;
-								break;
+								found_first_zero=1;
 						}
-						value = value >> 1;
+						
 				}
+			if(value%2 != last){
+				number_of_switches++;
+				}
+			last=value%2;
+			value = value >>1
+		
 		}
-		return (one_index + zero_index) >> 1;
-}
+	int index=(one_index + zero_index) >> 1;
+	if(number_of_switches>3){
+		index=20;
+		   }
+	
+			return index;
+	}
+		   
+
+		 

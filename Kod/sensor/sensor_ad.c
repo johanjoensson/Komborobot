@@ -139,8 +139,14 @@ void start_next_ad()
 						//kod som kollar om banan är slut
 						
 						data=calculate_diff(line_array_1, line_array_2); 
-						header=0x51; 	//Skicka till styr med A- och E-flagga
-						req_sending();
+						
+						if(data=0xC0){
+						 	header=0xC3;		//skicka till styr och dator med stopp-kod, D-flagga satt
+						}
+						else {
+							header=0x51;		//Skicka till styr med A- och E-flagga
+						}
+							req_sending();
 						
 
 
