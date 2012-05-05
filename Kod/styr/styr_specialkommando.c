@@ -120,3 +120,10 @@ int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsign
 			return 0;
 		}			
 }
+
+void set_wall(int vaggen){
+		wall=vaggen;
+}
+				
+
+			
