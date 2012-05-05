@@ -79,6 +79,9 @@ void display_setup(){
 
 	char_to_display('H',0x08);
 	char_to_display(':',0x09);
+
+	char_to_display('V',0x00);
+	char_to_display(':',0x01);
 }
 
 /*
@@ -94,9 +97,11 @@ void waiting(int n){
 /*
 *	void DATA_TO_DISPLAY(unsigned char data)
 *	Skickar en databyte till displayen, och säger åt displayen att visa den
-*	sensour_source: 0x00: höger
-*					0x01: vänster
-*					0x02: fram
+*	sensour_source: 0x00: höger fram
+*					0x01: vänster fram
+*					0x02: höger bak
+*					0x03: vänster bak
+*				
 */
 void data_to_display(int cm_value,unsigned char sensor_source){
 
@@ -125,6 +130,8 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	unsigned char place;
 	if(sensor_source == 0x00) place = 0x0A;
 	else if(sensor_source == 0x01) place = 0x02;
+	else if(sensor_source == 0x02) place = 0x4A;
+	else if(sensor_source == 0x03) place = 0x42;
 	else  place = 0x00;
 
 	PORTB &= 0xFE; //Register select = function
@@ -136,7 +143,7 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 
 	//Sätt position i minnet
 	PORTD |= (1<<PORTD7);
-	PORTD |= (place & 0x0B);
+	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
 	  
 	PORTB |= (1<<PORTB1); //Enable

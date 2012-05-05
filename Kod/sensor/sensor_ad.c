@@ -13,6 +13,7 @@ int truncate(unsigned char inbyte);
 void start_next_ad();
 int get_first_one(int value);
 unsigned char control_mux();
+int display_ctr = 0;
 
 
 
@@ -111,8 +112,14 @@ void start_next_ad()
 		}
 		else if(state==5){			//front klar
 				//visa på display
-				data_to_display(dist_left_front,0x01);
-				data_to_display(dist_right_front,0x00);
+				if(display_ctr == 10){
+					data_to_display(dist_right_front,0x00);
+					data_to_display(dist_left_front,0x01);
+					data_to_display(dist_right_back,0x02);
+					data_to_display(dist_left_back,0x03);
+					display_ctr = 0;
+				}
+				display_ctr++;
 		}
 		else if(state==6){			//linjesensor 0-7 pågår 
 				create_line_array(truncate(ADCH), 1);
