@@ -20,6 +20,7 @@ int count_2;
 int time1;
 int time2;
 int iterations;
+int counter;
 
 
 int find_ones(unsigned char array)
@@ -69,7 +70,14 @@ int markning(int now_value){
 		}
 	
 	}
+	
 	else {
+			counter++;
+			if(counter>120){
+					iterations=0;
+					count_2=0;
+			}
+		
 			return 0;
 	}
 
