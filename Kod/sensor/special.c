@@ -77,7 +77,7 @@ void generate_special_command(unsigned char command_code)
                 case 3:         special_command = 0x20;
                                 set_next_special_command(special_command);
                                 break;
-                case 4:         special_command = 0x80;
+                case 4:         special_command = 0x00;
                                 set_next_special_command(special_command);
                                 break;
                 default:        break;

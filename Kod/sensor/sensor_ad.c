@@ -61,19 +61,19 @@ void start_next_ad()
 				else {
 						header = 0x80;
 				}
-				data=0x80 | dist_left_front;
+				data=dist_left_front;
 				req_sending();
 
 		}
 		 else if (state==2){			//left_back klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0xC1;	//Skicka till styr&pc med E-flagga
+						header = 0xC5;	//Skicka till styr&pc med E-flagga
 				}
 				else if(maze_mode == 0 && auto_mode==1){  //linjeläge
-						header = 0x91;	//Skicka till pc
+						header = 0x95;	//Skicka till pc
 				}
 				else {
-						header = 0x80;
+						header = 0x84;
 				}
 				data= dist_left_back;
 				req_sending();
@@ -82,13 +82,13 @@ void start_next_ad()
 		
 		else if (state==3){			//right_front klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0xC1;	//Skicka till styr&pc med E-flagga
+						header = 0xC9;	//Skicka till styr&pc med E-flagga
 				}
 				else if(maze_mode == 0 && auto_mode==1){  //linjeläge
-						header = 0x91;	//Skicka till pc
+						header = 0x99;	//Skicka till pc
 				}
 				else {
-						header = 0x80;
+						header = 0x88;
 				}
 				data= dist_right_front;
 				req_sending();
@@ -98,15 +98,15 @@ void start_next_ad()
 		
 		else if (state==4){			//right_back klar
 				if(maze_mode==1 && auto_mode==1){
-						header = 0xC1;	//Skicka till styr&pc med E-flagga
+						header = 0xCD;	//Skicka till styr&pc med E-flagga
 				}
 				else if(maze_mode == 0 && auto_mode==1){  //linjeläge
-						header = 0x91;	//Skicka till pc
+						header = 0x9D;	//Skicka till pc
 				}
 				else {
-						header = 0x80;
+						header = 0x8C;
 				}
-				data= dist_right_front;
+				data= dist_right_back;
 				req_sending();
 
 		}
