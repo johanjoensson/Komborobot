@@ -136,13 +136,13 @@ signed char line_regulator(signed char new_value)
 void drive_engines(signed char value)
 {
         if(value > 0){
-                OCR2 = (speed + 2) - value; // Vänstermotor
-                OCR0 = (speed - 2); // + value; // Högermotor
+                OCR2 = speed - value; // Vänstermotor
+                OCR0 = speed; // + value; // Högermotor
         } else {
                 value = -value;
 
-                OCR2 = (speed + 2); //+ value; // Vänstermotor
-                OCR0 = (speed - 2) - value; // Högermotor
+                OCR2 = speed; //+ value; // Vänstermotor
+                OCR0 = speed - value; // Högermotor
         }
 }
 

@@ -28,27 +28,24 @@ void tolka_data()
 						drive_engines(line_regulator(data));
 				}
 				else if(0x01==(header & 0x11)){		//avståndsläge
-						if(0x80==(data & 0x80)){
-								dist_left_front= 0x7F & data;
+						if(0x00==(header & 0x0C)){
+								dist_left_front= data;
+								count=1;
+						} else if (count==1 && 0x04==(header & 0x0C)){
+								dist_left_back=data;
 								count++;
-						} else {
-								if (count==1){
-										dist_left_back=data;
-										count++;
-								} else if(count==2){
-										dist_right_front=data;
-										count++;
-								} /*else if(done_with_special_command==1){
-										count=0;								
-										done_with_special_command = straight(dist_left_front, dist_left_back, 
-										dist_right_front, data);
-								}*/ 
-								else {
-										count=0;
-										drive_engines(distance_regulator(
-										dist_left_front, dist_left_back, 
-										dist_right_front, data));
-								}
+						} else if(count==2 && 0x08==(header & 0x0C)){
+								dist_right_front=data;
+								count++;
+						} /*else if(done_with_special_command==1){
+								count=0;								
+								done_with_special_command = straight(dist_left_front, dist_left_back, 
+								dist_right_front, data);
+						}*/ 
+						else if(count==3 && 0x0C==(header & 0x0C)){
+								drive_engines(distance_regulator(
+								dist_left_front, dist_left_back, 
+								dist_right_front, data));
 						}
 				}
 		}

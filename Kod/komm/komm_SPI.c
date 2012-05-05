@@ -86,10 +86,20 @@ int send_to_sensor(unsigned char header,unsigned char data)
 		return 0;
 }
 
+
+/* --------------------------------------------------
+* SEND_TO_PC(unsigned char header,unsigned char data)
+*
+* Skickar i tur och ordning orden 'header' och 'data' 
+* via blåtand till PC.
+*
+* Efter sändning återställs enheten att vara redo att
+* ta emot data från PC.
+* ---------------------------------------------------*/
 int send_to_PC(unsigned char header,unsigned char data)
 {
 		
-/* Recieve data */
+/* Send data */
 	USART_write_char(header);
 	while(!(UCSRA & (1<<TXC))) //While transmission not complete
    	{
@@ -101,12 +111,19 @@ int send_to_PC(unsigned char header,unsigned char data)
       ;
    	}
 
+/*
+	volatile int ctr = 0;
+	while(ctr<100){
+		ctr++;
+	}
+*/
+
 /* Reset flags */
-	
-	UCSRA = (1<<TXC);
-	UCSRB = (1<<TXEN);
+//	UCSRA = (1<<TXC);
+//	UCSRB = (1<<TXEN);
 	UCSRB = (1<<RXCIE)|(1<<RXEN);
-	PORTD = (1<<PIND5);
+	PORTD &= 0xEF; //RTS = 0
+	PORTD |= (1<<PIND5); //CTS = 1
 
 	return 0;
 }
