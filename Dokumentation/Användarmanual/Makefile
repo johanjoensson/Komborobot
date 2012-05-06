@@ -1,6 +1,6 @@
 all: manual.pdf
 
-manual.pdf: manual.tex autonomt.tex fjarrstyrt.tex 
+manual.pdf: manual.tex autonomt.tex fjarrstyrt.tex LIPS.tex oversikt.tex
 	pdflatex manual.tex && \
 	pdflatex manual.tex && \
 	pdflatex manual.tex

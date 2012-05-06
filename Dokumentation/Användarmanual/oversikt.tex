@@ -1,7 +1,7 @@
 % !TEX encoding = UTF-8 Unicode
 
 %% --------------------------------------------------------------------------------------------------------------------------------------------
-% ÖVERSIKT 
+% ÖVERSIKT - Beskrivning av robotens funktioner och gränssnitt mellan robot och användare
 %
 %
 % --mj 20120506
@@ -10,3 +10,18 @@
 
 \section{Översikt}
 
+Man kan interagera med Komborobot på två sätt. Dels genom att använda knapparna och reglagen på robotens ovansida, dels genom datorprogrammets gränssnitt. 
+
+Figur \ref{fig:robot1} visar roboten, sett från ovan. Ovanpå roboten finns en skjutspak (1), två knappar (2 och 3),  samt en display (4).   Förutom detta så sitter även robotens bluetooth-enhet (5) på samma platta. 
+
+\nyBild{robot1.jpg}{Robotens utseende sett från ovan}{robot1}{0.5} %Bild på robot ovanifrån
+
+\begin{enumerate}
+\item{\bf Lägesspaken} bestämmer vilket styrläge roboten befinner sig i, d.v.s. om den befinner sig i \emph{autonomt} eller \emph{fjärrstyrt} läge. Spakens riktning för de två lägena kan ses i figur \ref{fig:spak}.
+\item {\bf Startknappen} används endast i autonomt läge. Som namnet antyder används den för att starta roboten från stillastående. 
+\item{\bf Reset-knappen} används för att få roboten att återgå till ursprungsläget, vilket i både autonomt och fjärrstyrt läge innebär att roboten stannar. Efter reset så startas roboten åter med antingen (2) eller kommando från PC, beroende på styrläge.
+\item{\bf Displayen} visar avståndet till väggarna på robotens högra och vänstra sida, angivet i cm. 
+\item{\bf Bluetooth-enheten} används för att kommunicera med PC. Då roboten är ansluten till en PC så lyser BT-enhetens lysdiod grönt. I annat fall blinkar den rött. 
+\end{enumerate}
+
+\nyBild{spakar2.png}{Lägesspakens två lägen. (1) innebär autonomt och (2) manuellt läge.}{spak}{0.5} %Bild på robot ovanifrån
