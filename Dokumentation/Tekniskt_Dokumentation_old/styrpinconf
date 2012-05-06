@@ -1,0 +1,7 @@
+PWM till högermotor -> OC0
+PWM till vänstermotor -> OC2
+Klocka in -> XTAL1
+riktning högermotor -> PD4
+riktning vänstermotor -> PD5
+
+REQ -> PD6

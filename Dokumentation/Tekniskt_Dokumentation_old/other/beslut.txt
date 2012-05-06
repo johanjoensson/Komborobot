@@ -1,0 +1,18 @@
+val:
+
+1  Bussarkiterktur
+2  Ska styrenheten ha olika hastigheter
+3  Hur vi ska ansluta blåtanden till beagleboarden.
+4  Val av Sensorer.
+5  Utritnings metod i pc-mjukvaran.
+6  Bussprotokoll
+7  antal sensorer och position
+8  programmeringsspråk till beagleboarden
+9  miljö till beagleboarden
+10 sensortestmetoder
+11 
+12 
+
+
+
+kom ner till sid 8 i sysskiss

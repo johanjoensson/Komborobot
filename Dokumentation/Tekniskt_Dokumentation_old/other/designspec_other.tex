@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{breakurl}
+\usepackage{tabularx}
+\usepackage[colorlinks=false]{hyperref}
+\input{LIPS.tex}
+
+\newcommand{\LIPSartaltermin}{2011/HT}
+\newcommand{\LIPSkursnamn}{TSEA29}
+
+\newcommand{\LIPSprojekttitel}{Kartrobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 11}
+\newcommand{\LIPSgruppepost}{cajla322@student.liu.se}
+\newcommand{\LIPSgrupphemsida}{finns ej}
+\newcommand{\LIPSdokumentansvarig}{Sebastian Thorarensen}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Ola Dahl, 013-282692, ola.dahl@liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{Anders Nilsson, 013-282635, andersn@isy.liu.se}
+
+\newcommand{\LIPSdokumenttyp}{Designspecifikation}
+\newcommand{\LIPSredaktor}{Sebastian Thorarensen}
+\newcommand{\LIPSversion}{1.1}
+%\newcommand{\LIPSdatum}{2004-xx-yy}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+% Förslag till versionshantering:
+% döp helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Caj Larsson}{Projektledare (PL)}{072-2022102}
+  		{cajla304@student.liu.se}
+  \LIPSgruppmedlem{Sebastian Thorarensen}{Dokumentansvarig (DOK),
+  		AVR-mjukvaruansvarig}{0733-567850}{sebth181@student.liu.se}
+  \LIPSgruppmedlem{David Stenberg}{Beagleboard-mjukvaruansvarig}
+  		{070-5369714}{davst636@student.liu.se}
+  \LIPSgruppmedlem{Hannes Boberg}{Hårdvaruansvarig}
+  		{0734-349419}{hanbo552@student.liu.se}
+  \LIPSgruppmedlem{Erik Lindholm}{Testansvarig (TEST)}{0768-078785}
+  		{erili322@student.liu.se}
+  \LIPSgruppmedlem{Andreas Ölund}{AI-arktitekt}
+  		{0766-292816}{andol860@student.liu.se}
+  \LIPSgruppmedlem{Carl Ehrenstråhle}{Leveransansvarig, 
+  		PC-mjukvaruansvarig}{070-3355560}{careh585@student.liu.se}
+\end{LIPSprojektidentitet}
+
+\tableofcontents{}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{0.1}{2011-10-26}{Första utkast.}{sebth181}{davst636}
+  \LIPSversionsinfo{1.0}{2011-10-26}{Första version.}{sebth181}{davst636}
+  \LIPSversionsinfo{1.1}{2011-11-14}{Andra version; ändrat dataformat för
+  		kartdata}{sebth181}{davst636}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\input{inledning.tex}
+\input{system.tex}
+\input{protokoll.tex}
+\input{kokn.tex}
+\input{sensor.tex}
+\input{styr.tex}
+\input{pcmjuk.tex}
+\input{testning.tex}
+\input{dok.tex}
+%\input{referenser.tex}
+\input{appendix.tex}
+
+\end{document} 
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
