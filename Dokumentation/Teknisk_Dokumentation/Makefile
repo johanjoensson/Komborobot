@@ -1,6 +1,6 @@
 all: tekdoc.pdf
 
-tekdoc.pdf: tekdoc.tex dok.tex helhet.tex inledning.tex \
+tekdoc.pdf: tekdoc.tex dok.tex produkten.tex inledning.tex \
 		integration.tex komm.tex montering.tex pcmjuk.tex \
 		protokoll.tex sensor.tex styr.tex systemskiss.tex test.tex
 	pdflatex tekdoc.tex && \
