@@ -1,0 +1,333 @@
+\section{Protokoll}
+Protokollen definieras i två lager, ett som enbart innehåller packetstorleken 
+på underliggande mer beskrivande lager. 
+\subsection{Modulgenerella format}
+Det enda modulgenerella formatet som används är dataformatet för sensordatan.
+Eftersom de optiska avståndsmätarna ger ett 10 bitars värde så skikas två byte
+med de 6 största bitarna nollade.
+
+\begin{table}[H]
+	\caption{Dataformat för sensordata}
+	\begin{center}
+	\begin{tabular}{| c | c | c | c | c | c | c | c |} \hline
+		0 & 0 & 0 & 0 & 0 & 0 &
+		MSBs sensordata [2 bitar] & LSBs sensordata  [1 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\subsection{Mellan PC-mjukvara och kartmodulen}
+PC-mjukvaran och kartmodulen använder en protokollstack där paketdatan wrapas
+med paketlängde för att sendan skickas som en paketlängd på 1 byte och
+sedan så många bytes som paketdatan.
+
+\begin{table}[H]
+	\caption{Protokollstack för kommunkation mellan PC-mjukvaran
+	och kartmodulen}
+	\begin{center}
+	\begin{tabular}{| c |} \hline
+		Paketdata \\ \hline
+		Paketlängd \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Dataformat för adresseringslagret}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Paketlängd [1 byte] & Data payload [0-255 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\subsubsection{PC-mjukvara $\rightarrow$ kartmodulen}
+När PC-mjukvaran skickar till kartmodulen skickas det först en byte med ett
+kommando och sedan inget eller flera bytes med data tillhörande det kommandot
+om sådan data behövs.
+
+\begin{table}[H]
+	\caption{Dataformat för kommunikation från PC-mjukvaran till
+	kartmodulen}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Kommando [1 byte] & Kommandospecifik data [0-254 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Kommandon till kartmodulen från PC-mjukvaran}
+	\begin{tabular}{l l}
+		\textbf{Kommando} & \textbf{Innebörd} \\
+		0x0	& 	Reset \\
+		0x1	&	Stop \\
+		0x2 	&	Begäran om karta \\
+		0x3	&	Fjärrstyrningskommando \\
+		0x4	&	Debugdataförfrågan \\
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\caption{Dataformat för fjärrstyrningskommandon}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Framåt / Bakåt [1 byte] & Vänster / Höger [1 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Fjärrstyrningskommando}
+	\begin{tabular}{l l}
+		\textbf{Kommando} & \textbf{Innebörd} \\
+		0x0	&	Stop (NOP) \\
+		0x1	&	Framåt / Vänster \\
+		0x2	&	Bakåt / Höger \\
+	\end{tabular}
+\end{table}
+
+\subsubsection{Kartmodul $\rightarrow$ PC-mjukvara}
+Vid förfrågan om debugdata så kommer allt tillgänglig debugdata att skickas.
+
+För att få roboten att röra sig så skickar man ett kommando. Roboten kommer att
+utföra det kommandot fram till ett annat kommando skickas.
+
+\begin{table}[H]
+	\caption{Dataformat för kommunikation från kartmodulen till
+	PC-mjukvaran}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Datatyp [1 byte] & Data [0-254 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Data till PC-mjukvaran från kartmodulen}
+	\begin{tabular}{l l}
+		\textbf{Kommando} & \textbf{Innebörd} \\
+		0x0	& 	Kartdata \\
+		0x1	&	Sensordata, avstånd fram \\
+		0x2	&	Sensordata, avstånd vänster \\
+		0x3	&	Sensordata, avstånd höger \\
+		0x4 	&	Sensordata, fart vänster \\
+		0x5	&	Sensordata, fart höger \\
+		0x6	&	Sensordata, gyro \\
+		0x7	&	Tillståndsbeskrivning \\
+	\end{tabular}
+\end{table}
+%GNAA
+
+Kartdatat skickas som 5 $*$ 17 byte där en byte innehåller fyra kartdelar,
+förutom den sista i varje rad där bara en kartdel lagras. 5 byte innehåller då
+alltså 17 kartdelar och det skickas därmed en karta med 17 $*$ 17 kartdelar.
+En rad (tabell \ref{fig:datakart}) skickas 17 ggr.
+
+\begin{table}[H]
+	\caption{Dataformat för kartdatan (en rad)}
+	\label{fig:datakart}
+	\begin{center}
+	\begin{tabular}{| c | c | c | c |} \hline
+		Kartdel [2 bit] & Kartdel [2 bit] & Kartdel [2 bit] &
+		Kartdel [2 bit] \\ \hline
+		Kartdel [2 bit] & Kartdel [2 bit] & Kartdel [2 bit] &
+		Kartdel [2 bit] \\ \hline
+		Kartdel [2 bit] & Kartdel [2 bit] & Kartdel [2 bit] &
+		Kartdel [2 bit] \\ \hline
+		Kartdel [2 bit] & Kartdel [2 bit] & Kartdel [2 bit] &
+		Kartdel [2 bit] \\ \hline
+		\multicolumn{3}{| c |}{Reserverad [6 bit]} &
+		Kartdel [2 bit] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Kartdelspecifikation}
+	\begin{tabular}{l l}
+		\textbf{Värde} & \textbf{Innebörd} \\
+		0x0	&	Okänd \\
+		0x1	&	Vägg \\
+		0x2	&	Körbart \\
+		0x3 	&	Roboten \\
+	\end{tabular}
+\end{table}
+
+Tillståndsbeskrivningen är en ASCII-kodad sträng med maxlängd 254 tecken.
+
+\subsection{Internt kartmodulsprotokoll}
+Robotens lägen är i kartmodulen uppdelade i två skilda program. Dessa
+lägesprogram kommunicerar med ett gemensamt masterprogram (som hanterar I/O)
+enligt nedanstående ASCII-protokoll.
+
+\subsubsection{Master $\rightarrow$ läge}
+
+\begin{table}[H]
+	\caption{Kommandon till lägesprogram från masterprogram}
+	\begin{tabular}{l l l}
+		\textbf{Kommando} & \textbf{Innebörd} & \textbf{Argument}\\
+		CONTEST	&	Karttävlingssignal	& - \\
+		MAP	&	Kartförfrågan		& - \\
+		SENSOR	&	Sensorvärde		& ID (heltal [0, 5]),
+		Värde (heltal [0, 65535])\\
+		STATUS	&	Statusförfrågan		& - \\
+		STEER	&	Styrförfrågan från PC	& Vänster
+		(heltal [-128, 127]), Höger (heltal [-128, 127])
+	\end{tabular}
+\end{table}
+
+\subsubsection{Läge $\rightarrow$ master}
+
+\begin{table}[H]
+	\caption{Kommandon till masterprogram från lägesprogram}
+	\begin{tabular}{l l l}
+		\textbf{Kommando} & \textbf{Innebörd} & \textbf{Argument} \\
+		MAP	&	Kartinformation		& - \\
+		STATUS	&	Statusinformation	& Informationssträng 
+		(0 - 255 tecken) \\
+		STEER	&	Styrkommando		& Vänster
+		(heltal [-128, 127]), Höger (heltal [-128, 127]) \\
+	\end{tabular}
+\end{table}
+
+\subsection{Kartmodul $\rightarrow$ styrmodul}
+Från kartmodulen till styrmodulen skickas två signed bytes, en för hur mycket 
+var sida ska PWM:as. Vid negativt värde backar man. Om båda fälten är 0
+räknas det som NOP.
+
+\begin{table}[H]
+	\caption{Dataformat för styrningen}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Vänster sida [1 byte] &
+		Höger sida [1 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\subsection{Kartmodul $\leftrightarrow$ sensormodul}
+Data som ska skickas från kartmodulen till sensormodulen:
+
+\begin{table}[H]
+	\caption{Bitmaskning för val av sensor som ska pollas}
+	\begin{center}
+	\begin{tabular}{| c | c | c | c | c | c | c | c |} \hline
+		0 & 0 &
+		Gyro &
+		Fart Höger & Fart Vänster &
+		Avstånd Höger & Avstånd Vänster & Avstånd Fram \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+Data som ska skickas från sensormodulen till kartmodulen
+\begin{table}[H]
+	\caption{Dataformat för sändning av sensordata till kartmodulen}
+	\begin{center}
+	\begin{tabular}{| c | c |} \hline
+		Vilken sensor [1 byte] &
+		Sensordata [2 byte] \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\caption{Vilken sensor vars data som skickas}
+	\begin{tabular}{l l}
+		\textbf{Värde} & \textbf{Vilken sensor} \\
+		0x0	&	Avstånd Fram \\
+		0x1	&	Avstånd Vänster \\
+		0x2	&	Avstånd Höger \\
+		0x3	&	Fart Vänster \\
+		0x4	&	Fart Höger \\
+		0x5	&	Gyro \\
+	\end{tabular}
+\end{table}
+
+\subsection{Gränssnitt mellan reglersystem samt kartalgoritm}
+Reglersystemet och kartalgoritmen kommunicerar enligt ett enkelt
+stateprotokoll. Kartalgoritmen skickar styrkommandon till reglersystemet. Dessa
+kommandon ligger på en väldigt hög abstraktionsnivå (se tabell \ref{ai_reg}),
+och involverar framåtförflyttning samt 90-graders rotationer.
+
+När ett styrkommando är utfört, antingen helt eller till den del reglersystemet
+tillåter roboten att förflytta sig, så skickar reglersystemet ett
+DONE-meddelande, som innehåller robotens relativa position sedan senaste
+förflyttningen. För att avbryta ett styrkommando kan STOP användas (se tabell
+\ref{ai_reg}). Reglerloopen stannar då roboten samt skickar tillbaka ett
+DONE-meddelande.
+
+Endast ett styrkommando kan hanteras i taget. För att byta styrkommando när
+man redan utför ett styrkommando så måste först ett STOP skickas. För att 
+hålla roboten rätvinklig mot kartans väggar så kan ej rotationskommandon
+avbrytas.
+
+När något har hänt, så som att en vägg har upptäckts eller försvunnit så
+meddelar reglersystemet detta till kartalgortimen (genom ett EVENT-meddelande).
+Kartalgoritmen kan baserat på dessa händelser ändra robotens rörelser.
+
+Meddelanden är insvepta i paranteser. Kommandot och varje argument är
+skilda med ett mellanslag, och varje meddelande avslutas med newline.
+
+Reglersystemet agerar även mellanlager mellan masterprogrammet och
+kartalgoritmen. CONTEST samt MAP skickas genom reglersystemet.
+
+\begin{table}[H]
+	\caption{AI $\rightarrow$ Reglersystem}
+	\label{ai_reg}
+	\begin{tabularx}{\linewidth}{l l X}
+	\textbf{Kommando} & \textbf{Argument} & \textbf{Beskrivning} \\
+	FWD	& $n$ (heltal > 0) & Åk framåt $n$ cm \\
+
+	LEFT	& $n$ (heltal > 0)& Följ vänster vägg $n$ centimeter, kommer att
+	avslutas när det inte finns en vägg att följa. \\
+
+	MAP	& 289 tecken & Argumenten representerar rad-för-rad en 17x17
+	stor karta (se tabell \ref{map_c}). \\
+
+	RIGHT	& $n$ (heltal > 0)& Som LEFT, fast för högervägg. \\
+
+	ROT	& $n$ (heltal)	& Rotera $n * 90$ grader, $n < 0$ ger
+	vänsterrotation, och $n > 0$ högerrotation\\
+
+	STOP	& -		& Påtvinga avslut av styrbeslut, reglersystemet
+	kommer att skicka tillbaka avslutsinfo (DONE). Rotationer kan inte
+	avbrytas. \\
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Reglersystem $\rightarrow$ AI}
+	\label{reg_ai}
+	\begin{tabularx}{\linewidth}{l l X}
+	\textbf{Kommando} & \textbf{Argument} & \textbf{Beskrivning} \\
+	CONTEST	& ($l$ $r$ $f$) & Tävlingsstartsmeddelande. $l$, $r$ och $f$ är
+	avståndsvärden för vänster, höger samt framåt (i cm), och de ligger
+	inslutna i paranteser.  \\
+
+	DONE	& $\Delta a$, ($l$ $r$ $f$) & Indikerar att ett
+	styrkommando är slutfört. $\Delta a$ är ett heltal som visar hur långt
+	roboten har åkt framåt jämfört med var den stod innan (uttryckt i cm).
+	$l$, $r$ och $f$ är avståndsvärden för vänster, höger samt framåt
+	(i cm), och de ligger inslutna i paranteser. \\
+
+	EVENT	& ($l$ $r$ $f$) & Händelse som visar att något har hänt
+	i robotens omgivning. $l$, $r$ och $f$ är avståndsvärden för vänster,
+	höger samt framåt (i cm), och de ligger inslutna i parenteser. \\
+
+	MAP	&	-	& Kartförfrågan \\
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Karttecken för kommunikation mellan AI och reglersystem}
+	\label{map_c}
+	\begin{tabular}{l l}
+	\textbf{Tecken}	& \textbf{Beskrivning} \\
+	$C$	& Fri tile \\
+	$W$	& Vägg \\
+	$R$	& Robot \\
+	$U$	& Okänt \\
+	\end{tabular}
+\end{table}

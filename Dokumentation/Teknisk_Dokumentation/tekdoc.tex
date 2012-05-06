@@ -1,0 +1,78 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\usepackage{float}
+\input{LIPS.tex}
+
+
+\newcommand{\LIPSartaltermin}{2012/VT}
+\newcommand{\LIPSkursnamn}{TSEA27}
+
+\newcommand{\LIPSprojekttitel}{Komborobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 17}
+\newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
+\newcommand{\LIPSgrupphemsida}{finns ej}
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
+
+\newcommand{\LIPSkund}{ISY, Link√∂pings universitet, 581\,83 Link√∂ping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{Olov Andersson, 013-282658, olov@isy.liu.se}
+
+
+\newcommand{\LIPSdokumenttyp}{Teknisk Dokumentation}
+\newcommand{\LIPSredaktor}{Simon Larsson}
+\newcommand{\LIPSversion}{0.2}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{simla804@student.liu.se}
+  \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
+  \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
+  \LIPSgruppmedlem{Johan J√∂nsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Tobias Andersson}{H√•rdvara (HV)}{073-7201098}{toban963@student.liu.se}
+  \LIPSgruppmedlem{Markus Falck}{Leveransansvarig (LV)}{076-3457552}{marlo265@student.liu.se}
+  \LIPSgruppmedlem{Simon Wallin}{Testansvarig (GM)}{076-2300665}{simwa252@student.liu.se}
+\end{LIPSprojektidentitet}
+
+\tableofcontents{}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, √§ndringar, utf√∂rt av, granskat av
+\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik} 
+  \LIPSversionsinfo{0.1}{2012-02-10}{F√∂rsta utkast.}{gussv666}{}
+  \LIPSversionsinfo{0.2}{2012-03-06}{Nya rubriker.}{matja307}{}
+\end{LIPSdokumenthistorik}
+\newpage 
+
+\input{inledning.tex} % #1 -Bakgrund och syfte
+\input{produkten.tex} % #2 -Översikt
+\input{teori.tex} % #3 -Regleralgoritmer etc.
+\input{systemet.tex} % #4 -Blockschema och allmänt om systemet i sin helhet
+\input{modulerna.tex} % #5 -Detaljerat om varje modul
+	%% Innehåller komm.tex, pcmjuk.tex, sensor.tex, styr.tex
+\input{slutsats.tex} % #6 -Förbättringspotential etc.
+\input{referenser.tex} % #7 -Referenser
+\input{appendix.tex} % -Appendix
+
+\newpage
+\appendix
+\end{document} 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
