@@ -1,0 +1,28 @@
+% !TEX encoding = UTF-8 Unicode
+
+%% --------------------------------------------------------------------------------------------------------------------------------------------
+% PRODUKTEN - En översiktlig beskrivning av produkten och hur den fungerar, samt vad den används till.
+%
+% - Inledande beskrivning av funktionalitet
+% - Bild på produkten
+% - Översikt över systemet
+%
+% --matja307, 2012-05-06
+%% --------------------------------------------------------------------------------------------------------------------------------------------
+ 
+\section{Översikt av produkten}
+
+Roboten är en s.k. \emph{komborobot}, vilket innebär att den dels kan följa en linje på marken, dels ta sig igenom en labyrint. Roboten kan vidare autonomt växla mellan linje- och labyrintläge, samt uppfatta en speciell stoppsignal som markeras med linjer på marken. Roboten kan också styras manuellt via bluetooth från en PC, samt skicka relevant information, såsom sensordata, till PC. 
+
+Figur \ref{fig:prod1} visar robotens utseende. Basen är en trehjulig plattform av typ \emph{CarpetRover}, på vilken är monterat fem stycken avståndssensorer riktade åt sidorna respektive framåt, samt x stycken sensorer för att upptäcka linjer på marken. 
+
+\nyBild{produktbild.pdf}{Bild på produkten}{prod1}
+
+Robotens funktionalitet är uppdelad på tre enheter, som var och en representeras av en AVR-processor. De tre enheterna är: 
+\begin{itemize}
+        \item Kommunikationsenhet
+        \item Sensorenhet
+        \item Styrenhet
+\end{itemize}
+
+All intern kommunikation sker via en SPI-buss. Kommunikationsenheten fungerar som master på bussen, det vill säga att all kommunikation går via den. Bluetooth-kommunikationen med PC sköts också i kommunikationsenheten.
