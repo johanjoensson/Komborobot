@@ -21,6 +21,7 @@
 #include <avr/interrupt.h>
 #include "styr_spi.h"
 #include "regulator.h"
+#include "styr_specialkommando.h"
 
 unsigned char speed = 105;
 signed char old_distance_right = 0;
@@ -47,28 +48,34 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		speed = 107;
         int Kp = 3;
 		int Ka = 1;
-        int Kd = 8;
+        int Kd = 14;
+		unsigned char crossing = 0;
 
         signed char outvalue=0;
 
-        signed char difference_left = (left_front - left_back);		//+-1 justering beh�vs ej
-		signed char difference_right = (right_front) - right_back;	//de visar nog lika �nd�
+        signed char difference_left = (left_front - left_back);		//+-1 justering beh?vs ej
+		signed char difference_right = (right_front) - right_back;	//de visar nog lika ?nd?
 		signed char difference_left_right_f = right_front - left_back;
 		signed char difference_left_right_b = right_back - left_back;
 		
-		if((left_front == 20) && (left_back == 20)){
+		if(((left_front == 20) && (left_back == 20)) || left_front > 80){
 				wall = 0;
-		}
-		else if((right_front == 20) && (right_back == 20)){
+		} else if(((right_front == 20) && (right_back == 20)) || right_front > 80){
 				wall = 1;
 		}
 
-		if(wall==0){														//h�ger v�gg
+		if(left_front > 80 || right_front > 80){
+				crossing = 1;
+		} else {
+				crossing = 0;
+		}
+
+		if(wall==0){														//h?ger v?gg
 				outvalue = -Kp*(difference_right);							// P-delen
 //				outvalue=cut(outvalue,25);
 				outvalue += -Kd*(difference_right - old_distance_right);    // D-delen
 		}
-		else if(wall==1){													//v�nster v�gg
+		else if(wall==1){													//v?nster v?gg
 				outvalue = Kp*(difference_left);               				// P-delen
 //				outvalue=cut(outvalue,25);
 				outvalue += Kd*(difference_left - old_distance_left);		// D-delen
@@ -78,7 +85,9 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		old_distance_left = difference_left;		
 
 		int temp =-Ka*(difference_left_right_f + difference_left_right_b)/(2);
-		outvalue += cut(temp,6);
+		if(!crossing){
+				outvalue += cut(temp,6);
+		}
 
         // sätter max- och minvärden på utvärdet
        	return cut(outvalue, 22);
@@ -95,7 +104,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 signed char line_regulator(signed char new_value)
 {
         int Kp = 1;
-		speed = 104;
+		speed = 102;
         signed char outvalue;
 
         //Kollar om roboten rör sig åt höger eller vänster
@@ -104,28 +113,26 @@ signed char line_regulator(signed char new_value)
         } else if(new_value < old_line){
                 angle = 1; // roboten går åt vänster
         }
-		outvalue = (Kp*new_value) >> 2;
+
+		outvalue = (Kp*new_value) / 5;
+
         switch(angle){
                 case 1:                      
 					    if(new_value < 0){   // roboten går åt vänster och är på 
                                              // vänstra sidan om tejpen
-                                outvalue += (Kp*new_value) >> 2;
-						} else if (new_value >= 90){
-								outvalue = 0;
+                                outvalue += (Kp*new_value) / 3;
 						} else {              // roboten går åt höger, men är på
                                              // högra sidan om tejpen
                                 outvalue -= (Kp*new_value) >> 1;
                         }
                         break;
                 case -1: 
-						if(new_value <= -90){
-								outvalue = 0;
-                        } else if(new_value <= 0){   // roboten går åt höger och är på 
+                        if(new_value <= 0){   // roboten går åt höger och är på 
                                              // vänstra sidan om tejpen
                                 outvalue -= (Kp*new_value) >> 1;
                         } else{              // roboten går åt höger och är på
                                              // högra sidan om tejpen
-                                outvalue += (Kp*new_value) >> 2;
+                                outvalue += (Kp*new_value) / 3;
                         }
                         break;
                 default:
@@ -136,11 +143,7 @@ signed char line_regulator(signed char new_value)
         old_line = new_value;
 
         // sätter max- och minvärden på utvärdet
-        if(outvalue > 70){
-                outvalue = 70;
-        } else if(outvalue < -70){
-                outvalue = -70;
-        }
+		outvalue = cut(outvalue,70);
 
         return outvalue;
 }
@@ -165,7 +168,7 @@ void drive_engines(signed char value)
 
 /****************************************************************************\
 	function: 	cut
-	descr:		ser till att v�rden ligger i intervallet [-max,max]
+	descr:		ser till att v?rden ligger i intervallet [-max,max]
 \****************************************************************************/
 
 signed char cut(signed char value, signed char max)
