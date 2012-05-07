@@ -1,8 +1,10 @@
 \documentclass[a4paper,12pt]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
-\input{../LIPS.tex}
+\input{LIPS.tex}
 
 
 \newcommand{\LIPSartaltermin}{2012/VT}
@@ -15,7 +17,7 @@
 \newcommand{\LIPSgrupphemsida}{finns ej}
 \newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
 
-\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkund}{ISY, LinkÃ¶pings universitet, 581\ 83 LinkÃ¶ping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPShandledare}{}
@@ -23,11 +25,11 @@
 
 \newcommand{\LIPSdokumenttyp}{Kravspecifikation}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{1.0}
+\newcommand{\LIPSversion}{1.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
-% Förslag till versionshantering:
-% döp helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
+% FÃ¶rslag till versionshantering:
+% dÃ¶p helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
 
 
 \newcommand{\LIPSgranskare}{}
@@ -41,11 +43,11 @@
 
 %% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
 \begin{LIPSprojektidentitet}
-  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{cajla304@student.liu.se}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{simla804@student.liu.se}
   \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
   \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
-  \LIPSgruppmedlem{Johan Jönsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
-  \LIPSgruppmedlem{Tobias Andersson}{Hårdvara (HV)}{073-7201098}{toban963@student.liu.se}
+  \LIPSgruppmedlem{Johan JÃ¶nsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Tobias Andersson}{HÃ¥rdvara (HV)}{073-7201098}{toban963@student.liu.se}
   \LIPSgruppmedlem{Markus Falck}{Leveransansvarig (LV)}{076-3457552}{marlo265@student.liu.se}
   \LIPSgruppmedlem{Simon Wallin}{Testansvarig (GM)}{076-2300665}{simwa252@student.liu.se}
 \end{LIPSprojektidentitet}
@@ -53,93 +55,94 @@
 \tableofcontents{}
 \newpage
 
-%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, Ã¤ndringar, utfÃ¶rt av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-\LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
+\LIPSversionsinfo{0.1}{2012-01-26}{FÃ¶rsta utkast.}{matja307}{}
 \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
-\LIPSversionsinfo{1.0}{2012-01-31}{Första versionen}{gussv666}{johjo939}
+\LIPSversionsinfo{1.0}{2012-01-31}{FÃ¶rsta versionen}{gussv666}{johjo939}
+\LIPSversionsinfo{1.1}{2012-05-07}{Ã„ndrat sÃ¥ att all kommunikation mellan robotens enheter sker via komunikationsenheten. Krav 9 Ã¤ndrat och krav 28 samt 29 sammanslagna. Vissa redaktionella Ã¤ndringar fÃ¶r att fÃ¶rtydliga}{simwa252}{simla804}
 \end{LIPSdokumenthistorik}
 \newpage
 
 \section{Inledning}
 I detta dokument formuleras samtliga krav som Komboroboten som
-beställare Tomas Svensson beställt av Grupp 17 ska uppfylla.
-Komboroboten ska vara enhetsuppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet.
-Den ska ha ett läge för manuell styrning via blåtand samt ett läge för 
-att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, 
-en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
+bestÃ¤llare Tomas Svensson bestÃ¤llt av Grupp 17 ska uppfylla.
+Komboroboten ska vara enhetsuppbyggd och bestÃ¥ av en kommunikationsenhet, en styrenhet och en sensorenhet.
+Den ska ha ett lÃ¤ge fÃ¶r manuell styrning via blÃ¥tand samt ett lÃ¤ge fÃ¶r 
+att autonomt kunna fÃ¶lja en bana bestÃ¥ende av antingen en linje lÃ¤ngs underlaget, 
+en labyrint med vÃ¤ggar lÃ¤ngs sidorna, eller en kombination av de tvÃ¥ fÃ¶regÃ¥ende enligt banspecifikation (A.1).
 
-I samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
+I samband med leverans ska Komboroboten delta i en tÃ¤vling dÃ¤r konstruktionen utvÃ¤rderas.
 
-Prioritetsnivåer enligt \ref{DEF}.
+PrioritetsnivÃ¥er enligt \ref{DEF}.
 
 %\includegraphics[scale=.7]{Tsea29.pdf}
 
 
-% Argument till \LIPSkrav och \LIPSunderkrav: förändring, kravtext, prioritet
+% Argument till \LIPSkrav och \LIPSunderkrav: fÃ¶rÃ¤ndring, kravtext, prioritet
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Roboten ska vara enhetsuppbyggd}{1}
 \end{LIPSkravlista}
 
 \subsection{Parter}
-Beställare: Tomas Svensson \\
-Leverantör: Grupp 17
+BestÃ¤llare: Tomas Svensson \\
+LeverantÃ¶r: Grupp 17
 
-\subsection{Mål}
-I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
-en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
- Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner.
+\subsection{MÃ¥l}
+I samband med leveransen ska roboten klara av att under tÃ¤vling helt autonomt navigera
+en bana som Ã¤r uppbyggd enligt bestÃ¤mmelserna i den bifogade banspecifikationen (\ref{app:bana}). 
+ TÃ¤vlingen avgÃ¶rs pÃ¥ tid, den robot som tar sig runt banan pÃ¥ kortast tid vinner.
 
-\subsection{Användning}
-Roboten ska ha ett autonomt läge och ett fjärrstyrningsläge.
-Man ska kunna växla mellan de två lägena med en brytarknapp på roboten.
+\subsection{AnvÃ¤ndning}
+Roboten ska ha ett autonomt lÃ¤ge och ett fjÃ¤rrstyrningslÃ¤ge.
+Man ska kunna vÃ¤xla mellan de tvÃ¥ lÃ¤gena med en brytarknapp pÃ¥ roboten.
 
-\subsubsection{Autonomt läge}
-I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation.
+\subsubsection{Autonomt lÃ¤ge}
+I autonomt lÃ¤ge ska roboten kunna startas med en knapp. Den ska dÃ¥ autonomt kunna fÃ¶lja en bana byggd enligt Ã¶verenskommen banspecifikation (A.1).
 
-\subsubsection{Fjärrstyrningsläge}
-I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medföljande mjukvara.
-Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation och back. 
+\subsubsection{FjÃ¤rrstyrningslÃ¤ge}
+I fjÃ¤rrstyrningslÃ¤ge ska roboten kunna styras manuellt med en PC via medfÃ¶ljande mjukvara.
+FÃ¶ljande kommandon ska finnas: kÃ¶r framÃ¥t, kÃ¶r bakÃ¥t, hÃ¶gersvÃ¤ng, vÃ¤nstersvÃ¤ng, vÃ¤nsterrotation, hÃ¶gerrotation och stopp. 
 
 \subsection{Bakgrundsinformation}
-Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfyller vissa krav.
-Ytterligare en leverantör ska konstruera en liknande robot,
-och i samband med tävlingen som hålls under vecka 20 utses vilken av robotarna som bäst tillgodoser beställarens krav.
+BestÃ¤llaren har givit leverantÃ¶ren i uppdrag att konstruera en robot som uppfyller vissa krav.
+Ytterligare en leverantÃ¶r ska konstruera en liknande robot,
+och i samband med tÃ¤vlingen som hÃ¥lls under vecka 20 utses vilken av robotarna som bÃ¤st tillgodoser bestÃ¤llarens krav.
 
 \subsection{Definitioner} \label{DEF}
 \begin{itemize}
-\item Prioritetsnivå 1 - Dessa krav ska uppfyllas
-\item Prioritetsnivå 2 - Dessa krav ska uppfyllas i mån av tid
-\item Prioritetsnivå 3 - Dessa krav ska uppfyllas i mån av tid och efter alla krav med prioritet 2 uppfyllts
+\item PrioritetsnivÃ¥ 1 - Dessa krav ska uppfyllas
+\item PrioritetsnivÃ¥ 2 - Dessa krav ska uppfyllas i mÃ¥n av tid
+\item PrioritetsnivÃ¥ 3 - Dessa krav ska uppfyllas i mÃ¥n av tid och efter alla krav med prioritet 2 uppfyllts
 \end{itemize}
 
-\section{översikt av systemet}
+\section{Ã¶versikt av systemet}
 
 \subsection{Grov beskrivning av produkten}
-Produkten är en komborobot som ska kunna styras trådlöst via blåtand samt autonomt följa linjer och navigera simpla labyrinter.
+Produkten Ã¤r en komborobot som ska kunna styras trÃ¥dlÃ¶st via blÃ¥tand samt autonomt fÃ¶lja linjer och navigera simpla labyrinter.
 
 \begin{figure}[h!]
-	\caption{översikt}
+	\caption{Ã¶versikt}
 	\begin{center}
 		\includegraphics[scale=0.5,angle=270]{Oversikt.pdf}
 	\end{center}
 \end{figure}
 
 \subsection{Produktkomponenter}
-De komponenter som ska ingå i den slutgiltiga produkten är
-komboroboten med tillhörande teknisk dokumentation, användarmanual och programvara.
+De komponenter som ska ingÃ¥ i den slutgiltiga produkten Ã¤r
+komboroboten med tillhÃ¶rande teknisk dokumentation, anvÃ¤ndarmanual och programvara.
 
 \subsection{Beroenden till andra system}
-När roboten är i fjärrstyrningsläge så ska den styras från en PC 
-med blåtandsanslutning och den mjukvara som levereras tillsammans med roboten.
+NÃ¤r roboten Ã¤r i fjÃ¤rrstyrningslÃ¤ge sÃ¥ ska den styras frÃ¥n en PC 
+med blÃ¥tandsanslutning och den mjukvara som levereras tillsammans med roboten.
 
-\subsection{Ingående delsystem}
-De delsystem som ska ingå är en styrenhet som sköter motorer och styrning,
-en sensorenhet som sköter tolkning och insamling av data,
-en kommunikationsenhet som sköter kommunikation med externa enheter och mjukvara 
-som ska installeras på en extern PC som kan visa information om 
-styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
+\subsection{IngÃ¥ende delsystem}
+De delsystem som ska ingÃ¥ Ã¤r en styrenhet som skÃ¶ter motorer och styrning,
+en sensorenhet som skÃ¶ter tolkning och insamling av data,
+en kommunikationsenhet som skÃ¶ter kommunikation mellan externa och interna enheter samt mjukvara 
+som ska installeras pÃ¥ en extern PC som kan visa information om 
+styrning och som ocksÃ¥ kan styra roboten nÃ¤r den Ã¤r i fjÃ¤rrstyrningslÃ¤ge.
 
 \begin{figure}[h!]
 	\caption{Delsystem}
@@ -148,130 +151,129 @@ styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 	\end{center}
 \end{figure}
 
-\subsection{Avgränsningar}
-Roboten behöver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
+\subsection{AvgrÃ¤nsningar}
+Roboten behÃ¶ver bara klara de banor som beskrivs i banreglerna (\ref{app:bana}).
 
-\subsection{Generella krav på hela systemet}
-Systemet i sin helhet ska uppfylla följande krav.
+\subsection{Generella krav pÃ¥ hela systemet}
+Systemet i sin helhet ska uppfylla fÃ¶ljande krav.
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt \ref{app:bana}}{1}
-  \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
-  \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
-  \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
+  \LIPSkrav{Original}{Roboten ska kunna styras med blÃ¥tand}{1} 
+  \LIPSkrav{Original}{Roboten ska kunna kÃ¶ra autonomt genom en bana enligt (\ref{app:bana})}{1}
+  \LIPSkrav{Original}{Val mellan fjÃ¤rrstyrnings- och autonomt lÃ¤ge ska styras med en brytare}{1}
+  \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tÃ¤vlingen}{1}
+  \LIPSkrav{Original}{Roboten ska bestÃ¥ av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
 \end{LIPSkravlista}
 
 
 \section{Styrenhet}
 \subsection{Inledande beskrivning}
-Styrenheten ska kontrollera alla motorer och servo utifrån data ifrån sensorenheten och kommunikationsenheten.
+Styrenheten ska kontrollera alla motorer och servo utifrÃ¥n data ifrÃ¥n sensorenheten och kommunikationsenheten.
 
-\subsection{Gränssnitt}
+\subsection{GrÃ¤nssnitt}
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Felmeddelanden ska skickas till kommunikationsenheten}{1} 
-  \LIPSkrav{Original}{Information om robotens nuvarande aktivitet, t ex svänger vänster, ska skickas till kommunikationsenheten när roboten är i autonomt läge}{1} 
-  \LIPSkrav{Original}{Styrdata ska kunna tas emot från kommunkations- och sensorenheten}{1} 
+  \LIPSkrav{Original}{Information om robotens nuvarande aktivitet, t ex svÃ¤nger vÃ¤nster, ska skickas till kommunikationsenheten nÃ¤r roboten Ã¤r i autonomt lÃ¤ge}{1} 
+  \LIPSkrav{Ã„ndrat 2012-05-07}{Styrdata ska kunna tas emot frÃ¥n kommunkationsenheten och frÃ¥n sensorenheten via kommunikationsenhetn}{1} 
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
-Styrenheten ska designas så att den kan bytas ut mot en annan styrenhet med t ex en annan styralgoritm.
+Styrenheten ska designas sÃ¥ att den kan bytas ut mot en annan styrenhet med t ex en annan styralgoritm.
 
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Styrenheten ska innehålla minst en processor}{1}
+	\LIPSkrav{Original}{Styrenheten ska innehÃ¥lla minst en processor}{1}
 	\LIPSkrav{Original}{Styrenheten ska kunna bytas ut}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Roboten ska följa en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{1}
-  \LIPSkrav{Original}{Roboten ska kunna utföra följande kommandon: fram, fram vänster, fram höger, back, rotera vänster, rotera höger och stopp}{1}
+	\LIPSkrav{Original}{Roboten ska fÃ¶lja en linje eller en korridor specificerad enligt banspecifikation (\ref{app:bana}) utan att slingra sig fram}{1}
+  \LIPSkrav{Original}{Roboten ska kunna utfÃ¶ra fÃ¶ljande kommandon: fram, fram vÃ¤nster, fram hÃ¶ger, back, rotera vÃ¤nster, rotera hÃ¶ger och stopp}{1}
 \end{LIPSkravlista}
 
 \section{Kommunikationsenhet}
 \subsection{Inledande beskrivning}
-Komboroboten ska kunna kommunicera med en dator via blåtand.
-Kommunikationsenheten ansvarar för att skicka data från komborobotens 
-sensorenhet och styrenhet till en datorn, via blåtand.
-I fjärrstyrningsläge skall även kommunikationsneheten ta emot 
-instruktioner och information från datorn, via blåtand.
-Dessa instruktioner och data kan sedan användas för att styra komboroboten.
+Komboroboten ska kunna kommunicera med en dator via blÃ¥tand.
+Kommunikationsenheten ansvarar fÃ¶r att skicka data frÃ¥n komborobotens 
+sensorenhet och styrenhet till en datorn, via blÃ¥tand.
+I fjÃ¤rrstyrningslÃ¤ge skall Ã¤ven kommunikationsneheten ta emot 
+instruktioner och information frÃ¥n datorn, via blÃ¥tand.
+Dessa instruktioner och data kan sedan anvÃ¤ndas fÃ¶r att styra komboroboten.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data, exempelvis felmeddelanden till datorn via blåtand}{1}
-  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data, exempelvis instruktioner till styrenheten via blåtand}{1}
-  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data från datorn till lämplig enhet, exempelvis navigationsinstruktioner skickas till styrenheten}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data, exempelvis felmeddelanden till datorn via blÃ¥tand}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data, exempelvis instruktioner till styrenheten via blÃ¥tand}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska skicka data frÃ¥n datorn till lÃ¤mplig enhet, exempelvis navigationsinstruktioner skickas till styrenheten}{1}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
-Kommuniaktionsenheten ska kommunicera med övriga enheter på roboten samt datorn och förmedla information mellan dessa.
+Kommuniaktionsenheten ska kommunicera med Ã¶vriga enheter pÃ¥ roboten samt datorn och fÃ¶rmedla information mellan dessa.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data från sensorenheten och förmedla den till datorn, via blåtand}{1}
-  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data från styrenheten och skicka denna vidare till datorn, via blåtand}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data frÃ¥n sensorenheten och fÃ¶rmedla den till datorn, via blÃ¥tand}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska ta emot data frÃ¥n styrenheten och skicka denna vidare till datorn, via blÃ¥tand}{1}
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
-Kommunikationsenheten ska designas på så sätt att den enkelt kan bytas ut mot en annan kommunikationsenhet,
-t.ex. för kommunikation via annan standard än blåtand
+Kommunikationsenheten ska designas pÃ¥ sÃ¥ sÃ¤tt att den enkelt kan bytas ut mot en annan kommunikationsenhet,
+t.ex. fÃ¶r kommunikation via annan standard Ã¤n blÃ¥tand
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Kommunikationsenheten ska innehålla minst en processor}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska innehÃ¥lla minst en processor}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
-Det ska vara möjligt att helt kunna styra komboroboten via blåtand då roboten befinner sig i fjärrstyrt läge.
+Det ska vara mÃ¶jligt att helt kunna styra komboroboten via blÃ¥tand dÃ¥ roboten befinner sig i fjÃ¤rrstyrt lÃ¤ge.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Roboten ska kunna fjärrstyras via blåtand}{1}
-  \LIPSkrav{Original}{Kommunikationsenheten ska fysiskt kunna visa blåtandsaktiviteten}{2}
+  \LIPSkrav{Original}{Roboten ska kunna fjÃ¤rrstyras via blÃ¥tand}{1}
+  \LIPSkrav{Original}{Kommunikationsenheten ska fysiskt kunna visa blÃ¥tandsaktiviteten}{2}
 \end{LIPSkravlista}
 
 \section{Sensorenhet}
 \subsection{Inledande beskrivning}
-Sensorenheten hämtar data från avståndssensorerna samt linjesensorerna 
-och skickar dessa vidare till kommunikationsenheten och styrenheten. 
-Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskvärt.
+Sensorenheten hÃ¤mtar data frÃ¥n avstÃ¥ndssensorerna samt linjesensorerna 
+och skickar dessa vidare till kommunikationsenheten som sedan fÃ¶rmedlar det till styrenheten. 
+Sensorenheten skall Ã¤ven kunna kalibrera linjefÃ¶ljarsensorn om det Ã¤r Ã¶nskvÃ¤rt.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
-  \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras trådlöst via bluetooth}{2}
+  \LIPSkrav{Original}{Sensordata fÃ¶r avstÃ¥nd till vÃ¤ggarna pÃ¥ sidan om roboten skall samlas in}{1}
+  \LIPSkrav{Original}{sensorenheten ska med sensordata frÃ¥n linjefÃ¶ljarsensorerna kunna mÃ¤rka skillnader mellan golv och svart tejp pÃ¥ marken}{1}
+  \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensorer ska kunna kalibreras}{1}
+  \LIPSkrav{Original}{Sensorenhetens linjefÃ¶ljarsensorer ska kunna kalibreras trÃ¥dlÃ¶st via bluetooth}{2}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Sensorenheten ska kunna visa avstånd till väggar på en display}{2}
+  \LIPSkrav{Original}{Sensorenheten ska kunna visa avstÃ¥nd till vÃ¤ggar pÃ¥ en display}{2}
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
 Sensorenheten ska kommunicera med kommunikationsenheten samt 
-styrenheten och förmedla vidare sensordata.
-Enheten ska vara designad så att den är utbytbar med en likvärdig enhet. Enheten ska innehålla minst en processor.
+styrenheten och fÃ¶rmedla vidare sensordata.
+Enheten ska vara designad sÃ¥ att den Ã¤r utbytbar med en likvÃ¤rdig enhet. Enheten ska innehÃ¥lla minst en processor.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Sensorenheten ska innehålla minst en processor}{1}
-  \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till styrenheten}{1}
-  \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till kommunikationsenheten}{1}
+  \LIPSkrav{Original}{Sensorenheten ska innehÃ¥lla minst en processor}{1}
+  \LIPSkrav{Ã„ndrat 2012-05-07}{Sensordata ska kontinuerligt skickas till kommunikationsenheten och dÃ¤rifrÃ¥n vidare till styrenheten}{1}
   \LIPSkrav{Original}{Sensorenheten ska vara utbytbar}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
-Linjeföljarsensor skall i labyrintläge läsa av markeringar på marken som sedan tolkas av styrenheten.
+LinjefÃ¶ljarsensor skall i labyrintlÃ¤ge lÃ¤sa av markeringar pÃ¥ marken som sedan tolkas av styrenheten.
 
 
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Sensorenheten ska kunna läsa av markeringar på marken (se \ref{app:bana} för tydligare beskrivning av markeringar)}{1}
+	\LIPSkrav{Original}{Sensorenheten ska kunna lÃ¤sa av markeringar pÃ¥ marken (se \ref{app:bana} fÃ¶r tydligare beskrivning av markeringar)}{1}
 \end{LIPSkravlista} 
 
-\subsection{Användargränssnitt}
+\subsection{AnvÃ¤ndargrÃ¤nssnitt}
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{All kommunikation med sensorenheten sker via kommunikationsenheten}{1}
 \end{LIPSkravlista}
@@ -279,103 +281,104 @@ Linjeföljarsensor skall i labyrintläge läsa av markeringar på marken som sedan t
 
 \section{Datormjukvara}
 \subsection{Inledande beskrivning}
-För att styra roboten krävs datormjukvara som kan låta användaren skicka kommandon från en dator till robotens kommunikationsenhet. 
+FÃ¶r att styra roboten krÃ¤vs datormjukvara som kan lÃ¥ta anvÃ¤ndaren skicka kommandon frÃ¥n en dator till robotens kommunikationsenhet. 
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas på en datorskärm}{1}
-  \LIPSkrav{Original}{Förståelig information från sensorenheten skall kontinuerligt visas på en datorskärm}{1}
-  \LIPSkrav{Original}{Avståndet till väggarna skall redovisas i cm på en datorskärm}{2}
+  \LIPSkrav{Original}{Information om robotens styrbeslut skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
+  \LIPSkrav{Original}{FÃ¶rstÃ¥elig information frÃ¥n sensorenheten skall kontinuerligt visas pÃ¥ en datorskÃ¤rm}{1}
+  \LIPSkrav{Original}{AvstÃ¥ndet till vÃ¤ggarna skall redovisas i cm pÃ¥ en datorskÃ¤rm}{2}
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Mjukvaran ska designas på så sätt att man enkelt kan anpassa den ifall någon av robotens enheter byts ut}{1}
+  \LIPSkrav{Original}{Mjukvaran ska designas pÃ¥ sÃ¥ sÃ¤tt att man enkelt kan anpassa den ifall nÃ¥gon av robotens enheter byts ut}{1}
 \end{LIPSkravlista}
 
 \subsection{Funktionella krav}
-Datormjukvaran ger användaren möjlighet att granska information från roboten på en dator.
-Användaren ska även kunna styra roboten via mjukvaran då roboten befinner sig i fjärrstyrt läge.
+Datormjukvaran ger anvÃ¤ndaren mÃ¶jlighet att granska information frÃ¥n roboten pÃ¥ en dator.
+AnvÃ¤ndaren ska Ã¤ven kunna styra roboten via mjukvaran dÃ¥ roboten befinner sig i fjÃ¤rrstyrt lÃ¤ge.
 
 
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Datormjukvaran ska ge möjlighet att styra roboten då den befinner sig i fjärrstyrt läge}{1}
-  \LIPSkrav{Original}{Datormjukvaran ska innehålla ett grafiskt användargränssnitt för att styra roboten i fjärrstyrt läge}{2}
-  \LIPSkrav{Original}{Datormjukvaran ska visa information från robotens olika enheter}{1}
-  \LIPSkrav{Original}{Datormjukvaran ska via ett grafiskt användargränssnitt visa information från robotens olika enheter}{2}
+  \LIPSkrav{Original}{Datormjukvaran ska ge mÃ¶jlighet att styra roboten dÃ¥ den befinner sig i fjÃ¤rrstyrt lÃ¤ge}{1}
+  \LIPSkrav{Original}{Datormjukvaran ska innehÃ¥lla ett grafiskt anvÃ¤ndargrÃ¤nssnitt fÃ¶r att styra roboten i fjÃ¤rrstyrt lÃ¤ge}{2}
+  \LIPSkrav{Original}{Datormjukvaran ska visa information frÃ¥n robotens olika enheter}{1}
+  \LIPSkrav{Original}{Datormjukvaran ska via ett grafiskt anvÃ¤ndargrÃ¤nssnitt visa information frÃ¥n robotens olika enheter}{2}
 \end{LIPSkravlista}
 
 
 \section{Prestandakrav}
-Roboten ska klara av att ta sig igenom banor som uppfyller banspecifikationen i tävlingsreglerna.
-Roboten ska dessutom följa reglerna som är uppsatta i regeldokumentet när den utför sin uppgift.
-Vilken nivå av bana som används till tävlingen ska bestämmas innan tävlingen.
-Ett mål är även att minimera tiden det tar för roboten att ta sig genom banan.
+Roboten ska klara av att ta sig igenom banor som uppfyller banspecifikationen i tÃ¤vlingsreglerna.
+Roboten ska dessutom fÃ¶lja reglerna som Ã¤r uppsatta i regeldokumentet nÃ¤r den utfÃ¶r sin uppgift.
+Vilken nivÃ¥ av bana som anvÃ¤nds till tÃ¤vlingen ska bestÃ¤mmas innan tÃ¤vlingen.
+Ett mÃ¥l Ã¤r Ã¤ven att minimera tiden det tar fÃ¶r roboten att ta sig genom banan.
 
 
 \begin{LIPSkravlista}
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
-        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
-	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivå 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 1 som definieras i banspecifikationen (\ref{app:bana})}{1}
+        \LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 2 som definieras i banspecifikationen (\ref{app:bana})}{2}
+	\LIPSkrav{Original}{Roboten ska ta sig igenom en bana av nivÃ¥ 3 som definieras i banspecifikationen (\ref{app:bana})}{3}
 \end{LIPSkravlista}
 
 
 
-\section{Krav på vidareutveckling}
+\section{Krav pÃ¥ vidareutveckling}
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Samtliga av de olika enheterna på roboten ska ha väl specificerade gränssnitt}{1}
-  \LIPSkrav{Original}{Det ska på ett enkelt vis vara möjligt att byta ut enskilda enheterna på roboten}{1}
+  \LIPSkrav{Original}{Samtliga av de olika enheterna pÃ¥ roboten ska ha vÃ¤l specificerade grÃ¤nssnitt}{1}
+  \LIPSkrav{Original}{Det ska pÃ¥ ett enkelt vis vara mÃ¶jligt att byta ut enskilda enheterna pÃ¥ roboten}{1}
 \end{LIPSkravlista}
 
 
 \section{Ekonomi}
 Efter att projektet har passerat BP2 ska  totalt 980 timmar (140 timmar per projektmedlem) brukas.
+\\
 \begin{LIPSkravlista}
-  \LIPSkrav{Original}{Totalt 980 timmar skall används i projektet efter att projektplanen godkänts}{1}
+  \LIPSkrav{Original}{Totalt 980 timmar skall anvÃ¤nds i projektet efter att projektplanen godkÃ¤nts}{1}
 \end{LIPSkravlista}
 
 
 \section{Leveranskrav och delleveranser}
-Dessa krav specificerar alla de leveranser som ska ske under projektets gång,
-och när dessa senast ska vara handledaren och beställaren tillhanda.
+Dessa krav specificerar alla de leveranser som ska ske under projektets gÃ¥ng,
+och nÃ¤r dessa senast ska vara handledaren och bestÃ¤llaren tillhanda.
 Alla leveranser ska senast vara levererade vid 16:00 under det angivna datumet.
-Under vecka 20 så ska en slutleverans ske i form av en muntlig presentation, samt en demonstation av roboten.
+Under vecka 20 sÃ¥ ska en slutleverans ske i form av en muntlig presentation, samt en demonstation av roboten.
 
 
 \begin{LIPSleveranslista}	
 	\LIPSleverans{Original}{Kravspecifikation}{2/2-2012}{1}
-	\LIPSleverans{Original}{Första version av projektplan, tidplan och systemskiss}{15/2-2012}{1}
+	\LIPSleverans{Original}{FÃ¶rsta version av projektplan, tidplan och systemskiss}{15/2-2012}{1}
 	\LIPSleverans{Original}{Slutgiltig version av projektplan, tidplan och systemskiss}{15/2-2012}{1}
-	\LIPSleverans{Original}{Första version av designspecifikation}{12/3-2012}{1}
+	\LIPSleverans{Original}{FÃ¶rsta version av designspecifikation}{12/3-2012}{1}
 	\LIPSleverans{Original}{Slutgiltig version av designspecifikation}{16/3-2012}{1}
-	\LIPSleverans{Original}{Teknisk Dokumentation och användaranvisning}{3 arbetsdagar före redovisningen v20}{1}
+	\LIPSleverans{Original}{Teknisk Dokumentation och anvÃ¤ndaranvisning}{3 arbetsdagar fÃ¶re redovisningen v20}{1}
 	\LIPSleverans{Original}{Efterstudie}{1/6-2012}{1}
 	\LIPSleverans{Original}{Tidrapporter}{12/3, 19/3, 26/3, 2/4, 16/4, 23/4, 30/4, 7/5, 14/5, 21/5}{1}
-	\LIPSleverans{Original}{Statusrapport}{Vid begäran}{1}
-	\LIPSleverans{Original}{Slutleverans innehållande en muntlig presentation på 15-20 minuter samt en demonstation}{Vecka 20}{1}
-	\LIPSleverans{Original}{Presentationen ska innehålla grafisk information som presenteras med en projektor}{}{1}
+	\LIPSleverans{Original}{Statusrapport}{Vid begÃ¤ran}{1}
+	\LIPSleverans{Original}{Slutleverans innehÃ¥llande en muntlig presentation pÃ¥ 15-20 minuter samt en demonstation}{Vecka 20}{1}
+	\LIPSleverans{Original}{Presentationen ska innehÃ¥lla grafisk information som presenteras med en projektor}{}{1}
 \end{LIPSleveranslista}
 
 \section{Dokumentation}
-Dokumentation för projektet innebär följande dokument: 
+Dokumentation fÃ¶r projektet innebÃ¤r fÃ¶ljande dokument: 
 \begin{list}{*}{}
 \item Teknisk dokumentation: Beskriver systemet och dess olika delar
-\item Användarmanual: Beskriver på ett änklare sätt hur produkten används
+\item AnvÃ¤ndarmanual: Beskriver pÃ¥ ett Ã¤nklare sÃ¤tt hur produkten anvÃ¤nds
 \end{list} 
 
 \begin{LIPSkravlista}	
 	\LIPSkrav{Original}{Dokumentation enligt ovan ska finnas vid leverans.}{1}
 	\LIPSkrav{Original}{Dokumentationen ska vara tydligt formulerad, samt samt ha en enhetlig layout.}{1}
-	\LIPSkrav{Original}{Dokumentationen ska fälja LIPS-standard.}{1}
-	\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
+	\LIPSkrav{Original}{Dokumentationen ska fÃ¤lja LIPS-standard.}{1}
+	\LIPSkrav{Original}{Dokumentation ska skrivas pÃ¥ svenska}{1}
 \end{LIPSkravlista}
 
 %\begin{LIPSkravlista}
-%\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgå från LIPS-mallar}{1}
-%\LIPSkrav{Original}{Dokument ska märkas med versionsnummer}{1}
-%\LIPSkrav{Original}{Möten ska protokollföras enligt LIPS-mallen för mötesprotokoll}{1}
-%\LIPSkrav{Original}{Mötesprotokoll ska justeras av två utsedda justeringspersoner}{1}
-%\LIPSkrav{Original}{Dokumentation ska skrivas på svenska}{1}
+%\LIPSkrav{Original}{Dokumenten ska ha enhetligt utseende och utgÃ¥ frÃ¥n LIPS-mallar}{1}
+%\LIPSkrav{Original}{Dokument ska mÃ¤rkas med versionsnummer}{1}
+%\LIPSkrav{Original}{MÃ¶ten ska protokollfÃ¶ras enligt LIPS-mallen fÃ¶r mÃ¶tesprotokoll}{1}
+%\LIPSkrav{Original}{MÃ¶tesprotokoll ska justeras av tvÃ¥ utsedda justeringspersoner}{1}
+%\LIPSkrav{Original}{Dokumentation ska skrivas pÃ¥ svenska}{1}
 %\end{LIPSkravlista}
 
 
@@ -386,70 +389,73 @@ Dokumentation för projektet innebär följande dokument:
 %
 %2 - 4 Lag
 %
-%Roboten ska operera autonomt och måste bära med sig den dator som utför
-%beräkningarna som krävs för att den ska utföra sin kartläggning.  Detta innebär
-%att roboten inte får fjärrstyras från en laptop som utför beräkningarna som
-%krävs för att roboten ska navigera etc.  Man får inte tejpa fast en laptop på
+%Roboten ska operera autonomt och mÃ¥ste bÃ¤ra med sig den dator som utfÃ¶r
+%berÃ¤kningarna som krÃ¤vs fÃ¶r att den ska utfÃ¶ra sin kartlÃ¤ggning.  Detta innebÃ¤r
+%att roboten inte fÃ¥r fjÃ¤rrstyras frÃ¥n en laptop som utfÃ¶r berÃ¤kningarna som
+%krÃ¤vs fÃ¶r att roboten ska navigera etc.  Man fÃ¥r inte tejpa fast en laptop pÃ¥
 %roboten.
 
 %\subsection{Regler}
 
-%En robot per lag.  Roboten ska själv avgöra när kartläggningen är klar och
-%signalera det.  Kartan ska under uppritning visas på en skärm eller projektor
-%och vara komplett när roboten anser sig klar.  Robotarna kör i tur och ordning
-%och börjar i samma ruta, dock inte tvunget vriden åt samma håll.  Robotarna ska
-%starta kartläggningen genom att någon trycker på en knapp på roboten.  Den
-%robot som snabbast signalerar att den är klar med kartritningen och vars karta
-%överrensstämmer med verkligheten får 4 poäng, 2:an får 3 poäng, 3:an får 2
-%poäng och fyran får 1 poäng.  Man kör två omgångar och om man i slutet har n
-%(n: heltal) par med samma resultat får de spela om sin placering i en 4:de
-%omgång.  Ola väljer startpositioner. Laget väljer var på rutan roboten ska
-%starta. Ingen del av roboen får vara utanför den designerade rutan vid start.
-%Körtiden mäts från det att knappen är tryckt i sekunder tills roboten
-%signalerat klar och man kan se en karta på skärmen.
+%En robot per lag.  Roboten ska sjÃ¤lv avgÃ¶ra nÃ¤r kartlÃ¤ggningen Ã¤r klar och
+%signalera det.  Kartan ska under uppritning visas pÃ¥ en skÃ¤rm eller projektor
+%och vara komplett nÃ¤r roboten anser sig klar.  Robotarna kÃ¶r i tur och ordning
+%och bÃ¶rjar i samma ruta, dock inte tvunget vriden Ã¥t samma hÃ¥ll.  Robotarna ska
+%starta kartlÃ¤ggningen genom att nÃ¥gon trycker pÃ¥ en knapp pÃ¥ roboten.  Den
+%robot som snabbast signalerar att den Ã¤r klar med kartritningen och vars karta
+%Ã¶verrensstÃ¤mmer med verkligheten fÃ¥r 4 poÃ¤ng, 2:an fÃ¥r 3 poÃ¤ng, 3:an fÃ¥r 2
+%poÃ¤ng och fyran fÃ¥r 1 poÃ¤ng.  Man kÃ¶r tvÃ¥ omgÃ¥ngar och om man i slutet har n
+%(n: heltal) par med samma resultat fÃ¥r de spela om sin placering i en 4:de
+%omgÃ¥ng.  Ola vÃ¤ljer startpositioner. Laget vÃ¤ljer var pÃ¥ rutan roboten ska
+%starta. Ingen del av roboen fÃ¥r vara utanfÃ¶r den designerade rutan vid start.
+%KÃ¶rtiden mÃ¤ts frÃ¥n det att knappen Ã¤r tryckt i sekunder tills roboten
+%signalerat klar och man kan se en karta pÃ¥ skÃ¤rmen.
 %
-%Man får inte ge roboten en hårdkodad verision av banan att arbeta utifrån.
-%Roboten ska söka sig fram till kartan inte bara verifiera en existerande
+%Man fÃ¥r inte ge roboten en hÃ¥rdkodad verision av banan att arbeta utifrÃ¥n.
+%Roboten ska sÃ¶ka sig fram till kartan inte bara verifiera en existerande
 %version.
 %
-%Om roboten signalerar klar i förtid (innan hela kartan syns på persondatorn)
-%läggs 10 sekunder till på dess arbetstid. Dessutom kommer tiden mellan KLAR
-%signalen och då hela kartan visas på persondatorn att läggas till robotens tid
-%den omgången.  Om kartan är ofullständig 4 minuter efter KLAR signal eller då
-%gruppen ger upp får roboten i den omgången 0 poäng.  Om två eller fler robotar
-%klarar uppgiften på samma tid så delar de på placeringen och får samma poäng.
-%Roboten på platsen efter de två med lika tid får då poängen som den skulle fått
-%om den två hade olika bättre tider.  Huruvida tiderna är optimala bör
-%förhandlas.
+%Om roboten signalerar klar i fÃ¶rtid (innan hela kartan syns pÃ¥ persondatorn)
+%lÃ¤ggs 10 sekunder till pÃ¥ dess arbetstid. Dessutom kommer tiden mellan KLAR
+%signalen och dÃ¥ hela kartan visas pÃ¥ persondatorn att lÃ¤ggas till robotens tid
+%den omgÃ¥ngen.  Om kartan Ã¤r ofullstÃ¤ndig 4 minuter efter KLAR signal eller dÃ¥
+%gruppen ger upp fÃ¥r roboten i den omgÃ¥ngen 0 poÃ¤ng.  Om tvÃ¥ eller fler robotar
+%klarar uppgiften pÃ¥ samma tid sÃ¥ delar de pÃ¥ placeringen och fÃ¥r samma poÃ¤ng.
+%Roboten pÃ¥ platsen efter de tvÃ¥ med lika tid fÃ¥r dÃ¥ poÃ¤ngen som den skulle fÃ¥tt
+%om den tvÃ¥ hade olika bÃ¤ttre tider.  Huruvida tiderna Ã¤r optimala bÃ¶r
+%fÃ¶rhandlas.
 
-%Vid oklarheter är det Ola Dahl som bedömmer utgången av en omgång eller en
-%annan person utsedd av Ola. Ola har också tillåtelse att tilldela/dra ifrån
-%sekunder på en omgång.
+%Vid oklarheter Ã¤r det Ola Dahl som bedÃ¶mmer utgÃ¥ngen av en omgÃ¥ng eller en
+%annan person utsedd av Ola. Ola har ocksÃ¥ tillÃ¥telse att tilldela/dra ifrÃ¥n
+%sekunder pÃ¥ en omgÃ¥ng.
 
 
 \subsection{Banspecifikation} \label{app:bana}
 
-%Ska vara uppförd av Ola Dahl eller ersättare tillsatt av Ola Dahl.  Max 8 x 8 rutor
-%stor. Varje ruta är 80cm x 80cm. Max 6.4 x 6.4 m. (projektdirektivet anger 6x6m
-%vilket är omöjligt) Vara tät, dvs inga hål i yttre väggen får finnas.  Inte ha
-%"tunna" väggar. Varje vägg har alltså en otillgänglig ruta bakom sig.  Ha
-%väggar beståendes av 80cm långa vita pappskivor som skär varandra i 90 graders
-%vinklar.  Maximalt ha en "köksö", "köksön" kan ha godtycklig storlek. "Köksön"
-%ska vara placerad passade till det rutnät (grid) man kan bygga upp av
-%ytterväggen. "Köksön" består av rutor på samma sätt som övriga banan.
+%Ska vara uppfÃ¶rd av Ola Dahl eller ersÃ¤ttare tillsatt av Ola Dahl.  Max 8 x 8 rutor
+%stor. Varje ruta Ã¤r 80cm x 80cm. Max 6.4 x 6.4 m. (projektdirektivet anger 6x6m
+%vilket Ã¤r omÃ¶jligt) Vara tÃ¤t, dvs inga hÃ¥l i yttre vÃ¤ggen fÃ¥r finnas.  Inte ha
+%"tunna" vÃ¤ggar. Varje vÃ¤gg har alltsÃ¥ en otillgÃ¤nglig ruta bakom sig.  Ha
+%vÃ¤ggar bestÃ¥endes av 80cm lÃ¥nga vita pappskivor som skÃ¤r varandra i 90 graders
+%vinklar.  Maximalt ha en "kÃ¶ksÃ¶", "kÃ¶ksÃ¶n" kan ha godtycklig storlek. "KÃ¶ksÃ¶n"
+%ska vara placerad passade till det rutnÃ¤t (grid) man kan bygga upp av
+%yttervÃ¤ggen. "KÃ¶ksÃ¶n" bestÃ¥r av rutor pÃ¥ samma sÃ¤tt som Ã¶vriga banan.
 
-Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
-
+Banan bestÃ¥r av tvÃ¥ huvuddelar: Linjedelar och labyrintdelar, dÃ¤r linjerna fungerar som transportstrÃ¤cka till, frÃ¥n eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgÃ¥ngen dÃ¤r labyrinten slutar eller bÃ¶rjar. Labyrintens bestÃ¥ndsdelar varierar utifrÃ¥n vilken prioritetsnivÃ¥ som Ã¤r uppfylld. TÃ¤vlingsdeltagarna kommer innan tÃ¤vlingen Ã¶verens om vilken av nivÃ¥erna som ska anvÃ¤ndas.
+\\
+\\
 Linjedelen:
-Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
-
+\\
+\\
+Linjerna i banan skall bestÃ¥ av en svart tejp pÃ¥ grÃ¥tt underlag. Tejpens bredd ska vara mellan 14-18 mm. I de fall en tjock linje nÃ¤mns avses en tejplinje med bredd mellan 42-54 mm (tre tejpbredder). Med en smal tejplinje avses en linje med bredd 14-18 mm (en tjepbredd). Tejpbanan kan korsa sig sjÃ¤lv i 90\degree korsningar, den kan dock ej dela sig. SvÃ¤ngradien fÃ¶r banan Ã¤r minst 25 cm. Banan avslutas med en stoppsignal eller Ã¶vergÃ¥r till en labyrint. Stoppsignalen inleds med en 30 cm rakstrÃ¤cka som sedan Ã¶vergÃ¥r i en tvÃ¤rgÃ¥ende linje fÃ¶ljt av tre parallella smala linjer, 3 cm isÃ¤r med mitten dÃ¤r den tidigare linjen avslutades, i fÃ¤rdriktningen.
+\\
 
 Labyrintdelen:
 
 \begin{list}{*}{}
-\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn fåljd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
-\item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
-\item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
+\item NivÃ¥ 1: AvstÃ¥ndet mellan parallella vÃ¤ggar Ã¤r 80 cm. 3-vÃ¤gskorsningar och 4-vÃ¤gskorsningar kan fÃ¶rekomma, dock med rÃ¤ta vinklar mellan varandra, rÃ¤tt vÃ¤g anges av markeringar pÃ¥ golvet. Markeringarna gÃ¶rs med tvÃ¥ linjer som gÃ¥r vinkelrÃ¤tt mellan vÃ¤ggarna. En tjock linje fÃ¶ljd av en tunn indikerar hÃ¶ger, en tunn fÃ¶ljd av en tjock indikerar vÃ¤nster och tvÃ¥ linjer av samma tjocklek rakt fram. Markeringarna ska komma 30 cm innan korsningen och en rakstrÃ¤cka ska fÃ¶lja fram till korsningen. 
+\item NivÃ¥ 2: Som nivÃ¥ 1 med fÃ¶ljande justeringar: Inga markeringar behÃ¶vs dÃ¥ ena vÃ¤gen vid en korsning Ã¤r en Ã¥tervÃ¤ndsgrÃ¤nd med djup pÃ¥ 80 cm.
+\item NivÃ¥ 3: Som nivÃ¥ 1 med fÃ¶ljande justeringar: Inga markeringar nÃ¶dvÃ¤ndiga. HÃ¥l 80 cm stora ut ur labyrinten som inte leder nÃ¥gonstans kan fÃ¶rekomma.
 \end{list} 
 
 \newpage
