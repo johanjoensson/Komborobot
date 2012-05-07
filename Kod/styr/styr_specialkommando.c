@@ -83,7 +83,6 @@ void specialkommando(unsigned char kommando_kod)
 		}
 		else if(0xA0==kommando_kod)
 		{
-                        //sväng höger 90 grader
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
                         special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
