@@ -28,7 +28,9 @@ int old_line = 0;
 int angle = 0;
 int old_angle=0;
 int old_angle_count=0;
-
+signed char old_value=0x00;
+int rep_count = 0;
+int Kd = 1;
 
 /*-----------------------------------------------------------------------------
  *  distance_regulator   
@@ -98,6 +100,22 @@ signed char line_regulator(signed char new_value)
 			  output=0;
 			  angle=0;
 		  }
+	if(rep_count<15){
+		rep_count++;
+	}
+	else{ 
+		if((new_value-old_value>38) || (old_value-new_value>38)){
+		Kd=2;
+		
+		}
+		else {
+			Kd=1;
+			
+		}
+		rep_count=0;
+		old_value=new_value;
+		
+	}
 			  
 							
 	
@@ -105,86 +123,86 @@ signed char line_regulator(signed char new_value)
 		switch(new_value){
 			
 			
-			case -127:
-				outvalue = 20;
-				break;
-			case -90:
-				outvalue = 15;
-				break;
+				case -127:
+					outvalue = 30;
+					break;
+				case -90:
+					outvalue = 20;
+					break;
 				
-			case -75:
-				outvalue = 10;
-				break;
-			case -50: 
-				outvalue = 6;
-				break;	
+				case -75:
+					outvalue = 15;
+					break;
+				case -50: 
+					outvalue = 10;
+					break;	
 				
-			case -25:
-				outvalue = 3;
-				break;
-			case 0:
-				outvalue = 1;
-				break;
-			case 25:
-				outvalue = 2;
-				break;
+				case -25:
+					outvalue = 7;
+					break;
+				case 0:
+					outvalue = 4;
+					break;
+				case 25:
+					outvalue = 7;
+					break;
 				
-			case 50:
-				outvalue = 3;
-				break;
-			case 75: 
-				outvalue = 5;
-				break;	
+				case 50:
+					outvalue = 8;
+					break;
+				case 75: 
+					outvalue = 15;
+					break;	
 				
-			case 90:
-				outvalue = 3;
-				break;
-			case 127:
-				outvalue = 1;
-				break;
-			default: 
-				outvalue = 0;
-						break
+				case 90:
+					outvalue = 10;
+					break;
+				case 127:
+					outvalue = 10;
+					break;
+				default: 
+					outvalue = 0;
+					break
 				}
 	}
 		else if(angle==-1){
 					switch(new_value){
 						case -127:
-							outvalue = 1;
+							outvalue = 10;
 							break;
 						case -90:
-							outvalue = 3;
+							outvalue = 10;
 							break;
 						
 						case -75:
-							outvalue = 5;
+							outvalue = 15;
 							break;
 						case -50: 
-							outvalue = 3;
+							outvalue = 8;
 							break;	
 					
 						case -25:
-							outvalue = 2;
+							outvalue = 7;
 							break;
 						case 0:
-                        	outvalue = 1;
+                        	outvalue = 4;
 							break;
 						case 25:
-							outvalue = 3;
+							outvalue = 7;
 							break;
 							
 						case 50:
-							outvalue = 6;
+							outvalue = 10;
 							break;
 						case 75: 
-							outvalue = 10;
+							outvalue = 15;
 							break;	
 							
 						case 90:
-							outvalue = 15;
+							outvalue = 20;
 							break;
 						case 127:
-							outvalue = 20;
+							outvalue = 30;
 							break;
 						default: 
 							outvalue = 0;
@@ -192,13 +210,14 @@ signed char line_regulator(signed char new_value)
 					}
 	
 			}
+
 	
 	old_line = new_value;
 	old_angle=angle;
 
         // sätter max- och minvärden på utvärdet
 
-        return outvalue;
+        return(outvalue*Kd);
 }
 
 /*-----------------------------------------------------------------------------
