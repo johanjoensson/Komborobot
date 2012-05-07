@@ -11,10 +11,10 @@ Mjukvaran är skriven i programspråket C och använder utöver Cs standardbibli
 generera kommandon till roboten via tangentbordet samt NCurses för att
 åskådliggöra information i terminalen på ett trevligt och överskådligt sätt..
 
-Mjukvaran består av 2 huvuddelar, input_control samt send_receive. input_control
+Mjukvaran består av 2 huvuddelar, input\_control samt send\_receive. input\_control
 hanterar knapptryckningar från användaren och genererar instruktioner att skicka
-till roboten, intruktionen placeras sedan i en enkel databas (instr_db).
-send_receive i sin tur läser in instruktionen från databasen och om användaren
+till roboten, intruktionen placeras sedan i en enkel databas (instr\_db).
+send\_receive i sin tur läser in instruktionen från databasen och om användaren
 har genererat en ny instruktion kommer denna skickas till roboten via blåtand
 (instruktioner som redan skcikat till roboten kommer alltså inte att skickas
  igen), ifall instruktionen innehåller information om önskad hastighet på
@@ -25,7 +25,7 @@ kommer åskådligjöras på skärmen.
 \subsection{Användande}
 
 För att börja använda roboten startar man först programmet input_control, detta
-initierar databasen instr_db och ger användaren möjlighet att skapa
+initierar databasen instr\_db och ger användaren möjlighet att skapa
 styrkommandon åt roboten med hjälp av tangentbordstryckningar. Sedan startar man
 programmet send_receive som ansluter till roboten via blåtand och börjar skicka
 samt ta emot data från roboten.
@@ -48,9 +48,9 @@ pil höger - trim höger, öka effekten på höger motor en aning (små steg,
 pil vänster - trim vänster, öka effekten på vänster motor en aning (små steg,
 		användbart för finjustering)
 o - nollställ trim
-esc - avsluta input control
+esc - avsluta input\_control
 
-För att avsluta send_receive används <ctr + c> vilket kommer återställa
+För att avsluta send\_receive används (ctr + c) vilket kommer återställa
 terminalen åt användaren.
 
 % \subsection{Implementation}
