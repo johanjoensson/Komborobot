@@ -1,7 +1,7 @@
 %% Definitioner för LIPS-dokument
 
 \usepackage[swedish]{babel}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{times}
 \usepackage{ifthen}
@@ -23,6 +23,25 @@
 
 \newcommand{\twodigit}[1]{\ifthenelse{#1<10}{0}{}{#1}}
 \newcommand{\dagensdatum}{\number\year-\twodigit{\number\month}-\twodigit{\number\day}}
+
+%% ------------------------------------------
+% NYBILD
+% Skapar centrerad bild med caption
+%   
+% #1: Filens url relativt '/bilder/'
+% #2:  Caption
+% #3: Label
+% #4: Skalning
+%% ------------------------------------------
+\newcommand{\nyBild}[4] 
+{\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=#4]{bilder/#1}
+  \caption{#2}
+  \label{fig:#3}
+\end{figure}}
+
+
 
 %%  Redefinitions of commands containing @
 \makeatletter
@@ -66,7 +85,7 @@
 \begin{center}
   {\small Gruppdeltagare}\\
 %  \begin{tabular}{|p{30mm}|p{40mm}|p{35mm}|p{45mm}|}
-  \begin{tabular}{|l|l|p{25mm}|l|}
+  \begin{tabular}{|l|p{45mm}|p{25mm}|l|}
     \hline
     \textbf{Namn} & \textbf{Ansvar} & \textbf{Telefon} & \textbf{E-post} \\
     \hline
@@ -109,6 +128,7 @@
 
 \newcounter{LIPSkravnummer}
 \newcounter{LIPSunderkravnummer}[LIPSkravnummer]
+
 \newenvironment{LIPSkravlista}{%
   \begin{tabular}{|p{25mm}|p{25mm}|p{85mm}|p{5mm}|}
     }%
@@ -116,16 +136,38 @@
     \hline
   \end{tabular}
 }
+
 \newenvironment{LIPSleveranslista}{%
-	\begin{tabular}{|p{35mm}lp{25}lp{45mm}lp{15}|p{10mm}|}
+  \begin{tabular}{|p{25mm}|p{15mm}|p{70mm}|p{25mm}|p{5mm}|}
     }%
   {%
     \hline
   \end{tabular}
 }
-\newcommand{\LIPSkrav}[3]{\hline\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} & \textbf{{#1}} & {#2} & \textbf{{#3}} \\}
-\newcommand{\LIPSleverans}[4]{\hline\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} & \textbf{{#1}} & {#2} & \textbf{{#3}} & \textbf {{#4}} \\}
+
+
+\newcommand{\LIPSkrav}[3]
+{\hline
+\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} &
+\textbf{{#1}} & 
+{#2} & 
+\textbf{{#3}} 
+\\}
+
+\newcommand{\LIPSleverans}[4]
+{\hline
+\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} & 
+\textbf{{#1}} & 
+{#2} & 
+\textbf{{#3}} & 
+\textbf {{#4}} 
+\\}
+
 \newcommand{\LIPSunderkrav}[3]{\hline\stepcounter{LIPSunderkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}\Alph{LIPSunderkravnummer}} & \textbf{{#1}} & {#2} & \textbf{{#3}} \\}
+
+
+
+
 
 %%% Local Variables: 
 %%% mode: latex
