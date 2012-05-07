@@ -33,6 +33,13 @@ ISR(INT0_vect)
 		decide_mode();
 }
 
+
+ISR(INT1_vect)
+{
+				start=1;
+}
+
+
 void req_sending()
 {
 		SPDR= header;

@@ -6,41 +6,46 @@ Funktionen läser
 #include "styr_SPI.h"
 #include "motor_styrning.h"
 #include "regulator.h"
-
+#include "styr_specialkommando.h"
+#include "styr_tolka_data.h"
 
 unsigned char kommando;
 unsigned char dist_left_front, dist_left_back, dist_right_front;
 unsigned char count;
+int done_with_special_command;
 
 void tolka_data()
 {
 		
-		if(auto_mode==1)						//autonom
+		if(auto_mode==1 && start==1)						//autonom
 		{
 				if(0x02==(header & 0x02))		//D-flagga=1?
 				{
-						//kör specialkommando
+						specialkommando(data & 0xE0);
+						done_with_special_command = 1;
 				}
 				else if(0x11==(header & 0x11)){		//linjeläge
 						drive_engines(line_regulator(data));
 				}
 				else if(0x01==(header & 0x11)){		//avståndsläge
-						if(0x80==(data & 0x80)){
-								dist_left_front= (data;
+						if(0x00==(header & 0x0C)){
+								dist_left_front= data;
+								count=1;
+						} else if (count==1 && 0x04==(header & 0x0C)){
+								dist_left_back=data;
 								count++;
-						} else {
-								if (count==1){
-										dist_left_back=data;
-										count++;
-								} else if(count==2){
-										dist_right_front=data;
-										count++;
-								} else {
-										count=0;								
-										drive_engines(distance_regulator(
-										dist_left_front, dist_left_back, 
-										dist_right_front, data));
-								}
+						} else if(count==2 && 0x08==(header & 0x0C)){
+								dist_right_front=data;
+								count++;
+						} /*else if(done_with_special_command==1){
+								count=0;								
+								done_with_special_command = straight(dist_left_front, dist_left_back, 
+								dist_right_front, data);
+						}*/ 
+						else if(count==3 && 0x0C==(header & 0x0C)){
+								drive_engines(distance_regulator(
+								dist_left_front, dist_left_back, 
+								dist_right_front, data));
 						}
 				}
 		}
@@ -99,3 +104,4 @@ void tolka_data()
 		}
 
 }
+

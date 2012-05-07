@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "styr_SPI.h"
-#include "motor_test.h"
+#include "motor_styrning.h"
 
 /*
  *	Hjälpfunktion som tar time, speed och command som argument och 
@@ -38,9 +38,11 @@ void special_help(int time, unsigned char speed, unsigned char command)
 		return;
 }
 
-void specialkommando()
+void specialkommando(unsigned char kommando_kod)
 {
-        unsigned char kommando_kod = 0x40;//data & 0xE0;
+		
+        //unsigned char kommando_kod = 0x40;//data & 0xE0;
+	
 
 		if(0x40 == kommando_kod)
 		{
@@ -50,11 +52,11 @@ void specialkommando()
                         att använda flaggan för uppfyllt tidskrav här (man väntar på
                         att den är lika med 1)
                         */
-                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                        special_help(0x2000, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x1800, 0x07,1);     // Rotera vänster ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x3200, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x2000, 0, 3);   
                         return;
 
@@ -62,11 +64,11 @@ void specialkommando()
 		else if(0x60==kommando_kod)
 		{
                         //sväng höger 90 grader
-                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                        special_help(0x2000, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x1800, 0x07,2);     // Rotera höger ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                        special_help(0x2900, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x3200, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x2000, 0, 3);   
                         return;
 		}
@@ -77,4 +79,51 @@ void specialkommando()
                         special_help(0x2000, 0, 3);   	  // Stanna
                         return;
 		}
+		else if((0xC0==kommando_kod){
+						stop(0);
+						start=0;
+						return;
+		}
+
 }
+
+int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsigned char dist_right_front, unsigned char dist_right_back)
+{
+		signed char difference_left = ((dist_left_front -1) - dist_left_back);
+		signed char difference_right = (dist_right_front - dist_right_back);
+
+		if(dist_left_front < 40){
+				if(difference_left < 2 && difference_left > -2){
+						return 0;
+				} else if (difference_left < 0){
+						unsigned char left_cm = - difference_left;
+						special_help(left_cm << 3, 0x07,2);     // Rotera h�ger
+						return 1;
+				} else {
+						unsigned char left_cm = difference_left;
+						special_help(left_cm << 3, 0x07,1);     // Rotera vänster
+						return 1;
+				}
+		} else if(dist_right_front < 40){
+				if(difference_right < 2 && difference_right > -2){
+						return 0;
+				} else if (difference_right < 0){
+						unsigned char right_cm = - difference_right;
+						special_help(right_cm << 3, 0x07,1);     // Rotera h�ger
+						return 1;
+				} else {
+						unsigned char right_cm = difference_left;
+						special_help(right_cm << 3, 0x07,2);     // Rotera vänster
+						return 1;
+				}
+		} else {
+			return 0;
+		}			
+}
+
+void set_wall(int vaggen){
+		wall=vaggen;
+}
+				
+
+			
