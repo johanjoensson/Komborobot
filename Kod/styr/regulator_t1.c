@@ -26,7 +26,11 @@ unsigned char speed = 105;
 int old_distance_left = 0;
 int old_line = 0;
 int angle = 0;
-
+int old_angle=0;
+int old_angle_count=0;
+signed char old_value=0x00;
+int rep_count = 0;
+int Kd = 1;
 
 /*-----------------------------------------------------------------------------
  *  distance_regulator   
@@ -77,88 +81,143 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-        int Kp = 1;
-		speed = 110;
+        speed = 110;
         signed char outvalue;
 
         //Kollar om roboten rör sig åt höger eller vänster
         if(new_value > old_line){
                 angle = -1; // roboten går åt höger
+				old_angle_count=0;
         } else if(new_value < old_line){
                 angle = 1; // roboten går åt vänster
-        }
-		outvalue = (Kp*new_value) >> 2;
-        switch(angle){
-                case 1:                      
-					    if(new_value <= -90){ // x<-90   
-                                             
-                                outvalue += (Kp*new_value) >> 2;
-						}
-						else if(new_value <= -50){ // -90<x<-50
-						
-							outvalue += (Kp*new_value) >> 2;
-						}
-						else if(new_value <= 0){ // -50<x<0
-						
-							outvalue += (Kp*new_value) >> 2;
-					
-						} 
-						else if(new_value >= 90){ // x>90
-							outvalue -= (Kp*new_value) >> 2;
+				old_angle_count=0;
+		}
+		  else if(new_value=old_line && old_angle_count<20){
+				angle=old_angle;
+				old_angle_count++;
+			}
+		  else if(new_value=old_line && old_angle_count>=20){
+			  output=0;
+			  angle=0;
+		  }
+	if(rep_count<15){
+		rep_count++;
+	}
+	else{ 
+		if((new_value-old_value>38) || (old_value-new_value>38)){
+		Kd=2;
+		
+		}
+		else {
+			Kd=1;
+			
+		}
+		rep_count=0;
+		old_value=new_value;
+		
+	}
+			  
 							
-					
-						}
-						else if(new_value >= 50){ // 50<x<90
+	
+	if(angle==1){
+		switch(new_value){
+			
+			
+				case -127:
+					outvalue = 30;
+					break;
+				case -90:
+					outvalue = 20;
+					break;
+				
+				case -75:
+					outvalue = 15;
+					break;
+				case -50: 
+					outvalue = 10;
+					break;	
+				
+				case -25:
+					outvalue = 7;
+					break;
+				case 0:
+					outvalue = 4;
+					break;
+				case 25:
+					outvalue = 7;
+					break;
+				
+				case 50:
+					outvalue = 8;
+					break;
+				case 75: 
+					outvalue = 15;
+					break;	
+				
+				case 90:
+					outvalue = 10;
+					break;
+				case 127:
+					outvalue = 10;
+					break;
+				default: 
+					outvalue = 0;
+					break
+				}
+	}
+		else if(angle==-1){
+					switch(new_value){
+						case -127:
+							outvalue = 10;
+							break;
+						case -90:
+							outvalue = 10;
+							break;
 						
-							outvalue -= (Kp*new_value >> 2)*3;
+						case -75:
+							outvalue = 15;
+							break;
+						case -50: 
+							outvalue = 8;
+							break;	
 					
-						} 
-						else { // 0<x<50            
-                        	outvalue -= (Kp*new_value) >> 1;
-                        }
-                        break;
-                case -1: 
-						if(new_value <= -90){   
-                                outvalue += (Kp*new_value) >> 2;
-						}
-						else if(new_value <= -50){
-
-							outvalue += (Kp*new_value >> 2)*3;
-						}
-						else if(new_value <= 0){
-						
-							outvalue += (Kp*new_value) >> 1;
-					
-						} 
-						else if(new_value >= 90){
-							outvalue += (Kp*new_value) >> 2;
+						case -25:
+							outvalue = 7;
+							break;
+						case 0:
+                        	outvalue = 4;
+							break;
+						case 25:
+							outvalue = 7;
+							break;
 							
-					
-						}
-						else if(new_value <= 50){
-						
-							outvalue += (Kp*new_value) >> 2;
-						}
-						else {              
-                        	outvalue += (Kp*new_value) >> 2;
-                        }
+						case 50:
+							outvalue = 10;
+							break;
+						case 75: 
+							outvalue = 15;
+							break;	
+							
+						case 90:
+							outvalue = 20;
+							break;
+						case 127:
+							outvalue = 30;
+							break;
+						default: 
+							outvalue = 0;
+							break
+					}
+	
+			}
 
-                        break;
-                default:
-                        outvalue = Kp*new_value;
-                        break;
-        }
-
-        old_line = new_value;
+	
+	old_line = new_value;
+	old_angle=angle;
 
         // sätter max- och minvärden på utvärdet
-        if(outvalue > 70){
-                outvalue = 70;
-        } else if(outvalue < -70){
-                outvalue = -70;
-        }
 
-        return outvalue;
+        return(outvalue*Kd);
 }
 
 /*-----------------------------------------------------------------------------
@@ -168,30 +227,28 @@ signed char line_regulator(signed char new_value)
  *-----------------------------------------------------------------------------*/
 void drive_engines(signed char value)
 {
-        if(value > 0){//V�nstersv�ng
+        if(angle < 0){//V�nstersv�ng
 
 				if(value > 20){
-					OCR2 = speed - (value >> 1);  // Vänstermotor
+					OCR2 = speed - (value >> 1) + 3;  // Vänstermotor
               		OCR0 = speed + (value >> 1); // Högermotor
 					}
 				else{
-					OCR2 = speed;  // Vänstermotor
-              		OCR0 = speed + value; // Högermotor
+					OCR2 = speed - (value+3);  // Vänstermotor
+              		OCR0 = speed;			// Högermotor
 					}
                 
         } else {// H�gersv�ng
 
-                value = -value;
 
 				if(value > 20){
-					OCR2 = speed + (value >> 1);  // Vänstermotor
+					OCR2 = speed + (value >> 1)+3;  // Vänstermotor
               		OCR0 = speed - (value >> 1); // Högermotor
 					}
 				else{
-					OCR2 = speed + value;  // Vänstermotor
-              		OCR0 = speed; // Högermotor
+					OCR2 = speed+3;  // Vänstermotor
+              		OCR0 = speed - value;// Högermotor
 					}
                 
         }
 }
-

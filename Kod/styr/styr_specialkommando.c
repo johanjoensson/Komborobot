@@ -2,6 +2,8 @@
 #include <avr/interrupt.h>
 #include "styr_SPI.h"
 #include "motor_styrning.h"
+#include "styr_tolka_data.h"
+#include "regulator.h"
 
 /*
  *	Hjälpfunktion som tar time, speed och command som argument och 
@@ -54,11 +56,18 @@ void specialkommando(unsigned char kommando_kod)
                         */
                         special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                        special_help(0x1800, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                        special_help(0x3200, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
                         special_help(0x2000, 0, 3);   
                         return;
+
+		} else if (0x80 == kommando_kod){
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
+						special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+                        return;						
 
 		}
 		else if(0x60==kommando_kod)
@@ -66,10 +75,19 @@ void specialkommando(unsigned char kommando_kod)
                         //sväng höger 90 grader
                         special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                        special_help(0x1800, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                        special_help(0x3200, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
                         special_help(0x2000, 0, 3);   
+                        return;
+		}
+		else if(0xA0==kommando_kod)
+		{
+                        //sväng höger 90 grader
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+						special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
                         return;
 		}
 		else if(0x20==kommando_kod)
@@ -79,7 +97,8 @@ void specialkommando(unsigned char kommando_kod)
                         special_help(0x2000, 0, 3);   	  // Stanna
                         return;
 		}
-		else if((0xC0==kommando_kod){
+		else if(0xC0==kommando_kod)
+		{
 						stop(0);
 						start=0;
 						return;
@@ -87,7 +106,7 @@ void specialkommando(unsigned char kommando_kod)
 
 }
 
-int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsigned char dist_right_front, unsigned char dist_right_back)
+/*int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsigned char dist_right_front, unsigned char dist_right_back)
 {
 		signed char difference_left = ((dist_left_front -1) - dist_left_back);
 		signed char difference_right = (dist_right_front - dist_right_back);
@@ -97,7 +116,7 @@ int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsign
 						return 0;
 				} else if (difference_left < 0){
 						unsigned char left_cm = - difference_left;
-						special_help(left_cm << 3, 0x07,2);     // Rotera h�ger
+						special_help(left_cm << 3, 0x07,2);     // Rotera h?ger
 						return 1;
 				} else {
 						unsigned char left_cm = difference_left;
@@ -109,7 +128,7 @@ int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsign
 						return 0;
 				} else if (difference_right < 0){
 						unsigned char right_cm = - difference_right;
-						special_help(right_cm << 3, 0x07,1);     // Rotera h�ger
+						special_help(right_cm << 3, 0x07,1);     // Rotera h?ger
 						return 1;
 				} else {
 						unsigned char right_cm = difference_left;
@@ -119,7 +138,7 @@ int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsign
 		} else {
 			return 0;
 		}			
-}
+}*/
 
 void set_wall(int vaggen){
 		wall=vaggen;
