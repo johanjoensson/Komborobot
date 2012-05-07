@@ -28,7 +28,7 @@
 #define HEIGTH 80
 #define BPP 4
 #define DEPTH 32
-int trim = 0;
+
 void event_loop(struct instruction_t *inst, FILE *db);
 void on_key_up(struct instruction_t *instr);
 void on_e_down(int speed, struct instruction_t *instr);
@@ -41,13 +41,17 @@ void on_w_down(int speed, struct instruction_t *instr);
 void set_left(int speed, struct instruction_t *instr);
 void set_right(int speed, struct instruction_t *instr);
 
-void trim_left(struct instruction_t *instr);
-void trim_right(struct instruction_t *instr);
+void trim_left(int trim, struct instruction_t *instr);
+void trim_right(int trim, struct instruction_t *instr);
 void no_trim(struct instruction_t *instr);
+
+void calibrate_sensors(int sensor_thresh, struct instruction_t *inst);
 
 void event_loop(struct instruction_t *inst, FILE *db)
 {
 	int speed = 7;
+        int trim = 0;
+        unsigned int sensor_thresh = 0xA8;
 
 	struct instruction_t *old_inst = malloc(sizeof(struct instruction_t));
 
@@ -62,7 +66,50 @@ void event_loop(struct instruction_t *inst, FILE *db)
 	SDL_WM_SetCaption("Hauptquartier", "Hauptquartier");
 
 	screen = SDL_SetVideoMode(WIDTH, HEIGTH, DEPTH, 0);
+        SDL_Rect screen_rect;
+        screen_rect.x = screen_rect.y = 0;
+        screen_rect.w = screen->w;
+        screen_rect.h = screen->h; 
 
+        Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255);
+        Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
+        Uint32 c1 = SDL_MapRGB(screen->format, 0x1F, 0x1F, 0x1F);
+        Uint32 c2 = SDL_MapRGB(screen->format, 0x2F, 0x2F, 0x2F);
+        Uint32 c3 = SDL_MapRGB(screen->format, 0x3F, 0x3F, 0x3F);
+        Uint32 c4 = SDL_MapRGB(screen->format, 0x4F, 0x4F, 0x4F);
+        Uint32 c5 = SDL_MapRGB(screen->format, 0x5F, 0x5F, 0x5F);
+        Uint32 c6 = SDL_MapRGB(screen->format, 0x6F, 0x6F, 0x6F);
+        Uint32 c7 = SDL_MapRGB(screen->format, 0x7F, 0x7F, 0x7F);
+        Uint32 c8 = SDL_MapRGB(screen->format, 0x8F, 0x8F, 0x8F);
+        Uint32 c9 = SDL_MapRGB(screen->format, 0x9F, 0x9F, 0x9F);
+        Uint32 cA = SDL_MapRGB(screen->format, 0xAF, 0xAF, 0xAF);
+        Uint32 cB = SDL_MapRGB(screen->format, 0xBF, 0xBF, 0xBF);
+        Uint32 cC = SDL_MapRGB(screen->format, 0xCF, 0xCF, 0xCF);
+        Uint32 cD = SDL_MapRGB(screen->format, 0xDF, 0xDF, 0xDF);
+        Uint32 cE = SDL_MapRGB(screen->format, 0xEF, 0xEF, 0xEF);
+        
+        Uint32 colors[16];
+        colors[0] = black;
+        colors[1] = c1;
+        colors[2] = c2;
+        colors[3] = c3;
+        colors[4] = c4;
+        colors[5] = c5;
+        colors[6] = c6;
+        colors[7] = c7;
+        colors[8] = c8;
+        colors[9] = c9;
+        colors[0xA] = cA;
+        colors[0xB] = cB;
+        colors[0xC] = cC;
+        colors[0xC] = cC;
+        colors[0xD] = cD;
+        colors[0xE] = cE;
+        colors[0xF] = white;
+        
+        SDL_FillRect(screen, &screen_rect, colors[(sensor_thresh & 0xF0) >> 4]);
+        SDL_Flip(screen);
+		
 	int quit = 0;
 	while((quit == 0) && (SDL_WaitEvent(&event))){
 		switch(event.type){
@@ -122,25 +169,43 @@ void event_loop(struct instruction_t *inst, FILE *db)
 						break;
 					case SDLK_RIGHT:
 						old_inst = inst;
-						trim_right(inst);
+						trim_right(trim, inst);
 						add_to_db(db, inst, 2);
 						inst = old_inst;
 						add_to_db(db, inst, 2);
+                                                trim = 1 - trim;
 						break;
 					case SDLK_LEFT:
 						old_inst = inst;
-						trim_left(inst);
+						trim_left(trim, inst);
 						add_to_db(db, inst, 2);
 						inst = old_inst;
 						add_to_db(db, inst, 2);
+                                                trim = 1 - trim;
 						break;
 
 					case SDLK_SPACE:
 						on_key_up(inst);
 						add_to_db(db, inst, 2);
+						break;
+                                        case SDLK_c:
+                                                calibrate_sensors(sensor_thresh, inst);
+                                                add_to_db(db, inst, 2);
+                                        case SDLK_u:
+                                                if(((sensor_thresh & 0xF0) >> 4) < 0xF){
+                                                        sensor_thresh = sensor_thresh + 0x10;
+                                                }
+                                                break;
+                                        case SDLK_i:
+                                                if(((sensor_thresh & 0xF0) >> 4) > 0x0){
+                                                        sensor_thresh = sensor_thresh - 0x10;
+                                                }
+                                                break;
 					default:
 						break;
 				}
+                                SDL_FillRect(screen, &screen_rect, colors[(sensor_thresh & 0xF0) >> 4]);
+                                SDL_Flip(screen);
 				break;
 				/*                        case SDL_KEYUP:
 							  switch(event.key.keysym.sym){
@@ -211,18 +276,16 @@ void set_right(int speed, struct instruction_t *instr)
 	instr->data = (unsigned char) 0x80 + speed;
 }
 
-void trim_left(struct instruction_t *instr)
+void trim_left(int trim, struct instruction_t *instr)
 {
 	instr->header = generate_header(2,2);
 	instr->data = (unsigned char) 0x90 + trim;
-	trim = 1 - trim;
 }
 
-void trim_right(struct instruction_t *instr)
+void trim_right(int trim, struct instruction_t *instr)
 {
 	instr->header = generate_header(2,2);
 	instr->data = (unsigned char) 0xA0 + trim;
-	trim = 1 - trim;
 }
 
 void no_trim(struct instruction_t *instr)
@@ -237,10 +300,10 @@ void on_key_up(struct instruction_t *instr)
        instr->data = stop();
 }
 
-void calibrate_sensors(struct instruction_t *inst)
+void calibrate_sensors(int sensor_thresh, struct instruction_t *inst)
 {
-	inst->header = generate_header(2,0xF);
-	inst->data = 125;
+	inst->header = generate_header(1,0xF);
+	inst->data = sensor_thresh;
 }
 
 int main()

@@ -75,13 +75,16 @@ void display_setup(){
 	waiting(waiting_time+1000); //t_SU2
 
 	char_to_display('V',0x00);
-	char_to_display(':',0x01);
 
-	char_to_display('H',0x08);
-	char_to_display(':',0x09);
+	char_to_display('H',0x0C);
 
 	char_to_display('V',0x00);
-	char_to_display(':',0x01);
+
+	char_to_display('F',0x06);
+
+	char_to_display('H',0x4C);
+
+	char_to_display('V',0x40);
 }
 
 /*
@@ -101,6 +104,7 @@ void waiting(int n){
 *					0x01: vänster fram
 *					0x02: höger bak
 *					0x03: vänster bak
+*					0x04: framsensorn
 *				
 */
 void data_to_display(int cm_value,unsigned char sensor_source){
@@ -128,10 +132,11 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	
 	//Sätt rätt skrivplats
 	unsigned char place;
-	if(sensor_source == 0x00) place = 0x0A;
-	else if(sensor_source == 0x01) place = 0x02;
-	else if(sensor_source == 0x02) place = 0x4A;
-	else if(sensor_source == 0x03) place = 0x42;
+	if(sensor_source == 0x00) place = 0x0D;
+	else if(sensor_source == 0x01) place = 0x01;
+	else if(sensor_source == 0x02) place = 0x4D;
+	else if(sensor_source == 0x03) place = 0x41;
+	else if(sensor_source == 0x04) place = 0x07;
 	else  place = 0x00;
 
 	PORTB &= 0xFE; //Register select = function
@@ -187,7 +192,7 @@ void char_to_display(unsigned char data,unsigned char place){
 
 	//Sätt position i minnet
 	PORTD |= (1<<PORTD7);
-	PORTD |= (place & 0x0B);
+	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
 	  
 	PORTB |= (1<<PORTB1); //Enable
@@ -226,36 +231,3 @@ unsigned char int_to_ascii(int digit){
 	return data;
 }
 
-/*
-int main(void){
-
-	display_setup();
-
-
-	char_to_display('V',0x00);
-	char_to_display(':',0x01);
-
-	char_to_display('H',0x08);
-	char_to_display(':',0x09);
-
-
-	data_to_display(406,0x00);
-
-	
-	data_to_display(45,0x00);
-	data_to_display(56,0x01);
-	data_to_display(906,0x00);
-	data_to_display(4,0x00);
-
-
-	//Oändlig dummy-loop
-	while (display_tester_loop<255) {
-		display_tester_loop++;
-		if (display_tester_loop>254) {
-			display_tester_loop = 1;
-		}
-	}
-	return 0;
-}
-
-*/

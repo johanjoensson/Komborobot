@@ -81,7 +81,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-		speed = 110;
+        speed = 110;
         signed char outvalue;
 
         //Kollar om roboten rör sig åt höger eller vänster
@@ -252,4 +252,3 @@ void drive_engines(signed char value)
                 
         }
 }
-

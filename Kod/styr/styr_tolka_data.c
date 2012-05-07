@@ -44,12 +44,6 @@ void tolka_data()
 								dist_right_front, data));
 						}
 				}
-				//Felmeddelande
-				else {
-					header=0x82;
-					data=0xE0;
-					req_sending;
-				}
 		}
 		else if(auto_mode==0 && (header & 0x01) == 0)				//fjärrstyrd
 		{
@@ -102,12 +96,6 @@ void tolka_data()
 				else if(0xB0==kommando)
 				{
 						trim_zero();
-				}
-				//Felmeddelande
-				else {
-					header=0x82;
-					data=0xE0;
-					req_sending;
 				}
 		}
 

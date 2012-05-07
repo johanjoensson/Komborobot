@@ -57,6 +57,7 @@ void specialkommando(unsigned char kommando_kod)
 		
         //unsigned char kommando_kod = 0x40;//data & 0xE0;
 	
+
 		if(0x10==kommando_kod){		//Rakt fram 100 cm
                 special_help(0x5200, 0x08, 0);    // Kör fram i ett tag (ca 2 sek)
                 special_help(0x2000, 0, 3);   	  // Stanna
@@ -93,6 +94,64 @@ void specialkommando(unsigned char kommando_kod)
                 special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
 				special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
                 return;						
+
+
+		if(0x40 == kommando_kod)
+		{
+                        /*Sväng vänster 90 grader
+                        Förslag: slå på timer och låt roboten köra rakt fram <tid>,
+                        rotera vänster <tid>, kör fram <tid>. jag tror det är enklast
+                        att använda flaggan för uppfyllt tidskrav här (man väntar på
+                        att den är lika med 1)
+                        */
+                        special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                        special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
+                        special_help(0x2000, 0, 3);   
+                        return;
+
+		} else if (0x80 == kommando_kod){
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
+						special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+                        return;						
+
+		}
+		else if(0x60==kommando_kod)
+		{
+                        //sväng höger 90 grader
+                        special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                        special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
+                        special_help(0x2000, 0, 3);   
+                        return;
+		}
+		else if(0xA0==kommando_kod)
+		{
+                        special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                        special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                        special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+						special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+                        return;
+		}
+		else if(0x20==kommando_kod)
+		{
+                        //kör rakt fram
+                        special_help(0x5200, 0x08, 0);    // Kör fram i ett tag (ca 2 sek)
+                        special_help(0x2000, 0, 3);   	  // Stanna
+                        return;
+		}
+		else if(0xC0==kommando_kod)
+		{
+						stop(0);
+						start=0;
+						return;
+
 		}
 		else if(0x60==kommando_kod){		//stanna och st�ng av autonom styrning
 				stop(0);

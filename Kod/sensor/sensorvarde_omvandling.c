@@ -62,7 +62,7 @@ int hogeromvandling_back(int sensorvarde)
 }
 
 
-int vansteromvandling_front(int sensorvarde){
+int framomvandling(int sensorvarde){
 	
 	int cmvarde;
 
@@ -109,7 +109,7 @@ int vansteromvandling_back(int sensorvarde)
 		
 }
 
-int framomvandling(int sensorvarde){
+int vansteromvandling_front(int sensorvarde){
 	
 	int cmvarde;
 

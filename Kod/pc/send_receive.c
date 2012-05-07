@@ -50,13 +50,17 @@ void send_inst(int s, struct instruction_t *inst)
 	return;
 }
 
-void receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
+int receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 {
 
 	receive_data(s, ff, &inst->header);
 	receive_data(s, ff, &inst->data);
 
-	return;
+        if(!( ( ( (int) inst->header & 0xC0) >> 5 == 4 )||( ( (int)inst->header & 0xC0) >> 5 == 6) ) ){
+                return 1;
+        }
+
+	return 0;
 }
 void exit_program()
 {
@@ -84,7 +88,7 @@ int main(void)
 	inst->data = 'b';
 #ifdef DEBUG
 	ex_inst->header = (unsigned char) 0x02;		// Speckomm 
-	ex_inst->data = (unsigned char) 0x2F;		// vänster fram, 15 cm
+	ex_inst->data = (unsigned char) 0xE0;		// vänster fram, 15 cm
 #endif /* DEBUG */
 	while(!quit){
 		if(new_data(f, inst)){
@@ -93,12 +97,13 @@ int main(void)
 			send_inst(socket, inst);
 #endif /* NO_BLUE */
 		}else{
-#ifndef DEBUG
 #ifndef NO_BLUE
-			receive_inst(socket, firefly, ex_inst);
+                        if( receive_inst(socket, firefly, ex_inst) == 0){
 #endif /* NO_BLUE */
-#endif /* DEBUG */
-			display_inst(ex_inst);
+                                display_inst(ex_inst);
+#ifndef NO_BLUE
+                        }
+#endif /* NO_BLUE */
 		}
 	}
 

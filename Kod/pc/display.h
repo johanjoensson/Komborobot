@@ -6,6 +6,7 @@
 enum mode{
 	LABYRINT,
 	LINJE,
+	FJARR,
 	ERROR
 };
 
@@ -21,6 +22,7 @@ enum spec_komm_t{
 	FRAM,
 	VANSTER,
 	HOGER,
+        FEL,
 	UNKNOWN_COMMAND
 };
 
