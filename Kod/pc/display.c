@@ -17,9 +17,8 @@ enum sensors{
 	NONE = 4
 };
 
-enum sensors cur_sensor;
 
-WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back;
+WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back, *err;
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
 {
 	WINDOW *local_win;
@@ -64,6 +63,8 @@ void remove_win(int win)
 		case 8:
 			local_win = rlsensor;
 			break;
+                case 9:
+                        local_win = err;
 
 		default:
 			local_win = NULL;
@@ -96,6 +97,7 @@ void init_curses()
 	speed = create_win((height >> 1) - height/6, width/3, width/3, height/6 << 1, '#', '=', '/');
 	ltrim = create_win(height/3 , width/6, width/3, height/3 << 1, '#', '=', '/');
 	rtrim = create_win(height/3 , width/6, width >> 1, height/3 << 1, '#', '=', '/');
+        err = create_win(height/5, width/3, 0, 5*height/12, '#', '=', '/');
 	
 	speed_back = speed;
 	ltrim_back = ltrim;
@@ -113,6 +115,10 @@ void exit_curses()
 	remove_win(4);
 	remove_win(5);
 	remove_win(6);
+	remove_win(7);
+	remove_win(8);
+	remove_win(9);
+
 
 	delwin(mode);
 	delwin(spec_komm);
@@ -123,24 +129,51 @@ void exit_curses()
 	delwin(speed);
 	delwin(ltrim);
 	delwin(rtrim);
+	delwin(err);
 	endwin();
 }
-
-void display_error(struct instruction_t *inst)
+void clear_error()
 {
-//	fprintf(stderr, "Something is seriously wrong with you!\n%X;%X is supposed to be what?\n", inst->header, inst->data);
+        int y,x;
+        getmaxyx(err, y, x);
+
+        for(int i = 1; i < x - 1; i++){
+                mvwaddch(err, y >> 1, i, ' ');
+        }
+
+        wrefresh(err);
+        return;
+}
+void display_error()
+{
+        int y,x;
+        getmaxyx(err, y, x);
+
+        for(int i = 1; i < x - 1; i++){
+                mvwaddch(err, y >> 1, i, ' ');
+        }
+
+        mvwprintw(err, y >> 1, 1, "Okänt kommando skickat till styrenheten");
+
+        wrefresh(err);
+
 	return;
 }
 enum mode run_mode(struct instruction_t *inst)
 {
-	switch((inst->header & 0x10) >> 4){
-		case 0:
-			return LABYRINT;
-		case 1:
-			return LINJE;
-		default:
-			return ERROR;
+	if((int)(inst->header & 0x01) == 0){
+		return FJARR;
+	}else{
+		switch((int)(inst->header & 0x10) >> 4){
+			case 0:
+				return LABYRINT;
+			case 1:
+				return LINJE;
+			default:
+				return ERROR;
+		}
 	}
+
 	return ERROR;
 }
 
@@ -159,8 +192,11 @@ void display_mode(struct instruction_t *inst)
 		case LINJE:
 			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Följer linjen");
 			break;
+		case FJARR:
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Fjärrstyrt läge");
+			break;
 		default:
-			display_error(inst);
+                        break;
 	}
 
 	wrefresh(mode);
@@ -221,6 +257,8 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 		case 3:
 			return HOGER;
 
+                case 7:
+                        return FEL;
 		default:
 			return UNKNOWN_COMMAND;
 	}
@@ -228,19 +266,22 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 	return UNKNOWN_COMMAND;
 }
 
-enum sensors next_sensor()
+enum sensors which_sensor(struct instruction_t *inst)
 {
-	switch(cur_sensor){
-		case LEFT_FRONT:
+	switch((int)(inst->header & 0x0C) >> 2){
+		
+                case 0:
+                        return LEFT_FRONT;                
+                case 1:
 			return LEFT_BACK;
-		case LEFT_BACK:
+		case 2:
 			return RIGHT_FRONT;
-		case RIGHT_FRONT:
+		case 3:
 			return RIGHT_BACK;
 		default:
 			return	NONE;
 	}
-	return cur_sensor;
+	return NONE;
 }
 
 WINDOW* get_sensor_window(enum sensors sensor)
@@ -265,6 +306,8 @@ WINDOW* get_sensor_window(enum sensors sensor)
 void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 {
 #ifndef DEBUG
+
+        
 	int y,x;
 	WINDOW *cur_win = get_sensor_window(sensor);
 
@@ -275,29 +318,22 @@ void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 	}
 	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen", (int) (inst->data & 0x7F));
 	wrefresh(cur_win);
+
 #endif
 	return;
 }
 
-int new_cycle(struct instruction_t *inst)
-{
-	if((inst->data & 0x80) != 0){
-		return 1;
-	}
-	return 0;
-}
-
 void display_sensor(struct instruction_t *inst)
 {
-	if(new_cycle(inst)){
-		cur_sensor = LEFT_FRONT;
-	}else if(cur_sensor == NONE){
-		return;
-	}
 
+/*        if((int)(inst->data & 0x7F) < 20){
+                unsigned char tmp = inst->header;
+                inst->header = inst->data;
+                inst->data = tmp;
+        }
+*/
+        enum sensors cur_sensor = which_sensor(inst);
 	display_sensor_data(inst, cur_sensor);
-
-	cur_sensor = next_sensor();
 
 	return;
 }
@@ -319,26 +355,48 @@ void display_spec(struct instruction_t *inst)
 	int y, x;
 	getmaxyx(spec_komm, y, x);
 
-	for(int i = 2; i < x-1; i++){
-		mvwaddch(spec_komm, y >> 1, i, ' ');
-	}
 
 	switch(type_of_command(inst)){
 		case REGLER:
+                        clear_error();
+			for(int i = 2; i < x-1; i++){
+				mvwaddch(spec_komm, y >> 1, i, ' ');
+			}
+
 			mvwprintw(spec_komm,  y >> 1, x >> 4,  "Tillbaka till vanlig reglering!");
-			break;
+                        break;
 		case FRAM:
+                        clear_error();
+			for(int i = 2; i < x-1; i++){
+				mvwaddch(spec_komm, y >> 1, i, ' ');
+			}
+
+
+
 			mvwprintw(spec_komm, y >> 1, x >> 2,  "Kör framåt!");
 			break;
 		case VANSTER:
+                        clear_error();
+			for(int i = 2; i < x-1; i++){
+				mvwaddch(spec_komm, y >> 1, i, ' ');
+			}
+
 			mvwprintw(spec_komm, y >> 1, x >> 2,  "Sväng vänster!");
 			break;
 		case HOGER:
+                        clear_error();
+			for(int i = 2; i < x-1; i++){
+				mvwaddch(spec_komm, y >> 1, i, ' ');
+			}
+
+
 			mvwprintw(spec_komm, y >> 1, x >> 2,  "Sväng höger!");
 			break;
+                case FEL:
+                        display_error();
 
 		default:
-			display_error(inst);
+                        break;
 	}
 
 	wrefresh(spec_komm);
@@ -368,6 +426,7 @@ int has_speed(struct instruction_t *inst)
 		case 0x9:
 		case 0xA:
 		case 0xB:
+                case 0x0:
 			return 0;
 
 		default:
@@ -472,6 +531,8 @@ void display_trim(struct instruction_t *inst)
 		print_trim(ltrim, trim);
 		print_trim(rtrim, -trim);
 		break;
+        default:
+                break;
 
 
 	}
@@ -491,8 +552,13 @@ void update_speed(struct instruction_t *inst)
 }
 void display_inst(struct instruction_t *inst)
 {
+        int y,x;
 
+        getmaxyx(speed, y, x);
 	display_mode(inst);
+        for(int i = 2; i < x - 1 ; i++){
+                mvwaddch(speed, 2, i, ' ');
+        }
 	switch(type_of_inst(inst)){
 			case SENSORDATA:
 				display_sensor(inst);
@@ -507,7 +573,7 @@ void display_inst(struct instruction_t *inst)
 				break;
 
 			case UNKNOWN_DATA:
-				display_error(inst);
+				display_error();
 				break;
 			}
 	return;
