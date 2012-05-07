@@ -122,6 +122,7 @@ void start_next_ad()
 					data_to_display(dist_left_front,0x01);
 					data_to_display(dist_right_back,0x02);
 					data_to_display(dist_left_back,0x03);
+					data_to_display(dist_front,0x04);
 					display_ctr = 0;
 				}
 				display_ctr++;
