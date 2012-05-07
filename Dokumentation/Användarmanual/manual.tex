@@ -22,9 +22,9 @@
 \newcommand{\LIPShandledare}{Olov Andersson, 013-282658, olov@isy.liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Teknisk Dokumentation}
+\newcommand{\LIPSdokumenttyp}{Anv√§ndarmanual}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{0.2}
+\newcommand{\LIPSversion}{0.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 \newcommand{\LIPSgranskare}{}
@@ -53,20 +53,16 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, √§ndringar, utf√∂rt av, granskat av
 \addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik} 
-  \LIPSversionsinfo{0.1}{2012-02-10}{F√∂rsta utkast.}{gussv666}{}
-  \LIPSversionsinfo{0.2}{2012-03-06}{Nya rubriker.}{matja307}{}
+  \LIPSversionsinfo{0.1}{2012-05-06}{F√∂rsta utkast}{matja307}{}
 \end{LIPSdokumenthistorik}
 \newpage 
 
-\input{inledning.tex} % #1 -Bakgrund och syfte
-\input{produkten.tex} % #2 -Översikt
-\input{teori.tex} % #3 -Regleralgoritmer etc.
-\input{systemet.tex} % #4 -Blockschema och allmänt om systemet i sin helhet
-\input{modulerna.tex} % #5 -Detaljerat om varje modul
-	%% Innehåller komm.tex, pcmjuk.tex, sensor.tex, styr.tex
-\input{slutsats.tex} % #6 -Förbättringspotential etc.
-\input{referenser.tex} % #7 -Referenser
-\input{appendix.tex} % -Appendix
+\input{inledning.tex} % #1
+\input{oversikt.tex} % #2
+\input{autonomt.tex} % #3
+\input{fjarrstyrt.tex} % #4
+
+
 
 \newpage
 \appendix
