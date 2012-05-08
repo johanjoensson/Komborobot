@@ -1,4 +1,4 @@
-%% Definitioner för LIPS-dokument
+%% Definitioner f‚àö‚àÇr LIPS-dokument
 
 \usepackage[swedish]{babel}
 \usepackage[utf8]{inputenc}
@@ -30,13 +30,11 @@
 %   
 % #1: Filens url relativt '/bilder/'
 % #2:  Caption
-% #3: Label
-% #4: Skalning
 %% ------------------------------------------
-\newcommand{\nyBild}[4] 
+\newcommand{\nyBild}[3] 
 {\begin{figure}[H]
   \centering
- \includegraphics[angle=0,scale=#4]{bilder/#1}
+ \includegraphics{bilder/#1}
   \caption{#2}
   \label{fig:#3}
 \end{figure}}
@@ -128,43 +126,24 @@
 
 \newcounter{LIPSkravnummer}
 \newcounter{LIPSunderkravnummer}[LIPSkravnummer]
-
-\newenvironment{LIPSkravlista}{%
+\newenvironment{LIPSkravlista}{
   \begin{tabular}{|p{25mm}|p{25mm}|p{85mm}|p{5mm}|}
-    }%
-  {%
+    }
+  {
     \hline
   \end{tabular}
 }
+\newcommand{\LIPSkrav}[3]{ \hline\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} & \textbf{{#1}} & {#2} & \textbf{{#3}} \\}
+\newcommand{\LIPSunderkrav}[3]{ \hline\stepcounter{LIPSunderkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}\Alph{LIPSunderkravnummer}}&\textbf{{#1}}&{#2}&\textbf{{#3}}\\}
 
-\newenvironment{LIPSleveranslista}{%
-  \begin{tabular}{|p{25mm}|p{15mm}|p{70mm}|p{25mm}|p{5mm}|}
-    }%
-  {%
+\newenvironment{LIPSleveranslista}{
+	\begin{tabular}{|p{25mm}|p{25mm}|p{55mm}|p{25mm}|p{5mm}|} 
+    }
+  {
     \hline
   \end{tabular}
 }
-
-
-\newcommand{\LIPSkrav}[3]
-{\hline
-\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} &
-\textbf{{#1}} & 
-{#2} & 
-\textbf{{#3}} 
-\\}
-
-\newcommand{\LIPSleverans}[4]
-{\hline
-\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}} & 
-\textbf{{#1}} & 
-{#2} & 
-\textbf{{#3}} & 
-\textbf {{#4}} 
-\\}
-
-\newcommand{\LIPSunderkrav}[3]{\hline\stepcounter{LIPSunderkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}\Alph{LIPSunderkravnummer}} & \textbf{{#1}} & {#2} & \textbf{{#3}} \\}
-
+\newcommand{\LIPSleverans}[4]{ \hline\stepcounter{LIPSkravnummer}\textbf{Krav nr \arabic{LIPSkravnummer}}&\textbf{{#1}}&{#2}&\textbf{{#3}}&\textbf{{#4}}\\}
 
 
 

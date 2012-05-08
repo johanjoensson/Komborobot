@@ -14,14 +14,14 @@ I det autonoma läget så styr roboten sig själv. Roboten är designad för att
 För att starta roboten i det autonoma läget så görs följande: (se figur \ref{fig:robot1} för nummerreferenser)
 
 \begin{enumerate}
-\item Slå på strömmen. (5)
+\item Slå på strömmen. (6)
 \item Se till att roboten är ställd i autonomt läge. (1)
 \item Tryck på reset för att sätta roboten i inaktivt läge. (3)
 \item Roboten kan börja antingen på en linje eller i labyrinten. I linjeläge måste robotens linjesensorer stå över linjen, och roboten vara riktad i riktning med linjen. 
 \item Körning startas med startknappen. (2)
 \end{enumerate}
 
-Roboten kommer att följa banan fram till dess att stoppkommando hittas. Man kan även stanna roboten manuellt med reset-kappen (3) eller genom att slå av strömmen (5). 
+Roboten kommer att följa banan fram till dess att stoppkommando hittas. Man kan även stanna roboten manuellt med reset-kappen (3) eller genom att slå av strömmen (6). 
 
 \subsection{Kalibrering}
 Todo
@@ -29,15 +29,35 @@ Todo
 \subsection{Displayen}
 Displayen visar avståndet till väggarna på sidorna till höger, vänster och framför, givet i cm. Figur \ref{fig:display} visar displayens utseende. 
 
-\nyBild{display1.jpg}{Displayens utseende.}{display}{1.0}
+\nyBild{display2.jpg}{Displayens utseende.}{display}{1.0}
 
-Displayen har två rader med tecken. Den övre raden visar framsensorns och de främre sidosensorernas värden, och den undre raden visar bakre sidosensorernas dito. Ett 'H' bredvid värdet indikerar högersensor, 'V' vänstersensor och 'F' sensorn riktad framåt. Avstånden visas med tre siffror, och ligger i intervallet [20 cm, 120 cm]. Detta innebär att avstånd som ligger utanför detta intervall kommer att ge ett felaktigt värde på displayen. 
+Displayen har två rader med tecken. Den övre raden visar framsensorns och de främre sidosensorernas värden, och den undre raden visar bakre sidosensorernas dito. Ett 'H' bredvid värdet indikerar högersensor, 'V' vänstersensor och 'F' sensorn riktad framåt. Avstånden visas med tre siffror, och ligger i intervallet 20 cm - 120 cm. Detta innebär att avstånd som ligger utanför detta intervall kommer att ge ett felaktigt värde på displayen. 
 
 \subsection{PC}
 Todo
 
 \subsection{Banan}
 \label{sec:banan}
-Todo
+
+Banan består av två moment, en labyrint att navigera i och en linje på marken att följa. Banan kan utformas så att den växlar mellan labyrint- och linjemoment ett godtyckligt antal gånger. Linjen tar vid mitt i utgången av en labyrint, och leder upp hela vägen till mitten av nästa ingång. Ett exempel på utformningen av en bana kan ses i fig. \ref{fig:bana1}.
+
+\nyBild{bana2.jpg}{Ett exempel på utformningen av en bana.}{bana1}{0.5}
+
+Roboten är designad för att navigera efter en svart linje på grått underlag. Linjens bredd ska vara i intervallet 14-18 mm. Linjen kan korsa sig själv i 90 graders korsningar, men kan ej dela sig. Svängradien ska vara minst 25 cm. 
+
+För labyrintmomentet är roboten designad för en 80 cm bred bana, d.v.s. i raksträckorna i labyrinten så är avståndet mellan väggarna 80 cm. Roboten kan hantera svängar i form av vanliga 90\degree-kurvor, tre- samt fyrvägskorsningar. I de två senare fallen då fler vägvalsmöjligheter finns så kräver roboten markeringar i form av linjer på golvet. De olika markeringarna visas i figur \ref{fig:markeringar}
+
+\nyBild{bild.jpg}{De olika riktningsmarkeringarnas utseende.}{markeringar}{1.0}
+
+Banan slutar i ett linjemoment, och markeras med stoppsignalen ovan. 
 
 \subsection{Övrigt}
+Todo: Övrigt angående autonomt läge.
+
+
+
+
+
+
+
+

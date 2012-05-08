@@ -1,3 +1,5 @@
+% !TEX encoding = UTF-8 Unicode
+
 \documentclass[a4paper,12pt]{article}
 \usepackage[swedish]{babel}
 \usepackage[utf8]{inputenc}
@@ -15,8 +17,8 @@
 \newcommand{\LIPSprojektgrupp}{Grupp 17}
 \newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
 \newcommand{\LIPSgrupphemsida}{finns ej}
-\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
 
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\ 83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
@@ -62,16 +64,17 @@
 \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
 \LIPSversionsinfo{1.0}{2012-01-31}{Första versionen}{gussv666}{johjo939}
 \LIPSversionsinfo{1.1}{2012-05-07}{Ändrat så att all kommunikation mellan robotens enheter sker via komunikationsenheten. Krav 9 ändrat och krav 28 samt 29 sammanslagna. Vissa redaktionella ändringar för att förtydliga}{simwa252}{simla804}
+
 \end{LIPSdokumenthistorik}
 \newpage
 
 \section{Inledning}
-I detta dokument formuleras samtliga krav som Komboroboten som
-beställare Tomas Svensson beställt av Grupp 17 ska uppfylla.
+I detta dokument formuleras samtliga krav som Komboroboten som beställare Tomas Svensson beställt av Grupp 17 ska uppfylla. 
 Komboroboten ska vara enhetsuppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet.
 Den ska ha ett läge för manuell styrning via blåtand samt ett läge för 
-att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, 
-en labyrint med väggar längs sidorna, eller en kombination av de två föregående enligt banspecifikation (A.1).
+att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, en labyrint med väggar längs sidorna, eller en kombination av de två föregående enligt banspecifikation (A.1).
+en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
+
 
 I samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
 
@@ -104,6 +107,8 @@ I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt ku
 \subsubsection{Fjärrstyrningsläge}
 I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medföljande mjukvara.
 Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation och stopp. 
+I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation. 
+
 
 \subsection{Bakgrundsinformation}
 Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfyller vissa krav.
@@ -147,7 +152,7 @@ styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 \begin{figure}[h!]
 	\caption{Delsystem}
 	\begin{center}
-		\includegraphics[scale=0.4,angle=270]{delsystem.pdf}
+		\includegraphics[scale=0.8,angle=0]{delsystem2.pdf}
 	\end{center}
 \end{figure}
 
@@ -449,6 +454,7 @@ Linjedelen:
 \\
 Linjerna i banan skall bestå av en svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. I de fall en tjock linje nämns avses en tejplinje med bredd mellan 42-54 mm (tre tejpbredder). Med en smal tejplinje avses en linje med bredd 14-18 mm (en tjepbredd). Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint. Stoppsignalen inleds med en 30 cm raksträcka som sedan övergår i en tvärgående linje följt av tre parallella smala linjer, 3 cm isär med mitten där den tidigare linjen avslutades, i färdriktningen.
 \\
+
 
 Labyrintdelen:
 
