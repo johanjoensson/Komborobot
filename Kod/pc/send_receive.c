@@ -28,19 +28,28 @@ FILE *f;	/* Härvid är jag af nöden tvungen!
 		   Annars kan jag inte stänga filen när programmet avslutas
 		*/
 
+struct instruction_t *inst;
+struct instruction_t *ex_inst;
+
+void init_inst(){
+        inst = malloc(sizeof(struct instruction_t));
+        ex_inst = malloc(sizeof(struct instruction_t));
+        return;
+}
+
 int new_data(FILE *db, struct instruction_t *inst)
 {
 
-	struct instruction_t *tmp = malloc(sizeof(struct instruction_t));
-	read_from_db(db, tmp, 2);
-	if((tmp->header == inst->header) && (tmp->data == inst->data)){ 
+	struct instruction_t tmp;
+	read_from_db(db, &tmp, 2);
+	if((tmp.header == inst->header) && (tmp.data == inst->data)){ 
 		return 0;
 	} else {
-		inst->header = tmp->header;
-		inst->data = tmp->data;
+		inst->header = tmp.header;
+		inst->data = tmp.data;
 		return 1;
 	}
-	free(tmp);
+//	free(tmp);
 }
 
 void send_inst(int s, struct instruction_t *inst)
@@ -66,6 +75,8 @@ void exit_program()
 {
 	exit_curses();
 	fclose(f);
+        free(inst);
+        free(ex_inst);
 	exit(0);
 
 }
@@ -73,6 +84,7 @@ int main(void)
 {
 	int socket = init();
 	signal(SIGINT, exit_program);
+        init_inst();
 	
 
 #ifndef NO_BLUE
@@ -82,13 +94,13 @@ int main(void)
 	int quit = 0;
 	f = init_read("instr_db");
 
-	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
-	struct instruction_t *ex_inst = malloc(sizeof(struct instruction_t));
+
+
 	inst->header = 'a';
 	inst->data = 'b';
 #ifdef DEBUG
 	ex_inst->header = (unsigned char) 0x02;		// Speckomm 
-	ex_inst->data = (unsigned char) 0xE0;		// vänster fram, 15 cm
+	ex_inst->data = (unsigned char) 0x70;		// vänster fram, 15 cm
 #endif /* DEBUG */
 	while(!quit){
 		if(new_data(f, inst)){
