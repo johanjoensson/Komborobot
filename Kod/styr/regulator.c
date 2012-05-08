@@ -91,10 +91,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 
 		int temp =-Ka*(difference_left_right_f + difference_left_right_b)/(2);
 		if(!crossing){
-
 				outvalue += cut(temp,7);
-
-
 		}
 
         // sätter max- och minvärden på utvärdet
@@ -114,11 +111,6 @@ signed char line_regulator(signed char new_value)
 		speed = 115;
         signed char outvalue=0;
 		int Kd=1;
-
-        int Kp = 1;
-		speed = 102;
-        signed char outvalue;
-
 
         //Kollar om roboten rör sig åt höger eller vänster
         
@@ -140,7 +132,6 @@ signed char line_regulator(signed char new_value)
         } 
 		else if(new_value < old_line){
                 angle = 1; // roboten går åt vänster
-
 				old_angle_count=0;
 				WARNING=0;
 		}
@@ -277,41 +268,8 @@ signed char line_regulator(signed char new_value)
 		}
 	old_angle=angle;
 
-        }
-
-		outvalue = (Kp*new_value) / 5;
-
-        switch(angle){
-                case 1:                      
-					    if(new_value < 0){   // roboten går åt vänster och är på 
-                                             // vänstra sidan om tejpen
-                                outvalue += (Kp*new_value) / 3;
-						} else {              // roboten går åt höger, men är på
-                                             // högra sidan om tejpen
-                                outvalue -= (Kp*new_value) >> 1;
-                        }
-                        break;
-                case -1: 
-                        if(new_value <= 0){   // roboten går åt höger och är på 
-                                             // vänstra sidan om tejpen
-                                outvalue -= (Kp*new_value) >> 1;
-                        } else{              // roboten går åt höger och är på
-                                             // högra sidan om tejpen
-                                outvalue += (Kp*new_value) / 3;
-                        }
-                        break;
-                default:
-                        outvalue = Kp*new_value;
-                        break;
-        }
-
-
 
         // sätter max- och minvärden på utvärdet
-
-
-		outvalue = cut(outvalue,70);
-
 
 		return(outvalue*Kd);
 }
@@ -338,14 +296,14 @@ void drive_engines(signed char value)
 
 void drive_engines_line(signed char value)
 {
-        if(angle < 0){//V�nstersv�ng
+        if(angle < 0){//V?nstersv?ng
 
 			
 					OCR2 = speed - (value+3);  // Vänstermotor
               		OCR0 = speed;			// Högermotor
 					
                 
-        } else {// H�gersv�ng
+        } else {// H?gersv?ng
 
 
 		
