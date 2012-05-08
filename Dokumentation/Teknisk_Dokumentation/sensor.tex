@@ -1,5 +1,11 @@
 \section{Sensorenhet}
 
+Sensorenheten är den enhet som behandlar all sensordata. Den samlar in data från 
+avståndssensorerna och linjesensorerna som den sedan antingen omvandlar till 
+cm värden i avståndsensorns fall, eller trösklar och ger diskreta varierande storheter 
+som i linjesensorns fall. Linje sensorn kommunicerar sedan med kommunikationsenheten
+som förmedlar värdena till styrenheten och till PCn.
+
 \subsection{Hårdvara}
 
 \begin{figure}[H]
@@ -10,14 +16,21 @@
 \end{figure}
 
 \subsubsection{Linjeföljarsensor}
-För att maximera robotens framförhållning är sensorerna monterade framför roboten så långt fram som möjligt ca 3 mm ovanför marken. Linjesensorn består av 11st lysdioder med 11st ljuskänsliga transistorer, en multiplex och en demultiplex.
+För att maximera robotens framförhållning är sensorerna monterade framför roboten 
+så långt fram som möjligt ca 3 mm ovanför marken. Linjesensorn består av 11st lysdioder 
+med 11st ljuskänsliga transistorer, en multiplex och en demultiplex.
 
 \begin{figure}[H]
   \centering
- \includegraphics[angle=0,scale=0.5]{bilder/Uppkoppling_linjesensorer.jpg}
+ \includegraphics[angle=0,scale=0.5]{bilder/Uppkoppling_linjesensorer.pdf}
   \caption{Uppkoppling linjesensorer}
   \label{fig:Uppkoppling_linjesensorer}
 \end{figure}
+
+CH1 EN – CH11 EN är ingångar som leder signalen (logiskt ) vidare till lysdioderna. 
+CH1  OUT - CH11 OUT Leder svarssignalen från transistorerna vidare mot styrenhetens 
+AVR. Multiplexen och demultiplexen styrs med signalerna A – D från AVRen. Inhibit 
+signalen är jordad då dataväljning alltid ska vara tillåten.
 
 
 
