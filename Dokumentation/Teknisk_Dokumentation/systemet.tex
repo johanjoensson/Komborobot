@@ -1,9 +1,23 @@
 %% --------------------------------------------------------------------------------------------------------------------------------------------
-% SYSTEMET - �versiktligt blockschema f�r systemet i sin helhet, samt �vergripande information om densamma.
+% SYSTEMET - �versiktligt blockschema f�r systemet i sin helhet, samt �vergripande information om densamma.
 %
 % --matja307, 2012-05-06
 %% --------------------------------------------------------------------------------------------------------------------------------------------
 
 \section{Systemet}
 
-Todo: En beskrivning av systemet i sin helhet.
+Roboten är byggd på en trehjulig plattform(CarpetRover). På plattformen kommer tre enheter att monteras:
+\begin{itemize}
+        \item Kommunikationsenhet
+        \item Sensorenhet
+        \item Styrenhet
+\end{itemize}
+Dessutom medföljer en PC-mjukvara för fjärrstyrning av roboten. 
+Varje enhet  styrs av en egen AVR-processor (ATmega16) som klockas av en extern EXO-3 kristalloscillator. Sensorenheten läser av och tolkar värden från sensorerna, och skickar denna information vidare via kommunikationsenheten till styrenheten och PC-mjukvaran. Styrenheten tolkar sensordatan från sensorenheten (i autonomt läge) eller styrkommandon från PC-mjukvaran (i fjärrstyrt läge) och styr de två motorerna som driver var sitt av de främre hjulen på pattformen.   
+
+\subsection{Kommunikation}
+All intern kommunikation sker via en SPI-buss. Kommunikationsenheten fungerar som master på bussen, och all kommunikation går via den. När en enhet vill kommunicera med en annan kommer aviseras detta genom att enheten genererar ett avbrott på kommunikationsenheten. 
+Robotens kommunikation med PC-mjukvaran sker via bluetooth.
+
+\subsection{Uppgraderbarhet}
+Ett tydligt kommunikationsprotokoll mellan enheterna används för att förenkla modifikationer och möjliggöra att fler enheter används, se (---hänvisn. till protokollavsnitt---).

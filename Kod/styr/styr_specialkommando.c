@@ -40,11 +40,61 @@ void special_help(int time, unsigned char speed, unsigned char command)
 		return;
 }
 
+
+/*
+		kommandokoder
+		00	undef
+		10	k�r rakt
+		20	sv�ng h�ger
+		30	sv�ng v�nster
+		40	rotera h�ger
+		50	rotera v�nster
+		60	stanna
+		70	inget sparat kommando
+*/
 void specialkommando(unsigned char kommando_kod)
 {
 		
         //unsigned char kommando_kod = 0x40;//data & 0xE0;
 	
+
+		if(0x10==kommando_kod){		//Rakt fram 100 cm
+                special_help(0x5200, 0x08, 0);    // Kör fram i ett tag (ca 2 sek)
+                special_help(0x2000, 0, 3);   	  // Stanna
+                return;
+		}
+		else if(0x20==kommando_kod){		//sväng höger 90 grader
+                special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
+                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
+                special_help(0x2000, 0, 3);   
+                return;
+		}
+		else if(0x30 == kommando_kod){		 //Sväng vänster 90 grader
+                special_help(0x2600, 0x08, 0);    // Kör fram i en sekund
+                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                special_help(0x4000, 0x09, 0);    // Kör fram i en sekund
+                special_help(0x2000, 0, 3);   
+                return;
+		}
+		else if(0x40==kommando_kod){		//Rotera h�ger 90
+                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
+                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+				special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+                return;
+		}
+		else if(0x50 == kommando_kod){		//Rotera v�nster 90	
+                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1400, 0x07,1);     // Rotera vänster ca en 1/3 sekund
+                special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
+				special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+                return;						
+
 
 		if(0x40 == kommando_kod)
 		{
@@ -83,7 +133,6 @@ void specialkommando(unsigned char kommando_kod)
 		}
 		else if(0xA0==kommando_kod)
 		{
-                        //sväng höger 90 grader
                         special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
                         special_help(0x1400, 0x07,2);     // Rotera höger ca en 1/3 sekund
                         special_help(0x0F00, 0, 3);       // Stanna i en kort stund
@@ -102,7 +151,20 @@ void specialkommando(unsigned char kommando_kod)
 						stop(0);
 						start=0;
 						return;
+
 		}
+		else if(0x60==kommando_kod){		//stanna och st�ng av autonom styrning
+				stop(0);
+				start=0;
+				return;
+		}
+		else if(kommando_kod==0x70){		//Inget sparat kommando
+				special_help(0x4000, 0, 3); 	  // Stanna i en kort stund
+				special_help(0x5000, 0x07,1);     // Rotera vänster ca 360 grader
+                special_help(0x4000, 0, 3);       // Stanna i en kort stund  
+				special_help(0x0010, 0x01, 0);    // Kör fram i en sekund
+		}
+				
 
 }
 

@@ -28,6 +28,11 @@ signed char old_distance_right = 0;
 signed char old_distance_left = 0;
 int old_line = 0;
 int angle = 0;
+int old_angle = 0;
+int old_angle_count=0;
+signed char old_value=0x00;
+int rep_count = 0;
+int WARNING=0;
 
 signed char cut(signed char value, signed char max);
 
@@ -86,7 +91,10 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 
 		int temp =-Ka*(difference_left_right_f + difference_left_right_b)/(2);
 		if(!crossing){
-				outvalue += cut(temp,6);
+
+				outvalue += cut(temp,7);
+
+
 		}
 
         // sätter max- och minvärden på utvärdet
@@ -103,15 +111,172 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
+		speed = 115;
+        signed char outvalue=0;
+		int Kd=1;
+
         int Kp = 1;
 		speed = 102;
         signed char outvalue;
 
+
         //Kollar om roboten rör sig åt höger eller vänster
-        if(new_value > old_line){
+        
+		
+		if(new_value==0 && abs(old_line)>75){
+				if(old_line<0){
+						angle=1;
+				}
+				else { 
+						angle=-1;
+				}
+				outvalue=35;
+				WARNING=1;
+				}
+		else if(new_value > old_line){
                 angle = -1; // roboten går åt höger
-        } else if(new_value < old_line){
+				old_angle_count=0;
+				WARNING=0;
+        } 
+		else if(new_value < old_line){
                 angle = 1; // roboten går åt vänster
+
+				old_angle_count=0;
+				WARNING=0;
+		}
+		else if(new_value==old_line && old_angle_count<4){
+				angle=old_angle;
+				old_angle_count++;
+				WARNING=0;
+		}
+		else if(new_value==old_line && old_angle_count>=4){ 
+				outvalue=0;
+			    angle=0;
+			    WARNING=0;
+		}
+		
+		if(rep_count<20){
+				rep_count++;
+				if(abs(new_value-old_value)>38){
+						Kd=2;
+						rep_count=19;
+		
+				}
+				else {
+						Kd=1;
+			
+				}
+		}
+		else {
+				old_value=new_value;
+				rep_count=0;
+		}
+	
+			  
+							
+	
+	if(angle==1 && WARNING==0){
+				switch(new_value){
+					
+						case -127:
+							outvalue = 40;
+							break;
+						
+						case -90:
+							outvalue = 35;
+							break;
+				
+						case -75:
+							outvalue = 28;
+							break;
+
+						case -50: 
+							outvalue = 24;
+							break;	
+				
+						case -25:
+							outvalue = 20;
+							break;
+						case 0:
+							outvalue = 10;
+							break;
+						case 25:
+							outvalue = 10;
+							break;
+				
+						case 50:
+							outvalue = 9;
+							break;
+						
+						case 75: 
+							outvalue = 9;
+							break;	
+					
+						case 90:
+							outvalue = 7;
+							break;
+						
+						case 127:
+							outvalue = 3;
+							break;
+				
+						default: 
+							outvalue = 0;
+							break;
+				}
+		}
+		else if(angle==-1 && WARNING==0){
+					
+					switch(new_value){
+						case -127:
+							outvalue = 3;
+							break;
+						case -90:
+							outvalue = 7;
+							break;
+						
+						case -75:
+							outvalue = 9;
+							break;
+						case -50: 
+							outvalue = 9;
+							break;	
+					
+						case -25:
+							outvalue = 10;
+							break;
+						case 0:
+                        	outvalue = 10;
+							break;
+						case 25:
+							outvalue = 20;
+							break;
+							
+						case 50:
+							outvalue = 24;
+							break;
+						case 75: 
+							outvalue = 30;
+							break;	
+							
+						case 90:
+							outvalue = 35;
+							break;
+						case 127:
+							outvalue = 40;
+							break;
+						default: 
+							outvalue = 0;
+							break;
+					}
+	
+		}
+	
+		if(!WARNING){
+				old_line = new_value;
+		}
+	old_angle=angle;
+
         }
 
 		outvalue = (Kp*new_value) / 5;
@@ -140,13 +305,18 @@ signed char line_regulator(signed char new_value)
                         break;
         }
 
-        old_line = new_value;
+
 
         // sätter max- och minvärden på utvärdet
+
+
 		outvalue = cut(outvalue,70);
 
-        return outvalue;
+
+		return(outvalue*Kd);
 }
+
+
 
 /*-----------------------------------------------------------------------------
  *  drive_engines styr motorerna beroende på value
@@ -166,6 +336,25 @@ void drive_engines(signed char value)
         }
 }
 
+void drive_engines_line(signed char value)
+{
+        if(angle < 0){//V�nstersv�ng
+
+			
+					OCR2 = speed - (value+3);  // Vänstermotor
+              		OCR0 = speed;			// Högermotor
+					
+                
+        } else {// H�gersv�ng
+
+
+		
+					OCR2 = speed+3;  // Vänstermotor
+              		OCR0 = speed - value;// Högermotor
+					
+                
+        }
+}
 /****************************************************************************\
 	function: 	cut
 	descr:		ser till att v?rden ligger i intervallet [-max,max]
