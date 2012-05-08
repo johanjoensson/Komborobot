@@ -65,7 +65,7 @@ void start_next_ad()
 				req_sending();
 
 		}
-		 else if (state==2){			//left_back klar
+		else if (state==2){			//left_back klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0xC5;	//Skicka till styr&pc med E-flagga
 				}
@@ -78,8 +78,7 @@ void start_next_ad()
 				data= dist_left_back;
 				req_sending();
 
-		}
-		
+		}		
 		else if (state==3){			//right_front klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0xC9;	//Skicka till styr&pc med E-flagga
@@ -94,8 +93,6 @@ void start_next_ad()
 				req_sending();
 
 		}
-
-		
 		else if (state==4){			//right_back klar
 				if(maze_mode==1 && auto_mode==1){
 						header = 0xCD;	//Skicka till styr&pc med E-flagga
@@ -122,6 +119,13 @@ void start_next_ad()
 					data_to_display(dist_left_front,0x01);
 					data_to_display(dist_right_back,0x02);
 					data_to_display(dist_left_back,0x03);
+					data_to_display(dist_front,0x04);
+					if(maze_mode == 1){
+							data_to_display((get_next_special_command()/16+100),0x05);
+					}
+					else{
+							data_to_display(get_next_special_command(),0x05);
+					}
 					display_ctr = 0;
 				}
 				display_ctr++;
@@ -145,7 +149,7 @@ void start_next_ad()
 						
 						data=calculate_diff(line_array_1, line_array_2); 
 						
-						if(data==0xC0){
+						if(data==0x60){		//bana slut?
 						 	header=0xC3;		//skicka till styr och dator med stopp-kod, D-flagga satt
 						}
 						else {
@@ -169,7 +173,7 @@ void start_next_ad()
 
 						int temp2 = search_for_crossroad();
 					
-						if(temp2==1 && !(((dist_right_front > 80) && (dist_right_back > 80)) || ((dist_left_front > 80) && (dist_left_back > 80)))){
+						if(temp2==1 && (((dist_right_front > 80) && (dist_right_back < 80)) || ((dist_left_front > 80) && (dist_left_back < 80)))){
 							//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
  							send_special_command(get_next_special_command());
 							//Resetar den globala variabeln next_special_command for att forma roboten att uppna vanlig reglering
@@ -177,12 +181,12 @@ void start_next_ad()
 						}
 						else if(temp2==2){		//vanlig 90 högersväng
 								header=0xC3;
-								data=0xA0;
+								data=0x40;
 								req_sending();
 						}
 						else if(temp2==3){		//vanlig 90 vänstersväng
 								header=0xC3;
-								data=0x80;
+								data=0x50;
 								req_sending();
 						} 
 						

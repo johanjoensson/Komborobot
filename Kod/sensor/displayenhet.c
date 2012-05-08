@@ -27,11 +27,11 @@ unsigned char int_to_ascii(int digit);
 *	void SETUP_DISPLAY()
 *	Initierar displayen. Kallas vid uppstart av roboten
 *
-*	Sätter pinnar för output på processorn, 
-*	Datalängd = 8, En rad på displayen
-* 	Display på, cursor på, cursor blinkar
+*	SÃ¤tter pinnar fÃ¶r output pÃ¥ processorn, 
+*	DatalÃ¤ngd = 8, En rad pÃ¥ displayen
+* 	Display pÃ¥, cursor pÃ¥, cursor blinkar
 * 	Rensar displayen
-* 	Flyttriktning framåt
+* 	Flyttriktning framÃ¥t
 */
 void display_setup(){
 
@@ -47,7 +47,7 @@ void display_setup(){
 	PORTB &= 0xFD; //Disable
 	waiting(waiting_time); //t_SU2
 
-	//Display, cursor på
+	//Display, cursor pÃ¥
 	PORTD = (1<<PORTD3)|(1<<PORTD1)|(1<<PORTD0); 
 	PORTB |= (1<<PORTB2);
 
@@ -85,11 +85,13 @@ void display_setup(){
 	char_to_display('H',0x4C);
 
 	char_to_display('V',0x40);
+
+	char_to_display('K',0x46);
 }
 
 /*
 *	void WAITING(int n)
-*	Gör ingenting i n klockcykler
+*	GÃ¶r ingenting i n klockcykler
 */
 void waiting(int n){
 	
@@ -99,12 +101,13 @@ void waiting(int n){
 
 /*
 *	void DATA_TO_DISPLAY(unsigned char data)
-*	Skickar en databyte till displayen, och säger åt displayen att visa den
-*	sensour_source: 0x00: höger fram
-*					0x01: vänster fram
-*					0x02: höger bak
-*					0x03: vänster bak
+*	Skickar en databyte till displayen, och sÃ¤ger Ã¥t displayen att visa den
+*	sensour_source: 0x00: hÃ¶ger fram
+*					0x01: vÃ¤nster fram
+*					0x02: hÃ¶ger bak
+*					0x03: vÃ¤nster bak
 *					0x04: framsensorn
+*					0x05: specialkommando
 *				
 */
 void data_to_display(int cm_value,unsigned char sensor_source){
@@ -130,23 +133,24 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	if(first_digit!=0 || second_digit!=0) data[1] = int_to_ascii(second_digit);
 	data[2] = int_to_ascii(third_digit);
 	
-	//Sätt rätt skrivplats
+	//SÃ¤tt rÃ¤tt skrivplats
 	unsigned char place;
 	if(sensor_source == 0x00) place = 0x0D;
 	else if(sensor_source == 0x01) place = 0x01;
 	else if(sensor_source == 0x02) place = 0x4D;
 	else if(sensor_source == 0x03) place = 0x41;
 	else if(sensor_source == 0x04) place = 0x07;
+	else if(sensor_source == 0x05) place = 0x47;
 	else  place = 0x00;
 
 	PORTB &= 0xFE; //Register select = function
 	PORTB &= 0xFD; //Disable 
 
-	//Nollställ register
+	//NollstÃ¤ll register
 	PORTD &= 0x04; 
 	PORTB &= 0xFB;
 
-	//Sätt position i minnet
+	//SÃ¤tt position i minnet
 	PORTD |= (1<<PORTD7);
 	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
@@ -156,14 +160,14 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	PORTB &= 0xFD; //Disable
 	waiting(waiting_time); //t_SU2
 
-	//Sänd till display
-	PORTB = (1<<PORTB0); //Regsiter select = data
+	//SÃ¤nd till display
+	PORTB |= (1<<PORTB0); //Regsiter select = data, lagt till |=, mÃ¥ste vara sÃ¥
 	for (int i = 0;i<3; i++){
-		//Nollställ databitar
+		//NollstÃ¤ll databitar
 		PORTD &= 0x04; 
 		PORTB &= 0xFB;
 
-		//Sätt databitar
+		//SÃ¤tt databitar
 		PORTD |= (data[i] & 0xFB);
 		PORTB |= (data[i] & 0x04);
 
@@ -176,7 +180,7 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 
 /*
 *	void CHAR_TO_DISPLAY(unsigned char data, unsigned char place)
-*	Skriver ut ett tecken på en given plats
+*	Skriver ut ett tecken pÃ¥ en given plats
 *
 *	data: tecken i ascii-kod
 *	place: plats i minnet i hex
@@ -186,11 +190,11 @@ void char_to_display(unsigned char data,unsigned char place){
 	PORTB &= 0xFE; //Register select = function
 	PORTB &= 0xFD; //Disable 
 
-	//Nollställ register
+	//NollstÃ¤ll register
 	PORTD &= 0x04; 
 	PORTB &= 0xFB;
 
-	//Sätt position i minnet
+	//SÃ¤tt position i minnet
 	PORTD |= (1<<PORTD7);
 	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
@@ -203,11 +207,11 @@ void char_to_display(unsigned char data,unsigned char place){
 
 	PORTB = (1<<PORTB0); //Regsiter select = data
 
-	//Nollställ databitar
+	//NollstÃ¤ll databitar
 	PORTD &= 0x04; 
 	PORTB &= 0xFB;
 
-	//Sätt databitar
+	//SÃ¤tt databitar
 	PORTD |= (data & 0xFB);
 	PORTB |= (data & 0x04);
 

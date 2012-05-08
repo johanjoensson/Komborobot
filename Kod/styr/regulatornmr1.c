@@ -1,4 +1,4 @@
-/*
+/*/*
  * =====================================================================================
  *
  *       Filename:  regulator.c
@@ -20,6 +20,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "styr_spi.h"
+#include "math.h"
 
 unsigned char speed = 105;
 //int old_distance_right = 0;
@@ -31,6 +32,8 @@ int old_angle_count=0;
 signed char old_value=0x00;
 int rep_count = 0;
 int Kd = 1;
+signed char old_outvalue = 0x00;
+int WARNING=0;
 
 /*-----------------------------------------------------------------------------
  *  distance_regulator   
@@ -81,143 +84,170 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-        speed = 110;
+		speed = 115;
         signed char outvalue;
+		
 
         //Kollar om roboten rör sig åt höger eller vänster
-        if(new_value > old_line){
+        
+		
+		if(new_value==0 && abs(old_line)>75){
+				if(old_line<0){
+						angle=1;
+				}
+				else { 
+						angle=-1;
+				}
+				outvalue=35;
+				WARNING=1;
+				}
+		else if(new_value > old_line){
                 angle = -1; // roboten går åt höger
 				old_angle_count=0;
-        } else if(new_value < old_line){
+				WARNING=0;
+        } 
+		else if(new_value < old_line){
                 angle = 1; // roboten går åt vänster
 				old_angle_count=0;
+				WARNING=0;
 		}
-		  else if(new_value=old_line && old_angle_count<20){
+		else if(new_value==old_line && old_angle_count<8){
 				angle=old_angle;
 				old_angle_count++;
-			}
-		  else if(new_value=old_line && old_angle_count>=20){
-			  output=0;
-			  angle=0;
-		  }
-	if(rep_count<15){
-		rep_count++;
-	}
-	else{ 
-		if((new_value-old_value>38) || (old_value-new_value>38)){
-		Kd=2;
+				WARNING=0;
+		}
+		else if(new_value==old_line && old_angle_count>=8){ 
+				outvalue=0;
+			    angle=0;
+			    WARNING=0;
+		}
 		
+		if(rep_count<15){
+				rep_count++;
+				if(abs(new_value-old_value)>38){
+						Kd=2;
+						rep_count=19;
+		
+				}
+				else {
+						Kd=1;
+			
+				}
 		}
 		else {
-			Kd=1;
-			
+				old_value=new_value;
+				rep_count=0;
 		}
-		rep_count=0;
-		old_value=new_value;
-		
-	}
+	
 			  
 							
 	
-	if(angle==1){
-		switch(new_value){
-			
-			
-				case -127:
-					outvalue = 30;
-					break;
-				case -90:
-					outvalue = 20;
-					break;
+	if(angle==1 && WARNING==0){
+				switch(new_value){
+					
+						case -127:
+							outvalue = 42;
+							break;
+						
+						case -90:
+							outvalue = 40;
+							break;
 				
-				case -75:
-					outvalue = 15;
-					break;
-				case -50: 
-					outvalue = 10;
-					break;	
+						case -75:
+							outvalue = 36;
+							break;
+
+						case -50: 
+							outvalue = 34;
+							break;	
 				
-				case -25:
-					outvalue = 7;
-					break;
-				case 0:
-					outvalue = 4;
-					break;
-				case 25:
-					outvalue = 7;
-					break;
+						case -25:
+							outvalue = 28;
+							break;
+						case 0:
+							outvalue = 23;
+							break;
+						case 25:
+							outvalue = 20;
+							break;
 				
-				case 50:
-					outvalue = 8;
-					break;
-				case 75: 
-					outvalue = 15;
-					break;	
+						case 50:
+							outvalue = 17;
+							break;
+						
+						case 75: 
+							outvalue = 11;
+							break;	
+					
+						case 90:
+							outvalue = 7;
+							break;
+						
+						case 127:
+							outvalue = 6;
+							break;
 				
-				case 90:
-					outvalue = 10;
-					break;
-				case 127:
-					outvalue = 10;
-					break;
-				default: 
-					outvalue = 0;
-					break
+						default: 
+							outvalue = 0;
+							break;
 				}
-	}
-		else if(angle==-1){
+		}
+		else if(angle==-1 && WARNING==0){
+					
 					switch(new_value){
 						case -127:
-							outvalue = 10;
+							outvalue = 6;
 							break;
 						case -90:
-							outvalue = 10;
+							outvalue = 7;
 							break;
 						
 						case -75:
-							outvalue = 15;
+							outvalue = 11;
 							break;
 						case -50: 
-							outvalue = 8;
+							outvalue = 17;
 							break;	
 					
 						case -25:
-							outvalue = 7;
+							outvalue = 20;
 							break;
 						case 0:
-                        	outvalue = 4;
+                        	outvalue = 23;
 							break;
 						case 25:
-							outvalue = 7;
+							outvalue = 28;
 							break;
 							
 						case 50:
-							outvalue = 10;
+							outvalue = 34;
 							break;
 						case 75: 
-							outvalue = 15;
+							outvalue = 36;
 							break;	
 							
 						case 90:
-							outvalue = 20;
+							outvalue = 40;
 							break;
 						case 127:
-							outvalue = 30;
+							outvalue = 42;
 							break;
 						default: 
 							outvalue = 0;
-							break
+							break;
 					}
 	
-			}
-
+		}
 	
-	old_line = new_value;
+		if(!WARNING){
+				old_line = new_value;
+		}
 	old_angle=angle;
+	old_outvalue=outvalue;
 
         // sätter max- och minvärden på utvärdet
 
-        return(outvalue*Kd);
+		return(outvalue*Kd);
 }
 
 /*-----------------------------------------------------------------------------
@@ -229,26 +259,18 @@ void drive_engines(signed char value)
 {
         if(angle < 0){//V?nstersv?ng
 
-				if(value > 20){
-					OCR2 = speed - (value >> 1) + 3;  // Vänstermotor
-              		OCR0 = speed + (value >> 1); // Högermotor
-					}
-				else{
+			
 					OCR2 = speed - (value+3);  // Vänstermotor
               		OCR0 = speed;			// Högermotor
-					}
+					
                 
         } else {// H?gersv?ng
 
 
-				if(value > 20){
-					OCR2 = speed + (value >> 1)+3;  // Vänstermotor
-              		OCR0 = speed - (value >> 1); // Högermotor
-					}
-				else{
+		
 					OCR2 = speed+3;  // Vänstermotor
               		OCR0 = speed - value;// Högermotor
-					}
+					
                 
         }
 }
