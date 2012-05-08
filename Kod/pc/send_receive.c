@@ -6,8 +6,8 @@
 #define DEBUG
 #define NO_BLUE
 
-//#undef NO_BLUE
-//#undef DEBUG
+#undef NO_BLUE
+#undef DEBUG
 
 #include "blue_pc.h"
 #include "db.h"
@@ -24,16 +24,20 @@
 
 	
 
-FILE *f;	/* Härvid är jag af nöden tvungen!
-		   Annars kan jag inte stänga filen när programmet avslutas
-		*/
-
+FILE *f;	
 struct instruction_t *inst;
 struct instruction_t *ex_inst;
+int sock;
 
 void init_inst(){
         inst = malloc(sizeof(struct instruction_t));
         ex_inst = malloc(sizeof(struct instruction_t));
+
+        inst->header = 0;
+        inst->data = 0;
+
+        ex_inst->header = 0;
+        ex_inst->data = 0;
         return;
 }
 
@@ -49,7 +53,6 @@ int new_data(FILE *db, struct instruction_t *inst)
 		inst->data = tmp.data;
 		return 1;
 	}
-//	free(tmp);
 }
 
 void send_inst(int s, struct instruction_t *inst)
@@ -77,18 +80,19 @@ void exit_program()
 	fclose(f);
         free(inst);
         free(ex_inst);
+        close_socket(sock);
 	exit(0);
 
 }
 int main(void)
 {
-	int socket = init();
+        sock = init();
 	signal(SIGINT, exit_program);
         init_inst();
 	
 
 #ifndef NO_BLUE
-	struct sockaddr_rc firefly = connect_to_firefly(socket);
+	struct sockaddr_rc firefly = connect_to_firefly(sock);
 #endif /* NO_BLUE */
 	init_curses();
 	int quit = 0;
@@ -106,11 +110,11 @@ int main(void)
 		if(new_data(f, inst)){
 			update_speed(inst);
 #ifndef NO_BLUE
-			send_inst(socket, inst);
+			send_inst(sock, inst);
 #endif /* NO_BLUE */
 		}else{
 #ifndef NO_BLUE
-                        if( receive_inst(socket, firefly, ex_inst) == 0){
+                        if( receive_inst(sock, firefly, ex_inst) == 0){
 #endif /* NO_BLUE */
                                 display_inst(ex_inst);
 #ifndef NO_BLUE

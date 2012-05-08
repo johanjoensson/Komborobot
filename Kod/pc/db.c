@@ -1,3 +1,12 @@
+/******************************************************************************
+ * Gränssnitt för att hantera en enkel databas
+ * 
+ * Skapad:      06/04/2012
+ * Av:          Johan Jönsson
+ *
+ * Redigerad:   08/05/2012
+ *****************************************************************************/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>

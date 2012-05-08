@@ -208,33 +208,12 @@ enum data_type_t type_of_inst(struct instruction_t *inst)
 {
 
 	switch( (inst->header & 0x02) >> 1 ){ // maska fram D flaggan
-#if 0
-		/* C = 0
-		 * Alltså sensorinfo
-		 */
-		case 0:
-		case 2:
-			return SENSORDATA;
-		/* C = 1, B = 0
-		 * Alltså vanlig reglering
-		 */
-		case 1:
-			return REGLERING;
 
-		/* C = 1, B = 1
-		 * Alltså specilkommando
-		 */
-		case 3:
-			return SPECKOMMANDO;
-		
-		/* Något är väldigt fel
-		 */ 
-#endif
 		case 1:
 			return SPECKOMMANDO;
+
 		case 0:
 			return SENSORDATA;
-
 
 		default:
 			return UNKNOWN_COMMAND;
@@ -326,12 +305,6 @@ void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 void display_sensor(struct instruction_t *inst)
 {
 
-/*        if((int)(inst->data & 0x7F) < 20){
-                unsigned char tmp = inst->header;
-                inst->header = inst->data;
-                inst->data = tmp;
-        }
-*/
         enum sensors cur_sensor = which_sensor(inst);
 	display_sensor_data(inst, cur_sensor);
 
@@ -347,12 +320,13 @@ void display_spec(struct instruction_t *inst)
 
 	switch(type_of_command(inst)){
 		case REGLER:
-                        clear_error();
+/*                        clear_error();
 			for(int i = 2; i < x-1; i++){
 				mvwaddch(spec_komm, y >> 1, i, ' ');
 			}
 
 			mvwprintw(spec_komm,  y >> 1, x >> 4,  "Tillbaka till vanlig reglering!");
+                        */
                         break;
 		case FRAM:
                         clear_error();
@@ -383,6 +357,7 @@ void display_spec(struct instruction_t *inst)
 			break;
                 case FEL:
                         display_error();
+                        break;
 
 		default:
                         break;
