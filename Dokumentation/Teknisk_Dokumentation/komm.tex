@@ -79,7 +79,8 @@ I \ref{fig:spibuss} visas hur pinnarna i de olika enheterna ska kopplas samman.
 \end{figure}
 
 
-\bf{SCK}
+\textbf{SCK}
+
 
 SCK porten är en port som förmedlar en klocka med en viss frekvens från 
 mastern till de två slavarna. Denna signal bestämmer hur snabbt överföringen 
@@ -99,7 +100,9 @@ arbetsklockan, det vill säga 8 MHz. Märk dock att denna överföringshastighet
 inte är garanterad att fungera för slavar.
 
 
-\bf{MOSI}
+\textbf{MOSI}
+
+
 MOSI porten är den port som används när kommunikationsenheten ska skicka 
 information till styrenheten och sensorenheten. Den kommer alltså att 
 användas som input för slavarna och output för mastern. MOSI-signalen 
@@ -108,7 +111,9 @@ korrekt inställd kommer slaven som inte är avsedd att motta den skickade
 datan att ignorera vad överföringen. Se pin SS för mer information om 
 denna funktion.
 
-\bf{MISO}
+\textbf{MISO}
+
+
 MISO porten används då kommunikationsenheten hämtar information från styr- 
 och sensorenheten. Den är alltså att vara en input för mastern och output för 
 båda slavarna. Precis som MOSI-signalen porten är MISO-signalerna 
@@ -117,8 +122,10 @@ används även MOSI porten varje gång MISO porten används och viceversa. En
 slav som inte är vald genom en hög SS-signal, se nedan, kommer inte 
 att kunna skicka något via MISO-porten. 
 
-\bf{SS}
+\textbf{SS}
 \label{sec:SS}
+
+
 SS portarna skickar eller tar emot en variant på en chip-select signal. Den SS
 -signal som är låg väljer vilken av slavarna som mastern ska kommunicera med. 
 Endast en av de två SS signalerna får vara låg samtidigt, detta för att 
@@ -137,7 +144,9 @@ att påverkas av aktivitet på databussen. Efter att två bytes överförts sät
 SS signalen åter hög och mastern påbörjar en analys av den skickade headern 
 och om denna specificerar att den mottagna datan ska skickas någonstans.
 
-\bf{REQ}
+\textbf{REQ}
+
+
 REQ portarna används av styr- och sensorenheten för att uppmärksamma 
 kommunikationsenheten om att de har ny data att förmedla. När 
 kommunikationsenheten tar emot en hög signal på någon av REQ portarna kommer 
@@ -159,7 +168,9 @@ bussen. Dessa register varierar lite i funktion beroende på om processorn är
 inställd för att fungera som master eller slav på SPI-bussen. För mer 
 information om dessa register se *INSERT KÄLLA atmega16 guide*
 
-\bf{SPI Statusregister - SPSR}
+\textbf{SPI Statusregister - SPSR}
+
+
 Detta register innehåller dels två olika flaggor och dels en bit som kan 
 sättas hög för att fördubbla SPI-bussens överföringshastighet om processorn 
 är konfigurerad till att fungera som master . 
@@ -172,7 +183,9 @@ SPSR läses och därefter läsa från(eller skriva till) SPI-bussens data-regist
 
 Resten av registrets innehåll används inte i projektet.
 
-\bf{SPI kontrollregister - SPCR}
+\textbf{SPI kontrollregister - SPCR}
+
+
 Innehållet i detta register avgör om och hur SPI-bussen ska fungera på 
 processorn. Endast de bitar som konfigureras i roboten kommer att beskrivas. 
 Värt att notera är att robotens överföringshastighet, 1/4 av arbetsklockan, 
@@ -187,7 +200,9 @@ inte SPI-överföringar att fungera.
 Bit 4 sätts hög för att göra enheten till master. Det betyder att denna bit 
 ska vara hög på kommunikationsenheten men låg på styr- och sensorenheten.
 
-\bf{SPI dataregister- SPDR}
+\textbf{SPI dataregister- SPDR}
+
+
 Detta är ett temporärt 8-bits dataregister som skiftas vid en SPI-överföring. 
 Slavar kan skriva till SPDR vid godtyckligt tillfälle. Då mastern skriver 
 till SPDR påbörjas överföringen. Då varje överföring i roboten består av två 
