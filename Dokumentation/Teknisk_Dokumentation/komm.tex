@@ -96,9 +96,9 @@ inte är garanterad att fungera för slavar.
 MOSI porten är den port som används när kommunikationsenheten ska skicka 
 information till styrenheten och sensorenheten. Den kommer alltså att 
 användas som input för slavarna och output för mastern. MOSI-signalen 
-parallellkopplas till slavarna, se \fig(pic:spibuss). Om SPI-bussen är 
+parallellkopplas till slavarna, se \ref(fig:spibuss). Om SPI-bussen är 
 korrekt inställd kommer slaven som inte är avsedd att motta den skickade 
-datan att ignorera vad överföringen. Se \ref{sec:SS} för mer information om 
+datan att ignorera vad överföringen. Se pin SS för mer information om 
 denna funktion.
 
 \bf{MISO}
@@ -107,7 +107,7 @@ och sensorenheten. Den är alltså att vara en input för mastern och output fö
 båda slavarna. Precis som MOSI-signalen porten är MISO-signalerna 
 parallellkopplade till slavarna.  Då all kommunikation med SPI är tvåsidig 
 används även MOSI porten varje gång MISO porten används och viceversa. En 
-slav som inte är vald genom en hög SS-signal, se \ref{sec:SS}, kommer inte 
+slav som inte är vald genom en hög SS-signal, se nedan, kommer inte 
 att kunna skicka något via MISO-porten. 
 
 \bf{SS}
