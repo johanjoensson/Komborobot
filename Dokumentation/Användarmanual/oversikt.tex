@@ -30,4 +30,30 @@ Figur \ref{fig:robot1} visar roboten, sett från ovan. Ovanpå roboten finns en 
 
 \subsection{Datorprogrammets gränssnitt}
 
-Todo: \emph{En översikt över datorns gränssnitt}
+Användatgränssnittet består av 2 olika program. input\_control som hanterar
+hanterar användarens tangentbordstryckningar samt send\_receive som skickar
+användarens intruktioner (genererade med input\_control) till Komborobot.
+
+Todo: \emph{Bild på användargränssnitt}
+send\_receive kommer på skärmen visa; ifall Komborobot kör i en labyrint, längs en linje eller ifall
+den fjärrstyrs, information från de avståndssensorer som är monterade på
+robotens sidor (4 st), vilken hastighet man skickade till roboten i samband med
+förra kommandot, vilken trimnivå motorerna har, vilket specialkommando roboten
+utför (endast i autonomt läge) samt ifall något felaktigt kommando har skickats
+till styrenheten.
+
+1: Avståndssensor, vänster fram på Komborobot.
+2: Avståndssensor, vänster bak på Komborobot.
+3: Avståndssensor, höger fram på Komborobot.
+4: Avståndssensor, höger bak på Komborobot.
+5: Labyrintläge, linjeföljarläge eller fjärrstyrt läge.
+6: Senast skickad hastighet.
+7: Trimnivå vänster motor.
+8: Trimnivå höger motor.
+9: Felaktigt kommando skickat till styrenheten.
+
+input\_control visar en fyrkant på skärmen, färgen på denna fykant visar det
+nuvarande värdet på linjesensorkalibreringskonstanten. Denna fyrkant
+\emph{måste} vara markerad för att man ska kunna styra roboten via PCn.
+
+10: input\_control.
