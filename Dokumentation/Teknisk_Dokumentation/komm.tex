@@ -6,9 +6,16 @@
 
 \section{Kommunikationsenhet}
 
-Kommunikationsenheten ansvarar för att förmedla data mellan de olika enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en Fireflymodul. Processorn klockas av en extern 16 MHz, samma klocka som för resten av systemet. Kommunikationsenheten tar ingen hänsyn till om roboten opererar i fjärrstyrt eller autonomt läge.
+Kommunikationsenheten ansvarar för att förmedla data mellan de olika 
+enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en 
+Fireflymodul. Processorn klockas av en extern 16 MHz, samma klocka som för 
+resten av systemet. Kommunikationsenheten tar ingen hänsyn till om roboten 
+opererar i fjärrstyrt eller autonomt läge.
 
-Kommunikationen mellan PCn och roboten sker via blåtand. Kommunikation mellan de olika enheterna på roboten sker med en så kallad SPI-buss. SPI-bussens olika anslutningar kan betraktas i figur \ref{fig:spibuss}. Hur de olika pinnarna på processorn är anslutna kan betraktas i figur \ref{fig:PINkomm}.
+Kommunikationen mellan PCn och roboten sker via blåtand. Kommunikation mellan 
+de olika enheterna på roboten sker med en så kallad SPI-buss. SPI-bussens 
+olika anslutningar kan betraktas i figur \ref{fig:spibuss}. Hur de olika 
+pinnarna på processorn är anslutna kan betraktas i figur \ref{fig:PINkomm}.
 
 \begin{figure}[H]
   \centering
