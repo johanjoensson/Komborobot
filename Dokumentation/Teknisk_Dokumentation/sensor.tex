@@ -14,26 +14,50 @@
 
 \subsubsection{Upptäckning av riktningsmarkeringar}
 \label{riktmark}
-Då roboten är i en labyrint kommer linjeföljarsensorn huvudsakligen användas för att hitta riktningsmarkeringar. Dessa markeringar används för att visa i vilken riktning roboten ska färdas i nästkommande korsning.  I enlighet med banspecifikationen, se *REF BANSPEC*, är funktionen anpassad för att uppfatta följande signaler:
+Då roboten är i en labyrint kommer linjeföljarsensorn huvudsakligen användas 
+för att hitta riktningsmarkeringar. Dessa markeringar används för att visa i 
+vilken riktning roboten ska färdas i nästkommande korsning.  I enlighet med 
+banspecifikationen, se *REF BANSPEC*, är funktionen anpassad för att uppfatta 
+följande signaler:
 
 Högersväng visas med en tunn tejpmarkering följd av en tre gånger så tjock.
 Vänstersväng visas genom en tjock tejpmarkering följd av en tre gånger så tunn.
 Framåt visas genom två tunna tejpmarkeringar.
 
-Vid varje uppdatering av samtliga linjeföljarsensorer görs en kontroll om de tre mittersta sensorerna ligger över tejp. Är så fallet så börjar antalet gånger linjesensorerna uppdateras att räknas. När de tre mittersta sensorerna inte längre ligger över tejp sparas antalet iterationer som sensorerna tillbringat över tejpen. Proceduren upprepas därefter och antalet iterationer jämförs för att se vilken tejpbit som var bredast, den första eller den andra. Resultatet sparas därefter och efterfrågat kommando utförs i nästkommande korsning, se \ref{upptackkorsning}.
+Vid varje uppdatering av samtliga linjeföljarsensorer görs en kontroll om de 
+tre mittersta sensorerna ligger över tejp. Är så fallet så börjar antalet 
+gånger linjesensorerna uppdateras att räknas. När de tre mittersta sensorerna 
+inte längre ligger över tejp sparas antalet iterationer som sensorerna 
+tillbringat över tejpen. Proceduren upprepas därefter och antalet iterationer 
+jämförs för att se vilken tejpbit som var bredast, den första eller den andra
+. Resultatet sparas därefter och efterfrågat kommando utförs i nästkommande 
+korsning, se \ref{sec:upptackkorsning}.
 
 
 \subsubsection{Avståndssensorer}
 
 \subsubsection{Upptäckning av korsningar och 90\degree svängar}
 \label{sec:upptackkorsning}
-Enligt specifikationen av den bana som roboten ska kunna följa, framgår det att det före alla korsningar ska finnas tejpmarkeringar som visar i vilken riktning roboten ska svänga, se \ref{sec:riktmark}. Roboten kommer att upptäcka korsningar om två av riktningarna höger, vänster och framåt visar mer än 80 cm.
+Enligt specifikationen av den bana som roboten ska kunna följa, framgår det 
+att det före alla korsningar ska finnas tejpmarkeringar som visar i vilken 
+riktning roboten ska svänga, se \ref{sec:riktmark}. Roboten kommer att 
+upptäcka korsningar om två av riktningarna höger, vänster och framåt visar 
+mer än 80 cm.
 
-Roboten kommer att upptäcka 90\degree svängar om det är längre än 80 cm åt höger eller vänster(inte båda), samt mindre än 35cm framåt.
+Roboten kommer att upptäcka 90\degree svängar om det är längre än 80 cm åt 
+höger eller vänster(inte båda), samt mindre än 35cm framåt.
 
-Upptäcker roboten en korsning kommer det kommando som beskrivits av tidigare tejpmarkeringar att skickas till styrenheten. Datat som skickas är skrivet för att uppfattas som ett så kallat specialkommando, det vill säga styrenheten har en procedur som utförs utan att ta hänsyn till den reglerdata som skickas från sensorenheten. Märk att detta specialkommando innehåller en framkörning till mitten av korsningen, till skillnad från 90\degree svängar som utförs omedelbart.
+Upptäcker roboten en korsning kommer det kommando som beskrivits av tidigare 
+tejpmarkeringar att skickas till styrenheten. Datat som skickas är skrivet 
+för att uppfattas som ett så kallat specialkommando, det vill säga 
+styrenheten har en procedur som utförs utan att ta hänsyn till den reglerdata 
+som skickas från sensorenheten. Märk att detta specialkommando innehåller en 
+framkörning till mitten av korsningen, till skillnad från 90\degree svängar 
+som utförs omedelbart.
 
-Upptäcker korsningen en 90\degree sväng kommer ett annat specialkommando att utföras, där roboten svänger 90\degree åt det håll som avståndssensorerna visar har det längre avståndet.
+Upptäcker korsningen en 90\degree sväng kommer ett annat specialkommando att 
+utföras, där roboten svänger 90\degree åt det håll som avståndssensorerna 
+visar har det längre avståndet.
 
 
 \subsubsection{Display}
