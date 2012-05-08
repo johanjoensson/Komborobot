@@ -63,18 +63,18 @@ void specialkommando(unsigned char kommando_kod)
                 return;
 		}
 		else if(0x20==kommando_kod){		//sv??ng h??ger 90 grader
-                special_help(0x2600, 0x08, 0);    // K??r fram i en sekund
+                special_help(0x2400, 0x08, 0);    // K??r fram i en sekund
                 special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1400, 0x07,2);     // Rotera h??ger ca en 1/3 sekund
+                special_help(0x1400, 0x07,2);     // Rotera h??ger
                 special_help(0x0F00, 0, 3);       // Stanna i en kort stund
                 special_help(0x4000, 0x09, 0);    // K??r fram i en sekund
                 special_help(0x2000, 0, 3);   
                 return;
 		}
 		else if(0x30 == kommando_kod){		 //Sv??ng v??nster 90 grader
-                special_help(0x2600, 0x08, 0);    // K??r fram i en sekund
+                special_help(0x2400, 0x08, 0);    // K??r fram i en sekund
                 special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1400, 0x07,1);     // Rotera v??nster ca en 1/3 sekund
+                special_help(0x1400, 0x07,1);     // Rotera v??nster
                 special_help(0x0F00, 0, 3);       // Stanna i en kort stund
                 special_help(0x4000, 0x09, 0);    // K??r fram i en sekund
                 special_help(0x2000, 0, 3);   
@@ -82,16 +82,18 @@ void specialkommando(unsigned char kommando_kod)
 		}
 		else if(0x40==kommando_kod){		//Rotera h?ger 90
                 special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1400, 0x07,2);     // Rotera h??ger ca en 1/3 sekund
+                special_help(0x1400, 0x07,2);     // Rotera h??ger
                 special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-				special_help(0x0010, 0x01, 0);    // K??r fram i en sekund
+				special_help(0x0010, 0x01, 0);    // Ställ om riktningarna 
+												  // på motorerna
                 return;
 		}
 		else if(0x50 == kommando_kod){		//Rotera v?nster 90	
                 special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1400, 0x07,1);     // Rotera v??nster ca en 1/3 sekund
+                special_help(0x1400, 0x07,1);     // Rotera v??nster
                 special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
-				special_help(0x0010, 0x01, 0);    // K??r fram i en sekund
+				special_help(0x0010, 0x01, 0);    // Ställ om riktningarna 
+												  // på motorerna
                 return;						
 		}
 		else if(0x60==kommando_kod){		//stanna och st?ng av autonom styrning
