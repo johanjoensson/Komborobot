@@ -20,7 +20,7 @@
 #include"sensor_ad.h"
 #include<stdio.h>
 
-unsigned char next_special_command; //= 0xE0;
+unsigned char next_special_command; //= 0x70;
 
 /*
 int main(int argc, char *argv[])
@@ -66,15 +66,15 @@ unsigned char get_next_special_command()
  *-----------------------------------------------------------------------------*/
 void generate_special_command(unsigned char command_code)
 {
-        unsigned char special_command = 0xE0;
+        unsigned char special_command = 0x70;
         switch(command_code){
-                case 1:         special_command = 0x60;
+                case 1:         special_command = 0x20;
                                 set_next_special_command(special_command);
                                 break;
-                case 2:         special_command = 0x40;
+                case 2:         special_command = 0x30;
                                 set_next_special_command(special_command);
                                 break;
-                case 3:         special_command = 0x20;
+                case 3:         special_command = 0x10;
                                 set_next_special_command(special_command);
                                 break;
                 case 4:         special_command = 0x00;
@@ -95,7 +95,7 @@ void generate_special_command(unsigned char command_code)
  *-----------------------------------------------------------------------------*/
 void send_special_command(unsigned char command)
 {
-        if(command == 0xE0){
+        if(command == 0x70){
 
                 return;
         } else {
@@ -115,7 +115,7 @@ void send_special_command(unsigned char command)
 int search_for_crossroad(){
 
 
-		if((dist_right_front>=80 && dist_left_front>=80) || (dist_front>=80 && dist_left_front>=80) || (dist_front>=80 && dist_right_front>=80)){
+		if((dist_right_front>=80 && dist_left_front>=80) || (dist_front>=110 && dist_left_front>=80) || (dist_front>=110 && dist_right_front>=80)){
 				return 1;
 		}
 		else if(dist_right_front >= 80 && dist_right_back >= 80 && dist_front <= 35){

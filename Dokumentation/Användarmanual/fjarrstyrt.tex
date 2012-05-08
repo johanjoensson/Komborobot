@@ -9,4 +9,59 @@
 
 
 \section{Fjärrstyrt läge}
-Todo.
+I det fjärrstyrda läget så styrs roboten via bluetooth med en PC...
+
+\subsection{Start och stopp}
+För att starta roboten i det fjärrstyrda läget så görs följande: (se figur \ref{fig:robot1} för nummerreferenser)
+
+\begin{enumerate}
+\item Slå på strömmen. (5)
+\item Se till att roboten är ställd i fjärrstyrt läge. (1)
+\item Tryck på reset för att sätta roboten i inaktivt läge. (3)
+\item ... 
+\end{enumerate}
+
+\emph{Något om att stanna roboten...}
+
+\subsection{PC}
+I fjärrstyrt läge kan användaren styra Komborobot med hjälp av en PC.
+Information från Komborobots avståndssensorer, Komborobots hastighet samt
+motorernas trimnivåer kommer kontinuerligt att visas på datorskärmen.
+\subsubsection{input\_control}
+input\_control hanterar användarens knapptryckningar och genererar instruktioner
+som skickas till Komborobot.
+
+Nedan följer vilka knapptryckningar som genererar de olika kommandona:
+
+w - Kör framåt med given hastighet.
+s - Kör bakåt med given hastighet.
+a - Rotera vänster med given hastighet.
+d - Rotera höger med given hastighet.
+q - Sväng vänster (mjuk kurva) med given hastighet.
+e - Sväng höger (mjuk kurva) med given hastighet.
+[Mellanslag] - Stopp.
+
+[Pil upp] - Öka hastigheten till nästa kommando.
+[Pil ner] - Minska hastigheten till nästa kommando.
+
+[Pil höger] - Öka trimnivån på höger motor.
+[Pil vänster] - Öka trimnivån på vänster motor.
+o - Nollställ trimnivåerna.
+
+u - Öka värdet på linjesensorkalibreringskonstanten.
+i - Minska värdet på linjesensorkalibreringskonstanten.
+c - Kalibrera linjesensorerna med linjesensorkalibreringskonstanten.
+
+Då värdet på linjesensorkalibreringskonstanten ändras kommer bakgrunden på
+input\_control att ändras för att approximativt spegla vid vilken färg vi går
+från svart till vitt.
+
+För att avsluta input\_control trycker man [escape], eller använder krysset på
+fönstret.
+
+\subsubsection{send\_receive}
+I fjärrstyrt läge kommer send\_receive att visa hastighet på senast skickat
+kommando, trimnivåerna på motorerna samt information från avståndssensorerna.
+
+send\_receive avslutas genom att trycka [ctrl + c].
+

@@ -1,10 +1,12 @@
 % !TEX encoding = UTF-8 Unicode
 
 \documentclass[a4paper,12pt]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{gensymb}
-\input{../LIPS.tex}
+\input{LIPS.tex}
 
 
 \newcommand{\LIPSartaltermin}{2012/VT}
@@ -15,9 +17,9 @@
 \newcommand{\LIPSprojektgrupp}{Grupp 17}
 \newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
 \newcommand{\LIPSgrupphemsida}{finns ej}
-\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
 
-\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\ 83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
 \newcommand{\LIPShandledare}{}
@@ -25,7 +27,7 @@
 
 \newcommand{\LIPSdokumenttyp}{Kravspecifikation}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{1.0}
+\newcommand{\LIPSversion}{1.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 % Förslag till versionshantering:
@@ -43,7 +45,7 @@
 
 %% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
 \begin{LIPSprojektidentitet}
-  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{cajla304@student.liu.se}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{simla804@student.liu.se}
   \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
   \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
   \LIPSgruppmedlem{Johan Jönsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
@@ -61,16 +63,18 @@
 \LIPSversionsinfo{0.1}{2012-01-26}{Första utkast.}{matja307}{}
 \LIPSversionsinfo{0.2}{2012-01-30}{Andra utkast.}{matja307}{johjo939}
 \LIPSversionsinfo{1.0}{2012-01-31}{Första versionen}{gussv666}{johjo939}
+\LIPSversionsinfo{1.1}{2012-05-07}{Ändrat så att all kommunikation mellan robotens enheter sker via komunikationsenheten. Krav 9 ändrat och krav 28 samt 29 sammanslagna. Vissa redaktionella ändringar för att förtydliga}{simwa252}{simla804}
+
 \end{LIPSdokumenthistorik}
 \newpage
 
 \section{Inledning}
-I detta dokument formuleras samtliga krav som Komboroboten som
-beställare Tomas Svensson beställt av Grupp 17 ska uppfylla.
+I detta dokument formuleras samtliga krav som Komboroboten som beställare Tomas Svensson beställt av Grupp 17 ska uppfylla. 
 Komboroboten ska vara enhetsuppbyggd och bestå av en kommunikationsenhet, en styrenhet och en sensorenhet.
 Den ska ha ett läge för manuell styrning via blåtand samt ett läge för 
-att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, 
+att autonomt kunna följa en bana bestående av antingen en linje längs underlaget, en labyrint med väggar längs sidorna, eller en kombination av de två föregående enligt banspecifikation (A.1).
 en labyrint med väggar längs sidorna, eller en kombination av de två föregående.
+
 
 I samband med leverans ska Komboroboten delta i en tävling där konstruktionen utvärderas.
 
@@ -90,7 +94,7 @@ Leverantör: Grupp 17
 
 \subsection{Mål}
 I samband med leveransen ska roboten klara av att under tävling helt autonomt navigera
-en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen \ref{app:bana}. 
+en bana som är uppbyggd enligt bestämmelserna i den bifogade banspecifikationen (\ref{app:bana}). 
  Tävlingen avgörs på tid, den robot som tar sig runt banan på kortast tid vinner.
 
 \subsection{Användning}
@@ -98,11 +102,13 @@ Roboten ska ha ett autonomt läge och ett fjärrstyrningsläge.
 Man ska kunna växla mellan de två lägena med en brytarknapp på roboten.
 
 \subsubsection{Autonomt läge}
-I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation.
+I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation (A.1).
 
 \subsubsection{Fjärrstyrningsläge}
 I fjärrstyrningsläge ska roboten kunna styras manuellt med en PC via medföljande mjukvara.
-Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation och back. 
+Följande kommandon ska finnas: kör framåt, kör bakåt, högersväng, vänstersväng, vänsterrotation, högerrotation och stopp. 
+I autonomt läge ska roboten kunna startas med en knapp. Den ska då autonomt kunna följa en bana byggd enligt överenskommen banspecifikation. 
+
 
 \subsection{Bakgrundsinformation}
 Beställaren har givit leverantören i uppdrag att konstruera en robot som uppfyller vissa krav.
@@ -139,14 +145,14 @@ med blåtandsanslutning och den mjukvara som levereras tillsammans med roboten.
 \subsection{Ingående delsystem}
 De delsystem som ska ingå är en styrenhet som sköter motorer och styrning,
 en sensorenhet som sköter tolkning och insamling av data,
-en kommunikationsenhet som sköter kommunikation med externa enheter och mjukvara 
+en kommunikationsenhet som sköter kommunikation mellan externa och interna enheter samt mjukvara 
 som ska installeras på en extern PC som kan visa information om 
 styrning och som också kan styra roboten när den är i fjärrstyrningsläge.
 
 \begin{figure}[h!]
 	\caption{Delsystem}
 	\begin{center}
-		\includegraphics[scale=0.4,angle=270]{delsystem.pdf}
+		\includegraphics[scale=0.8,angle=0]{delsystem2.pdf}
 	\end{center}
 \end{figure}
 
@@ -158,7 +164,7 @@ Systemet i sin helhet ska uppfylla följande krav.
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Roboten ska kunna styras med blåtand}{1} 
-  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt \ref{app:bana}}{1}
+  \LIPSkrav{Original}{Roboten ska kunna köra autonomt genom en bana enligt (\ref{app:bana})}{1}
   \LIPSkrav{Original}{Val mellan fjärrstyrnings- och autonomt läge ska styras med en brytare}{1}
   \LIPSkrav{Original}{Roboten ska ha en knapp som startar den i tävlingen}{1}
   \LIPSkrav{Original}{Roboten ska bestå av minst tre enheter, styrenhet, kommunikationsenhet och sensorenhet}{1}
@@ -173,7 +179,7 @@ Styrenheten ska kontrollera alla motorer och servo utifrån data ifrån sensoren
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Felmeddelanden ska skickas till kommunikationsenheten}{1} 
   \LIPSkrav{Original}{Information om robotens nuvarande aktivitet, t ex svänger vänster, ska skickas till kommunikationsenheten när roboten är i autonomt läge}{1} 
-  \LIPSkrav{Original}{Styrdata ska kunna tas emot från kommunkations- och sensorenheten}{1} 
+  \LIPSkrav{Ändrat 2012-05-07}{Styrdata ska kunna tas emot från kommunkationsenheten och från sensorenheten via kommunikationsenhetn}{1} 
 \end{LIPSkravlista}
 
 \subsection{Designkrav}
@@ -236,15 +242,15 @@ Det ska vara möjligt att helt kunna styra komboroboten via blåtand då roboten
 \section{Sensorenhet}
 \subsection{Inledande beskrivning}
 Sensorenheten hämtar data från avståndssensorerna samt linjesensorerna 
-och skickar dessa vidare till kommunikationsenheten och styrenheten. 
+och skickar dessa vidare till kommunikationsenheten som sedan förmedlar det till styrenheten. 
 Sensorenheten skall även kunna kalibrera linjeföljarsensorn om det är önskvärt.
 
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Sensordata för avstånd till väggarna på sidan om roboten skall samlas in}{1}
-  \LIPSkrav{Original}{Sensordata från linjeföljarsensor ska kunna märka skillnader mellan golv och svart tejp på marken}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras}{1}
-  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensor ska kunna kalibreras trådlöst via bluetooth}{2}
+  \LIPSkrav{Original}{sensorenheten ska med sensordata från linjeföljarsensorerna kunna märka skillnader mellan golv och svart tejp på marken}{1}
+  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensorer ska kunna kalibreras}{1}
+  \LIPSkrav{Original}{Sensorenhetens linjeföljarsensorer ska kunna kalibreras trådlöst via bluetooth}{2}
 \end{LIPSkravlista}
 
 \subsection{Externa interface}
@@ -260,8 +266,7 @@ Enheten ska vara designad så att den är utbytbar med en likvärdig enhet. Enhe
 
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Sensorenheten ska innehålla minst en processor}{1}
-  \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till styrenheten}{1}
-  \LIPSkrav{Original}{Sensordata ska kontinuerligt skickas till kommunikationsenheten}{1}
+  \LIPSkrav{Ändrat 2012-05-07}{Sensordata ska kontinuerligt skickas till kommunikationsenheten och därifrån vidare till styrenheten}{1}
   \LIPSkrav{Original}{Sensorenheten ska vara utbytbar}{1}
 \end{LIPSkravlista}
 
@@ -332,6 +337,7 @@ Ett mål är även att minimera tiden det tar för roboten att ta sig genom bana
 
 \section{Ekonomi}
 Efter att projektet har passerat BP2 ska  totalt 980 timmar (140 timmar per projektmedlem) brukas.
+\\
 \begin{LIPSkravlista}
   \LIPSkrav{Original}{Totalt 980 timmar skall används i projektet efter att projektplanen godkänts}{1}
 \end{LIPSkravlista}
@@ -441,15 +447,19 @@ Dokumentation för projektet innebär följande dokument:
 %ytterväggen. "Köksön" består av rutor på samma sätt som övriga banan.
 
 Banan består av två huvuddelar: Linjedelar och labyrintdelar, där linjerna fungerar som transportsträcka till, från eller mellan en eller flera labyrinter. Linjen tar vid i mitten av labyrintgången där labyrinten slutar eller börjar. Labyrintens beståndsdelar varierar utifrån vilken prioritetsnivå som är uppfylld. Tävlingsdeltagarna kommer innan tävlingen överens om vilken av nivåerna som ska användas.
-
+\\
+\\
 Linjedelen:
-Linjerna i banan skall bestå av svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint.
+\\
+\\
+Linjerna i banan skall bestå av en svart tejp på grått underlag. Tejpens bredd ska vara mellan 14-18 mm. I de fall en tjock linje nämns avses en tejplinje med bredd mellan 42-54 mm (tre tejpbredder). Med en smal tejplinje avses en linje med bredd 14-18 mm (en tjepbredd). Tejpbanan kan korsa sig själv i 90\degree korsningar, den kan dock ej dela sig. Svängradien för banan är minst 25 cm. Banan avslutas med en stoppsignal eller övergår till en labyrint. Stoppsignalen inleds med en 30 cm raksträcka som sedan övergår i en tvärgående linje följt av tre parallella smala linjer, 3 cm isär med mitten där den tidigare linjen avslutades, i färdriktningen.
+\\
 
 
 Labyrintdelen:
 
 \begin{list}{*}{}
-\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn fåljd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. 
+\item Nivå 1: Avståndet mellan parallella väggar är 80 cm. 3-vägskorsningar och 4-vägskorsningar kan förekomma, dock med räta vinklar mellan varandra, rätt väg anges av markeringar på golvet. Markeringarna görs med två linjer som går vinkelrätt mellan väggarna. En tjock linje följd av en tunn indikerar höger, en tunn följd av en tjock indikerar vänster och två linjer av samma tjocklek rakt fram. Markeringarna ska komma 30 cm innan korsningen och en raksträcka ska följa fram till korsningen. 
 \item Nivå 2: Som nivå 1 med följande justeringar: Inga markeringar behövs då ena vägen vid en korsning är en återvändsgränd med djup på 80 cm.
 \item Nivå 3: Som nivå 1 med följande justeringar: Inga markeringar nödvändiga. Hål 80 cm stora ut ur labyrinten som inte leder någonstans kan förekomma.
 \end{list} 
