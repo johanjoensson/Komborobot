@@ -1,12 +1,12 @@
-/*
+/******************************************************************************
  * Datum 22/03/2012
  * Gränssnitt för att skicka information över en blåtandsanslutning till en
  * given blåtandsenhet (firefly)
  * 
  * Skapad av: Johan Jönsson
  *
- * Redigerad:
- */
+ * Redigerad: 08/05/2012
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,10 +42,7 @@ struct sockaddr_rc connect_to_firefly(int s)
 { 
 	struct sockaddr_rc addr, loc_addr;
 	int status;
-//	char dest[18] = "38:E7:D8:C0:8F:E2";	// MAC-addess till min HTC
-	char dest[18] = "00:06:66:03:A9:D1";	// MAC-address till
-//	FireFlyenheten
-//	char dest[18] = "00:15:83:2A:48:18";
+	char dest[18] = "00:06:66:03:A9:D1";	// MAC-address fireflyenheten
 	
 	loc_addr.rc_family = AF_BLUETOOTH;
 	loc_addr.rc_bdaddr = *BDADDR_ANY;
@@ -112,9 +109,9 @@ void start_listening(int s)
  *
  * Inparametrar:	int s		socket data skickas till
  *			sockaddr_rc ff	blåtandsenhet som skickar datan
- *			char *buf	buffer för mottagande av data
+ *			void *buf	buffer för mottagande av data
  *
- * Returvärde:		uint8_t		databyten som mottogs
+ * Returvärde:		-
  */
 void receive_data(int s, struct sockaddr_rc ff, void* buffer)
 {
@@ -124,52 +121,9 @@ void receive_data(int s, struct sockaddr_rc ff, void* buffer)
 
 
 	int nr = recv(s, buffer, 1, 0);
-	//	*buffer = (unsigned char) btohs((short) *buffer);
+
 	if(nr == -1){
 		fprintf(stderr, "Error, no message received!\n");
 	}
 	return;
 }
-
-/* Huvudprogrammet.
- * Sköter anrop till övriga funktioner och initierar variabler.
- * Skapar anslutning till en firefly-enhet, skickar en byte och tar emot en byte
- *
- * Inparametrar:	int argc	antalet argument programmet anropas med
- *			char** argv	lista över argumenten
- */
-
-/*
-int main(int argc, char** argv)
-{
-	struct instruction_t *inst = malloc(sizeof(instruction));
-	uint8_t msg; 
-	if(argc > 1){
-		msg = atoi(argv[1]);
-	}else{
-	       msg = 0xA2;
-	}
-
-	inst->data = '\0';
-	inst->header = '\0';
-
-	int s = init();
-
-	printf("Socket nr: %d\n", s);
-
-	struct sockaddr_rc ffunit = connect_to_firefly(s);
-
-	send_msg(s,msg);
-	send_msg(s, (uint8_t) 43);
-
-	start_listening(s);
-
-	msg = receive_data(s, ffunit, &(inst->header));
-	msg = receive_data(s, ffunit, &(inst->data));
-
-	printf("Header byte:\t%X\nData byte:\t%c\n", (uint8_t)inst->header, inst->data);
-
-	close_socket(s);
-	return 0;
-}
-*/

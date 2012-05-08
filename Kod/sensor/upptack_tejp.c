@@ -3,7 +3,6 @@
 #include "upptack_tejp.h"
 #include "sensor_ad.h"
 #include "sensor_spi.h"
-#include "avstandsskillnad.h"
 #include "linjeskillnad.h"
 
 #define DELTA 2
@@ -70,7 +69,7 @@ int markning(int now_value){
 		}
 	
 	}
-	
+/*	
 	else {
 			counter++;
 			if(counter>120){
@@ -80,7 +79,7 @@ int markning(int now_value){
 		
 			return 0;
 	}
-
+*/
 	return 0;
 }
 

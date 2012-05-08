@@ -38,7 +38,7 @@ int calculate_diff(int byte1, int byte2)
                 case 10:
                         return 127;
 				case 20:
-						return 192;	//Felkod
+						return 96;	//Felkod
 				default:
                         return 0;
         }

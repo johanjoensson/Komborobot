@@ -208,33 +208,12 @@ enum data_type_t type_of_inst(struct instruction_t *inst)
 {
 
 	switch( (inst->header & 0x02) >> 1 ){ // maska fram D flaggan
-#if 0
-		/* C = 0
-		 * Alltså sensorinfo
-		 */
-		case 0:
-		case 2:
-			return SENSORDATA;
-		/* C = 1, B = 0
-		 * Alltså vanlig reglering
-		 */
-		case 1:
-			return REGLERING;
 
-		/* C = 1, B = 1
-		 * Alltså specilkommando
-		 */
-		case 3:
-			return SPECKOMMANDO;
-		
-		/* Något är väldigt fel
-		 */ 
-#endif
 		case 1:
 			return SPECKOMMANDO;
+
 		case 0:
 			return SENSORDATA;
-
 
 		default:
 			return UNKNOWN_COMMAND;
@@ -244,7 +223,7 @@ enum data_type_t type_of_inst(struct instruction_t *inst)
 
 enum spec_komm_t type_of_command(struct instruction_t *inst)
 {
-	switch((inst->data & 0xE0) >> 5){
+	switch((inst->data & 0x70) >> 4){
 		case 0:
 			return REGLER;
 
@@ -326,28 +305,11 @@ void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 void display_sensor(struct instruction_t *inst)
 {
 
-/*        if((int)(inst->data & 0x7F) < 20){
-                unsigned char tmp = inst->header;
-                inst->header = inst->data;
-                inst->data = tmp;
-        }
-*/
         enum sensors cur_sensor = which_sensor(inst);
 	display_sensor_data(inst, cur_sensor);
 
 	return;
 }
-
-void display_reg(struct instruction_t *inst)
-{
-#ifndef DEBUF
-	int y, x;
-	getmaxyx(mode, y, x);
-#endif
-	return;
-}
-
-
 
 void display_spec(struct instruction_t *inst)
 {
@@ -358,12 +320,13 @@ void display_spec(struct instruction_t *inst)
 
 	switch(type_of_command(inst)){
 		case REGLER:
-                        clear_error();
+/*                        clear_error();
 			for(int i = 2; i < x-1; i++){
 				mvwaddch(spec_komm, y >> 1, i, ' ');
 			}
 
 			mvwprintw(spec_komm,  y >> 1, x >> 4,  "Tillbaka till vanlig reglering!");
+                        */
                         break;
 		case FRAM:
                         clear_error();
@@ -394,6 +357,7 @@ void display_spec(struct instruction_t *inst)
 			break;
                 case FEL:
                         display_error();
+                        break;
 
 		default:
                         break;
@@ -406,6 +370,9 @@ void display_spec(struct instruction_t *inst)
 
 int is_trim(struct instruction_t *inst)
 {
+        if((inst->header & 0xE0) >> 5 == 0x1){
+                return 0;
+        }
 	switch((inst->data & 0xF0) >> 4){
 		case 9:
 		case 0xA:
@@ -420,6 +387,10 @@ int is_trim(struct instruction_t *inst)
 
 int has_speed(struct instruction_t *inst)
 {
+
+        if((inst->header & 0xE0) >> 5 == 0x1){
+                return 0;
+        }
 	switch((inst->data & 0xF0) >> 4){
 		case 0x7:
 		case 0x8:
@@ -552,20 +523,10 @@ void update_speed(struct instruction_t *inst)
 }
 void display_inst(struct instruction_t *inst)
 {
-        int y,x;
-
-        getmaxyx(speed, y, x);
 	display_mode(inst);
-        for(int i = 2; i < x - 1 ; i++){
-                mvwaddch(speed, 2, i, ' ');
-        }
 	switch(type_of_inst(inst)){
 			case SENSORDATA:
 				display_sensor(inst);
-				break;
-
-			case REGLERING:
-				display_reg(inst);
 				break;
 
 			case SPECKOMMANDO:
@@ -575,6 +536,8 @@ void display_inst(struct instruction_t *inst)
 			case UNKNOWN_DATA:
 				display_error();
 				break;
+                        default:
+                                break;
 			}
 	return;
 }

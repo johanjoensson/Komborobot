@@ -34,8 +34,13 @@ Displayen visar avståndet till väggarna på sidorna till höger, vänster och 
 Displayen har två rader med tecken. Den övre raden visar framsensorns och de främre sidosensorernas värden, och den undre raden visar bakre sidosensorernas dito. Ett 'H' bredvid värdet indikerar högersensor, 'V' vänstersensor och 'F' sensorn riktad framåt. Avstånden visas med tre siffror, och ligger i intervallet 20 cm - 120 cm. Detta innebär att avstånd som ligger utanför detta intervall kommer att ge ett felaktigt värde på displayen. 
 
 \subsection{PC}
-Todo
-
+I autonomt läge så kommer Komborobot att kontinuerligt skicka avstånd till
+väggarna längs sidorna till PC. Då roboten utför ett specialkommando, då den
+exempelvis kommer fram till en korsning,  kommer Komborobot skicka information om
+detta till PC. Skulle något gå fel och styrenheten får in ett kommando den inte
+känner igen kommer Komborobot att skicka ett meddelande till PC. Var gång
+Komborobot skickar något till PC så inkluderas information om den följer en
+linje eller om den kör i en labyrint.
 \subsection{Banan}
 \label{sec:banan}
 
@@ -53,11 +58,4 @@ Banan slutar i ett linjemoment, och markeras med stoppsignalen ovan.
 
 \subsection{Övrigt}
 Todo: Övrigt angående autonomt läge.
-
-
-
-
-
-
-
 

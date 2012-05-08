@@ -29,7 +29,7 @@
 #define BPP 4
 #define DEPTH 32
 
-void event_loop(struct instruction_t *inst, FILE *db);
+void event_loop(FILE *db);
 void on_key_up(struct instruction_t *instr);
 void on_e_down(int speed, struct instruction_t *instr);
 void on_q_down(int speed, struct instruction_t *instr);
@@ -47,15 +47,19 @@ void no_trim(struct instruction_t *instr);
 
 void calibrate_sensors(int sensor_thresh, struct instruction_t *inst);
 
-void event_loop(struct instruction_t *inst, FILE *db)
+void event_loop(FILE *db)
 {
 	int speed = 7;
         int trim = 0;
         unsigned int sensor_thresh = 0xA8;
 
-	struct instruction_t *old_inst = malloc(sizeof(struct instruction_t));
+	struct instruction_t old_instruction;
+	struct instruction_t instruction;
 
-	int error = SDL_Init(SDL_INIT_EVERYTHING);
+        struct instruction_t *inst = &instruction;
+        struct instruction_t *old_inst = &old_instruction;
+
+	int error = SDL_Init(SDL_INIT_VIDEO);
 	if(error == -1){
 		printf("SDL error");
 		exit(1);
@@ -191,6 +195,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
                                         case SDLK_c:
                                                 calibrate_sensors(sensor_thresh, inst);
                                                 add_to_db(db, inst, 2);
+                                                break;
                                         case SDLK_u:
                                                 if(((sensor_thresh & 0xF0) >> 4) < 0xF){
                                                         sensor_thresh = sensor_thresh + 0x10;
@@ -228,8 +233,7 @@ void event_loop(struct instruction_t *inst, FILE *db)
 		}
 
 	}
-
-	free(old_inst);
+        SDL_Quit();
 }
 
 
@@ -309,8 +313,7 @@ void calibrate_sensors(int sensor_thresh, struct instruction_t *inst)
 int main()
 {
 	FILE *f = init_write("instr_db");
-	struct instruction_t *inst = malloc(sizeof(struct instruction_t));
-        event_loop(inst, f);
+        event_loop(f);
 
 	fclose(f);
         return 0;
