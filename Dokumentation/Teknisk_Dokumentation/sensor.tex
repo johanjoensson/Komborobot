@@ -5,7 +5,7 @@
 Sensorenheten är den enhet som behandlar all sensordata. Den samlar in data från 
 avståndssensorerna och linjesensorerna som den sedan antingen omvandlar till 
 cm värden i avståndsensorns fall, eller trösklar och ger diskreta varierande storheter 
-som i linjesensorns fall. Linje sensorn kommunicerar sedan med kommunikationsenheten
+som i linjesensorns fall. Linjesensorn kommunicerar sedan med kommunikationsenheten
 som förmedlar värdena till styrenheten och till PCn.
 
 \subsection{Hårdvara}
@@ -128,27 +128,49 @@ visar har det längre avståndet.
 
 
 \subsubsection{Display}
-Robotens display-enhet är av typ \emph{LCD JM162A}. Displayen används för att visa avståndssensorernas värden. Eftersom sensorerna bara kan ge korrekta värden i intervallet 20-120 cm så kommer även displayen arbeta i detta intervall. Displayen arbetar i åtta databitarsläge och visar två rader med tecken. 
+Robotens display-enhet är av typ \emph{LCD JM162A}. Displayen används för att 
+visa avståndssensorernas värden. Eftersom sensorerna bara kan ge korrekta 
+värden i intervallet 20-120 cm så kommer även displayen arbeta i detta 
+intervall. Displayen arbetar i åtta databitarsläge och visar två rader med 
+tecken. 
 
 %Pinnar
-Förutom de åtta databitarna som överförs för varje tecken till displayen så går ytterligare två signaler mellan sensorenhetens mikroprocessor och displayenheten: \emph{Enable} och \emph{Register select}. Enable-signalen signalerar till displayen att något ska skrivas ut, och Register select väljer mellan input-lägena 'data' och 'function'. Då det aldrig är någon data som läses från displayen så är pinnen \emph{R/W} konstant låg. 
+Förutom de åtta databitarna som överförs för varje tecken till displayen så 
+går ytterligare två signaler mellan sensorenhetens mikroprocessor och 
+displayenheten: \emph{Enable} och \emph{Register select}. Enable-signalen 
+signalerar till displayen att något ska skrivas ut, och Register select 
+väljer mellan input-lägena 'data' och 'function'. Då det aldrig är någon data 
+som läses från displayen så är pinnen \emph{R/W} konstant låg. 
 
 %Kod
-Sensorenheten har två funktioner som kan kallas för att skriva ut ett tecken på displayen. I funktionen \emph{char\_to\_display} anges parmetrarna vilket tecken (givet i ASCII-kod) som ska skrivas ut, samt vilken position på displayen som ska skrivas till. Denna funktion används för bokstäver. För att skriva ut sensorvärden används funktionen \emph{data\_to\_display}, vilken tar parametrarna för sensorvärdet i cm samt vilken sensor som skickat det. 
+Sensorenheten har två funktioner som kan kallas för att skriva ut ett tecken 
+på displayen. I funktionen \emph{char\_to\_display} anges parametrarna vilket 
+tecken (givet i ASCII-kod) som ska skrivas ut, samt vilken position på 
+displayen som ska skrivas till. Denna funktion används för bokstäver. För att 
+skriva ut sensorvärden används funktionen \emph{data\_to\_display}, vilken 
+tar parametrarna för sensorvärdet i cm samt vilken sensor som skickat det. 
 
-Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCII-kod, vilken används av \emph{data\_to\_display}.
+Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCII
+-kod, vilken används av \emph{data\_to\_display}.
 
 \subsection{Mjukvara}
 
 \subsubsection{AD}
 
 \subsubsection{Linjesensor}
-Varje diod på linjesensorn A/D-omvandlas och jämförs med ett tröskelvärde, är
-det ett högt värde antas en tejp och en etta skiftas in i en byte och är det 
+Styrsignaler till multiplexern väljer ut en diod i taget.
+Varje diod på linjesensorn A/D-omvandlas och jämförs med ett tröskelvärde. Om
+det omvandlade värder är
+ett högt värde antas en tejp och en etta skiftas in i en byte och är det 
 ett lågt värde så antas ingen tejp och en nolla skiftas in, varje diod
 representeras alltså med en bit. Då det finns elva dioder så används två byte 
-för att representera hela linjesensorn.
-
+för att representera hela linjesensorn. Tröskelvärdet går att justera från PCn. 
+Ur de två byten med linjedata räknas vilket index som tejpen befinner sig på,
+detta indexet tar värden i intervallet 1-11. Från indexet beräknas en
+reglerparameter, negativ om roboten är till vänster och positiv om den är till
+höger. Denna parameter skickas till styrenheten där den används i
+linjeregulatorn, se \ref{sec:linjereglering}. Linjedatat undersökts också efter
+stoppsignaler i linjeläge och riktningsmarkeringar i labyrintläge.
 
 
 \subsubsection{Avståndsberäkning}
@@ -159,18 +181,19 @@ Kommunikationsenheten använder den anslutna databussen för att förmedla
 data till andra delar av roboten. Sensorenheten är den stora leverantören av 
 data i systemet och sänder iväg betydligt mer data än vad den tar emot. För att 
 adressera och specificera den data som skickas iväg från sensorenheten märks 
-headerbyten upp med diverse olika flaggor och adresseringsbits. För mer info om 
+headerbyten upp med diverse olika flaggor och adresseringsbitar. För mer info om 
 dessa, se \ref{sec:protokoll}. Den enda data som tas emot av sensorenheten är en 
 referenskod för att kalibrera linjesensorerna.
 
-I fjärrstyrt läge så skickar sensorenheten avståndet från avståndssensorerna till datorn. 
-I detta läge skickar sensorenheten ingen data till styrenheten. I autonomt läge då 
-roboten befinner sig över en linje skickar sensorenheten data om var tejpen befinner 
-sig på linjesensorn till styrenheten, samt avståndet till väggarna till datorn. Befinner sig 
-roboten i en labyrint skickar sensorenheten avståndet till väggarna till både sensorenheten 
-och datorn.
+I fjärrstyrt läge så skickar sensorenheten avståndet från avståndssensorerna 
+till datorn.  I detta läge skickar sensorenheten ingen data till styrenheten. 
+I autonomt läge då roboten befinner sig över en linje skickar sensorenheten data om 
+var tejpen befinner sig på linjesensorn till styrenheten, samt avståndet till 
+väggarna till datorn. Befinner sig roboten i en labyrint skickar 
+sensorenheten avståndet till väggarna till både sensorenheten och datorn.  
 
 Då sensorenheten tar ett beslut om att ett avvikande beteende är nödvändigt, till exempel 
-en korsning eller en stoppmarkering, så skickas denna information alltid till både styrenheten och datorn.
+en korsning eller en stoppmarkering, så skickas denna information alltid till 
+både styrenheten och datorn.
 
 
