@@ -92,3 +92,18 @@ den skillnaden stor så motverkar den P-delen. Eftersom D-delen reglerar på
 relativt små skillnader har den hög vikt.
 
 \label{reglering}
+
+\subsubsection{Manuell läge}
+
+I manuellt läge styrs Roboten med styrsignaler som skickas från PCn via 
+kommunikationsenheten. I mjukvaran liger kod för kommandona; rakt 
+fram, bakåt, sväng höger, sväng vänster, rotera höger, rotera vänster
+och stopp. Det finns även en funktion trim som ökar respektive sänker 
+hastigheten på ett hjul. Detta så att man ska kunna öka precisionen vid 
+rak körning. Styrkommandona, som kommer in via SPI bussen, tolkas 
+tolkas först och anropar sedan den funktion som efterfrågades av PCn
+
+
+
+	
+
