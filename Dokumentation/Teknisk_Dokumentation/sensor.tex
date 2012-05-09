@@ -1,3 +1,5 @@
+% !TEX encoding = UTF-8 Unicode
+
 \section{Sensorenhet}
 
 Sensorenheten är den enhet som behandlar all sensordata. Den samlar in data från 
@@ -27,9 +29,9 @@ med 11st ljuskänsliga transistorer, en multiplex och en demultiplex.
   \label{fig:Uppkoppling_linjesensorer}
 \end{figure}
 
-CH1 EN – CH11 EN är ingångar som leder signalen (logiskt ) vidare till lysdioderna. 
+CH1 EN - CH11 EN är ingångar som leder signalen (logiskt ) vidare till lysdioderna. 
 CH1  OUT - CH11 OUT Leder svarssignalen från transistorerna vidare mot styrenhetens 
-AVR. Multiplexen och demultiplexen styrs med signalerna A – D från AVRen. Inhibit 
+AVR. Multiplexen och demultiplexen styrs med signalerna A - D från AVRen. Inhibit 
 signalen är jordad då dataväljning alltid ska vara tillåten.
 
 
@@ -97,7 +99,15 @@ visar har det längre avståndet.
 
 
 \subsubsection{Display}
+Robotens display-enhet är av typ \emph{LCD JM162A}. Displayen används för att visa avståndssensorernas värden. Eftersom sensorerna bara kan ge korrekta värden i intervallet 20-120 cm så kommer även displayen arbeta i detta intervall. Displayen arbetar i åtta databitarsläge och visar två rader med tecken. 
 
+%Pinnar
+Förutom de åtta databitarna som överförs för varje tecken till displayen så går ytterligare två signaler mellan sensorenhetens mikroprocessor och displayenheten: \emph{Enable} och \emph{Register select}. Enable-signalen signalerar till displayen att något ska skrivas ut, och Register select väljer mellan input-lägena 'data' och 'function'. Då det aldrig är någon data som läses från displayen så är pinnen \emph{R/W} konstant låg. 
+
+%Kod
+Sensorenheten har två funktioner som kan kallas för att skriva ut ett tecken på displayen. I funktionen \emph{char\_to\_display} anges parmetrarna vilket tecken (givet i ASCII-kod) som ska skrivas ut, samt vilken position på displayen som ska skrivas till. Denna funktion används för bokstäver. För att skriva ut sensorvärden används funktionen \emph{data\_to\_display}, vilken tar parametrarna för sensorvärdet i cm samt vilken sensor som skickat det. 
+
+Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCII-kod, vilken används av \emph{data\_to\_display}.
 
 \subsection{Mjukvara}
 

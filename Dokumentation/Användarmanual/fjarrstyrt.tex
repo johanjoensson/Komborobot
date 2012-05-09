@@ -9,7 +9,8 @@
 
 
 \section{Fjärrstyrt läge}
-I det fjärrstyrda läget så styrs roboten via bluetooth med en PC...
+I det fjärrstyrda läget så styrs roboten via bluetooth med en PC. Styrningen från PC innefattar bland annat körning framåt, bakåt, svängar, rotationer samt 
+förändring av hastighet. Dessutom finns kommandon för att justera de individuella motorerna, samt kalibrering av linjesensorerna. 
 
 \subsection{Start och stopp}
 För att starta roboten i det fjärrstyrda läget så görs följande: (se figur \ref{fig:robot1} för nummerreferenser)
@@ -18,10 +19,9 @@ För att starta roboten i det fjärrstyrda läget så görs följande: (se figur
 \item Slå på strömmen. (5)
 \item Se till att roboten är ställd i fjärrstyrt läge. (1)
 \item Tryck på reset för att sätta roboten i inaktivt läge. (3)
-\item ... 
 \end{enumerate}
 
-\emph{Något om att stanna roboten...}
+Roboten kan stannas med reset-knappen på samma sätt som i det autonoma läget, eller med stopp-kommandot i PCn. 
 
 \subsection{PC}
 I fjärrstyrt läge kan användaren styra Komborobot med hjälp av en PC.
@@ -53,6 +53,7 @@ Nedan följer vilka knapptryckningar som genererar de olika kommandona:
 \item i - Minska värdet på linjesensorkalibreringskonstanten.
 \item c - Kalibrera linjesensorerna med linjesensorkalibreringskonstanten.
 \end{itemize}
+
 Då värdet på linjesensorkalibreringskonstanten ändras kommer bakgrunden på
 input\_control att ändras för att approximativt spegla vid vilken färg vi går
 från svart till vitt.
