@@ -39,7 +39,7 @@ ISR(TIMER1_COMPA_vect)
 {
 		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
 		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
-		count=7;												//starta pÃ¥ linjesensorer
+		count=7;	//starta på linjesensorer
 		ADCSRA |= (1<<ADSC);
 		ad_counter++;
 		if(ad_counter==1){
@@ -60,7 +60,7 @@ ISR(TIMER1_COMPB_vect)
 {
 		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
 		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
-		count=7;												//starta pÃ¥ linjesensorer
+		count=7;       //starta på linjesensorer
 		ADCSRA |= (1<<ADSC);
 		ad_counter++;
 		if(ad_counter==2){
@@ -83,7 +83,7 @@ ISR(TIMER1_COMPB_vect)
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  start_next_ad
- *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen fÃ¶r att
+ *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen för att
  *				  skicka data. Det här kan ses som sensorenhetens huvudprogram då alla
  *				  andra funktioner anropas härifrån.
  * =====================================================================================
@@ -149,7 +149,7 @@ void start_next_ad()
 
 		}
 		else if(state==5){			//front klar
-				//visa pÃ¥ display'
+				//visa på display'
 				/*if(dist_front == 20){ // stannar om robot nära vägg
 						header = 0xC3;
 						data = 192;
@@ -189,10 +189,12 @@ void start_next_ad()
 				data=dist_left_short | 0xC0;
 				req_sending();				
 		}
-		else if(state==8){			//linjesensor 0-7 pÃ¥gÃ¥r 
+
+		else if(state==8){			//linjesensor 0-7 pågår 
 				create_line_array(truncate(ADCH), 1);
 		}
-		else if(state==9){			//linjesensor 8-10 pÃ¥gÃ¥r
+		else if(state==9){			//linjesensor 8-10 pågår
+
 				create_line_array(truncate(ADCH), 2);
 		}
 				
@@ -215,7 +217,7 @@ void start_next_ad()
 						
 
 
-						//inga linjer? byt till maze_mode=1 om vÃ¤ggar finns 
+						//inga linjer? byt till maze_mode=1 om väggar finns 
 						if(line_array_1==0 && line_array_2==0) {
 								decide_maze_mode(1);
 						}
@@ -284,7 +286,7 @@ void start_next_ad()
 								generate_special_command(4);
 						}								
 
-						//linjer? byt till maze_mode=0 om inga vÃ¤ggar finns
+						//linjer? byt till maze_mode=0 om inga väggar finns
 						if(line_array_1!=0 || line_array_2!=0) {
 								decide_maze_mode(0);
 						}
@@ -292,12 +294,12 @@ void start_next_ad()
 
 
 
-				create_line_array(0,0);		//NollstÃ¤ll
+				create_line_array(0,0);		//Nollställ
 
 		}
 		else if (count<17){
 			count++;
-			ADCSRA |= (1<<ADSC);		//starta nÃ¤sta omvandling
+			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
 		}
 
 
@@ -306,7 +308,7 @@ void start_next_ad()
 
  /***************************************************************************\
 	Namn: control_mux														  
-	Beskr: StÃ¤ller om interna och externa muxar samt anropar omvandlingar,
+	Beskr: Ställer om interna och externa muxar samt anropar omvandlingar,
 		   returnerar ett värde beroende på muxarnas inställning.
  \***************************************************************************/
 
@@ -396,7 +398,7 @@ unsigned char control_mux()
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  create_line_array
- *  Description:  Fyller tvÃ¥ byte med data dÃ¤r bitarna visar 1 fÃ¶r svart och 0 fÃ¶r vit
+ *  Description:  Fyller två byte med data där bitarna visar 1 för svart och 0 för vit
  * =====================================================================================
  */
 void create_line_array(int trunc_value, int vect_id)
@@ -419,9 +421,9 @@ void create_line_array(int trunc_value, int vect_id)
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  truncate
- *  Description:  TrÃ¶sklar invÃ¤rdet
- *  		  Input: en byte som ska trÃ¶sklas
- *  		  Output: 1 om byten Ã¤r mindre Ã¤n trÃ¶skelvÃ¤rdet och 0 annars
+ *  Description:  Trösklar invärdet
+ *  		  Input: en byte som ska trösklas
+ *  		  Output: 1 om byten är mindre än tröskelvärdet och 0 annars
  * =====================================================================================
  */
 int truncate(unsigned char inbyte)
