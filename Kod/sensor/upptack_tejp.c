@@ -5,7 +5,7 @@
 #include "sensor_spi.h"
 #include "linjeskillnad.h"
 
-#define DELTA 20
+#define DELTA 22
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -20,6 +20,7 @@ int time1;
 int time2;
 int iterations;
 int counter;
+int maze_mode_exit_cnt=0;
 
 
 int find_ones(unsigned char array)
@@ -58,7 +59,6 @@ int markning(int now_value){
 	
 		if(time1-time2>DELTA){
 			//Sväng höger
-			
 			return 1;
 			
 		}
@@ -74,7 +74,7 @@ int markning(int now_value){
 			
 		}
 	
-	}
+	} 
 	
 	else {
 			if(count_2){
@@ -108,7 +108,16 @@ void decide_maze_mode(int no_tape)
 		}
 		else {
 				if((no_tape==0) && ((dist_left_front > 55) || (dist_right_front > 55))) {
-						maze_mode=0;
+						if(maze_mode_exit_cnt==5){
+								maze_mode=0;
+								maze_mode_exit_cnt=0;
+						}
+						else {
+								maze_mode_exit_cnt++;
+						}
+				}
+				else {
+						maze_mode_exit_cnt=0;
 				}
 		}
 }

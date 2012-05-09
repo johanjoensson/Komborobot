@@ -231,10 +231,10 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 			return FRAM;
 
 		case 2:
-			return VANSTER;
+			return HOGER;
 
 		case 3:
-			return HOGER;
+			return VANSTER;
 
                 case 7:
                         return FEL;

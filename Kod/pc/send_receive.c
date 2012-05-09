@@ -25,21 +25,7 @@
 	
 
 FILE *f;	
-struct instruction_t *inst;
-struct instruction_t *ex_inst;
 int sock;
-
-void init_inst(){
-        inst = malloc(sizeof(struct instruction_t));
-        ex_inst = malloc(sizeof(struct instruction_t));
-
-        inst->header = 0;
-        inst->data = 0;
-
-        ex_inst->header = 0;
-        ex_inst->data = 0;
-        return;
-}
 
 int new_data(FILE *db, struct instruction_t *inst)
 {
@@ -78,8 +64,6 @@ void exit_program()
 {
 	exit_curses();
 	fclose(f);
-        free(inst);
-        free(ex_inst);
         close_socket(sock);
 	exit(0);
 
@@ -88,8 +72,8 @@ int main(void)
 {
         sock = init();
 	signal(SIGINT, exit_program);
-        init_inst();
 	
+        struct instruction_t inst, ex_inst;
 
 #ifndef NO_BLUE
 	struct sockaddr_rc firefly = connect_to_firefly(sock);
@@ -100,23 +84,23 @@ int main(void)
 
 
 
-	inst->header = 'a';
-	inst->data = 'b';
+	inst.header = 'a';
+	inst.data = 'b';
 #ifdef DEBUG
-	ex_inst->header = (unsigned char) 0x02;		// Speckomm 
-	ex_inst->data = (unsigned char) 0x70;		// vänster fram, 15 cm
+	ex_inst.header = (unsigned char) 0x02;		// Speckomm 
+	ex_inst.data = (unsigned char) 0x70;		// vänster fram, 15 cm
 #endif /* DEBUG */
 	while(!quit){
-		if(new_data(f, inst)){
-			update_speed(inst);
+		if(new_data(f, &inst)){
+			update_speed(&inst);
 #ifndef NO_BLUE
-			send_inst(sock, inst);
+			send_inst(sock, &inst);
 #endif /* NO_BLUE */
 		}else{
 #ifndef NO_BLUE
-                        if( receive_inst(sock, firefly, ex_inst) == 0){
+                        if( receive_inst(sock, firefly, &ex_inst) == 0){
 #endif /* NO_BLUE */
-                                display_inst(ex_inst);
+                                display_inst(&ex_inst);
 #ifndef NO_BLUE
                         }
 #endif /* NO_BLUE */
