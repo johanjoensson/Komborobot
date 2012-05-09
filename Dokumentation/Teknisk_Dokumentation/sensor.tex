@@ -5,7 +5,7 @@
 Sensorenheten är den enhet som behandlar all sensordata. Den samlar in data från 
 avståndssensorerna och linjesensorerna som den sedan antingen omvandlar till 
 cm värden i avståndsensorns fall, eller trösklar och ger diskreta varierande storheter 
-som i linjesensorns fall. Linje sensorn kommunicerar sedan med kommunikationsenheten
+som i linjesensorns fall. Linjesensorn kommunicerar sedan med kommunikationsenheten
 som förmedlar värdena till styrenheten och till PCn.
 
 \subsection{Hårdvara}
@@ -146,8 +146,10 @@ Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCI
 \subsubsection{AD}
 
 \subsubsection{Linjesensor}
-Varje diod på linjesensorn A/D-omvandlas och jämförs med ett tröskelvärde, är
-det ett högt värde antas en tejp och en etta skiftas in i en byte och är det 
+Styrsignaler till multiplexern väljer ut en diod i taget.
+Varje diod på linjesensorn A/D-omvandlas och jämförs med ett tröskelvärde. Om
+det omvandlade värder är
+ett högt värde antas en tejp och en etta skiftas in i en byte och är det 
 ett lågt värde så antas ingen tejp och en nolla skiftas in, varje diod
 representeras alltså med en bit. Då det finns elva dioder så används två byte 
 för att representera hela linjesensorn. Tröskelvärdet går att justera från PCn. 
@@ -155,7 +157,8 @@ Ur de två byten med linjedata räknas vilket index som tejpen befinner sig på,
 detta indexet tar värden i intervallet 1-11. Från indexet beräknas en
 reglerparameter, negativ om roboten är till vänster och positiv om den är till
 höger. Denna parameter skickas till styrenheten där den används i
-linjeregulatorn, se \ref{sec:linjereglering}.
+linjeregulatorn, se \ref{sec:linjereglering}. Linjedatat undersökts också efter
+stoppsignaler i linjeläge och riktningsmarkeringar i labyrintläge.
 
 
 \subsubsection{Avståndsberäkning}
