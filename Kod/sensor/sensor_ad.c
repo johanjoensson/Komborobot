@@ -389,7 +389,6 @@ unsigned char control_mux()
                 default:
                         return 0;
         }
-
 }
 
 
