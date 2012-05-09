@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 int komm_init();
-//SPI för Kruse (master)
+//SPI fÃ¶r Kruse (master)
 
 void USARTInit(uint16_t ubrr_value);
 
@@ -31,5 +31,4 @@ int main(){
 
 	
 
-//return 0;
 }

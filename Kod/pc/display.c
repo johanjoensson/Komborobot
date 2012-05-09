@@ -111,14 +111,21 @@ void init_curses()
 	getmaxyx(stdscr, height, width);
 
 	mode = create_win(height/6, width, 0, 0, '#', '=', '/');
-	spec_komm = create_win(height/6, width/3, width/3, height/6, '#', '=', '/');
+	spec_komm = create_win(height/6, width/3, width/3, height/6, '#', '=',//
+                        '/');
 	lusensor = create_win(height >> 2, width/3, 0, height/6, '#', '=', '/');
-	llsensor = create_win(height >> 2, width/3, 0, (height/6) << 2, '#', '=', '/');
-	rusensor = create_win(height >> 2, width/3, width/3 << 1, height/6, '#', '=', '/');
-	rlsensor = create_win(height >> 2, width/3, width/3 << 1, (height/6) << 2, '#', '=', '/');
-	speed = create_win((height >> 1) - height/6, width/3, width/3, height/6 << 1, '#', '=', '/');
-	ltrim = create_win(height/3 , width/6, width/3, height/3 << 1, '#', '=', '/');
-	rtrim = create_win(height/3 , width/6, width >> 1, height/3 << 1, '#', '=', '/');
+        llsensor = create_win(height >> 2, width/3, 0, (height/6) << 2, '#',//
+                        '=', '/');
+	rusensor = create_win(height >> 2, width/3, width/3 << 1, height/6,//
+                        '#', '=', '/');
+	rlsensor = create_win(height >> 2, width/3, width/3 << 1,//
+                        (height/6) << 2, '#', '=', '/');
+	speed = create_win((height >> 1) - height/6, width/3, width/3,//
+                        height/6 << 1, '#', '=', '/');
+	ltrim = create_win(height/3 , width/6, width/3, height/3 << 1, '#',//
+                        '=', '/');
+	rtrim = create_win(height/3 , width/6, width >> 1, height/3 << 1,//
+                        '#', '=', '/');
         err = create_win(height/5, width/3, 0, 5*height/12, '#', '=', '/');
 	
 	speed_back = speed;
@@ -352,7 +359,8 @@ void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 	for(int i = x >> 4; i < x-1; i++){
 		mvwaddch(cur_win, y >> 1, i, ' ');
 	}
-	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen", (int) (inst->data & 0x7F));
+	mvwprintw(cur_win, y >> 1, x >> 4, "%dcm till väggen",//
+                        (int) (inst->data & 0x7F));
 	wrefresh(cur_win);
 
 #endif

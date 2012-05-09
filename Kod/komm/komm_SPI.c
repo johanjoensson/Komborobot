@@ -57,9 +57,9 @@ int tolka_och_skicka(unsigned char header,unsigned char data)
 
 int send_to_styr(unsigned char header,unsigned char data)
 {
-		PORTB &= ~(1<<PB4);		//Låg SS till styrenhet
+		PORTB &= ~(1<<PB4);		//LÃ¥g SS till styrenhet
 		header=transmit_data(header); //Byt header
-		while(!(GIFR & (1<<INTF1))) 	//vänta på att andra enheten läst data
+		while(!(GIFR & (1<<INTF1))) 	//vÃ¤nta pÃ¥ att andra enheten lÃ¤st data
 		{
 		;
 		}
@@ -72,15 +72,15 @@ int send_to_styr(unsigned char header,unsigned char data)
 
 int send_to_sensor(unsigned char header,unsigned char data)
 {
-		PORTB &= ~(1<<PB3);		//Låg SS till sensorenhet
+		PORTB &= ~(1<<PB3);		//LÃ¥g SS till sensorenhet
 		header=transmit_data(header); 	//Byt header
-		while(!(GIFR & (1<<INTF2))) 	//vänta på att andra enheten läst data
+		while(!(GIFR & (1<<INTF2))) 	//vÃ¤nta pÃ¥ att andra enheten lÃ¤st data
 		{
 		;
 		}
 		GIFR = GIFR & 0x20;						
 		data=transmit_data(data);		//Byt data
-		PORTB |= (1<<PB3);		//Hög SS till sensorenhet
+		PORTB |= (1<<PB3);		//HÃ¶g SS till sensorenhet
 		
 		tolka_och_skicka(header,data);	//Skicka data vidare
 		return 0;
@@ -91,10 +91,10 @@ int send_to_sensor(unsigned char header,unsigned char data)
 * SEND_TO_PC(unsigned char header,unsigned char data)
 *
 * Skickar i tur och ordning orden 'header' och 'data' 
-* via blåtand till PC.
+* via blÃ¥tand till PC.
 *
-* Efter sändning återställs enheten att vara redo att
-* ta emot data från PC.
+* Efter sÃ¤ndning Ã¥terstÃ¤lls enheten att vara redo att
+* ta emot data frÃ¥n PC.
 * ---------------------------------------------------*/
 int send_to_PC(unsigned char header,unsigned char data)
 {
@@ -131,8 +131,8 @@ int send_to_PC(unsigned char header,unsigned char data)
 
 int transmit_data(unsigned char data_send)
 {
-		SPDR=data_send;				//välj data som skickas och starta överföring
-		while(!(SPSR & (1<<SPIF))) 	//vänta på att alla data skiftats
+		SPDR=data_send;				//vÃ¤lj data som skickas och starta Ã¶verfÃ¶ring
+		while(!(SPSR & (1<<SPIF))) 	//vÃ¤nta pÃ¥ att alla data skiftats
 		{
 		;
 		}

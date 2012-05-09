@@ -9,9 +9,9 @@ void pass_from_PC(unsigned char header,unsigned char data);
 /* ---------------------------------------------
 * ISR(USART_RXC_vect)
 *
-* Avbrott som inträffar då data tagits emot från PC.
-* Första ordet sparas undan, och väntar på att ta
-* emot nästa.
+* Avbrott som intrÃ¤ffar dÃ¥ data tagits emot frÃ¥n PC.
+* FÃ¶rsta ordet sparas undan, och vÃ¤ntar pÃ¥ att ta
+* emot nÃ¤sta.
 * ---------------------------------------------*/
 ISR(USART_RXC_vect){
 
@@ -31,7 +31,7 @@ ISR(USART_RXC_vect){
 * USARTInit(uint16_t ubrr_value)
 *
 * Fukntionen initierar USART-kommunikation med firefly-
-* enheten, med följande parametrar:
+* enheten, med fÃ¶ljande parametrar:
 *
 * - Recieve enable, samt recieve complete-avbrott.
 * - Baude rate:  
@@ -49,7 +49,7 @@ void USARTInit(uint16_t ubrr_value)
 
 	SREG |= 0x80; // Global interrupt enable
 
-	DDRD |= 0x32; //Output på RTS,CTS och RXD
+	DDRD |= 0x32; //Output pÃ¥ RTS,CTS och RXD
     PORTD |= (1<<PIND5); //CTS
 
 }
