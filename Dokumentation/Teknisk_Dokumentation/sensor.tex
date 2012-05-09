@@ -76,6 +76,20 @@ Robotens kommer att uppfatta markeringar där det finns mer än 5 distinkta skil
 
 
 \subsubsection{Avståndssensorer}
+På roboten sitter fem avståndssensorer av typ GP2Y0A02YK som mäter avstånd
+mellan 20 och 150 cm. Två sitter på robotens vänstra sida, två på högra och en
+rakt fram. Dessa sensorer ger spänningsspikar varje millisekund så lågpassfilter
+används för att få en jämnare signal utan spikar. Lågpassfiltren figur
+har skärfrekvensen 54 Hz, se figur \ref{fig:lagpassfilter}. Utsignalen från
+lågpassfiltrena är kopplade till port A på AVRen, se figur \ref{fig:PINsensor}.
+
+\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=0.7]{bilder/LPfilter.pdf}
+  \caption{Lågpassfilter}
+  \label{fig:lagpassfilter}
+\end{figure}
+
 
 \subsubsection{Upptäckning av korsningar och 90\degree svängar}
 \label{sec:upptackkorsning}
