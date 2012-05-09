@@ -50,7 +50,7 @@ signed char cut(signed char value, signed char max);
 signed char distance_regulator(unsigned char left_front, unsigned char left_back,
                 unsigned char right_front, unsigned char right_back)
 {
-		speed = 107;
+		speed = 110;
         int Kp = 3;
 		int Ka = 1;
         int Kd = 14;
@@ -58,9 +58,9 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 
         signed char outvalue=0;
 
-        signed char difference_left = (left_front - left_back);		//+-1 justering beh?vs ej
-		signed char difference_right = (right_front) - right_back;	//de visar nog lika ?nd?
-		signed char difference_left_right_f = right_front - left_back;
+        signed char difference_left = ((left_front - 1) - left_back);		
+		signed char difference_right = (right_front) - right_back;	
+		signed char difference_left_right_f = right_front - (left_front - 1);
 		signed char difference_left_right_b = right_back - left_back;
 		
 		if(((left_front == 20) && (left_back == 20)) || left_front > 80){
@@ -77,12 +77,10 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 
 		if(wall==0){														//h?ger v?gg
 				outvalue = -Kp*(difference_right);							// P-delen
-//				outvalue=cut(outvalue,25);
-				outvalue += -Kd*(difference_right - old_distance_right);    // D-delen
+				outvalue -= Kd*(difference_right - old_distance_right);    // D-delen
 		}
 		else if(wall==1){													//v?nster v?gg
 				outvalue = Kp*(difference_left);               				// P-delen
-//				outvalue=cut(outvalue,25);
 				outvalue += Kd*(difference_left - old_distance_left);		// D-delen
 		}
 				
@@ -91,7 +89,15 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 
 		int temp =-Ka*(difference_left_right_f + difference_left_right_b)/(2);
 		if(!crossing){
-				outvalue += cut(temp,7);
+				if((left_front == 20) && (left_back == 20)){
+						outvalue -= 7;						
+				}
+				else if((right_front == 20) && (right_back == 20)){
+						outvalue += 7;
+				}
+ 				else{
+						outvalue += cut(temp,6);
+				}
 		}
 
         // sätter max- och minvärden på utvärdet
@@ -108,7 +114,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-		speed = 115;
+		speed = 118;
         signed char outvalue=0;
 		int Kd=1;
 
@@ -121,6 +127,8 @@ signed char line_regulator(signed char new_value)
 				}
 				else { 
 						angle=-1;
+
+
 				}
 				outvalue=35;
 				WARNING=1;
@@ -135,22 +143,22 @@ signed char line_regulator(signed char new_value)
 				old_angle_count=0;
 				WARNING=0;
 		}
-		else if(new_value==old_line && old_angle_count<4){
+		else if(new_value==old_line && old_angle_count<50){
 				angle=old_angle;
 				old_angle_count++;
 				WARNING=0;
 		}
-		else if(new_value==old_line && old_angle_count>=4){ 
+		else if(new_value==old_line && old_angle_count>=50){ 
 				outvalue=0;
 			    angle=0;
 			    WARNING=0;
 		}
 		
-		if(rep_count<20){
+		if(rep_count<200){
 				rep_count++;
 				if(abs(new_value-old_value)>38){
 						Kd=2;
-						rep_count=19;
+						rep_count=199;
 		
 				}
 				else {
@@ -170,15 +178,15 @@ signed char line_regulator(signed char new_value)
 				switch(new_value){
 					
 						case -127:
-							outvalue = 40;
+							outvalue = 38;
 							break;
 						
 						case -90:
-							outvalue = 35;
+							outvalue = 34;
 							break;
 				
 						case -75:
-							outvalue = 28;
+							outvalue = 31;
 							break;
 
 						case -50: 
@@ -189,26 +197,26 @@ signed char line_regulator(signed char new_value)
 							outvalue = 20;
 							break;
 						case 0:
-							outvalue = 10;
+							outvalue = 17;
 							break;
 						case 25:
-							outvalue = 10;
+							outvalue = 15;
 							break;
 				
 						case 50:
-							outvalue = 9;
+							outvalue = 12;
 							break;
 						
 						case 75: 
-							outvalue = 9;
+							outvalue = 10;
 							break;	
 					
 						case 90:
-							outvalue = 7;
+							outvalue = 8;
 							break;
 						
 						case 127:
-							outvalue = 3;
+							outvalue = 7;
 							break;
 				
 						default: 
@@ -220,24 +228,24 @@ signed char line_regulator(signed char new_value)
 					
 					switch(new_value){
 						case -127:
-							outvalue = 3;
+							outvalue = 7;
 							break;
 						case -90:
-							outvalue = 7;
+							outvalue = 8;
 							break;
 						
 						case -75:
-							outvalue = 9;
+							outvalue = 10;
 							break;
 						case -50: 
-							outvalue = 9;
+							outvalue = 12;
 							break;	
 					
 						case -25:
-							outvalue = 10;
+							outvalue = 15;
 							break;
 						case 0:
-                        	outvalue = 10;
+                        	outvalue = 17;
 							break;
 						case 25:
 							outvalue = 20;
@@ -247,14 +255,14 @@ signed char line_regulator(signed char new_value)
 							outvalue = 24;
 							break;
 						case 75: 
-							outvalue = 30;
+							outvalue = 31;
 							break;	
 							
 						case 90:
-							outvalue = 35;
+							outvalue = 34;
 							break;
 						case 127:
-							outvalue = 40;
+							outvalue = 38;
 							break;
 						default: 
 							outvalue = 0;
@@ -284,12 +292,12 @@ signed char line_regulator(signed char new_value)
 void drive_engines(signed char value)
 {
         if(value > 0){
-                OCR2 = speed + 3 - value; // Vänstermotor
+                OCR2 = speed + 4 - value; // Vänstermotor
                 OCR0 = speed; // + value; // Högermotor
         } else {
                 value = -value;
 
-                OCR2 = speed + 3; //+ value; // Vänstermotor
+                OCR2 = speed + 4; //+ value; // Vänstermotor
                 OCR0 = speed - value; // Högermotor
         }
 }
@@ -297,7 +305,7 @@ void drive_engines(signed char value)
 void drive_engines_line(signed char value)
 {
         if(angle < 0){//V?nstersv?ng
-
+				
 			
 					OCR2 = speed - (value+3);  // Vänstermotor
               		OCR0 = speed;			// Högermotor

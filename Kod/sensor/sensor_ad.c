@@ -14,6 +14,8 @@ void start_next_ad();
 int get_first_one(int value);
 unsigned char control_mux();
 int display_ctr = 0;
+int ad_counter=0;
+int duplicate;
 
 
 
@@ -27,6 +29,30 @@ ISR(TIMER1_OVF_vect)
 {
 		ADCSRA |= (1<<ADSC);
 		count=0;			//starta om
+		OCR1A=0x1745;
+		OCR1B=0x2E8A;
+		ad_counter=0;
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
+		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
+		count=5;												//starta pÃ¥ linjesensorer
+		ADCSRA |= (1<<ADSC);
+		ad_counter++;
+		if(ad_counter==1){
+				OCR1A=0x45CF;
+		}
+		else if(ad_counter==3){
+				OCR1A=0x7459;
+		}
+		else if(ad_counter==5){
+				OCR1A=0xA2E3;
+		}
+		else if(ad_counter==7){
+				OCR1A=0xD16D;
+		}
 }
 
 ISR(TIMER1_COMPB_vect)
@@ -35,6 +61,20 @@ ISR(TIMER1_COMPB_vect)
 		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
 		count=5;												//starta pÃ¥ linjesensorer
 		ADCSRA |= (1<<ADSC);
+		ad_counter++;
+		if(ad_counter==2){
+				OCR1B=0x5D14;
+		}
+		else if(ad_counter==4){
+				OCR1B=0x8B9E;
+		}
+		else if(ad_counter==6){
+				OCR1B=0xBA28;
+		}
+		else if(ad_counter==8){
+				OCR1B=0xE8B2;
+		}
+
 }
 
 
@@ -124,7 +164,7 @@ void start_next_ad()
 							data_to_display((get_next_special_command()/16+100),0x05);
 					}
 					else{
-							data_to_display(get_next_special_command(),0x05);
+							data_to_display(get_next_special_command()/16,0x05);
 					}
 					display_ctr = 0;
 				}
@@ -181,18 +221,32 @@ void start_next_ad()
 						}
 						else if(temp2==2){		//vanlig 90 högersväng
 								header=0xC3;
-								data=0x40;
+								if(duplicate==1){
+										data=0x00;
+										duplicate=0;
+								}
+								else {
+										duplicate=1;
+										data=0x40;
+								}
 								req_sending();
 						}
 						else if(temp2==3){		//vanlig 90 vänstersväng
 								header=0xC3;
-								data=0x50;
+								if(duplicate==1){
+										data=0x00;
+										duplicate=0;
+								}
+								else {
+										duplicate=1;
+										data=0x50;
+								}
 								req_sending();
 						} 
 						
 
 						//linjer? byt till maze_mode=0 om inga vÃ¤ggar finns
-						if(line_array_1!=0 && line_array_2!=0) {
+						if(line_array_1!=0 || line_array_2!=0) {
 								decide_maze_mode(0);
 						}
 				}

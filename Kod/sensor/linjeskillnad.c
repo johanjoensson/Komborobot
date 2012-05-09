@@ -5,6 +5,7 @@
 #include "sensor_spi.h"
 
 int find_index(int value);
+int delay_stop=0;
 
 // returns a value based on how far away the robot is from the center of the 
 // line. Value is 11 bits that represent the converted values 
@@ -54,6 +55,10 @@ int find_index(int value)
 		int found_first_zero=0;
 		int last = (value%2);
 		int number_of_switches=0;
+		if(last){
+				number_of_switches++; // R?kna som en ?ndring om f?rsta dioden
+									  // ?r svart 
+		}
 		for(int i=0;i<11; i++){
 				if(!found_one){
 						if(value%2 == 1){
@@ -75,13 +80,18 @@ int find_index(int value)
 			value = value >>1;
 		
 		}
-	int index=(one_index + zero_index) >> 1;
-	if(number_of_switches>4){
-		index=20;
-		   }
-	
-			return index;
-	}
-		   
-
-		 
+		if(last){
+				number_of_switches++; // R?kna som ?ndring om sista dioden ?r 
+									  // svart
+		}
+		int index=(one_index + zero_index) >> 1;
+		if(number_of_switches>5){
+				delay_stop++;
+				if (delay_stop>5){
+						index=20;
+				}
+	   	} else {
+				delay_stop=0;
+		}
+		return index;
+}
