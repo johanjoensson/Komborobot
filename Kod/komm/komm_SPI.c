@@ -35,8 +35,9 @@ ISR(INT1_vect)
 
 /* int tolka_och_skicka(unsigned char header,unsigned char data)
  *
- * Tolkar den mottagna headerbyten som återkommer vid varje överföring. Ska databyten 
- * vidare så skickas header och data till den eller de enheter som datat är adresserad till.
+ * Tolkar den mottagna headerbyten som återkommer vid varje överföring. 
+ * Ska databyten vidare så skickas header och data till den eller de enheter
+ *  som datat är adresserad till.
  *
  * Input: Headerbyte och databyte
  * Output: 0
@@ -82,7 +83,8 @@ int send_to_styr(unsigned char header,unsigned char data)
 {
 		PORTB &= ~(1<<PB4);		//Låg SS till styrenhet
 		header=transmit_data(header); //Byt header
-		while(!(GIFR & (1<<INTF1))) 	//vänta på att andra enheten läst data
+		while(!(GIFR & (1<<INTF1)))  //vänta på att andra 
+                                             //enheten läst data
 		{
 		;
 		}
@@ -106,7 +108,8 @@ int send_to_sensor(unsigned char header,unsigned char data)
 {
 		PORTB &= ~(1<<PB3);		//Låg SS till sensorenhet
 		header=transmit_data(header); 	//Byt header
-		while(!(GIFR & (1<<INTF2))) 	//vänta på att andra enheten läst data
+		while(!(GIFR & (1<<INTF2))) 	//vänta på att andra enheten 
+                                                //läst data
 		{
 		;
 		}
@@ -143,16 +146,8 @@ int send_to_PC(unsigned char header,unsigned char data)
       ;
    	}
 
-/*
-	volatile int ctr = 0;
-	while(ctr<100){
-		ctr++;
-	}
-*/
 
 /* Reset flags */
-//	UCSRA = (1<<TXC);
-//	UCSRB = (1<<TXEN);
 	UCSRB = (1<<RXCIE)|(1<<RXEN);
 	PORTD &= 0xEF; //RTS = 0
 	PORTD |= (1<<PIND5); //CTS = 1
@@ -170,8 +165,8 @@ int send_to_PC(unsigned char header,unsigned char data)
 
 int transmit_data(unsigned char data_send)
 {
-		SPDR=data_send;				//välj data som skickas och starta överföring
-		while(!(SPSR & (1<<SPIF))) 	//vänta på att alla data skiftats
+		SPDR=data_send;	//välj data som skickas och starta överföring
+		while(!(SPSR & (1<<SPIF)))//vänta på att alla data skiftats
 		{
 		;
 		}

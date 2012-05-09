@@ -30,17 +30,20 @@ enum sensors{
 /******************************************************************************
  * De olika fönster vi visar information i
  *****************************************************************************/
-WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back, *err;
+WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed,//
+      *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back, *err;
 
 /******************************************************************************
  * Initiera ett fönster
  *****************************************************************************/
-WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
+WINDOW *create_win(int win_height, int win_width, int starty, int startx,//
+                char corner, char hline, char vline)
 {
 	WINDOW *local_win;
 
 	local_win = newwin(win_height, win_width, startx, starty);
-	wborder(local_win, vline, vline, hline, hline, corner, corner, corner, corner);
+	wborder(local_win, vline, vline, hline, hline, corner, corner, corner,//
+                        corner);
 
 	wrefresh(local_win);
 
@@ -234,13 +237,16 @@ void display_mode(struct instruction_t *inst)
 	}
 	switch(run_mode(inst)){
 		case LABYRINT:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Kör i labyrint");
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,//
+                                        "Kör i labyrint");
 			break;
 		case LINJE:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Följer linjen");
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,//
+                                        "Följer linjen");
 			break;
 		case FJARR:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,"Fjärrstyrt läge");
+			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,//
+                                        "Fjärrstyrt läge");
 			break;
 		default:
                         break;
@@ -410,7 +416,8 @@ void display_spec(struct instruction_t *inst)
 			}
                         wrefresh(spec_komm);
 
-			mvwprintw(spec_komm, y >> 1, x >> 2,  "Sväng vänster!");
+			mvwprintw(spec_komm, y >> 1, x >> 2,//
+                                        "Sväng vänster!");
 			break;
 		case HOGER:
                         clear_error();
