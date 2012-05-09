@@ -9,6 +9,18 @@ som i linjesensorns fall. Linje sensorn kommunicerar sedan med kommunikationsenh
 som förmedlar värdena till styrenheten och till PCn.
 
 \subsection{Hårdvara}
+Sensorenheten utgörs av en AVR microcontroller samt de analoga sensorer som är kopplade till denna. Sensorenheten består av en AVR ATmega16 som 
+kopplats till fem avståndssensorer, de sensorer som hittar linjer på marken samt en display. För AD-omvandlig så används den interna omvandlaren på port A
+i mikroprocessorn, se figur \ref{fig:PINsensor}. 
+
+%Linjesensorer
+Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer. 
+
+%AvståndssensorerSensorenheten har fem optiska avståndsmätare av typen \emph{GP2Y0A02YK} (20-150 cm). Två är placerade på vardera sida av roboten, en fram och en bak på var sida. Vidare sitter en sensor riktad framåt. 
+
+%Display
+En alfanumerisk LCD-display av typen \emph{LCD JM162A} används för att visa avstånd till väggarna när roboten är i labyrintläge. 
+
 
 \begin{figure}[H]
   \centering
