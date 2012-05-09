@@ -346,11 +346,11 @@ unsigned char control_mux()
 		case(6):
 				ADMUX &= ~(1<<MUX2);				//PA3
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
-				//kanal noll pÃ¥ extern mux/demux
+				//kanal noll på extern mux/demux
 				dist_left_short=kortvansteromvandling(ADCH);
 				return 7;
 		case(7):
-				PORTC |= (1<<PC0);					//vÃ¤lj kanal 1
+				PORTC |= (1<<PC0);					//välj kanal 1
 				return 8;
 		case(8):
 				PORTC |= (1<<PC1);
