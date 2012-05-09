@@ -41,15 +41,24 @@ signalen är jordad då dataväljning alltid ska vara tillåten.
 
 \subsubsection{Upptäckning av riktningsmarkeringar}
 \label{sec:riktmark}
-Då roboten är i en labyrint kommer linjeföljarsensorn huvudsakligen användas 
+Då roboten är i en labyrint kommer linjeföljarsensorn användas 
 för att hitta riktningsmarkeringar. Dessa markeringar används för att visa i 
 vilken riktning roboten ska färdas i nästkommande korsning.  I enlighet med 
-banspecifikationen, se *REF BANSPEC*, är funktionen anpassad för att uppfatta 
+banspecifikationen är funktionen anpassad för att uppfatta 
 följande signaler:
 
 Högersväng visas med en tunn tejpmarkering följd av en tre gånger så tjock.
 Vänstersväng visas genom en tjock tejpmarkering följd av en tre gånger så tunn.
-Framåt visas genom två tunna tejpmarkeringar.
+Framåt visas genom två tunna tejpmarkeringar. Se figur \ref{fig:tejpmarkeringar}.
+för samtliga markeringars utseende.
+
+\begin{figure}[H]
+  \centering
+ \includegraphics[angle=0,scale=0.5]{bilder/tejpmarkeringar.pdf}
+  \caption{De olika typer av tejpmarkeringar som används}
+  \label{fig:tejpmarkeringar}
+\end{figure}
+
 
 Vid varje uppdatering av samtliga linjeföljarsensorer görs en kontroll om de 
 tre mittersta sensorerna ligger över tejp. Är så fallet så börjar antalet 
@@ -59,6 +68,11 @@ tillbringat över tejpen. Proceduren upprepas därefter och antalet iterationer
 jämförs för att se vilken tejpbit som var bredast, den första eller den andra
 . Resultatet sparas därefter och efterfrågat kommando utförs i nästkommande 
 korsning, se \ref{sec:upptackkorsning}.
+
+\subsubsection{Upptäckning av stoppsignal}
+När banan tar slut ska det i enlighet i banspecifikationen finnas en speciell typ av 
+markering. Avslutet ska ske på en linje och markeringen går att se i figur \ref{fig:tejpmarkeringar}.
+Robotens kommer att uppfatta markeringar där det finns mer än 5 distinkta skillnader mellan tejp och golv, förutsatt att den ser markeringen under en tidsperiod, som en stoppsignal. 
 
 
 \subsubsection{Avståndssensorer}
@@ -82,21 +96,21 @@ lågpassfiltrena är kopplade till port A på AVRen, se figur \ref{fig:PINsensor
 Enligt specifikationen av den bana som roboten ska kunna följa, framgår det 
 att det före alla korsningar ska finnas tejpmarkeringar som visar i vilken 
 riktning roboten ska svänga, se \ref{sec:riktmark}. Roboten kommer att 
-upptäcka korsningar om två av riktningarna höger, vänster och framåt visar 
+upptäcka korsningar om två eller fler av riktningarna höger, vänster och framåt visar 
 mer än 80 cm.
 
 Roboten kommer att upptäcka 90\degree svängar om det är längre än 80 cm åt 
 höger eller vänster(inte båda), samt mindre än 35cm framåt.
 
 Upptäcker roboten en korsning kommer det kommando som beskrivits av tidigare 
-tejpmarkeringar att skickas till styrenheten. Datat som skickas är skrivet 
+tejpmarkeringar att skickas till styrenheten. Det data som skickas är skrivet 
 för att uppfattas som ett så kallat specialkommando, det vill säga 
 styrenheten har en procedur som utförs utan att ta hänsyn till den reglerdata 
 som skickas från sensorenheten. Märk att detta specialkommando innehåller en 
 framkörning till mitten av korsningen, till skillnad från 90\degree svängar 
 som utförs omedelbart.
 
-Upptäcker korsningen en 90\degree sväng kommer ett annat specialkommando att 
+Upptäcker roboten en 90\degree sväng kommer ett annat specialkommando att 
 utföras, där roboten svänger 90\degree åt det håll som avståndssensorerna 
 visar har det längre avståndet.
 
@@ -129,4 +143,22 @@ för att representera hela linjesensorn.
 
 
 \subsubsection{Kommunikation}
+Kommunikationsenheten använder den anslutna databussen för att förmedla 
+data till andra delar av roboten. Sensorenheten är den stora leverantören av 
+data i systemet och sänder iväg betydligt mer data än vad den tar emot. För att 
+adressera och specificera den data som skickas iväg från sensorenheten märks 
+headerbyten upp med diverse olika flaggor och adresseringsbits. För mer info om 
+dessa, se \ref{sec:protokoll}. Den enda data som tas emot av sensorenheten är en 
+referenskod för att kalibrera linjesensorerna.
+
+I fjärrstyrt läge så skickar sensorenheten avståndet från avståndssensorerna till datorn. 
+I detta läge skickar sensorenheten ingen data till styrenheten. I autonomt läge då 
+roboten befinner sig över en linje skickar sensorenheten data om var tejpen befinner 
+sig på linjesensorn till styrenheten, samt avståndet till väggarna till datorn. Befinner sig 
+roboten i en labyrint skickar sensorenheten avståndet till väggarna till både sensorenheten 
+och datorn.
+
+Då sensorenheten tar ett beslut om att ett avvikande beteende är nödvändigt, till exempel 
+en korsning eller en stoppmarkering, så skickas denna information alltid till både styrenheten och datorn.
+
 
