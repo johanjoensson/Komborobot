@@ -1,6 +1,15 @@
 \section{Styrenhet}
 
+Styrenhetens huvudsakliga uppgift är att ta emot data från
+kommunikationsenheten och omvandla det till PWM signaler som styr motorerna.
+Styrningen av motorerna sker antingen autonomt med reglering eller 
+manuellt genom styrkommandon.
+
 \subsection{Hårdvara}
+
+Styrenheten består av en AVRAtmega16 som sänder styrsignalerna till motorerna, 
+En brytknapp som väljer mellan autonomt och manuellt läge, en startknapp och en 
+resetknapp.  
 
 \begin{figure}[H]
   \centering
@@ -12,7 +21,15 @@
 
 \subsection{Mjukvara}
 
+Mjukvaran i styrenheten är indelad i två delar, en manuell del och en autonom del.
+I den manuella delen styrs motorerna via instruktioner från PCn som skickas 
+genom kommunikationsenheten. PCn skickar då direkta kommandon om vad 
+den ska göra. I den autonoma delen kommer styrenheten istället ta emot 
+sensordata, ursprungligen skickat från sensorenheten. Styrenheten sköter sedan 
+regleringen utifrån dessa sensorvärden.
+
 \subsubsection{Autonomt läge}
+
 
 \subsection{Reglering}
 Två olika regleralgoritmer används i roboten, en när roboten följer linjer och
@@ -75,3 +92,18 @@ den skillnaden stor så motverkar den P-delen. Eftersom D-delen reglerar på
 relativt små skillnader har den hög vikt.
 
 \label{reglering}
+
+\subsubsection{Manuell läge}
+
+I manuellt läge styrs Roboten med styrsignaler som skickas från PCn via 
+kommunikationsenheten. I mjukvaran liger kod för kommandona; rakt 
+fram, bakåt, sväng höger, sväng vänster, rotera höger, rotera vänster
+och stopp. Det finns även en funktion trim som ökar respektive sänker 
+hastigheten på ett hjul. Detta så att man ska kunna öka precisionen vid 
+rak körning. Styrkommandona, som kommer in via SPI bussen, tolkas 
+tolkas först och anropar sedan den funktion som efterfrågades av PCn
+
+
+
+	
+
