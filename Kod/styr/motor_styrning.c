@@ -53,9 +53,9 @@ void stop(unsigned char speed)
 void forward(unsigned char speed)
 {
 		set_speed(speed);
-		PORTD &= 0xCF;	//ställer riktning framåt
-		OCR0 = (speed_right);		//höger
-		OCR2 = (speed_left);		//vänster
+		PORTD &= 0xCF;			//ställer riktning framåt
+		OCR0 = (speed_right);	//höger
+		OCR2 = (speed_left);	//vänster
 }
 
 void forward_left(unsigned char speed)
