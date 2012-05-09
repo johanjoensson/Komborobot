@@ -95,8 +95,8 @@ int markning(int now_value){
 }
 
 /*****************************************************************************\
-Sätter maze_mode=1 om roboten har v?ggar p? b?da sidor och ingen tejp, annars
-s?tts maze_mode=0 om det finns en linje och bara en v?gg
+Sätter maze_mode=1 om roboten har väggar på båda sidor och ingen tejp, annars
+sätts maze_mode=0 om det finns en linje och bara en vägg
 \*****************************************************************************/
 
 void decide_maze_mode(int no_tape)
