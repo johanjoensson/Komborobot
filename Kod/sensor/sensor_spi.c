@@ -39,9 +39,6 @@ int req_sending()
  *
  * Avbrottsvektor som aktiveras då en SPI-överföring är färdig. 
  * Skickar också den andra halvan i överföringen, databyten.
- *
- *
- *
  */
 
 
@@ -92,20 +89,13 @@ void tolka_data()
 
 
 //auto_mode beskriver huruvida roboten är i autonomt läge eller ej.
-//INT0 är programmerat för att ge avbrott på förändring på spaken för att byta läge
+//INT0 är programmerat för att ge avbrott på förändring på spaken då byts läge
 
 ISR(INT0_vect)
 {
 		decide_mode();
 }
 	
-/*void decide_mode()
- *
- *ändrar läget från fjärrstyrt till autonomt och viceverca
- *Input: Inget
- *Output: Void
- */
- 
 void decide_mode()
 {
 		if(0x04==(PIND & 0x04)){
