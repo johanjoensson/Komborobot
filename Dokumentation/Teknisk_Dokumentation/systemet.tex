@@ -23,12 +23,15 @@ Dessutom finns på ovansidan en knapp för att starta roboten då den är i auto
 
 \begin{figure}[H]
  \centering
- \includegraphics[angle=0,scale=0.8]{bilder/systemoversikt.pdf}
+ %\includegraphics[angle=0,scale=0.8]{bilder/systemoversikt.pdf}
   \caption{Översikt av systemet}
   \label{fig:system}
 \end{figure}
 
 
 \subsection{Kommunikation}
-All intern kommunikation sker via en SPI-buss. Kommunikationsenheten fungerar som master på bussen, och all kommunikation går via den. När en enhet vill kommunicera med en annan kommer aviseras detta genom att enheten genererar ett avbrott på kommunikationsenheten. 
-Robotens kommunikation med PC-mjukvaran sker via bluetooth.
+All intern kommunikation sker via en SPI-buss. Kommunikationsenheten fungerar 
+som master på bussen, och all kommunikation går via den. När en enhet vill 
+kommunicera med en annan kommer aviseras detta genom att enheten genererar 
+ett avbrott på kommunikationsenheten.  Robotens kommunikation med PC-
+mjukvaran sker via bluetooth.
