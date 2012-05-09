@@ -45,30 +45,15 @@ att generera styrkommandon:
 \item pil höger - trim höger, öka effekten på höger motor en aning (små steg, användbart för finjustering)
 \item pil vänster - trim vänster, öka effekten på vänster motor en aning (små steg, användbart för finjustering)
 \item o - nollställ trim
+\item u - öka linjesensorklibreringskonstanten 
+\item i - minska linjesensorkalibreringskonstanten
+\item c - kalibrera linjesensorerna med värdet sparat i
+linjesensorkalibreringskonstanten
 \item esc - avsluta input control
 \end{itemize}
 
+Värdet på linjesensorkalibreringskonstanten anges inte exakt, däremot så anger
+färgen på input\_control ett ungeförligt värde.
+
 För att avsluta send\_receive används <ctr + c> vilket kommer återställa
 terminalen åt användaren.
-
-% \subsection{Implementation}
-% 
-% Mjukvaran är skriven i programspråken C samt Tcl och använder utöver Cs standardbibliotek
-% även gränssnittet BlueZ för att kommunicera via blåtand.
-% 
-% \subsection{Användande}
-% 
-% Mjukvaran kommer utgöras av ett fönster där användaren kan se information
-% skickad från robotens sensorer och dess styrenhet samt skicka styrkommandon till
-% roboten.
-% 
-% I fjärrstyrt läge kan användaren välja att använda de pilknappar som finns i
-% fönstret för att styra roboten eller så kan användaren använda piltangenterna på
-% tangentbordet.
-% 
-% I autonomt läge kommer gränssnittet visa information från robotens sensorer samt
-% vilket styrkommando som roboten just nu utför.
-% 
-% Gränssnittet är enkelt att använda, kommandona är logiska och simpla och
-% informationen från roboten visas på ett tydligt och lättförståeligt sätt.
-% 
