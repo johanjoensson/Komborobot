@@ -1,20 +1,31 @@
+/******************************************************************************
+ * Datum 09/05/2012
+ * 
+ * Mainfunktion fšr kommunikationsenhet. 
+ *
+ * Skapad av: Markus Falck
+ *
+ * Redigerad: 09/05/2012
+ *****************************************************************************/
+
+
 #include <avr/io.h>
 #include <avr/interrupt.h> 
+
+
 int komm_init();
-//SPI för Kruse (master)
 
 void USARTInit(uint16_t ubrr_value);
 
+//Variabel fšr att motverka att kompilatorn tar bort en oŠndlig loop.
 volatile int a=0;
 
 int main(){
-
-		//volatile char SPIF;		//SPI interrupt flag
 		
-
-		
-		
+		//Initiering av kommunikationsenhet exklusive USART
 		komm_init();
+		
+		//Initiering av USART
 		USARTInit(8);
 
 
@@ -25,11 +36,6 @@ int main(){
 				
 				}
 		}
-		
-				
-		return 0;
-
 	
-
-//return 0;
+		return 0;
 }
