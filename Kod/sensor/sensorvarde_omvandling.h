@@ -15,6 +15,8 @@ int hogeromvandling_back(int sensorvarde);
 int vansteromvandling_front(int sensorvarde);
 int vansteromvandling_back(int sensorvarde);
 int framomvandling(int sensorvarde);
+int kortvansteromvandling(int sensorvarde);
+int korthogeromvandling(int sensorvarde);
 
 #endif
 

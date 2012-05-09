@@ -11,18 +11,17 @@ Funktionen läser
 
 unsigned char kommando;
 unsigned char dist_left_front, dist_left_back, dist_right_front;
+unsigned char dist_right_back, short_right; 
 unsigned char count;
-int done_with_special_command;
 
 void tolka_data()
 {
 		
-		if(auto_mode==1 && start==1)						//autonom
+		if(auto_mode==1 && start==1)					//autonom
 		{
 				if(0x02==(header & 0x02))		//D-flagga=1?
 				{
 						specialkommando(data & 0x70);
-						done_with_special_command = 1;
 				}
 				else if(0x11==(header & 0x11)){		//linjeläge
 						drive_engines_line(line_regulator(data));
@@ -39,13 +38,23 @@ void tolka_data()
 								count++;
 						}
 						else if(count==3 && 0x0C==(header & 0x0C)){
-								drive_engines(distance_regulator(
-								dist_left_front, dist_left_back, 
-								dist_right_front, data));
+								if(0x80 != (0x80 & data)){ 
+										dist_right_back=data;
+								}
+								else if(0x80==(0xC0 & data)){
+										short_right=(data & 0x7F);
+								}
+								else if(0xC0==(0xC0 & data)){
+										drive_engines(distance_regulator(
+										dist_left_front, dist_left_back, 
+										dist_right_front, dist_right_back,
+										(data & 0x3F) , short_right));
+										count=0;
+								}		
 						}
 				}
 		}
-		else if(auto_mode==0 && (header & 0x01) == 0)				//fjärrstyrd
+		else if(auto_mode==0 && (header & 0x01) == 0)		//fjärrstyrd
 		{
 				kommando=(data & 0xF0);
 
