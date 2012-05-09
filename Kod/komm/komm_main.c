@@ -2,7 +2,7 @@
 /******************************************************************************
  * Datum 09/05/2012
  * 
- * Mainfunktion för kommunikationsenhet. 
+ * Mainfunktion f√∂r kommunikationsenhet. 
  *
  * Skapad av: Markus Falck
  *
@@ -18,7 +18,7 @@ int komm_init();
 
 void USARTInit(uint16_t ubrr_value);
 
-//Variabel för att motverka att kompilatorn tar bort en oändlig loop.
+//Variabel f√∂r att motverka att kompilatorn tar bort en o√§ndlig loop.
 volatile int a=0;
 
 int main(){
