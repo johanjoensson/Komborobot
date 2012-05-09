@@ -213,7 +213,7 @@ void start_next_ad()
 
 						int temp2 = search_for_crossroad();
 					
-						if(temp2==1 && (((dist_right_front > 80) && (dist_right_back < 80)) || ((dist_left_front > 80) && (dist_left_back < 80)))){
+						if(temp2==1 && (((dist_right_front > 65) && (dist_right_back < 65)) || ((dist_left_front > 65) && (dist_left_back < 65)))){
 							//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
  							send_special_command(get_next_special_command());
 							//Resetar den globala variabeln next_special_command for att forma roboten att uppna vanlig reglering

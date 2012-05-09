@@ -50,10 +50,10 @@ signed char cut(signed char value, signed char max);
 signed char distance_regulator(unsigned char left_front, unsigned char left_back,
                 unsigned char right_front, unsigned char right_back)
 {
-		speed = 110;
-        int Kp = 3;
+		speed = 108;
+        int Kp = 5;
 		int Ka = 1;
-        int Kd = 14;
+        int Kd = 18;
 		unsigned char crossing = 0;
 
         signed char outvalue=0;
@@ -62,10 +62,18 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		signed char difference_right = (right_front) - right_back;	
 		signed char difference_left_right_f = right_front - (left_front - 1);
 		signed char difference_left_right_b = right_back - left_back;
+
+		//reglera p? n?rmsta v?ggen
+		if((right_front+right_back) < (left_front+right_back)){
+				wall=0;
+		}
+		else {
+				wall=1;
+		}
 		
-		if(((left_front == 20) && (left_back == 20)) || left_front > 80){
+		if(((left_front <= 20) && (left_back <= 20)) || left_front > 80){
 				wall = 0;
-		} else if(((right_front == 20) && (right_back == 20)) || right_front > 80){
+		} else if(((right_front <= 20) && (right_back <= 20)) || right_front > 80){
 				wall = 1;
 		}
 
@@ -88,16 +96,14 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		old_distance_left = difference_left;		
 
 		int temp =-Ka*(difference_left_right_f + difference_left_right_b)/(2);
-		if(!crossing){
-				if((left_front == 20) && (left_back == 20)){
-						outvalue -= 7;						
-				}
-				else if((right_front == 20) && (right_back == 20)){
-						outvalue += 7;
-				}
- 				else{
-						outvalue += cut(temp,6);
-				}
+		if((left_front <= 20) && (left_back <= 20)){
+				outvalue -= 7;						
+		}
+		else if((right_front == 20) && (right_back == 20)){
+				outvalue += 7;
+		}
+		else if(!crossing){
+				outvalue += cut(temp,6);
 		}
 
         // sätter max- och minvärden på utvärdet
@@ -114,14 +120,15 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-		speed = 118;
+		speed = 110;
         signed char outvalue=0;
 		int Kd=1;
 
         //Kollar om roboten rör sig åt höger eller vänster
         
 		
-		if(new_value==0 && abs(old_line)>75){
+		if(new_value==0 && abs(old_line)>90
+		){
 				if(old_line<0){
 						angle=1;
 				}
