@@ -74,7 +74,10 @@ void event_loop(FILE *db)
         screen_rect.x = screen_rect.y = 0;
         screen_rect.w = screen->w;
         screen_rect.h = screen->h; 
-
+/******************************************************************************
+ * Färgkoder som används för att visa linjesensorkalibreringskonstantens
+ * (sensor_thresh) värde
+ *****************************************************************************/
         Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255);
         Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
         Uint32 c1 = SDL_MapRGB(screen->format, 0x1F, 0x1F, 0x1F);
@@ -111,10 +114,14 @@ void event_loop(FILE *db)
         colors[0xE] = cE;
         colors[0xF] = white;
         
+
         SDL_FillRect(screen, &screen_rect, colors[(sensor_thresh & 0xF0) >> 4]);
         SDL_Flip(screen);
-		
+
 	int quit = 0;
+        /**********************************************************************
+         * Börja hantera användarinstruktioner
+         *********************************************************************/
 	while((quit == 0) && (SDL_WaitEvent(&event))){
 		switch(event.type){
 			case SDL_QUIT:
@@ -212,22 +219,6 @@ void event_loop(FILE *db)
                                 SDL_FillRect(screen, &screen_rect, colors[(sensor_thresh & 0xF0) >> 4]);
                                 SDL_Flip(screen);
 				break;
-				/*                        case SDL_KEYUP:
-							  switch(event.key.keysym.sym){
-							  case SDLK_w:
-							  case SDLK_a:
-							  case SDLK_s:
-							  case SDLK_d:
-							  case SDLK_q:
-							  case SDLK_e:
-							  on_key_up(inst);
-							  add_to_db(db, inst, 2);
-							  break;
-							  case SDLK_RIGHT:
-							  case SDLK_LEFT:
-							  default:
-							  break;
-							  } */
 			default:
 				break;
 		}
@@ -237,6 +228,9 @@ void event_loop(FILE *db)
 }
 
 
+/******************************************************************************
+ * Funktioner som genererar instruktioner att skicka
+ *****************************************************************************/
 void on_w_down(int speed, struct instruction_t *instr)
 {
        instr->header = generate_header(2,2);
@@ -310,6 +304,10 @@ void calibrate_sensors(int sensor_thresh, struct instruction_t *inst)
 	inst->data = sensor_thresh;
 }
 
+/******************************************************************************
+ * Mainfunktion
+ * Starta, öppna, kör och stäng
+ *****************************************************************************/
 int main()
 {
 	FILE *f = init_write("instr_db");

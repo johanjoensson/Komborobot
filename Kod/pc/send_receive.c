@@ -23,10 +23,20 @@
 #include <bluetooth/rfcomm.h>
 
 	
-
+/******************************************************************************
+ * Pekare till vår databas
+ *****************************************************************************/
 FILE *f;	
+
+/******************************************************************************
+ * Socket vi binder till blåtandsenheten
+ *****************************************************************************/
 int sock;
 
+/******************************************************************************
+ * Returnera 1 ifall ny data matats in i databasen
+ * returnera 0 annars
+ *****************************************************************************/
 int new_data(FILE *db, struct instruction_t *inst)
 {
 
@@ -41,6 +51,9 @@ int new_data(FILE *db, struct instruction_t *inst)
 	}
 }
 
+/******************************************************************************
+ * Skicka instruktion till Komborobot
+ *****************************************************************************/
 void send_inst(int s, struct instruction_t *inst)
 {
 	send_msg(s, inst->header);
@@ -48,6 +61,9 @@ void send_inst(int s, struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Ta emot instruktioner från Komborobot
+ *****************************************************************************/
 int receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 {
 
@@ -60,6 +76,11 @@ int receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 
 	return 0;
 }
+
+/******************************************************************************
+ * Avsluta programmet på korrekt sätt
+ * Kör då ctr + c matas in
+ *****************************************************************************/
 void exit_program()
 {
 	exit_curses();
@@ -68,11 +89,18 @@ void exit_program()
 	exit(0);
 
 }
+
+/******************************************************************************
+ * Initiera allt, och kommunicera med Komborobot
+ *****************************************************************************/
 int main(void)
 {
         sock = init();
+        /**********************************************************************
+         * Bind ctr + c till exit_program
+         *********************************************************************/
 	signal(SIGINT, exit_program);
-	
+
         struct instruction_t inst, ex_inst;
 
 #ifndef NO_BLUE
@@ -90,6 +118,9 @@ int main(void)
 	ex_inst.header = (unsigned char) 0x02;		// Speckomm 
 	ex_inst.data = (unsigned char) 0x70;		// vänster fram, 15 cm
 #endif /* DEBUG */
+        /**********************************************************************
+         * Huvudloopen, skicka, ta emot instruktioner samt uppdatera skärmen
+         *********************************************************************/
 	while(!quit){
 		if(new_data(f, &inst)){
 			update_speed(&inst);
