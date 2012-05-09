@@ -1,6 +1,10 @@
 \newpage
 \appendix
 
+\lstset{language=c}
+\lstset{linewidth=\textwidth}
+
+
 \section{Kopplingsschema sensormodul}
 \label{sensor-sch}
   \begin{figure}[ht!]
@@ -49,4 +53,9 @@
         JP4.2 & PWM för motor \\ \hline
       \end{tabular}
     \end{figure}
-
+\section{Kod}
+\subsection{PC}
+\lstinputlisting[caption=input_control,label=lst:input]{../../Kod/pc/input_control.c}
+\subsection{Kommunikationsenhet}
+\subsection{Styrenhet}
+\subsection{Sensorenhet}

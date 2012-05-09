@@ -5,8 +5,49 @@
 %% --------------------------------------------------------------------------------------------------------------------------------------------
 
 \section*{Appendix}
+\appendix
 \addcontentsline{toc}{section}{Appendix}
 
-Todo: Appendix.
+\lstset{inputencoding=utf8,
+        language=c,
+        linewidth=\textwidth,
+        basicstyle=\footnotesize,
+        numbers=left,
+        stepnumber=1,
+        tabsize=8,
+        showtabs=false
+}
+\lstset{literate={å}{{\aa}}1
+                {ä}{{\"a}}1
+                {ö}{{\"o}}1
+                {Å}{{\AA}}1
+                {Ä}{{\"A}}1
+                {Ö}{{\"O}}1
+}
+
+
+
+\section{Kod}
+\subsection{PC}
+\lstinputlisting[caption=input\_control,label=lst:input]{../../Kod/pc/input_control.c}
+\lstinputlisting[caption=keypress.h,label=lst:keypress_h]{../../Kod/pc/keypress.h}
+\lstinputlisting[caption=keypress.c,label=lst:keypress_c]{../../Kod/pc/keypress.c}
+\lstinputlisting[caption=header.h,label=lst:header_h]{../../Kod/pc/header.h}
+\lstinputlisting[caption=header.c,label=lst:header_c]{../../Kod/pc/header.c}
+\lstinputlisting[caption=send\_receive.c,label=lst:sendrec_c]{../../Kod/pc/send_receive.c}
+\lstinputlisting[caption=blue\_pc.h,label=lst:blue_h]{../../Kod/pc/blue_pc.h}
+\lstinputlisting[caption=blue\_pc.c,label=lst:blue_c]{../../Kod/pc/blue_pc.c}
+\lstinputlisting[caption=db.h,label=lst:db_h]{../../Kod/pc/db.h}
+\lstinputlisting[caption=db.c,label=lst:db_c]{../../Kod/pc/db.c}
+\lstinputlisting[caption=display.h,label=lst:display_h]{../../Kod/pc/display.h}
+\lstinputlisting[caption=display.c,label=lst:display_c]{../../Kod/pc/display.c}
+\subsection{Kommunikationsenhet}
+\lstinputlisting[caption=komm\_main.c,label=lst:komm_main_c]{../../Kod/komm/komm_main.c}
+\lstinputlisting[caption=komm\_init.c,label=lst:komm_init_c]{../../Kod/komm/komm_init.c}
+\lstinputlisting[caption=bluetooth\_interrupt.c,%
+label=lst:bluetooth_interrupt_c]{../../Kod/komm/bluetooth_interrupt.c}
+\lstinputlisting[caption=komm\_SPI.c,label=lst:komm_SPI_c]{../../Kod/komm/komm_SPI.c}
+\subsection{Styrenhet}
+\subsection{Sensorenhet}
 
 

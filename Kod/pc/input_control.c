@@ -205,18 +205,19 @@ void event_loop(FILE *db)
                                                 break;
                                         case SDLK_u:
                                                 if(((sensor_thresh & 0xF0) >> 4) < 0xF){
-                                                        sensor_thresh = sensor_thresh + 0x10;
+                                                        sensor_thresh += 0x10;
                                                 }
                                                 break;
                                         case SDLK_i:
                                                 if(((sensor_thresh & 0xF0) >> 4) > 0x0){
-                                                        sensor_thresh = sensor_thresh - 0x10;
+                                                        sensor_thresh -=  0x10;
                                                 }
                                                 break;
 					default:
 						break;
 				}
-                                SDL_FillRect(screen, &screen_rect, colors[(sensor_thresh & 0xF0) >> 4]);
+                                SDL_FillRect(screen, &screen_rect, colors[//
+                                                (sensor_thresh & 0xF0) >> 4]);
                                 SDL_Flip(screen);
 				break;
 			default:
