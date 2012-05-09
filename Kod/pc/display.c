@@ -5,10 +5,19 @@
 
 #define DEBUG
 #undef DEBUG
+/******************************************************************************
+ * Fönstrets storlek
+ *****************************************************************************/
 int width, height;
 
+/******************************************************************************
+ * Variabel för att hålla koll på motorernas trim
+ *****************************************************************************/
 int trim = 0;
 
+/******************************************************************************
+ * Typ för att hålla koll på robotens olika avståndssensorer
+ *****************************************************************************/
 enum sensors{
 	LEFT_FRONT = 0,
 	LEFT_BACK = 1,
@@ -18,7 +27,14 @@ enum sensors{
 };
 
 
+/******************************************************************************
+ * De olika fönster vi visar information i
+ *****************************************************************************/
 WINDOW *mode, *spec_komm, *lusensor, *llsensor, *rusensor, *rlsensor, *speed, *ltrim, *rtrim, *speed_back, *ltrim_back, *rtrim_back, *err;
+
+/******************************************************************************
+ * Initiera ett fönster
+ *****************************************************************************/
 WINDOW *create_win(int win_height, int win_width, int starty, int startx, char corner, char hline, char vline)
 {
 	WINDOW *local_win;
@@ -31,6 +47,9 @@ WINDOW *create_win(int win_height, int win_width, int starty, int startx, char c
 	return local_win;
 }
 
+/******************************************************************************
+ * Radera givet fönster
+ *****************************************************************************/
 void remove_win(int win)
 {
 	WINDOW *local_win;
@@ -77,6 +96,9 @@ void remove_win(int win)
 	return;
 }
 
+/******************************************************************************
+ * Initiera grässnittet
+ *****************************************************************************/
 void init_curses()
 {
 	initscr();
@@ -106,6 +128,9 @@ void init_curses()
 
 }
 
+/******************************************************************************
+ * Avsluta gränssnittet
+ *****************************************************************************/
 void exit_curses()
 {
 	remove_win(0);
@@ -132,6 +157,10 @@ void exit_curses()
 	delwin(err);
 	endwin();
 }
+
+/******************************************************************************
+ * Töm felmeddelandefönstret
+ *****************************************************************************/
 void clear_error()
 {
         int y,x;
@@ -144,6 +173,10 @@ void clear_error()
         wrefresh(err);
         return;
 }
+
+/******************************************************************************
+ * Visa felmeddelande
+ *****************************************************************************/
 void display_error()
 {
         int y,x;
@@ -159,6 +192,10 @@ void display_error()
 
 	return;
 }
+
+/******************************************************************************
+ * Maska fram och returnera vilket läge Komborobot befinner sig i
+ *****************************************************************************/
 enum mode run_mode(struct instruction_t *inst)
 {
 	if((int)(inst->header & 0x01) == 0){
@@ -177,6 +214,9 @@ enum mode run_mode(struct instruction_t *inst)
 	return ERROR;
 }
 
+/******************************************************************************
+ * Visa vilket läge roboten befinner sig i
+ *****************************************************************************/
 void display_mode(struct instruction_t *inst)
 {
 	int y, x;
@@ -204,6 +244,9 @@ void display_mode(struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Maska fram och returnera vilken typ av data Komborobot har skickat
+ *****************************************************************************/
 enum data_type_t type_of_inst(struct instruction_t *inst)
 {
 
@@ -221,6 +264,10 @@ enum data_type_t type_of_inst(struct instruction_t *inst)
 	return UNKNOWN_COMMAND;
 }
 
+/******************************************************************************
+ * Maska fram och returnera vilket specialkommando Komborobot har skickat till
+ * PC
+ *****************************************************************************/
 enum spec_komm_t type_of_command(struct instruction_t *inst)
 {
 	switch((inst->data & 0x70) >> 4){
@@ -245,6 +292,9 @@ enum spec_komm_t type_of_command(struct instruction_t *inst)
 	return UNKNOWN_COMMAND;
 }
 
+/******************************************************************************
+ * Maska fram och returnera vilken sensor som Komborobot har uppdaterat
+ *****************************************************************************/
 enum sensors which_sensor(struct instruction_t *inst)
 {
 	switch((int)(inst->header & 0x0C) >> 2){
@@ -263,6 +313,9 @@ enum sensors which_sensor(struct instruction_t *inst)
 	return NONE;
 }
 
+/******************************************************************************
+ * Returnera lämpligt fönster att uppdatera med sensorinfo
+ *****************************************************************************/
 WINDOW* get_sensor_window(enum sensors sensor)
 {
 #ifndef DEBUG
@@ -282,6 +335,10 @@ WINDOW* get_sensor_window(enum sensors sensor)
 
 	return NULL;
 }
+
+/******************************************************************************
+ * Visa sensordata på skärmen
+ *****************************************************************************/
 void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 {
 #ifndef DEBUG
@@ -302,6 +359,9 @@ void display_sensor_data(struct instruction_t *inst, enum sensors sensor)
 	return;
 }
 
+/******************************************************************************
+ * Visa sensordate skickad fån Komborobot på skärmen
+ *****************************************************************************/
 void display_sensor(struct instruction_t *inst)
 {
 
@@ -311,6 +371,9 @@ void display_sensor(struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Visa specialkommando på skärmen
+ *****************************************************************************/
 void display_spec(struct instruction_t *inst)
 {
 #ifndef DEBUG
@@ -320,13 +383,6 @@ void display_spec(struct instruction_t *inst)
 
 	switch(type_of_command(inst)){
 		case REGLER:
-/*                        clear_error();
-			for(int i = 2; i < x-1; i++){
-				mvwaddch(spec_komm, y >> 1, i, ' ');
-			}
-
-			mvwprintw(spec_komm,  y >> 1, x >> 4,  "Tillbaka till vanlig reglering!");
-                        */
                         break;
 		case FRAM:
                         clear_error();
@@ -368,6 +424,10 @@ void display_spec(struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Returnera 1 ifall kommandot är ett trimkommando
+ * returnera 0 ifall inte
+ *****************************************************************************/
 int is_trim(struct instruction_t *inst)
 {
         if((inst->header & 0xE0) >> 5 == 0x1){
@@ -385,6 +445,9 @@ int is_trim(struct instruction_t *inst)
 	return 0;
 }
 
+/******************************************************************************
+ * Returnera 1 ifall kommandot innehåller hastighet
+ *****************************************************************************/
 int has_speed(struct instruction_t *inst)
 {
 
@@ -407,6 +470,9 @@ int has_speed(struct instruction_t *inst)
 	return 1;
 }
 
+/******************************************************************************
+ * Visa önskad hastighet på roboten på skärmen
+ *****************************************************************************/
 void display_speed(struct instruction_t *inst)
 {
 #ifndef DEBUG
@@ -443,6 +509,9 @@ void display_speed(struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Visa aktuella trimnivåer på skärmen
+ *****************************************************************************/
 void print_trim(WINDOW *win, int spd)
 {
 #ifndef DEBUG
@@ -476,6 +545,10 @@ void print_trim(WINDOW *win, int spd)
 #endif
 	return;
 }
+
+/******************************************************************************
+ * Ta fram aktuella trimnivåer och visa dessa
+ *****************************************************************************/
 void display_trim(struct instruction_t *inst)
 {
 
@@ -511,6 +584,9 @@ void display_trim(struct instruction_t *inst)
 	return;
 }
 
+/******************************************************************************
+ * Uppdatera hastighetsfönstret
+ *****************************************************************************/
 void update_speed(struct instruction_t *inst)
 {
 	if(has_speed(inst)){
@@ -521,6 +597,10 @@ void update_speed(struct instruction_t *inst)
 
 	return;
 }
+
+/******************************************************************************
+ * Visa information från Komborobot
+ *****************************************************************************/
 void display_inst(struct instruction_t *inst)
 {
 	display_mode(inst);
