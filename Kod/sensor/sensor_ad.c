@@ -16,6 +16,7 @@ unsigned char control_mux();
 int display_ctr = 0;
 int ad_counter=0;
 int duplicate;
+int lost_one_wall=0;
 
 
 
@@ -38,7 +39,7 @@ ISR(TIMER1_COMPA_vect)
 {
 		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
 		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
-		count=5;												//starta pÃ¥ linjesensorer
+		count=7;	//starta på linjesensorer
 		ADCSRA |= (1<<ADSC);
 		ad_counter++;
 		if(ad_counter==1){
@@ -59,7 +60,7 @@ ISR(TIMER1_COMPB_vect)
 {
 		PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	//kanal 0
 		ADMUX |= (1<<MUX0) | (1<<MUX1);							//byt till PA3
-		count=5;												//starta pÃ¥ linjesensorer
+		count=7;       //starta på linjesensorer
 		ADCSRA |= (1<<ADSC);
 		ad_counter++;
 		if(ad_counter==2){
@@ -82,7 +83,7 @@ ISR(TIMER1_COMPB_vect)
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  start_next_ad
- *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen fÃ¶r att
+ *  Description:  Styr muxar, ad och anropar omvandlingar samt anropar bussen för att
  *				  skicka data. Det här kan ses som sensorenhetens huvudprogram då alla
  *				  andra funktioner anropas härifrån.
  * =====================================================================================
@@ -148,7 +149,7 @@ void start_next_ad()
 
 		}
 		else if(state==5){			//front klar
-				//visa pÃ¥ display'
+				//visa på display'
 				/*if(dist_front == 20){ // stannar om robot nära vägg
 						header = 0xC3;
 						data = 192;
@@ -161,27 +162,44 @@ void start_next_ad()
 					data_to_display(dist_left_back,0x03);
 					data_to_display(dist_front,0x04);
 					if(maze_mode == 1){
-							data_to_display((get_next_special_command()/16+100),0x05);
+							if(lost_one_wall==1){
+							data_to_display(
+							(get_next_special_command()/16+100 +10),0x05);
+							}
+							else{
+							data_to_display(
+							(get_next_special_command()/16+100),0x05);
+							}
 					}
 					else{
-							data_to_display(get_next_special_command()/16,0x05);
+							data_to_display(
+							get_next_special_command()/16,0x05);
 					}
 					display_ctr = 0;
 				}
 				display_ctr++;
+		}		
+		else if(state==6){
+				header=0x4D;
+				data=dist_right_short | 0x80;
+				req_sending();
 		}
-		else if(state==6){			//linjesensor 0-7 pÃ¥gÃ¥r 
+		else if(state==7){
+				header=0x4D;
+				data=dist_left_short | 0xC0;
+				req_sending();				
+		}
+
+		else if(state==8){			//linjesensor 0-7 pågår 
 				create_line_array(truncate(ADCH), 1);
 		}
-		else if(state==7){			//linjesensor 8-10 pÃ¥gÃ¥r
+		else if(state==9){			//linjesensor 8-10 pågår
+
 				create_line_array(truncate(ADCH), 2);
-		}
-		else {
-				;
 		}
 				
 
-		if (count==15){				//alla linjesensorer omvandlade
+		if (count==17){				//alla linjesensorer omvandlade
 				if (maze_mode==0 && auto_mode==1){
 						
 
@@ -199,7 +217,7 @@ void start_next_ad()
 						
 
 
-						//inga linjer? byt till maze_mode=1 om vÃ¤ggar finns 
+						//inga linjer? byt till maze_mode=1 om väggar finns 
 						if(line_array_1==0 && line_array_2==0) {
 								decide_maze_mode(1);
 						}
@@ -213,11 +231,29 @@ void start_next_ad()
 
 						int temp2 = search_for_crossroad();
 					
-						if(temp2==1 && (((dist_right_front > 65) && (dist_right_back < 65)) || ((dist_left_front > 65) && (dist_left_back < 65)))){
-							//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
- 							send_special_command(get_next_special_command());
-							//Resetar den globala variabeln next_special_command for att forma roboten att uppna vanlig reglering
-							generate_special_command(4);
+						if(temp2==1 && (((dist_right_front > 65) && 
+						(dist_right_back < 65)) || ((dist_left_front > 65) && 
+						(dist_left_back < 65)))){
+								//Om en korsning upptackts: skicka specialkommandot som ska utforas till styrenheten
+ 						
+								if(get_next_special_command()!=0x10){
+										send_special_command(
+										get_next_special_command());
+										//Resetar next_special_command
+										generate_special_command(4);
+								}
+								else if(dist_right_front > 65 &&
+								 dist_left_front > 65){
+										send_special_command(
+										get_next_special_command());
+										//Resetar next_special_command
+										generate_special_command(4);
+										lost_one_wall=0;
+								}
+								else{
+										lost_one_wall=1;
+								}
+						
 						}
 						else if(temp2==2){		//vanlig 90 högersväng
 								header=0xC3;
@@ -242,10 +278,15 @@ void start_next_ad()
 										data=0x50;
 								}
 								req_sending();
-						} 
-						
+						}
 
-						//linjer? byt till maze_mode=0 om inga vÃ¤ggar finns
+						if(dist_left_front < 65 && 
+						dist_right_front < 65 && lost_one_wall ==1){
+								lost_one_wall=0;
+								generate_special_command(4);
+						}								
+
+						//linjer? byt till maze_mode=0 om inga väggar finns
 						if(line_array_1!=0 || line_array_2!=0) {
 								decide_maze_mode(0);
 						}
@@ -253,12 +294,12 @@ void start_next_ad()
 
 
 
-				create_line_array(0,0);		//NollstÃ¤ll
+				create_line_array(0,0);		//Nollställ
 
 		}
-		else if (count<15){
+		else if (count<17){
 			count++;
-			ADCSRA |= (1<<ADSC);		//starta nÃ¤sta omvandling
+			ADCSRA |= (1<<ADSC);		//starta nästa omvandling
 		}
 
 
@@ -267,7 +308,7 @@ void start_next_ad()
 
  /***************************************************************************\
 	Namn: control_mux														  
-	Beskr: StÃ¤ller om interna och externa muxar samt anropar omvandlingar,
+	Beskr: Ställer om interna och externa muxar samt anropar omvandlingar,
 		   returnerar ett värde beroende på muxarnas inställning.
  \***************************************************************************/
 
@@ -295,50 +336,58 @@ unsigned char control_mux()
 				dist_right_back=hogeromvandling_back(ADCH);
 				return 4;
 		case(4):
-				ADMUX |= (1<<MUX0);					//byt till PA3
-				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
-				//kanal noll pÃ¥ extern mux/demux
+				ADMUX |= (1<<MUX2);					//PA6
 				dist_front=framomvandling(ADCH);
 				return 5;
 		case(5):
-				PORTC |= (1<<PC0);					//vÃ¤lj kanal 1
+				ADMUX |= (1<<MUX0);					//PA7
+				dist_right_short=korthogeromvandling(ADCH);	
 				return 6;
 		case(6):
+				ADMUX &= ~(1<<MUX2);				//PA3
+				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6) & ~(1<<PC7);	
+				//kanal noll pÃ¥ extern mux/demux
+				dist_left_short=kortvansteromvandling(ADCH);
+				return 7;
+		case(7):
+				PORTC |= (1<<PC0);					//vÃ¤lj kanal 1
+				return 8;
+		case(8):
 				PORTC |= (1<<PC1);
 				PORTC &= ~(1<<PC0);					//kanal 2
-				return 6;
-		case(7):
+				return 8;
+		case(9):
 				PORTC |= (1<<PC0);					//kanal 3
-				return 6;
-		case(8):
+				return 8;
+		case(10):
 				PORTC |= (1<<PC6);
 				PORTC &= ~(1<<PC0) & ~(1<<PC1);		//kanal 4
-				return 6;
-		case(9):
+				return 8;
+		case(11):
 				PORTC |= (1<<PC0);					//kanal 5
-				return 6;
-		case(10):
+				return 8;
+		case(12):
 				PORTC |= (1<<PC1);
 				PORTC &= ~(1<<PC0);					//kanal 6
-				return 6;
-		case(11):
+				return 8;
+		case(13):
 				PORTC |= (1<<PC0);					//kanal 7
-				return 6;
-		case(12):
+				return 8;
+		case(14):
 				PORTC &= ~(1<<PC0) & ~(1<<PC1) & ~(1<<PC6);
 				PORTC |= (1<<PC7);					//kanal 8
-				return 6;
-		case(13):
+				return 8;
+		case(15):
 				PORTC |= (1<<PC0);					//kanal 9
-				return 7;
-		case(14):
+				return 9;
+		case(16):
 				PORTC |= (1<<PC1);
 				PORTC &= ~(1<<PC0);					//kanal 10
-				return 7;
-		case(15):
+				return 9;
+		case(17):
 				ADMUX &= ~(1<<MUX0) & ~(1<<MUX1); 	//PA0
 				PORTC |= (1<<PC0);					//kanal 11
-				return 7;
+				return 9;
 		default:
 				return 0;
 		}
@@ -349,7 +398,7 @@ unsigned char control_mux()
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  create_line_array
- *  Description:  Fyller tvÃ¥ byte med data dÃ¤r bitarna visar 1 fÃ¶r svart och 0 fÃ¶r vit
+ *  Description:  Fyller två byte med data där bitarna visar 1 för svart och 0 för vit
  * =====================================================================================
  */
 void create_line_array(int trunc_value, int vect_id)
@@ -372,9 +421,9 @@ void create_line_array(int trunc_value, int vect_id)
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  truncate
- *  Description:  TrÃ¶sklar invÃ¤rdet
- *  		  Input: en byte som ska trÃ¶sklas
- *  		  Output: 1 om byten Ã¤r mindre Ã¤n trÃ¶skelvÃ¤rdet och 0 annars
+ *  Description:  Trösklar invärdet
+ *  		  Input: en byte som ska trösklas
+ *  		  Output: 1 om byten är mindre än tröskelvärdet och 0 annars
  * =====================================================================================
  */
 int truncate(unsigned char inbyte)

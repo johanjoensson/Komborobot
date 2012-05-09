@@ -7,7 +7,7 @@ manuellt genom styrkommandon.
 
 \subsection{Hårdvara}
 
-Styrenheten består av en AVRAtmega16 som sänder styrsignalerna till motorerna, 
+Styrenheten består av en AVR Atmega16 som sänder styrsignalerna till motorerna, 
 En brytknapp som väljer mellan autonomt och manuellt läge, en startknapp och en 
 resetknapp.  
 
@@ -30,11 +30,39 @@ regleringen utifrån dessa sensorvärden.
 
 \subsubsection{Autonomt läge}
 
+Styrenhetens uppgift i autonomt läge är kortfattat att bestämma vilken vinkelhastighet de båda hjulen ska rotera i. 
+För att ta dessa beslut tar styrenheten mot en stor mängd data från sensorenheten som analyseras.
+För att styrenheten ska kunna veta vilken typ av data som mottas märks detta upp i den
+medföljande headern, se \ref{sec:protokoll}. 
+
+Datan används sedan olika beroende på vad headern innehåller för information:
+ 
+ \begin{itemize}
+ 
+\item Innehåller datan information från linjeföljning, och roboten befinner sig i linjeläge, 
+så anropas linjeregulatorn, se \ref{sec:linjereglering}.
+
+\item Innehåller datan information om avstånd till väggar, och roboten är i labyrintläge,
+ så anropas labyrintregulatorn, se \ref{sec:labyrintreglering}.
+
+\item Innehåller datan koden till något typ av så kallat specialkommando, t.ex, en 90\degree 
+sväng så utförs en förprogrammerad serie av styrbeslut med tillhörande hastigheter och tider.
+
+\item Innehåller datan koden till stoppkommandot så slutar styrenheten att motta data via databussen.
+
+\item Känner sensorenheten inte igen den header som skickats, kanske pågrund av kommunikationsfel,
+så kastas datan och en felmeddelande till datorn.
+
+\end{itemize}
+
+Styrenheten sätts igång med en extern knapp på roboten, vilket aktiverar enheten som då börjar
+reglera efter den data som skickas till den.
 
 \subsection{Reglering}
 Två olika regleralgoritmer används i roboten, en när roboten följer linjer och
 en när roboten kör i labyrinter.
 \subsubsection{Linjereglering}
+\label{sec:linjereglering}
 Utöver att uppfatta var på linjen roboten för närvarande befinner sig är 
 linjeregleringen är anpassad för att uppfatta i vilken riktning roboten för 
 närvarande färdas. Datan som styrenheten tar emot när roboten befinner sig i 
@@ -59,14 +87,21 @@ tejpen ligger över de högra sensorerna.
 Linjeregulatorn har utöver detta flera olika egenskaper för att förbättra 
 regleringen:
 \begin{itemize}
-\item Visar linjesensorerna att samma sensor varit mitt över tejpen i mer än 8st avläsningar, så utgår regulatorn ifrån att tejpen för tillfället är rak och roboten beordras att röra sig rakt framåt. Under de första 8 avläsningarna som samma sensor varit i mitten av tejpen så utgår regulatorn att roboten har samma riktning relativt tejpen som tidigare.
-\item Visar linjesensorerna att att mitten av tejpen rört sig än 2 sensorer eller mer under de senaste 20 avläsningar, så dubblas regulatorns "effekt".
-\item Om roboten hamnat utanför tejpen, det vill säga att den av någon anledning kört av, så svänger regulatorn kraftigt åt den riktning där tejpen senast uppfattats
+\item Visar linjesensorerna att samma sensor varit mitt över tejpen i mer än 8st 
+avläsningar, så utgår regulatorn ifrån att tejpen för tillfället är rak och roboten 
+beordras att röra sig rakt framåt. Under de första 8 avläsningarna som samma 
+sensor varit i mitten av tejpen så utgår regulatorn att roboten har samma riktning 
+relativt tejpen som tidigare.
+\item Visar linjesensorerna att att mitten av tejpen rört sig än 2 sensorer eller mer
+ under de senaste 20 avläsningar, så dubblas regulatorns "effekt".
+\item Om roboten hamnat utanför tejpen, det vill säga att den av någon anledning 
+kört av, så svänger regulatorn kraftigt åt den riktning där tejpen senast uppfattats
 \end{itemize}
 
 
 
 \subsubsection{Labyrintreglering}
+\label{sec:labyrintreglering}
 Labyrintregleringen består av 3 olika delar med olika vikter,
 en del som ser till att roboten går rakt (P-del), en del som ser till att
 roboten håller sig i mitten av labyrinten (M-del) och en del som motverkar

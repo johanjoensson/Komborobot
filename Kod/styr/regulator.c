@@ -48,7 +48,8 @@ signed char cut(signed char value, signed char max);
  *              värde som ska styra motorer (-70 --- 70)
  *-----------------------------------------------------------------------------*/
 signed char distance_regulator(unsigned char left_front, unsigned char left_back,
-                unsigned char right_front, unsigned char right_back)
+                unsigned char right_front, unsigned char right_back,
+				unsigned char short_left, unsigned char short_right)
 {
 		speed = 108;
         int Kp = 5;
@@ -63,8 +64,9 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		signed char difference_left_right_f = right_front - (left_front - 1);
 		signed char difference_left_right_b = right_back - left_back;
 
-		//reglera p? n?rmsta v?ggen
-		if((right_front+right_back) < (left_front+right_back)){
+
+		//reglera på nårmsta väggen
+		if((right_front+right_back) < (left_front+left_back)){
 				wall=0;
 		}
 		else {
@@ -77,17 +79,17 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 				wall = 1;
 		}
 
-		if(left_front > 80 || right_front > 80){
+		if(left_front > 80 || right_front > 80 ){
 				crossing = 1;
 		} else {
 				crossing = 0;
 		}
 
-		if(wall==0){														//h?ger v?gg
+		if(wall==0){	//höger vägg
 				outvalue = -Kp*(difference_right);							// P-delen
 				outvalue -= Kd*(difference_right - old_distance_right);    // D-delen
 		}
-		else if(wall==1){													//v?nster v?gg
+		else if(wall==1){													//vänster vägg
 				outvalue = Kp*(difference_left);               				// P-delen
 				outvalue += Kd*(difference_left - old_distance_left);		// D-delen
 		}
@@ -99,11 +101,15 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		if((left_front <= 20) && (left_back <= 20)){
 				outvalue -= 7;						
 		}
-		else if((right_front == 20) && (right_back == 20)){
+		else if((right_front <= 20) && (right_back <= 20)){
 				outvalue += 7;
 		}
 		else if(!crossing){
 				outvalue += cut(temp,6);
+		}
+
+		if(short_right < 20){
+				outvalue = 7;
 		}
 
         // sätter max- och minvärden på utvärdet
@@ -311,14 +317,14 @@ void drive_engines(signed char value)
 
 void drive_engines_line(signed char value)
 {
-        if(angle < 0){//V?nstersv?ng
+        if(angle < 0){//Vänstersväng
 				
 			
 					OCR2 = speed - (value+3);  // Vänstermotor
               		OCR0 = speed;			// Högermotor
 					
                 
-        } else {// H?gersv?ng
+        } else {// Högersväng
 
 
 		
@@ -330,7 +336,7 @@ void drive_engines_line(signed char value)
 }
 /****************************************************************************\
 	function: 	cut
-	descr:		ser till att v?rden ligger i intervallet [-max,max]
+	descr:		ser till att värden ligger i intervallet [-max,max]
 \****************************************************************************/
 
 signed char cut(signed char value, signed char max)

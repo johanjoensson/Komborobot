@@ -1,3 +1,13 @@
+/******************************************************************************
+ * Datum 09/05/2012
+ * 
+ * Alla avbrottsvektorer som används av kommunikationsenheten. Innehåller också
+ * de funktioner som krävs för att styra SPI-kommunikationen.
+ *
+ * Skapad av: Markus Falck
+ *
+ * Redigerad: 09/05/2012
+ *****************************************************************************/
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 
@@ -12,17 +22,25 @@ void USARTInit(uint16_t ubrr_value);
 char USARTReadChar();
 void USART_write_char(unsigned char data);
 
-
-ISR(INT2_vect) //sensor REQ,
+//Avbrottsvektor för sensorenhetens request-signal.
+ISR(INT2_vect)
 {
 		send_to_sensor(0x00,0x00);
 }
-
-ISR(INT1_vect) //styr REQ
+//Avbrottsvektor för styrenhetens request-signal.
+ISR(INT1_vect)
 {
 		send_to_styr(0x00,0x00);	
 }
 
+/* int tolka_och_skicka(unsigned char header,unsigned char data)
+ *
+ * Tolkar den mottagna headerbyten som återkommer vid varje överföring. Ska databyten 
+ * vidare så skickas header och data till den eller de enheter som datat är adresserad till.
+ *
+ * Input: Headerbyte och databyte
+ * Output: 0
+ */ 
 
 int tolka_och_skicka(unsigned char header,unsigned char data)
 {		
@@ -51,8 +69,13 @@ int tolka_och_skicka(unsigned char header,unsigned char data)
 		return 0;
 }
 
-
-
+/* send_to_styr(unsigned char header,unsigned char data)
+ * 
+ * Skickar header- och databyte till styrenheten. 
+ * 
+ * Input: Headerbyte och databyte
+ * Output: 0
+ */ 
 
 
 int send_to_styr(unsigned char header,unsigned char data)
@@ -69,6 +92,15 @@ int send_to_styr(unsigned char header,unsigned char data)
 		tolka_och_skicka(header,data);
 		return 0;
 		}
+
+
+/* send_to_sensor(unsigned char header,unsigned char data)
+ * 
+ * Skickar header- och databyte till sensorenheten. 
+ * 
+ * Input: Headerbyte och databyte
+ * Output: 0
+ */ 
 
 int send_to_sensor(unsigned char header,unsigned char data)
 {
@@ -127,6 +159,13 @@ int send_to_PC(unsigned char header,unsigned char data)
 
 	return 0;
 }
+
+/* int transmit_data(unsigned char data_send)
+ * 
+ * Skriver till SPI dataregistret SPDR, vilket påbörjar överföringen
+ * av 1 byte data.
+ *
+ */ 
 		
 
 int transmit_data(unsigned char data_send)

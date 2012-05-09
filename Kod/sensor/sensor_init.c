@@ -9,8 +9,8 @@ void spi_init()
 		DDRB |= (1<<DDB6) | (1<<DDB3); //1=ut bit7=SCLK,1 bit6=MISO,0 bit5=MOSI bit4=SS1
 		SPCR |= (1<<SPIE) | (1<<SPE);  
 		//bit7 SPI interrupt enable bit6 SPI enable bit5 LSB first bit4 slave bit3:2 SPI-mode 3, bit1:0 gör inget	
-		GICR |= (1<<INT0);		//TillŒt avbrott frŒn spak
-		MCUCR |= (1<<ISC00);	//Spakavbrott triggar pŒ change
+		GICR |= (1<<INT0);		//Tillåt avbrott från spak
+		MCUCR |= (1<<ISC00);	//Spakavbrott triggar på change
 		decide_mode();
 }
 
