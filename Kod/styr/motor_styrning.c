@@ -1,15 +1,15 @@
 /*
- * =====================================================================================
+ * ===============================================================================
  *
- *       Filename:  motor.c
+ *       Filename:  motor_styrning.c
  *
- *    Description:  styr motorerna
+ *    Description:  styr motorerna i manuellt läge
  *        Created:  2012-03-31
  *
- *         Author:  S&S
- *   Organization:  
+ *         Author:  Simon Wallin & Simon Larsson
+ *   Organization:  Grupp 17 TSEA27
  *
- * =====================================================================================
+ * ===============================================================================
  */
 
 #include <avr/io.h>
@@ -18,8 +18,14 @@
 int trim;
 int speed_right;
 int speed_left;
-void init()
- 	{
+
+/*******************************************************************************
+*void init() är en initsiering som anropas för sätta alla register rätt
+*så att körning ska möjliggöras genom att ställa in vilken typ av PWM signal
+*som ska användas och vilka register som ska räkna
+*******************************************************************************/
+ 
+void init(){
 			TCCR0 |= (1<<WGM00) | (1<<WGM01) | (1<<COM01) | (1<<CS00);
 			TCCR2 |= (1<<WGM20) | (1<<WGM21) | (1<<COM21) | (1<<CS20);
 			DDRD |= (1<<DDD7) | (1<<DDD5) | (1<<DDD4);
@@ -27,6 +33,16 @@ void init()
 			PORTD &= 0xCF;
 	}	
 
+/*******************************************************************************
+*Funktionerna nedan anropar en subrutin set_speed som sätter olka hastighet 
+*på hjulen för att jämna ut felet och få roboten att gå rakare.
+*Funktionerna sätter registrena som styr motorerna.
+*OCR0 = Hastighet höger hjul
+*OCR2 = Hastighet vänster hjul
+*PORTD = Sätter riktningen på hjulen
+*Hjulen kör långasammare bakåt och därför adderas de/det hjul som går bakåt
+*med 6
+*******************************************************************************/
 
 void stop(unsigned char speed)
  	{
@@ -38,17 +54,15 @@ void forward(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;	//ställer riktning framåt
-	/*	OCR0 = 0x89;	//hšger
-		OCR2 = 0x8F;	//vŠnster */
 		if (trim < 0)
 		{
-			OCR0 = (speed_right);		//hšger
-			OCR2 = (speed_left);		//vŠnster
+			OCR0 = (speed_right);		//höger
+			OCR2 = (speed_left);		//vänster
 		}
 		else
 		{
-			OCR0 = (speed_right);		//hšger
-			OCR2 = (speed_left);		//vŠnster
+			OCR0 = (speed_right);		
+			OCR2 = (speed_left);		
 		}
 	}
 
@@ -56,15 +70,15 @@ void forward_left(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;
-		OCR0 = (speed_right);		//hšger
-		OCR2 = (speed_left)-6;		//vŠnster
+		OCR0 = (speed_right);		
+		OCR2 = (speed_left)-6;		
 	}
 
 void forward_right(unsigned char speed)
 	{	set_speed(speed);
 		PORTD &= 0xCF;
-		OCR0 = (speed_right)-6;		//hšger
-		OCR2 = (speed_left);		//vŠnster
+		OCR0 = (speed_right)-6;		
+		OCR2 = (speed_left);		
 	}
 
 void rotate_left(unsigned char speed)
@@ -72,8 +86,8 @@ void rotate_left(unsigned char speed)
 		set_speed(speed);
 		PORTD &= 0xEF;
 		PORTD |= (1<<PD5);
-		OCR0 = (speed_right);		//hšger 
-		OCR2 = (speed_left)+6;		//vŠnster škar hastigheten nŒgot pŒ det hjulet som kšr bakŒt
+		OCR0 = (speed_right);		 
+		OCR2 = (speed_left)+6;		 
 	}
 
 void rotate_right(unsigned char speed)
@@ -81,36 +95,42 @@ void rotate_right(unsigned char speed)
 		set_speed(speed);
 		PORTD &= 0xDF;
 		PORTD |= (1<<PD4);
-		OCR0 = (speed_right)+6;		//hšger škar hastigheten nŒgot pŒ det hjulet som kšr bakŒt
-		OCR2 = (speed_left);		//vŠnster
+		OCR0 = (speed_right)+6;		
+		OCR2 = (speed_left);		
 	}
 
 void back(unsigned char speed)
 	{	
 		set_speed(speed);
 		PORTD |= (1<<PD4) | (1<<PD5);
-		OCR0 = (speed_right)+6;		//hšger (med škad hastighet dŒ back inte Šr lika stark)
-		OCR2 = (speed_left)+6;		//vŠnster
+		OCR0 = (speed_right)+6;		
+		OCR2 = (speed_left)+6;		
 	}
 void set_speed_left(unsigned char speed)
 	{
 		set_speed(speed);
-		PORTD &= 0xCF;	//ställer riktning framåt
-		OCR2 = (speed_left);		//vŠnster
+		PORTD &= 0xCF;	
+		OCR2 = (speed_left);		
 	}
-void set_speed_right(unsigned char speed)
-	{
+void set_speed_right(unsigned char speed){
 		set_speed(speed);
-		PORTD &= 0xCF;	//ställer riktning framåt
-		OCR0 = (speed_right);		//hšger
+		PORTD &= 0xCF;	
+		OCR0 = (speed_right);		
 	}
-void trim_left()		// ökar höger speed och minskar vänster speed med 1
-	{
+
+/*******************************************************************************
+*Trim funktionerna ökar 
+*
+*
+*
+*
+*******************************************************************************/
+void trim_left(){
 		if(trim>-16){
 			trim=trim-1;
 		}
 	}
-void trim_right()		//ökar höger speed och minskar vänster speed med 1
+void trim_right()		// ökar höger speed speed med 1
 	{
 		if(trim<16){
 			trim=trim+1;
