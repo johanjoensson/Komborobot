@@ -1,3 +1,10 @@
+/* ---------------------------------------------
+ * Datum 2012-03-25
+ * Skapad av Mattias Jansson
+ *
+ * Blåtandskommunikation
+ * ---------------------------------------------*/
+
 #include <avr/io.h>
 #include <inttypes.h>
 #include <avr/interrupt.h>
@@ -20,7 +27,7 @@ ISR(USART_RXC_vect){
 
 	header = UDR;
 	int j = 0;
-	while(!(UCSRA & (1<<RXC))){ //While recieve not complete
+	while(!(UCSRA & (1<<RXC))){ 
 		;
 	}
 	data = UDR;
@@ -34,26 +41,28 @@ ISR(USART_RXC_vect){
 * enheten, med följande parametrar:
 *
 * - Recieve enable, samt recieve complete-avbrott.
-* - Baude rate:  
 * ---------------------------------------------*/
 void USARTInit(uint16_t ubrr_value)
 {
 	unsigned int ubrr = ubrr_value;
-	/* Set baud rate */
 	UBRRH = (unsigned char)(ubrr>>8);
 	UBRRL = (unsigned char)ubrr;
-	/* Enable receiver, avbrott OK*/
 	UCSRB = (1<<RXCIE)|(1<<RXEN);
-	/* Set frame format: 8data 1 stoppbit*/
 	UCSRC = (1<<URSEL)|(3<<UCSZ0);
 
-	SREG |= 0x80; // Global interrupt enable
+	SREG |= 0x80; 
 
-	DDRD |= 0x32; //Output på RTS,CTS och RXD
-    PORTD |= (1<<PIND5); //CTS
+	DDRD |= 0x32; 
+    PORTD |= (1<<PIND5);
 
 }
 
+/* ---------------------------------------------
+ * char USARTReadChar()
+ *
+ * Läser data från USARTens dataregister. 
+ * Returnerar: char data
+ * ---------------------------------------------*/
 char USARTReadChar()
 {	
 	unsigned char data = 'a';
@@ -61,8 +70,7 @@ char USARTReadChar()
 	PORTD |= (1<<PIND5);
 
    while(!(UCSRA & (1<<RXC)))
-   {
-      //Do nothing
+   {    
    }
 
 	data = UDR;
@@ -72,18 +80,23 @@ char USARTReadChar()
 	return data;
 }
 
-
+/* ---------------------------------------------
+ * void USART_write_char(unsigned char data)
+ *
+ * Skriver data till USARTens dataregister
+ * Parametrar: unsigned char data: Data som ska
+                                    skrivas
+ * ---------------------------------------------*/
 void USART_write_char(unsigned char data)
 {
 	UCSRB = (1<<TXEN);
 
    while(!(UCSRA & (1<<UDRE)))
    {
-      ;//Do nothing
+      ;
    }
 
-//	UCSRA = (1<<TXC);
-	PORTD &= 0xDF; //CTS = 0
-  	PORTD |= (1<<PIND4); //RTS = 1
+	PORTD &= 0xDF; 
+  	PORTD |= (1<<PIND4); 
     UDR = data;
 }
