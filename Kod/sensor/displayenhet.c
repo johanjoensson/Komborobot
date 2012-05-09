@@ -1,3 +1,10 @@
+/* ---------------------------------------------
+ * Datum 2012-05-01
+ * Skapad av Mattias Jansson
+ *
+ * Hanterar displayenheten
+ * ---------------------------------------------*/
+
 #include <avr/io.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -7,32 +14,16 @@
 volatile int display_tester_loop=0;
 int waiting_time = 20;
 
-/*
-PORTD 0-1: Databitar
-PORTB 2: Databit
-PORTD 3-7: Databitar
-PORTB 0: Register select
-PORTB 1: Enable
-*/
 
-/*
-void display_setup(); 
-void waiting(int n);
-void data_to_display(int cm_value,unsigned char sensor_source);
-void char_to_display(unsigned char data,unsigned char place);
-unsigned char int_to_ascii(int digit);
-*/
-
-/*
-*	void SETUP_DISPLAY()
-*	Initierar displayen. Kallas vid uppstart av roboten
-*
-*	Sätter pinnar för output på processorn, 
-*	Datalängd = 8, En rad på displayen
-* 	Display på, cursor på, cursor blinkar
-* 	Rensar displayen
-* 	Flyttriktning framåt
-*/
+/* ---------------------------------------------
+ * void DISPLAY_SETUP()
+ *
+ *	Sätter pinnar för output på processorn, 
+ *	Datalängd = 8, En rad på displayen
+ * 	Display på, cursor på, cursor blinkar
+ * 	Rensar displayen
+ * 	Flyttriktning framåt
+ * ---------------------------------------------*/
 void display_setup(){
 
 	//Pinnar output
@@ -42,78 +33,77 @@ void display_setup(){
 	//Datalength, number of lines
 	PORTD = (1<<PORTD5)|(1<<PORTD4)|(1<<PORTD3); 
 
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time); //t_SU2
+	PORTB |= (1<<PORTB1); 
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time); 
 
 	//Display, cursor på
 	PORTD = (1<<PORTD3)|(1<<PORTD1)|(1<<PORTD0); 
 	PORTB |= (1<<PORTB2);
 
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time); //t_SU2
+	PORTB |= (1<<PORTB1);
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time);
 
 	//Clear display
 	PORTD = (1<<PORTD0);
 	PORTB &= 0xFB;	
 
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time); //t_SU2
+	PORTB |= (1<<PORTB1); 
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time); 
 
 	//Cursor moving direction
 	PORTB |= (1<<PORTB2);
 	PORTD = (1<<PORTD1);
 	  
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time+1000); //t_SU2
-
+	PORTB |= (1<<PORTB1); 
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time+1000); 
+    
+    //Skriv 'rubriker'
 	char_to_display('V',0x00);
-
 	char_to_display('H',0x0C);
-
 	char_to_display('V',0x00);
-
 	char_to_display('F',0x06);
-
 	char_to_display('H',0x4C);
-
 	char_to_display('V',0x40);
-
 	char_to_display('K',0x46);
 }
 
-/*
-*	void WAITING(int n)
-*	Gör ingenting i n klockcykler
-*/
+
+/* ---------------------------------------------
+ *	void WAITING(int n)
+ *
+ *	Gör ingenting i n klockcykler
+ * ---------------------------------------------*/
 void waiting(int n){
 	
 	volatile int a = 0;
 	while(a<n){a++;}
 }
 
-/*
-*	void DATA_TO_DISPLAY(unsigned char data)
-*	Skickar en databyte till displayen, och säger åt displayen att visa den
-*	sensour_source: 0x00: höger fram
-*					0x01: vänster fram
-*					0x02: höger bak
-*					0x03: vänster bak
-*					0x04: framsensorn
-*					0x05: specialkommando
-*				
-*/
+/* ---------------------------------------------
+ *	void DATA_TO_DISPLAY(unsigned char data)
+ *
+ *	Skickar en databyte till displayen, och säger åt 
+ *  displayen att visa den
+ *
+ *	sensor_source: 0x00: höger fram
+ *					0x01: vänster fram
+ *					0x02: höger bak
+ *					0x03: vänster bak
+ *					0x04: framsensorn
+ *					0x05: specialkommando
+ * ---------------------------------------------*/
 void data_to_display(int cm_value,unsigned char sensor_source){
 
-	PORTB |= (1<<PORTB0); //Regsiter select = data
-	PORTB &= 0xFD; //Disable 
+	PORTB |= (1<<PORTB0); 
+	PORTB &= 0xFD; 
 
 	//Isolera sifforna i int
 	int first_digit;
@@ -126,7 +116,7 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	}
 	third_digit = cm_value-(second_digit*10)-(first_digit*100);
 
-	//Convert digits to ASCII-code
+	//Konvertera till ASCII
 	unsigned char data[3] = {'0','0','0'};
 
 	if(first_digit!=0) data[0] = int_to_ascii(first_digit);
@@ -143,10 +133,9 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	else if(sensor_source == 0x05) place = 0x47;
 	else  place = 0x00;
 
-	PORTB &= 0xFE; //Register select = function
-	PORTB &= 0xFD; //Disable 
-
-	//Nollställ register
+    //Redo att skriva
+	PORTB &= 0xFE; 
+	PORTB &= 0xFD; 
 	PORTD &= 0x04; 
 	PORTB &= 0xFB;
 
@@ -155,40 +144,40 @@ void data_to_display(int cm_value,unsigned char sensor_source){
 	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
 	  
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time); //t_SU2
+	PORTB |= (1<<PORTB1); 
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time);
 
 	//Sänd till display
-	PORTB |= (1<<PORTB0); //Regsiter select = data, lagt till |=, måste vara så
+	PORTB |= (1<<PORTB0); 
 	for (int i = 0;i<3; i++){
-		//Nollställ databitar
 		PORTD &= 0x04; 
 		PORTB &= 0xFB;
-
-		//Sätt databitar
 		PORTD |= (data[i] & 0xFB);
 		PORTB |= (data[i] & 0x04);
 
-		PORTB |= (1<<PORTB1); //Enable
-		waiting(waiting_time); //t_SU2
-		PORTB &= 0xFD; //Disable
-		waiting(waiting_time); //t_SU2
+		PORTB |= (1<<PORTB1); 
+		waiting(waiting_time);
+		PORTB &= 0xFD; 
+		waiting(waiting_time);
 	}
 }
 
-/*
-*	void CHAR_TO_DISPLAY(unsigned char data, unsigned char place)
-*	Skriver ut ett tecken på en given plats
-*
-*	data: tecken i ascii-kod
-*	place: plats i minnet i hex
-*/
+
+/* ---------------------------------------------
+ *	void CHAR_TO_DISPLAY(unsigned char data, 
+ *                       unsigned char place)
+ *
+ *	Skriver ut ett tecken på en given plats
+ *
+ *	data: tecken i ascii-kod
+ *	place: plats i minnet i hex
+ * ---------------------------------------------*/
 void char_to_display(unsigned char data,unsigned char place){
 
-	PORTB &= 0xFE; //Register select = function
-	PORTB &= 0xFD; //Disable 
+	PORTB &= 0xFE; 
+	PORTB &= 0xFD; 
 
 	//Nollställ register
 	PORTD &= 0x04; 
@@ -199,15 +188,14 @@ void char_to_display(unsigned char data,unsigned char place){
 	PORTD |= (place & 0xFB);
 	PORTB |= (place & 0x04);
 	  
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time+80); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time+80); //t_SU2
+	PORTB |= (1<<PORTB1); 
+	waiting(waiting_time+80); 
+	PORTB &= 0xFD; 
+	waiting(waiting_time+80); 
 
 
-	PORTB = (1<<PORTB0); //Regsiter select = data
-
-	//Nollställ databitar
+    //Redo att skriva
+	PORTB = (1<<PORTB0); 
 	PORTD &= 0x04; 
 	PORTB &= 0xFB;
 
@@ -215,19 +203,19 @@ void char_to_display(unsigned char data,unsigned char place){
 	PORTD |= (data & 0xFB);
 	PORTB |= (data & 0x04);
 
-	PORTB |= (1<<PORTB1); //Enable
-	waiting(waiting_time); //t_SU2
-	PORTB &= 0xFD; //Disable
-	waiting(waiting_time); //t_SU2
+	PORTB |= (1<<PORTB1);
+	waiting(waiting_time);
+	PORTB &= 0xFD; 
+	waiting(waiting_time); 
 
 }
 
 
-
-/*
-* 	unsigned char INT_TO_CHAR(int cm_value)
-* 	Omvandlar int till char
-*/
+/* ---------------------------------------------
+ * 	unsigned char INT_TO_CHAR(int cm_value)
+ *
+ * 	Omvandlar int till char
+ * ---------------------------------------------*/
 unsigned char int_to_ascii(int digit){
 	
 	int digit_ascii = 48+digit;
