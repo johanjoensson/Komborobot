@@ -38,17 +38,17 @@ void forward(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;	//ställer riktning framåt
-	/*	OCR0 = 0x89;	//hšger
-		OCR2 = 0x8F;	//vŠnster */
+	/*	OCR0 = 0x89;	//höger
+		OCR2 = 0x8F;	//vänster */
 		if (trim < 0)
 		{
-			OCR0 = (speed_right);		//hšger
-			OCR2 = (speed_left);		//vŠnster
+			OCR0 = (speed_right);		//höger
+			OCR2 = (speed_left);		//vänster
 		}
 		else
 		{
-			OCR0 = (speed_right);		//hšger
-			OCR2 = (speed_left);		//vŠnster
+			OCR0 = (speed_right);		//höger
+			OCR2 = (speed_left);		//vänster
 		}
 	}
 
@@ -56,15 +56,15 @@ void forward_left(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;
-		OCR0 = (speed_right);		//hšger
-		OCR2 = (speed_left)-6;		//vŠnster
+		OCR0 = (speed_right);		//höger
+		OCR2 = (speed_left)-6;		//vänster
 	}
 
 void forward_right(unsigned char speed)
 	{	set_speed(speed);
 		PORTD &= 0xCF;
-		OCR0 = (speed_right)-6;		//hšger
-		OCR2 = (speed_left);		//vŠnster
+		OCR0 = (speed_right)-6;		//höger
+		OCR2 = (speed_left);		//vänster
 	}
 
 void rotate_left(unsigned char speed)
@@ -72,8 +72,8 @@ void rotate_left(unsigned char speed)
 		set_speed(speed);
 		PORTD &= 0xEF;
 		PORTD |= (1<<PD5);
-		OCR0 = (speed_right);		//hšger 
-		OCR2 = (speed_left)+6;		//vŠnster škar hastigheten nŒgot pŒ det hjulet som kšr bakŒt
+		OCR0 = (speed_right);		//höger 
+		OCR2 = (speed_left)+6;		//vänster ökar hastigheten något på det hjulet som kör bakåt
 	}
 
 void rotate_right(unsigned char speed)
@@ -81,28 +81,28 @@ void rotate_right(unsigned char speed)
 		set_speed(speed);
 		PORTD &= 0xDF;
 		PORTD |= (1<<PD4);
-		OCR0 = (speed_right)+6;		//hšger škar hastigheten nŒgot pŒ det hjulet som kšr bakŒt
-		OCR2 = (speed_left);		//vŠnster
+		OCR0 = (speed_right)+6;		//höger ökar hastigheten något på det hjulet som kör bakåt
+		OCR2 = (speed_left);		//vänster
 	}
 
 void back(unsigned char speed)
 	{	
 		set_speed(speed);
 		PORTD |= (1<<PD4) | (1<<PD5);
-		OCR0 = (speed_right)+6;		//hšger (med škad hastighet dŒ back inte Šr lika stark)
-		OCR2 = (speed_left)+6;		//vŠnster
+		OCR0 = (speed_right)+6;		//höger (med ökad hastighet då back inte är lika stark)
+		OCR2 = (speed_left)+6;		//vänster
 	}
 void set_speed_left(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;	//ställer riktning framåt
-		OCR2 = (speed_left);		//vŠnster
+		OCR2 = (speed_left);		//vänster
 	}
 void set_speed_right(unsigned char speed)
 	{
 		set_speed(speed);
 		PORTD &= 0xCF;	//ställer riktning framåt
-		OCR0 = (speed_right);		//hšger
+		OCR0 = (speed_right);		//höger
 	}
 void trim_left()		// ökar höger speed och minskar vänster speed med 1
 	{
@@ -123,16 +123,16 @@ void trim_zero()		//nollställer trimning
 void set_speed(unsigned char speed)
 	{
 		speed = (speed << 1);		// speed som kommer in ligger 0-F, dubblar det til 0-1E
-		speed = 0x6A + speed;		// sŠtter lŠgsta hastigheten till 6A och hšgsta till 88
+		speed = 0x6A + speed;		// sätter lägsta hastigheten till 6A och högsta till 88
 		if (trim > 0)
 		{
-			speed_right = speed - 2;			// sŠtter hastigheten fšr rak kšrning hšger hjul
-			speed_left = speed + (2+trim);		// sŠtter hastigheten fšr rak kšrning vŠnser hjul
+			speed_right = speed - 2;			// sätter hastigheten för rak körning höger hjul
+			speed_left = speed + (2+trim);		// sätter hastigheten för rak körning vänser hjul
 		}
 		else
 		{
-			speed_right = speed - (2+trim);		// sŠtter hastigheten fšr rak kšrning hšger hjul
-			speed_left = speed + 2;				// sŠtter hastigheten fšr rak kšrning vŠnser hjul
+			speed_right = speed - (2+trim);		// sätter hastigheten för rak körning höger hjul
+			speed_left = speed + 2;				// sätter hastigheten för rak körning vänser hjul
 		}
 	}
 		
