@@ -89,7 +89,7 @@ unsigned char header_sens(int datakod)
 {
         //datakod används ej, kommunkationt till styrenhet sker endast för kalibrering
 
-        return 0b00100000;
+        return 0b00100000 + datakod;;
 }
 
 /* 

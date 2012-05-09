@@ -117,7 +117,7 @@ void receive_data(int s, struct sockaddr_rc ff, void* buffer)
 {
 	ba2str(&ff.rc_bdaddr, buffer);
 
-	memset(buffer, 0, sizeof(buffer));
+	memset(buffer, 0, 4);
 
 
 	int nr = recv(s, buffer, 1, 0);

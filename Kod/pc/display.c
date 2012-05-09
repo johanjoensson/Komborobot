@@ -389,6 +389,7 @@ void display_spec(struct instruction_t *inst)
 			for(int i = 2; i < x-1; i++){
 				mvwaddch(spec_komm, y >> 1, i, ' ');
 			}
+                        wrefresh(spec_komm);
 
 
 
@@ -399,6 +400,7 @@ void display_spec(struct instruction_t *inst)
 			for(int i = 2; i < x-1; i++){
 				mvwaddch(spec_komm, y >> 1, i, ' ');
 			}
+                        wrefresh(spec_komm);
 
 			mvwprintw(spec_komm, y >> 1, x >> 2,  "Sväng vänster!");
 			break;
@@ -407,6 +409,7 @@ void display_spec(struct instruction_t *inst)
 			for(int i = 2; i < x-1; i++){
 				mvwaddch(spec_komm, y >> 1, i, ' ');
 			}
+                        wrefresh(spec_komm);
 
 
 			mvwprintw(spec_komm, y >> 1, x >> 2,  "Sväng höger!");
