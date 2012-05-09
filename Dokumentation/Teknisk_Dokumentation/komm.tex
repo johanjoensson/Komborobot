@@ -1,3 +1,4 @@
+% !TEX encoding = UTF-8 Unicode
 %% --------------------------------------------------------------------------------------------------------------------------------------------
 % KOMMUNIKATIONSENHETEN - Detaljbeskrivning av kommunikationsenheten
 %
@@ -25,7 +26,19 @@ pinnarna på processorn är anslutna kan betraktas i figur \ref{fig:PINkomm}.
 \end{figure}
 
 \subsection{Bluetooth}
-Todo: Blatand.
+%Övevrsikt
+Roboten kommunicerar med PCn med Bluetooth via enheten \emph{FireFly Bluetooth Modem - BlueSMiRF Gold}. Överföringen mellan kommunikationsenhetens AVR-processor och Firefly-enheten sker seriellt med protokollet RS232 via mikroprocessorns USART-register. 
+
+%Överföring från AVR
+Bluetooth-överföringen till och från Firefly-enheten använder fyra pinnar på mikroprocessorn: RTS, CTS, RXD samt TXD, se fig. \ref{fig:PINkomm}. Data skickas och tas emot på TXD respektive RXD. RTS- och CTS-signalerna används för att signalera när data ska skickas och tas emot. Överföringen sker i asynkront läge med en baude rate på 115200 bps. Förutom de åtta databitarna så skickas även en start- och en stoppbit. Inga paritetsbitar används. 
+
+%Ta emot data
+\subsubsection*{Ta emot data}
+Då ingen data skickas eller tas emot så väntar enheten på att ta emot data. Efter det att en byte mottagits så sker ett avbrott av typen \emph{Recieve complete interrupt}. Som beskrivs i sektion \ref{sec:SPI} så sker all kommunikation med två bytes. På grund av detta så väntar kommunikationsenheten i avbrottet på att ta emot ytterligare ett ord. När detta tagits emot så vidarebefordras de två orden till bussen. 
+
+%Skicka data
+\subsubsection*{Skicka data}
+Vid varje överföring skickas två bytes, ett header- och ett dataord. Detta kräver alltså två separata överföringar om åtta bitar. Då det första ordet skrivits till \emph{UDR-registret} så väntar processorn på att flaggan \emph{TXC, Transmit complete} sätts, varpå nästa ord skrivs till registret. Då båda orden överförts så sätts åter enheten att lyssna på mottagen data. 
 
 \subsection{SPI}
 \label{sec:SPI}
