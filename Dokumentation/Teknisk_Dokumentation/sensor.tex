@@ -83,7 +83,15 @@ visar har det l√§ngre avst√•ndet.
 
 
 \subsubsection{Display}
+Robotens display-enhet är av typ \emph{LCD JM162A}. Displayen används för att visa avståndssensorernas värden. Eftersom sensorerna bara kan ge korrekta värden i intervallet 20-120 cm så kommer även displayen arbeta i detta intervall. Displayen arbetar i åtta databitarsläge och visar två rader med tecken. 
 
+%Pinnar
+Förutom de åtta databitarna som överförs för varje tecken till displayen så går ytterligare två signaler mellan sensorenhetens mikroprocessor och displayenheten: \emhp{Enable} och \emph{Register select}. Enable-signalen signalerar till displayen att något ska skrivas ut, och Register select väljer mellan input-lägena 'data' och 'function'. Då ingen data läses från displayen så är pinnen \emph{R/W} konstant låg. 
+
+%Kod
+Sensorenheten har två funktioner som kan kallas för att skriva ut ett tecken på displayen. I funktionen \emph{char_to_display} anges parmetrarna vilket tecken (givet i ASCII-kod) som ska skrivas ut, samt vilken position på displayen som ska skrivas till. Denna funktion används för bokstäver. För att skriva ut sensorvärden används funktionen \emph{data_to_display}, vilken tar parametrarna för sensorvärdet i cm samt vilken sensor som skickat det. 
+
+Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCII-kod. 
 
 \subsection{Mjukvara}
 
