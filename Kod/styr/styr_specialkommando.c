@@ -72,17 +72,18 @@ void specialkommando(unsigned char kommando_kod)
                 return;
 		}
 		else if(0x21==kommando_kod){		//sv??ng h??ger 90 grader
-                special_help(0x2500, 0x07, 0);    // K??r fram i en sekund
-                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1500, 0x07,2);     // Rotera h??ger
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                return;
+                special_help(0x2200, 0x05, 0);    // K??r fram i en sekund
+                special_help(0x0200, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1500, 0x06,2);     // Rotera h??ger
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund
+                special_help(0x0010, 0x01, 0);
+				return;
 		}
 		else if(0x22==kommando_kod){		//sv??ng h??ger 90 grader
-                special_help(0x1500, 0x07,2);     // Rotera h??ger
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                special_help(0x4400, 0x06, 0);    // K??r fram i en sekund
-                special_help(0x2000, 0, 3);   
+                special_help(0x1100, 0x06,2);     // Rotera h??ger
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund
+                special_help(0x4400, 0x04, 0);    // K??r fram i en sekund
+                special_help(0x0500, 0, 3);   
                 return;
 		}
 		else if(0x30 == kommando_kod){		 //Sv??ng v??nster 90 grader
@@ -95,31 +96,32 @@ void specialkommando(unsigned char kommando_kod)
                 return;
 		}
 		else if(0x31 == kommando_kod){		 //Sv??ng v??nster 90 grader
-                special_help(0x2500, 0x07, 0);    // K??r fram i en sekund
-                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
-                special_help(0x1500, 0x07,1);     // Rotera v??nster
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
-                return;
+                special_help(0x2200, 0x05, 0);    // K??r fram i en sekund
+                special_help(0x0500, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x1500, 0x06,1);     // Rotera v??nster
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund  
+                special_help(0x0010, 0x01, 0);
+				return;
 		}
 		else if(0x32 == kommando_kod){		 //Sv??ng v??nster 90 grader
-                special_help(0x1500, 0x07,1);     // Rotera v??nster
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
-                special_help(0x4400, 0x06, 0);    // K??r fram i en sekund
-                special_help(0x2000, 0, 3);   
+                special_help(0x1100, 0x06,1);     // Rotera v??nster
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund
+                special_help(0x4400, 0x04, 0);    // K??r fram i en sekund
+                special_help(0x0500, 0, 3);   
                 return;
 		}
 		else if(0x40==kommando_kod){		//Rotera h?ger 90
-                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x0500, 0, 3); 	  // Stanna i en kort stund
                 special_help(0x1400, 0x07,2);     // Rotera h??ger
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund
 				special_help(0x0010, 0x01, 0);    // Ställ om riktningarna 
 												  // på motorerna
                 return;
 		}
 		else if(0x50 == kommando_kod){		//Rotera v?nster 90	
-                special_help(0x0F00, 0, 3); 	  // Stanna i en kort stund
+                special_help(0x0500, 0, 3); 	  // Stanna i en kort stund
                 special_help(0x1400, 0x07,1);     // Rotera v??nster
-                special_help(0x0F00, 0, 3);       // Stanna i en kort stund  
+                special_help(0x0500, 0, 3);       // Stanna i en kort stund  
 				special_help(0x0010, 0x01, 0);    // Ställ om riktningarna 
 												  // på motorerna
                 return;						
@@ -139,43 +141,6 @@ void specialkommando(unsigned char kommando_kod)
 
 }
 
-/*int straight(unsigned char dist_left_front, unsigned char dist_left_back, unsigned char dist_right_front, unsigned char dist_right_back)
-{
-		signed char difference_left = ((dist_left_front -1) - dist_left_back);
-		signed char difference_right = (dist_right_front - dist_right_back);
-
-		if(dist_left_front < 40){
-				if(difference_left < 2 && difference_left > -2){
-						return 0;
-				} else if (difference_left < 0){
-						unsigned char left_cm = - difference_left;
-						special_help(left_cm << 3, 0x07,2);     // Rotera h?ger
-						return 1;
-				} else {
-						unsigned char left_cm = difference_left;
-						special_help(left_cm << 3, 0x07,1);     // Rotera v??nster
-						return 1;
-				}
-		} else if(dist_right_front < 40){
-				if(difference_right < 2 && difference_right > -2){
-						return 0;
-				} else if (difference_right < 0){
-						unsigned char right_cm = - difference_right;
-						special_help(right_cm << 3, 0x07,1);     // Rotera h?ger
-						return 1;
-				} else {
-						unsigned char right_cm = difference_left;
-						special_help(right_cm << 3, 0x07,2);     // Rotera v??nster
-						return 1;
-				}
-		} else {
-			return 0;
-		}			
-}*/
-
-void set_wall(int vaggen){
-		wall=vaggen;
-}
 				
 
 			

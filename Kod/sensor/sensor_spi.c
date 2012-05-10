@@ -98,10 +98,10 @@ ISR(INT0_vect)
 	
 void decide_mode()
 {
-		if(0x04==(PIND & 0x04)){
+		if((PIND & 0x04) >> 2 == 1){
 				auto_mode=1;
 		}
-		else if(0x00==(PIND & 0x04)){
+		else if((PIND & 0x04) >> 2 == 0){
 				auto_mode=0;
 		}
 }

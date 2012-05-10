@@ -51,7 +51,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
                 unsigned char right_front, unsigned char right_back,
 				unsigned char short_left, unsigned char short_right)
 {
-		speed = 108;
+		speed = 105;
         int Kp = 5;
 		int Ka = 1;
         int Kd = 18;
@@ -108,10 +108,13 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 				outvalue += cut(temp,6);
 		}
 
-/*		if(short_right < 20){
+		if(short_right < 17){
 				outvalue = 7;
 		}
-*/
+		else if(short_left < 17){
+				outvalue = -7;
+		}
+
         // sätter max- och minvärden på utvärdet
        	return cut(outvalue, 22);
 }
@@ -126,7 +129,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-		speed = 115;
+		speed = 110;
         signed char outvalue=0;
 		int Kd=1;
 

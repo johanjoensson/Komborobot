@@ -78,11 +78,11 @@ void generate_special_command(unsigned char command_code)
 
 /*-----------------------------------------------------------------------------
  *  send_special_command skickar specialkommando till styrenheten
- *      input: command  0xE0 - gör inget
+ *      input: command  0x70 - gör inget
  *                      0x00 - återuppta vanlig reglering
- *                      0x02 - kör rakt fram
- *                      0x04 - sväng vänster
- *                      0x06 - sväng höger
+ *                      0x01 - kör rakt fram
+ *                      0x03 - sväng vänster
+ *                      0x02 - sväng höger
  *-----------------------------------------------------------------------------*/
 void send_special_command(unsigned char command)
 {
