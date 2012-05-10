@@ -159,12 +159,12 @@ void start_next_ad()
                         data_to_display(dist_left_back,0x03);
                         data_to_display(dist_front,0x04);
                         if(maze_mode == 1){
-                                data_to_display(
-                                        (get_next_special_command()/16+100),
+                                data_to_display(//
+                                        (get_next_special_command()/16+100),//
                                         0x05);
                         }
                         else{
-                                data_to_display(
+                                data_to_display(//
                                         get_next_special_command()/16,0x05);
                         }
                         display_ctr = 0;
