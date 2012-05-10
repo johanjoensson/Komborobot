@@ -225,35 +225,23 @@ void start_next_ad()
 
                         int temp2 = search_for_crossroad();
 
-                        if(temp2==1 && 
-                                (((dist_right_front > 65) && 
-                                (dist_right_back < 65)) || 
-                                 ((dist_left_front > 65) && 
-                                (dist_left_back < 65)))){
-                                //Om en korsning upptackts: skicka 
-                                //specialkommandot som ska utforas till 
-                                //styrenheten
-
-                                if(get_next_special_command()!=0x10){
-                                        send_special_command(
-                                                get_next_special_command());
+                        if(temp2==1){
+								send_special_command(get_next_special_command()
+								| 0x01);
                                         //Resetar next_special_command
-                                        generate_special_command(4);
-                                }
-                                else if(dist_right_front > 65 &&
-                                                dist_left_front > 65){
-                                        send_special_command(
-                                                get_next_special_command());
-                                        //Resetar next_special_command
-                                        generate_special_command(4);
-                                        lost_one_wall=0;
-                                }
-                                else{
-                                        lost_one_wall=1;
-                                }
+                                generate_special_command(4);
 
                         }
-                        else if(temp2==3){		//vanlig 90 högersväng
+						else if(temp2==2){
+								send_special_command(get_next_special_command()
+								| 0x02);
+                                        //Resetar next_special_command
+                                generate_special_command(4);
+						}
+						else if(temp2==3){
+								generate_special_command(4);
+						}
+                        else if(temp2==4){		//vanlig 90 högersväng
                                 header=0xC3;
                                 if(duplicate==1){
                                         data=0x00;
@@ -265,7 +253,7 @@ void start_next_ad()
                                 }
                                 req_sending();
                         }
-                        else if(temp2==4){		//vanlig 90 vänstersväng
+                        else if(temp2==5){		//vanlig 90 vänstersväng
                                 header=0xC3;
                                 if(duplicate==1){
                                         data=0x00;
