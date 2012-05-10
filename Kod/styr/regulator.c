@@ -65,7 +65,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		signed char difference_left_right_b = right_back - left_back;
 
 
-		//reglera på närmsta väggen
+		//reglera på nårmsta väggen
 		if((right_front+right_back) < (left_front+left_back)){
 				wall=0;
 		}
@@ -86,12 +86,12 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 		}
 
 		if(wall==0){	//höger vägg
-				outvalue = -Kp*(difference_right);	// P-delen
-				outvalue -= Kd*(difference_right - old_distance_right);  // D-delen
+				outvalue = -Kp*(difference_right);							// P-delen
+				outvalue -= Kd*(difference_right - old_distance_right);    // D-delen
 		}
-		else if(wall==1){       //vänster vägg
-				outvalue = Kp*(difference_left);       	// P-delen
-				outvalue += Kd*(difference_left - old_distance_left);	// D-delen
+		else if(wall==1){													//vänster vägg
+				outvalue = Kp*(difference_left);               				// P-delen
+				outvalue += Kd*(difference_left - old_distance_left);		// D-delen
 		}
 				
 		old_distance_right = difference_right;
@@ -108,10 +108,10 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
 				outvalue += cut(temp,6);
 		}
 
-		if(short_right < 20){
+/*		if(short_right < 20){
 				outvalue = 7;
 		}
-
+*/
         // sätter max- och minvärden på utvärdet
        	return cut(outvalue, 22);
 }
@@ -126,7 +126,7 @@ signed char distance_regulator(unsigned char left_front, unsigned char left_back
  *-----------------------------------------------------------------------------*/
 signed char line_regulator(signed char new_value)
 {
-		speed = 110;
+		speed = 115;
         signed char outvalue=0;
 		int Kd=1;
 
