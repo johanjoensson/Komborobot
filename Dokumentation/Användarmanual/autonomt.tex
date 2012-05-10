@@ -26,9 +26,9 @@ Roboten kommer att följa banan fram till dess att stoppkommando hittas. Man kan
 \subsection{Kalibrering}
 Robotens linjesensorer kan kalibreras via användargränssnittet, detta går till
 så att man startar input\_control och send\_receive, använder ''u'' och ''i''
-för att ställa in önskad tröskelnivå på linjesensorerna (ett ungeförligt värde
+för att ställa in önskad tröskelnivå på linjesensorerna (ett ungefärligt värde
 på tröskelnivån ges av färgen på input\_control). När man hittat en tröskelnivå
-man äe nöjd med trycker man ''c'' så kommer Komborobot ställa in tröskelvärdet
+man är nöjd med trycker man ''c'' så kommer Komborobot ställa in tröskelvärdet
 på linjesensorerna till värdet på linjekalibreringskonstanten.
 
 \subsection{Displayen}
@@ -36,7 +36,13 @@ Displayen visar avståndet till väggarna på sidorna till höger, vänster och 
 
 \nyBild{display2.jpg}{Displayens utseende.}{display}{1.0}
 
-Displayen har två rader med tecken. Den övre raden visar framsensorns och de främre sidosensorernas värden, och den undre raden visar bakre sidosensorernas dito. Ett 'H' bredvid värdet indikerar högersensor, 'V' vänstersensor och 'F' sensorn riktad framåt. Avstånden visas med tre siffror, och ligger i intervallet 20 cm - 120 cm. Detta innebär att avstånd som ligger utanför detta intervall kommer att ge ett felaktigt värde på displayen. 
+Displayen har två rader med tecken. Den övre raden visar framsensorns och de 
+främre sidosensorernas värden, och den undre raden visar bakre 
+sidosensorernas dito. Ett 'H' bredvid värdet indikerar högersensor, 'V' 
+vänstersensor och 'F' sensorn riktad framåt. Avstånden visas med tre 
+siffror, och ligger i intervallet 20 cm - 120 cm. Detta innebär att avstånd 
+som ligger utanför detta intervall kommer att ge ett felaktigt värde på 
+displayen.
 
 \subsection{PC}
 I autonomt läge så kommer Komborobot att kontinuerligt skicka avstånd till
@@ -44,7 +50,7 @@ väggarna längs sidorna till PC. Då roboten utför ett specialkommando, då de
 exempelvis kommer fram till en korsning,  kommer Komborobot skicka information om
 detta till PC. Skulle något gå fel och styrenheten får in ett kommando den inte
 känner igen kommer Komborobot att skicka ett meddelande till PC. Var gång
-Komborobot skickar något till PC så inkluderas information om den följer en
+Komborobot skickar något till PC så inkluderas information som visar om den följer en
 linje eller om den kör i en labyrint.
 \subsection{Banan}
 \label{sec:banan}
