@@ -5,7 +5,7 @@
 #include "sensor_spi.h"
 #include "linjeskillnad.h"
 
-#define DELTA 22
+#define DELTA 10
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -23,7 +23,8 @@ int time2;
 int iterations;
 int counter;
 int maze_mode_exit_cnt=0;
-int line_fault_avoid_cnt=0;
+int line_fault_avoid_cnt_b=0;
+int line_fault_avoid_cnt_w=0;
 
 int find_ones(unsigned char array)
 {
@@ -41,20 +42,20 @@ int markning(int now_value){
 
         //Om är på Tejp, öka antalet iterationer
         if(now_value==1){
-                line_fault_avoid_cnt++;
-				if(line_fault_avoid_cnt==3){
+                line_fault_avoid_cnt_b++;
+				line_fault_avoid_cnt_w=0;
+				if(line_fault_avoid_cnt_b>=4){
 						iterations++;
-						line_fault_avoid_cnt=0;
 				}
 
         }	//Spara antalet iterationer när går av första markeringen
         else if(iterations > 0 && now_value==0 && count_2==0){
-				line_fault_avoid_cnt++;
-				if(line_fault_avoid_cnt==3){
+				line_fault_avoid_cnt_b=0;
+				line_fault_avoid_cnt_w++;
+				if(line_fault_avoid_cnt_w>=4){
 						time1 = iterations;
         		        iterations=0;
                 		count_2++;
-						line_fault_avoid_cnt=0;
 				}
 
 
@@ -98,7 +99,7 @@ int markning(int now_value){
                 }
 
 
-				line_fault_avoid_cnt=0;
+				line_fault_avoid_cnt_b=0;
                 return 0;
         }
 
