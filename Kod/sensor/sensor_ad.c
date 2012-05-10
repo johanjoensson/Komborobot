@@ -238,7 +238,8 @@ void start_next_ad()
                                         //Resetar next_special_command
                                 generate_special_command(4);
 						}
-						else if(temp2==3){
+						else if(temp2==3 && (get_next_special_command()==0x10))
+						{
 								generate_special_command(4);
 						}
                         else if(temp2==4){		//vanlig 90 högersväng
