@@ -104,16 +104,17 @@ void send_special_command(unsigned char command)
 int search_for_crossroad(){
 
 
-		if((dist_right_front>=70 && dist_left_front>=70) {
+		if((dist_right_front>=70 && dist_left_front>=70)) {
 				return 1;
 		}
 		else if((dist_front>=110 && dist_left_front>=80) ||
-				(dist_front>=110 && dist_right_front>=80)))
+				(dist_front>=110 && dist_right_front>=80)){
 				return 2;
 		}
 		else if((dist_front>=110 && dist_left_front>=80) ||
                                 (dist_front>=110 && dist_right_front>=80)){
 				return 3;
+		}
 		else if(dist_right_front >= 80 && dist_right_back >= 80 &&
                                 dist_front <= 35){
 				return 3;
