@@ -253,7 +253,7 @@ void start_next_ad()
                                 }
 
                         }
-                        else if(temp2==2){		//vanlig 90 högersväng
+                        else if(temp2==3){		//vanlig 90 högersväng
                                 header=0xC3;
                                 if(duplicate==1){
                                         data=0x00;
@@ -265,7 +265,7 @@ void start_next_ad()
                                 }
                                 req_sending();
                         }
-                        else if(temp2==3){		//vanlig 90 vänstersväng
+                        else if(temp2==4){		//vanlig 90 vänstersväng
                                 header=0xC3;
                                 if(duplicate==1){
                                         data=0x00;
