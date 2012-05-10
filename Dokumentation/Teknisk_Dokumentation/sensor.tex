@@ -156,6 +156,14 @@ Sensorprocessorn har också en funktion för att konvertera cm-värdet till ASCI
 \subsection{Mjukvara}
 
 \subsubsection{AD}
+AD-omvandlaren startas av ett interrupt som genereras av overflow på en timer.
+Detta overflow genereras ca var 32 ms och omvandlar alla sensorer. 
+Ytterligare tio avbrott genereras med jämna mellanrum innan nästa overflow 
+kommer. Dessa avbrott omvandlar endast linjesensorerna då de kan uppdateras
+oftare än avståndssensorerna. När en AD-omvandling är klar ställs interna och 
+externa muxar om för nästa ad-omvandling i funktionen \emph{mux\_control}. Efter 
+det omvandlas det färdiga digitala värdet till data som skickas till
+styrenheten.
 
 \subsubsection{Linjesensor}
 Styrsignaler till multiplexern väljer ut en diod i taget.
