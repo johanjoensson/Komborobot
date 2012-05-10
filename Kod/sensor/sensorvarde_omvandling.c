@@ -134,10 +134,25 @@ int vansteromvandling_front(int sensorvarde){
 
 int kortvansteromvandling(int sensorvarde)
 {
-		
-		int cmvarde = 0;
-
-		return cmvarde;
+	int cmvarde;
+	
+	if(sensorvarde<=161 && sensorvarde>146){
+		cmvarde=round(165-sensorvarde);
+	}
+	else if(sensorvarde<=146 && sensorvarde>108){
+		cmvarde=round(32-(sensorvarde)*0.17);
+	}
+	else if(sensorvarde<=108 && sensorvarde>93){
+		cmvarde=round(98-(sensorvarde)*0.78);
+	}
+	else if(sensorvarde>161){
+		cmvarde=4;
+	}
+	else{
+		cmvarde=26;
+	}
+	
+	return cmvarde;
 }
 
 int korthogeromvandling(int sensorvarde)
