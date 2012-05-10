@@ -11,7 +11,7 @@
 \lstset{inputencoding=utf8,
         language=c,
         linewidth=\textwidth,
-        basicstyle=\footnotesize,
+        basicstyle=\scriptsize,
         numbers=left,
         stepnumber=1,
         tabsize=8,
@@ -27,13 +27,16 @@
 
 
 
-\section{Kod}
+\subsection*{A \hspace*{1em} Kod}
+\addcontentsline{toc}{subsection}{A \hspace*{1em} Kod}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PC
 % Kod till användargränssnittet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{PC}
+\subsubsection*{A.1 \hspace*{1em} PC}
+\addcontentsline{toc}{subsubsection}{A.1 \hspace*{1em} PC}
 \lstinputlisting[caption=input\_control,label=lst:input]{../../Kod/pc/input_control.c}
 \lstinputlisting[caption=keypress.h,label=lst:keypress_h]{../../Kod/pc/keypress.h}
 \lstinputlisting[caption=keypress.c,label=lst:keypress_c]{../../Kod/pc/keypress.c}
@@ -50,7 +53,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kommunikationsenhet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Kommunikationsenhet}
+\subsubsection*{A.2 \hspace*{1em} Kommunikationsenhet}
+\addcontentsline{toc}{subsubsection}{A.2 \hspace*{1em} Kommunikationsenhet}
 \lstinputlisting[caption=komm\_main.c,label=lst:komm_main_c]{../../Kod/komm/komm_main.c}
 \lstinputlisting[caption=komm\_init.c,label=lst:komm_init_c]{../../Kod/komm/komm_init.c}
 \lstinputlisting[caption=bluetooth\_interrupt.c,%
@@ -60,7 +64,8 @@ label=lst:bluetooth_interrupt_c]{../../Kod/komm/bluetooth_interrupt.c}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Styrenehet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Styrenhet}
+\subsubsection*{A.3 \hspace*{1em} Styrenhet}
+\addcontentsline{toc}{subsubsection}{A.3 \hspace*{1em} Styrenhet}
 \lstinputlisting[caption=styr\_main.c,label=lst:styr_main_c]{../../Kod/styr/styr_main.c}
 \lstinputlisting[caption=motor\_styrning.h,label=lst:motor_styrning_h]{../../Kod/styr/motor_styrning.h}
 \lstinputlisting[caption=motor\_styrning.c,label=lst:motor_styrning_c]{../../Kod/styr/motor_styrning.c}
@@ -70,13 +75,14 @@ label=lst:bluetooth_interrupt_c]{../../Kod/komm/bluetooth_interrupt.c}
 \lstinputlisting[caption=styr\_specialkommando.c,label=lst:styr_specialkommando_c]{../../Kod/styr/styr_specialkommando.c}
 \lstinputlisting[caption=styr\_tolka\_data.h,label=lst:styr_tolka_data_h]{../../Kod/styr/styr_tolka_data.h}
 \lstinputlisting[caption=styr\_tolka\_data.c,label=lst:styr_tolka_data_c]{../../Kod/styr/styr_tolka_data.c}
-\lstinputlisting[caption=styr\_SPI.h,label=lst:styr_SPI_h]{../../Kod/styr/styr_SPI.c}
+\lstinputlisting[caption=styr\_SPI.h,label=lst:styr_SPI_h]{../../Kod/styr/styr_SPI.h}
 \lstinputlisting[caption=styr\_SPI.c,label=lst:styr_SPI_c]{../../Kod/styr/styr_SPI.c}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sensorenhet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Sensorenhet}
+\subsubsection*{A.4 \hspace*{1em} Sensorenhet}
+\addcontentsline{toc}{subsubsection}{A.4 \hspace*{1em} Sensorenhet}
 \lstinputlisting[caption=sensor.c,label=lst:sensor_c]{../../Kod/sensor/sensor.c}
 \lstinputlisting[caption=sensor\_init.h,label=lst:sensor_init_h]{../../Kod/sensor/sensor_init.h}
 \lstinputlisting[caption=sensor\_init.c,label=lst:sensor_init_c]{../../Kod/sensor/sensor_init.c}
@@ -95,4 +101,6 @@ label=lst:bluetooth_interrupt_c]{../../Kod/komm/bluetooth_interrupt.c}
 \lstinputlisting[caption=sensot\_spi.h,label=lst:sensor_spi_h]{../../Kod/sensor/sensor_spi.h}
 \lstinputlisting[caption=sensot\_spi.c,label=lst:sensor_spi_c]{../../Kod/sensor/sensor_spi.c}
 
-
+\subsection*{B \hspace*{1em} Kopplingsschema}
+\addcontentsline{toc}{subsection}{B \hspace*{1em} Kopplingsschema}
+Här kommer ligga ett kopplingsschema
