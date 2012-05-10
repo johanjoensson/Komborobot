@@ -16,7 +16,8 @@ i mikroprocessorn, se figur \ref{fig:PINsensor}.
 %Linjesensorer
 Linjeföljarsensorn utgörs av en reflexsensormodul kopplad till en mux och en demux av typen 4067. Reflexsensormodulen består av 11 lysdioder och 11 ljuskänsliga transistorer. 
 
-%AvståndssensorerSensorenheten har fem optiska avståndsmätare av typen \emph{GP2Y0A02YK} (20-150 cm). Två är placerade på vardera sida av roboten, en fram och en bak på var sida. Vidare sitter en sensor riktad framåt. 
+%Avståndssensorer
+Sensorenheten har fem optiska avståndsmätare av typen \emph{GP2Y0A02YK} (20-150 cm). Två är placerade på vardera sida av roboten, en fram och en bak på var sida. Vidare sitter en sensor riktad framåt. 
 
 %Display
 En alfanumerisk LCD-display av typen \emph{LCD JM162A} används för att visa avstånd till väggarna när roboten är i labyrintläge. 
@@ -182,6 +183,29 @@ stoppsignaler i linjeläge och riktningsmarkeringar i labyrintläge.
 
 
 \subsubsection{Avståndsberäkning}
+Då alla avståndssensorer är individer, det vill säga de levererar inte samma spänningar vid
+samma avstånd, så behövs det en normering av värdena till centimeter för att kunna reglera
+på sensordatan. 
+
+Avstånden i centimeter ska också skickas till datorn och displayen, i enlighet med
+kravspecifikationen.
+
+På roboten används två olika sorters avståndsensorer, en sort för längre sträckor och en sort för
+kortare sträckor. De sensorer som klarar av längre sträckor fungerar mellan 20-150 cm men 
+används bara i intervallet 20-120 cm. De sensorer som är till för kortare distanser fungerar mellan 4-30 cm,
+ men används bara mellan 4-26 cm. Samtliga avståndssensorer är icke-linjära, det vill säga att de 
+ inte levererar en spänning som är linjärt proportionerlig mot avståndet.
+
+Detta har lösts genom att varje sensors hexadecimala utvärde, efter AD omvandlingen, linjäriseras i minst 
+tre olika intervall:
+
+\begin{itemize}
+\item Långdistanssensorerna är linjäriserade för intervallen 20-40 cm, 41-60 cm och 61-120 cm
+\item Kortdistanssensorerna är linjäriserade för intervallen 4-7 cm, 8-12 cm och 13-26 cm
+\end{itemize}
+ 
+
+För samtliga grafer för linjäriseringen, se appendix \ref{appendix:cmomvandling}.
 
 
 \subsubsection{Kommunikation}
