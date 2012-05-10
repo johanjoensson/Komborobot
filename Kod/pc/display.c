@@ -208,7 +208,7 @@ void display_error()
  *****************************************************************************/
 enum mode run_mode(struct instruction_t *inst)
 {
-	if((int)(inst->header & 0x01) == 0){
+	if((inst->header & 0x01) == 0){
 		return FJARR;
 	}else{
 		switch((int)(inst->header & 0x10) >> 4){
