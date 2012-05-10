@@ -26,7 +26,8 @@ I den manuella delen styrs motorerna via instruktioner från PCn som skickas
 genom kommunikationsenheten. PCn skickar då direkta kommandon om vad 
 den ska göra. I den autonoma delen kommer styrenheten istället ta emot 
 sensordata, ursprungligen skickat från sensorenheten. Styrenheten sköter sedan 
-regleringen utifrån dessa sensorvärden.
+regleringen utifrån dessa sensorvärden. I båda fallen ser styrenheten till att sätta
+hastigheten och riktningen på motorerna.
 
 \subsubsection{Autonomt läge}
 
@@ -57,6 +58,28 @@ så kastas datan och en felmeddelande till datorn.
 
 Styrenheten sätts igång med en extern knapp på roboten, vilket aktiverar enheten som då börjar
 reglera efter den data som skickas till den.
+
+\subsubsection{Manuell styrning}
+
+I manuellt läge styrs roboten med styrsignaler som skickas från PCn via 
+kommunikationsenheten. I mjukvaran liger kod för styrkommandona:
+\begin{itemize}
+\item Kör framåt - sätter hastighet och riktning framåt
+\item Kör bakåt - sätter hastigheten och riktning bakåt
+\item Sväng höger - svänger höger snett framåt
+\item Sväng vänster - svänger vänster snett framåt
+\item Rotera höger - Roterar på platsen åt höger
+\item Rotera vänster - Roterar på platsen åt vänster
+\item Stopp - Motorerna stannar
+\end{itemize}
+Styrkommandona anropas med inkommandot speed som ger motorerna den
+önskade hastigheten. Hastigheten på respektive motor kommer att skalas i en subrutin
+där även trim läggs till. Detta så att trim kommer att löpa över alla styrkommandon.
+
+\subsubsection{Trimning}
+Trim är en funktion trim som ökar respektive sänker hastigheten på ett hjul. 
+Detta så att man ska kunna öka precisionen vid manuell styrning. Trimning 
+anropas från PCn och behöver ingen inparameter.
 
 \subsection{Reglering}
 Två olika regleralgoritmer används i roboten, en när roboten följer linjer och
@@ -127,16 +150,6 @@ den skillnaden stor så motverkar den P-delen. Eftersom D-delen reglerar på
 relativt små skillnader har den hög vikt.
 
 \label{reglering}
-
-\subsubsection{Manuell läge}
-
-I manuellt läge styrs Roboten med styrsignaler som skickas från PCn via 
-kommunikationsenheten. I mjukvaran liger kod för kommandona; rakt 
-fram, bakåt, sväng höger, sväng vänster, rotera höger, rotera vänster
-och stopp. Det finns även en funktion trim som ökar respektive sänker 
-hastigheten på ett hjul. Detta så att man ska kunna öka precisionen vid 
-rak körning. Styrkommandona, som kommer in via SPI bussen, tolkas 
-tolkas först och anropar sedan den funktion som efterfrågades av PCn
 
 
 
