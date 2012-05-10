@@ -94,24 +94,33 @@ felmeddelande till PCn.
     1001 & Trim vänster \\
     1010 & Trim höger \\
     1011 & Nollställ trim \\
+    
   \end{tabular}
   \caption{Kommandokodning}
   \label{tab:styrkommando}
 \end{table}
 
 
-\subsection{PC-mjukvara $\longleftrightarrow$ Sensorenhet}
-När sensorenheten skickar information till styrenheten och PCn 
-så anger E-flaggan om roboten är i autonomt eller fjärrstyrt läge.
+\subsection{Sensorenhet $\longleftrightarrow$ Styrenhet, PC-mjukvara}
+När sensorenheten skickar information till styrenheten och PCn så anger
+E-flaggan om roboten är i autonomt eller fjärrstyrt läge.
 D-flaggan avgör om databyten som mottagits är ett specialkommando eller inte.
 A-flaggan anger om roboten kör i labyrint eller om den följer en linje.
 Flaggornas lägen kan ses i tabell \ref{tab:adeflaggor}.
 
+Efterföljande data är antingen ett specialkommando,
+se tabell \ref{tab:special}, avstånd till väggar eller avstånd till 
+centrumlinjen. Databytens bituppdelning vid specialkommando kan ses i tabell
+\ref{tab:specialbitar}. Avstånd till centrumlinjen skickas bara till styrenheten.
+B- och C-flaggorna anger vilken avståndssensor som skickas, kodningen kan ses i
+tabell \ref{tab:bcflaggor}. Om både B- och C-flaggan är satt kan det vara en av
+tre sensorer, då avgör de översta databitarna vilken sensor det är, se tabell
+\ref{tab:kortsensor}.
 
 PC-mjukvaran skickar data till sensorenheten då tröskelvärdet på linjesensorerna
 kalibreras, se \ref{sec:linjesensor}.
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{l l l l l l l l}
     \textbf{A} & \textbf{Läge} & & \textbf{D} & \textbf{Typ av data} & & \textbf{E} & \textbf{Läge} \\
@@ -123,11 +132,31 @@ kalibreras, se \ref{sec:linjesensor}.
 \end{table}
 
 
-\subsection{Sensorenhet $\longleftrightarrow$ Kommunikationsenhet}
-Sensorenheten skickar data till kommunikationsenheten som ska vidare både 
-till PCn och styrenheten. Detta anges med en header enligt tabell 
-\ref{tab:headerkod}. Efterföljande data är antingen ett specialkommando, se 
-tabell \ref{tab:special}, avstånd till väggar eller avstånd till centrumlinjen.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{BC} & \textbf{Sensor} \\
+    00 & Fram vänster \\
+    01 & Bak vänster \\
+    10 & Fram höger\\
+    11 & Bak höger, Kort vänster, Kort höger\\
+  \end{tabular}
+  \caption{B- och C-flaggor}
+  \label{tab:bcflaggor}
+\end{table}
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{2 MSB i databyte} & \textbf{Sensor} \\
+    0- & Bak höger \\
+    10 & Kort höger \\
+    11 & Kort vänster\\
+  \end{tabular}
+  \caption{B- och C-flaggor}
+  \label{tab:kortsensor}
+\end{table}
 
 \begin{table}[h] 
   \centering
@@ -153,4 +182,3 @@ tabell \ref{tab:special}, avstånd till väggar eller avstånd till centrumlinje
   \caption{Kodning av specialkommandon}
   \label{tab:special}
 \end{table}
-
