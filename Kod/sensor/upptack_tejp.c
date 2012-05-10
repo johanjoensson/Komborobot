@@ -23,7 +23,7 @@ int time2;
 int iterations;
 int counter;
 int maze_mode_exit_cnt=0;
-
+int line_fault_avoid_cnt=0;
 
 int find_ones(unsigned char array)
 {
@@ -41,20 +41,28 @@ int markning(int now_value){
 
         //Om är på Tejp, öka antalet iterationer
         if(now_value==1){
-                iterations++;
-
+                line_fault_avoid_cnt++;
+				if(line_fault_avoid_cnt==3){
+						iterations++;
+						line_fault_avoid_cnt=0;
+				}
 
         }	//Spara antalet iterationer när går av första markeringen
         else if(iterations > 0 && now_value==0 && count_2==0){
-                time1 = iterations;
-                iterations=0;
-                count_2++;
+				line_fault_avoid_cnt++;
+				if(line_fault_avoid_cnt==3){
+						time1 = iterations;
+        		        iterations=0;
+                		count_2++;
+						line_fault_avoid_cnt=0;
+				}
 
 
         }	//När går från tejp till ingen tejp, slå av timer 
                 //och spara värde i time2
         else if(iterations > 0 && now_value==0 && count_2==1){
-                time2 = iterations;
+                
+				time2 = iterations;
                 iterations=0;
                 count_2=0;
                 counter=0;
@@ -83,14 +91,14 @@ int markning(int now_value){
                 if(count_2){
                         counter++;
                 }
-                if(counter>2000){
+                if(counter>200){
                         iterations=0;
                         count_2=0;
                         counter=0;
                 }
 
 
-
+				line_fault_avoid_cnt=0;
                 return 0;
         }
 
