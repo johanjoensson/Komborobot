@@ -93,7 +93,8 @@ felmeddelande till PCn.
     1000 & Set vänster \\
     1001 & Trim vänster \\
     1010 & Trim höger \\
-    1011 & No trim \\
+    1011 & Nollställ trim \\
+
   \end{tabular}
   \caption{Kommandokodning}
   \label{tab:styrkommando}
@@ -109,16 +110,17 @@ Flaggornas lägen kan ses i tabell \ref{tab:adeflaggor}.
 
 Efterföljande data är antingen ett specialkommando,
 se tabell \ref{tab:special}, avstånd till väggar eller avstånd till 
-centrumlinjen.  Avstånd till centrumlinjen skickas bara till styrenheten.
+centrumlinjen. Databytens bituppdelning vid specialkommando kan ses i tabell
+\ref{tab:specialbitar}. Avstånd till centrumlinjen skickas bara till styrenheten.
 B- och C-flaggorna anger vilken avståndssensor som skickas, kodningen kan ses i
-tabell \ref{tab:bcflaggor}. Om både B- och C-flaggan är ett kan det vara 3
-sensorer, då avgör de översta databitarna vilken sensor det är, se tabell
+tabell \ref{tab:bcflaggor}. Om både B- och C-flaggan är satt kan det vara en av
+tre sensorer, då avgör de översta databitarna vilken sensor det är, se tabell
 \ref{tab:kortsensor}.
 
 PC-mjukvaran skickar data till sensorenheten då tröskelvärdet på linjesensorerna
 kalibreras, se \ref{sec:linjesensor}.
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{l l l l l l l l}
     \textbf{A} & \textbf{Läge} & & \textbf{D} & \textbf{Typ av data} & & \textbf{E} & \textbf{Läge} \\
@@ -130,7 +132,7 @@ kalibreras, se \ref{sec:linjesensor}.
 \end{table}
 
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{l l}
     \textbf{BC} & \textbf{Sensor} \\
@@ -144,7 +146,7 @@ kalibreras, se \ref{sec:linjesensor}.
 \end{table}
 
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{l l}
     \textbf{2 MSB i databyte} & \textbf{Sensor} \\

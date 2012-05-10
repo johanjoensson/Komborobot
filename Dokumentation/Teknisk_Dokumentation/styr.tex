@@ -59,6 +59,7 @@ så kastas datan och en felmeddelande till datorn.
 Styrenheten sätts igång med en extern knapp på roboten, vilket aktiverar enheten som då börjar
 reglera efter den data som skickas till den.
 
+<<<<<<< HEAD
 \subsubsection{Manuell styrning}
 
 I manuellt läge styrs roboten med styrsignaler som skickas från PCn via 
@@ -80,6 +81,8 @@ där även trim läggs till. Detta så att trim kommer att löpa över alla styr
 Trim är en funktion trim som ökar respektive sänker hastigheten på ett hjul. 
 Detta så att man ska kunna öka precisionen vid manuell styrning. Trimning 
 anropas från PCn och behöver ingen inparameter.
+=======
+>>>>>>> f3d39a4d7404a1c5944538274f66fb7ec29882a0
 
 \subsection{Reglering}
 Två olika regleralgoritmer används i roboten, en när roboten följer linjer och
@@ -148,9 +151,65 @@ D-delen ser till att roboten rör sig lugnt och inte börjar att oscillera i
 labyrinten. Detta gör den genom att kika på skillnaden på sidosensorerna och är
 den skillnaden stor så motverkar den P-delen. Eftersom D-delen reglerar på
 relativt små skillnader har den hög vikt.
-
 \label{reglering}
 
+<<<<<<< HEAD
+=======
+\subsubsection{Specialkommandon}
+För att utföra till exempel köra rakt framåt eller utföra 90\degree svängar använder
+roboten något som kallas för specialkommandon. Dessa är förprogrammerade 
+sekvenser av motorhastigheter, som utförs när styrenheten mottar vissa speciella
+headerfilen. Den flagga i headern som avgör om det skickade kommandot är ett
+specialkommando är E-flaggan, se \ref{protokoll}.
+
+Roboten har sex olika specialkommandon:
+
+ \begin{itemize}
+\item Återuppta vanlig reglering
+\end{itemize}
+Specialkommandot används inte för närvarande, men det finns programmerat ett
+kommando som tvingar styrenheten att omedelbart avsluta pågående specialkommando
+och återuppta vanlig reglering.
+
+\begin{itemize}
+\item Kör rakt fram
+\end{itemize}
+Specialkommandot kör rakt fram används för att köra framåt i en korsning. Tiden, och hastigheten,
+ som motorerna får resulterar i att roboten kör framåt  i ungefär 100 cm, vilket är sträckan mellan 
+ början av en korsning fram tills det att hela roboten står mellan väggarna på den labyrint som är 
+ på andra sidan.
+ 
+ \begin{itemize}
+\item Sväng höger/vänster 90\degree (Två specialkommandon) 
+\end{itemize}
+Specialkommandot används för att utföra 90\degree  svängar i korsningar. Utförandet som båbörjas
+då styrenheten mottar detta kommando är att roboten först kör rakt framåt i cirka 40 cm och därefter
+gör en 90\degree sväng i den givna riktningen. Därefter kör roboten framåt i ungefär 50 cm för 
+att komma in mellan de väggar som finns på sidan av korsningen som.
+
+ \begin{itemize}
+\item Rotera höger/vänster 90\degree (Två specialkommandon) 
+\end{itemize}
+Specialkommandot utförs då roboten upptäckt en 90\degree  kurva labyrinten. Roboten utför efter 
+mottaget kommando en 90\degree sväng åt den givna riktningen, utan körning framåt varken innan 
+eller efter svängen.
+
+
+
+
+ 
+
+\subsubsection{Manuell läge}
+
+I manuellt läge styrs Roboten med styrsignaler som skickas från PCn via 
+kommunikationsenheten. I mjukvaran liger kod för kommandona; rakt 
+fram, bakåt, sväng höger, sväng vänster, rotera höger, rotera vänster
+och stopp. Det finns även en funktion trim som ökar respektive sänker 
+hastigheten på ett hjul. Detta så att man ska kunna öka precisionen vid 
+rak körning. Styrkommandona, som kommer in via SPI bussen, tolkas 
+tolkas först och anropar sedan den funktion som efterfrågades av PCn
+
+>>>>>>> f3d39a4d7404a1c5944538274f66fb7ec29882a0
 
 
 	
