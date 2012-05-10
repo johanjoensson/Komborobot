@@ -194,45 +194,45 @@ signed char line_regulator(signed char new_value)
 				switch(new_value){
 					
 						case -127:
-							outvalue = 38;
+							outvalue = 40;
 							break;
 						
 						case -90:
-							outvalue = 34;
+							outvalue = 36;
 							break;
 				
 						case -75:
-							outvalue = 31;
+							outvalue = 33;
 							break;
 
 						case -50: 
-							outvalue = 24;
+							outvalue = 26;
 							break;	
 				
 						case -25:
-							outvalue = 20;
+							outvalue = 22;
 							break;
 						case 0:
-							outvalue = 17;
+							outvalue = 19;
 							break;
 						case 25:
-							outvalue = 15;
+							outvalue = 17;
 							break;
 				
 						case 50:
-							outvalue = 12;
+							outvalue = 14;
 							break;
 						
 						case 75: 
-							outvalue = 10;
+							outvalue = 12;
 							break;	
 					
 						case 90:
-							outvalue = 8;
+							outvalue = 10;
 							break;
 						
 						case 127:
-							outvalue = 7;
+							outvalue = 9;
 							break;
 				
 						default: 
@@ -244,41 +244,41 @@ signed char line_regulator(signed char new_value)
 					
 					switch(new_value){
 						case -127:
-							outvalue = 7;
+							outvalue = 9;
 							break;
 						case -90:
-							outvalue = 8;
+							outvalue = 10;
 							break;
 						
 						case -75:
-							outvalue = 10;
+							outvalue = 12;
 							break;
 						case -50: 
 							outvalue = 12;
 							break;	
 					
 						case -25:
-							outvalue = 15;
+							outvalue = 17;
 							break;
 						case 0:
-                        	outvalue = 17;
+                        	outvalue = 19;
 							break;
 						case 25:
-							outvalue = 20;
+							outvalue = 22;
 							break;
 							
 						case 50:
-							outvalue = 24;
+							outvalue = 26;
 							break;
 						case 75: 
-							outvalue = 31;
+							outvalue = 33;
 							break;	
 							
 						case 90:
-							outvalue = 34;
+							outvalue = 36;
 							break;
 						case 127:
-							outvalue = 38;
+							outvalue = 40;
 							break;
 						default: 
 							outvalue = 0;
