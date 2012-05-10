@@ -31,6 +31,7 @@ En alfanumerisk LCD-display av typen \emph{LCD JM162A} används för att visa av
 \end{figure}
 
 \subsubsection{Linjeföljarsensor}
+\label{sec:linjesensor}
 För att maximera robotens framförhållning är sensorerna monterade framför roboten 
 så långt fram som möjligt ca 3 mm ovanför marken. Linjesensorn består av 11st lysdioder 
 med 11st ljuskänsliga transistorer, en multiplex och en demultiplex.
@@ -146,7 +147,7 @@ höger. Denna parameter skickas till styrenheten där den används i
 linjeregulatorn, se \ref{sec:linjereglering}. Linjedatat undersökts också efter
 stoppsignaler i linjeläge och riktningsmarkeringar i labyrintläge.
 
-\subsubsection{Upptäckning av riktningsmarkeringar}
+\subsubsection{Upptäckande av riktningsmarkeringar}
 \label{sec:riktmark}
 Då roboten är i en labyrint kommer linjeföljarsensorn användas 
 för att hitta riktningsmarkeringar. Dessa markeringar används för att visa i 
@@ -176,7 +177,7 @@ jämförs för att se vilken tejpbit som var bredast, den första eller den andr
 . Resultatet sparas därefter och efterfrågat kommando utförs i nästkommande 
 korsning, se \ref{sec:upptackkorsning}.
 
-\subsubsection{Upptäckning av stoppsignal}
+\subsubsection{Upptäckande av stoppsignal}
 När banan tar slut ska det i enlighet i banspecifikationen finnas en speciell typ av 
 markering. Avslutet ska ske på en linje och markeringen går att se i figur \ref{fig:tejpmarkeringar}.
 Robotens kommer att uppfatta markeringar där det finns mer än 5 distinkta skillnader mellan tejp och golv, förutsatt att den ser markeringen under en tidsperiod, som en stoppsignal. 
@@ -198,7 +199,7 @@ används bara i intervallet 20-120 cm. De sensorer som är till för kortare dis
 Detta har lösts genom att varje sensors hexadecimala utvärde, efter AD omvandlingen, linjäriseras i minst 
 tre olika intervall.
 
-\subsubsection{Upptäckning av korsningar och 90\degree svängar}
+\subsubsection{Upptäckande av korsningar och 90\degree svängar}
 \label{sec:upptackkorsning}
 Enligt specifikationen av den bana som roboten ska kunna följa, framgår det 
 att det före alla korsningar ska finnas tejpmarkeringar som visar i vilken 
