@@ -9,19 +9,18 @@
 volatile int a=0;
 
 int main(void){
-		
-		spi_init();	
-		ad_init();
-		display_setup();
-		SREG |= (1<<7);				//Globala avbrott	
 
+        spi_init();	
+        ad_init();
+        display_setup();
+        SREG |= (1<<7);		//Globala avbrott	
 
-				while (a<255) {
-						a++;
-						if (a>254) {
-								a = 1;
-						}
-				}
-		return 0;
+        while (a<255) {
+                a++;
+                if (a>254) {
+                        a = 1;
+                }
+        }
+        return 0;
 
 }

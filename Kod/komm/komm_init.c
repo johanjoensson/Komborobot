@@ -12,7 +12,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-/* Initiering av kommunikationsenheten. Diverse olika kontrollregister initieras. 
+/* Initiering av kommunikationsenheten. Diverse olika kontrollregister initieras
  *
  * Tar inga inparametrar
  * Returnerar alltid 0.

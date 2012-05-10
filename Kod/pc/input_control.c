@@ -200,16 +200,19 @@ void event_loop(FILE *db)
 						add_to_db(db, inst, 2);
 						break;
                                         case SDLK_c:
-                                                calibrate_sensors(sensor_thresh, inst);
+                                                calibrate_sensors(sensor_thresh,//
+                                                                inst);
                                                 add_to_db(db, inst, 2);
                                                 break;
                                         case SDLK_u:
-                                                if(((sensor_thresh & 0xF0) >> 4) < 0xF){
+                                                if(((sensor_thresh & 0xF0) >> 4)//
+                                                                < 0xF){
                                                         sensor_thresh += 0x10;
                                                 }
                                                 break;
                                         case SDLK_i:
-                                                if(((sensor_thresh & 0xF0) >> 4) > 0x0){
+                                                if(((sensor_thresh & 0xF0) >> 4)//
+                                                                > 0x0){
                                                         sensor_thresh -=  0x10;
                                                 }
                                                 break;

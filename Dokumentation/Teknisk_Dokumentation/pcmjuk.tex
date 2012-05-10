@@ -22,6 +22,37 @@ roboten eller trimnivåer på motorerna så kommer detta också visas på skärm
 När instruktionen skickats till roboten kommer send\_receive invänta 2 databyte
 från roboten (vilket kan vara sensorinfo, specialkommando el. dyl.) som sedan
 kommer åskådligjöras på skärmen.
+
+\subsubsection{Gränssnittet}
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{bilder/granssnitt.png}
+        \caption{Användargränssnittet för send\_receive}
+        \label{fig:sendrec}
+\end{figure}
+\begin{enumerate}
+\item Avståndssensor, vänster fram på Komborobot.
+\item Avståndssensor, vänster bak på Komborobot.
+\item Avståndssensor, höger fram på Komborobot.
+\item Avståndssensor, höger bak på Komborobot.
+\item Labyrintläge, linjeföljarläge eller fjärrstyrt läge.
+\item Senast skickad hastighet.
+\item Trimnivå vänster motor.
+\item Trimnivå höger motor.
+\item Felaktigt kommando skickat till styrenheten.
+\item Senast utförda specialkommandon.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{bilder/input_control.png}
+        \caption{Användargränssnittet för input\_control}
+        \label{fig:inputcont}
+\end{figure}
+
+\item input\_control.
+
+\end{enumerate}
 \subsection{Användande} 
 
 För att börja använda roboten startar man först programmet input\_control, detta

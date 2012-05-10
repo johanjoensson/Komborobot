@@ -66,7 +66,8 @@ int receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 	receive_data(s, ff, &inst->data);
 
 
-        if(!( ( ( (int) inst->header & 0xC0) >> 5 == 4 )||( ( (int)inst->header & 0xC0) >> 5 == 6) ) ){
+        if(!( ( ( (int) inst->header & 0xC0) >> 5 == 4 )||//
+                                ( ( (int)inst->header & 0xC0) >> 5 == 6) ) ){
                 return 1;
         }
 
@@ -105,7 +106,7 @@ int main(void)
 
 
 
-//	struct sockaddr_rc firefly = connect_to_firefly(sock);
+	struct sockaddr_rc firefly = connect_to_firefly(sock);
 	init_curses();
 	int quit = 0;
 	f = init_read("instr_db");
@@ -118,11 +119,11 @@ int main(void)
 	while(!quit){
 		if(new_data(f, inst)){
 			update_speed(inst);
-//			send_inst(sock, inst);
+			send_inst(sock, inst);
 		}else{
-//                        if( receive_inst(sock, firefly, ex_inst) == 0){
+                        if( receive_inst(sock, firefly, ex_inst) == 0){
                                 display_inst(ex_inst);
-//                        }
+                        }
 		}
 	}
 

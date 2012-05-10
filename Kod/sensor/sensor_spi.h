@@ -19,7 +19,8 @@ int req_sending();
 unsigned char header;
 unsigned char data;
 
-//Global variabel som bestämmer vilket läge sensorenheten ska operera i, fjärrstyrt eller autonomt läge.
+//Global variabel som bestämmer vilket läge sensorenheten ska operera i, 
+//fjärrstyrt eller autonomt läge.
 int auto_mode;
 
 /*void decide_mode()

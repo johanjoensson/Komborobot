@@ -12,10 +12,10 @@ int delay_stop=0;
 // from the line sensor
 int calculate_diff(int byte1, int byte2)
 {
-		byte2 &= 0b00000111;
-		int value = (byte2 << 8) + byte1;
-		int index = find_index(value);
-		switch(index){
+        byte2 &= 0b00000111;
+        int value = (byte2 << 8) + byte1;
+        int index = find_index(value);
+        switch(index){
                 case 0 :
                         return -127;
                 case 1:
@@ -38,9 +38,9 @@ int calculate_diff(int byte1, int byte2)
                         return 90;
                 case 10:
                         return 127;
-				case 20:
-						return 96;	//Felkod
-				default:
+                case 20:
+                        return 96;	//Felkod
+                default:
                         return 0;
         }
 }
@@ -49,49 +49,49 @@ int calculate_diff(int byte1, int byte2)
 // returns -1 if no ones
 int find_index(int value)
 {
-		int found_one = 0;
-		int one_index = 0;
-		int zero_index = 10;
-		int found_first_zero=0;
-		int last = (value%2);
-		int number_of_switches=0;
-		if(last){
-				number_of_switches++; // R?kna som en ?ndring om f?rsta dioden
-									  // ?r svart 
-		}
-		for(int i=0;i<11; i++){
-				if(!found_one){
-						if(value%2 == 1){
-								one_index = i;
-								found_one = 1;
-							}
-						
-				} else{
-						if(value%2 == 0 && found_first_zero == 0){
-								zero_index = i;
-								found_first_zero=1;
-						}
-						
-				}
-			if(value%2 != last){
-				number_of_switches++;
-				}
-			last=value%2;
-			value = value >>1;
-		
-		}
-		if(last){
-				number_of_switches++; // R?kna som ?ndring om sista dioden ?r 
-									  // svart
-		}
-		int index=(one_index + zero_index) >> 1;
-		if(number_of_switches>5){
-				delay_stop++;
-				if (delay_stop>5){
-						index=20;
-				}
-	   	} else {
-				delay_stop=0;
-		}
-		return index;
+        int found_one = 0;
+        int one_index = 0;
+        int zero_index = 10;
+        int found_first_zero=0;
+        int last = (value%2);
+        int number_of_switches=0;
+        if(last){
+                number_of_switches++; // Räkna som en ?ndring om f?rsta dioden
+                // är svart 
+        }
+        for(int i=0;i<11; i++){
+                if(!found_one){
+                        if(value%2 == 1){
+                                one_index = i;
+                                found_one = 1;
+                        }
+
+                } else{
+                        if(value%2 == 0 && found_first_zero == 0){
+                                zero_index = i;
+                                found_first_zero=1;
+                        }
+
+                }
+                if(value%2 != last){
+                        number_of_switches++;
+                }
+                last=value%2;
+                value = value >>1;
+
+        }
+        if(last){
+                number_of_switches++;   // Räkna som ändring om sista dioden är
+                                        // svart
+        }
+        int index=(one_index + zero_index) >> 1;
+        if(number_of_switches>5){
+                delay_stop++;
+                if (delay_stop>5){
+                        index=20;
+                }
+        } else {
+                delay_stop=0;
+        }
+        return index;
 }

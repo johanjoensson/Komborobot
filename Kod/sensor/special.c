@@ -22,15 +22,6 @@
 
 unsigned char next_special_command; //= 0x70;
 
-/*
-int main(int argc, char *argv[])
-{
-        generate_special_command(atoi(argv[1]));
-	send_special_command(get_next_special_command());
-        return 0;
-}
-*/
-
 /*-----------------------------------------------------------------------------
  *  set_next_special_command 
  *      input: command
@@ -101,8 +92,6 @@ void send_special_command(unsigned char command)
         } else {
                 header = 0xC3;
                 data = command;
-		//printf("Header is %x\n", header);
-		//printf("Data is %x\n", data);
                 req_sending();
         }
 }
@@ -115,13 +104,17 @@ void send_special_command(unsigned char command)
 int search_for_crossroad(){
 
 
-		if((dist_right_front>=80 && dist_left_front>=80) || (dist_front>=110 && dist_left_front>=80) || (dist_front>=110 && dist_right_front>=80)){
+		if((dist_right_front>=80 && dist_left_front>=80) ||//
+                                (dist_front>=110 && dist_left_front>=80) ||//
+                                (dist_front>=110 && dist_right_front>=80)){
 				return 1;
 		}
-		else if(dist_right_front >= 80 && dist_right_back >= 80 && dist_front <= 35){
+		else if(dist_right_front >= 80 && dist_right_back >= 80 &&//
+                                dist_front <= 35){
 				return 2;
 		}
-		else if(dist_left_front >= 80 && dist_left_back >= 80 && dist_front <= 35){
+		else if(dist_left_front >= 80 && dist_left_back >= 80 &&//
+                                dist_front <= 35){
 				return 3;
 		}
 		else {
