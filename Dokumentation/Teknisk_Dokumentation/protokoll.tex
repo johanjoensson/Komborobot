@@ -10,3 +10,173 @@
 \section{Protokoll}
 \label{sec:protokoll}
 
+För att förenkla kommunikation mellan enheter så används ett enhetligt
+protokoll, detta gör det också väldigt mycket lättare att lägga till fler
+enheter till roboten.
+
+
+\subsection{Generell överföring mellan enheter}
+Kommunikationen mellan de olika enheterna sker via en SPI-buss (se 
+\ref{sec:SPI}).
+All kommunikation består av en headerbyte följt av en databyte.
+I headerbyten anges till vilken enhet den efterföljande informationen ska, 
+samt hur den ska tolkas av den mottagande enheten.
+De tre mest signifikanta bitarna i headern anger till vilken enhet 
+informationen ska och de 5 minst signifikanta bitarna anger 
+hur denna information ska behandlas. Uppdelningen kan ses i tabell 
+\ref{tab:header}.  Kodningen av de tre mest signifikanta bitarna kan ses i 
+tabell \ref{tab:headerkod}.
+
+All kommunikation går via kommunikationsenheten, så om sensorenheten vill 
+skicka data till styrenheten skickar den en headerbyte med styrenhetens adress 
+och en databyte till kommunikationsenheten som 
+tolkar headern och skickar headern och databyten till styrenheten.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{| c | c | c | c | c | c |}
+    \hline
+    Målenhet [3 bitar] & A & B & C & D & E \\
+    \hline
+  \end{tabular}
+  \caption{Bituppdelning av header}
+  \label{tab:header}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{3 MSB} & \textbf{Målenhet} \\
+    000 & Kommunikationsenhet \\
+    001 & Sensorenhet \\
+    010 & Styrenhet \\
+    100 & PC \\
+    110 & PC och Styrenhet\\
+  \end{tabular}
+  \caption{Kodning av header}
+  \label{tab:headerkod}
+\end{table}
+
+
+\subsection{PC-mjukvara $\longleftrightarrow$ Styrenhet}
+Då styr- eller sensorenheten sänder data till PC-mjukvaran kommer mjukvaran att
+översätta header-byten samt data-byten så att man enkelt kan åskådliggöra
+instruktionen som sändes. 
+PC-mjukvaran skickar styrkommandon till roboten då roboten är i fjärrstyrt läge.
+Bituppdelningen av styrkommandon kan ses i tabell \ref{tab:styrbitar} och
+kodningen kan ses i tabell \ref{tab:styrkommando}.
+
+Om styrenheten får en header den inte känner igen så skickar den ett
+felmeddelande till PCn.
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{| c | c |}
+    \hline
+    Kommando [4 bitar] & Hastighet [4 bitar] \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av styrkommandon}
+  \label{tab:styrbitar}
+\end{table}
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{l l}
+    \textbf{4 MSB} & \textbf{Kommando} \\
+    0000 & Stopp \\
+    0001 & Framåt \\
+    0010 & Fram vänster \\
+    0011 & Fram höger \\
+    0100 & Rotera vänster \\
+    0101 & Rotera höger \\
+    0110 & Back \\
+    0111 & Set höger \\
+    1000 & Set vänster \\
+    1001 & Trim vänster \\
+    1010 & Trim höger \\
+    1011 & No trim \\
+  \end{tabular}
+  \caption{Kommandokodning}
+  \label{tab:styrkommando}
+\end{table}
+
+
+\subsection{Sensorenhet $\longleftrightarrow$ Styrenhet, PC-mjukvara}
+När sensorenheten skickar information till styrenheten och PCn så anger
+E-flaggan om roboten är i autonomt eller fjärrstyrt läge.
+D-flaggan avgör om databyten som mottagits är ett specialkommando eller inte.
+A-flaggan anger om roboten kör i labyrint eller om den följer en linje.
+Flaggornas lägen kan ses i tabell \ref{tab:adeflaggor}.
+
+Efterföljande data är antingen ett specialkommando,
+se tabell \ref{tab:special}, avstånd till väggar eller avstånd till 
+centrumlinjen.  Avstånd till centrumlinjen skickas bara till styrenheten.
+B- och C-flaggorna anger vilken avståndssensor som skickas, kodningen kan ses i
+tabell \ref{tab:bcflaggor}. Om både B- och C-flaggan är ett kan det vara 3
+sensorer, då avgör de översta databitarna vilken sensor det är, se tabell
+\ref{tab:kortsensor}.
+
+PC-mjukvaran skickar data till sensorenheten då tröskelvärdet på linjesensorerna
+kalibreras, se \ref{sec:linjesensor}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l l l l l l l}
+    \textbf{A} & \textbf{Läge} & & \textbf{D} & \textbf{Typ av data} & & \textbf{E} & \textbf{Läge} \\
+    0 & Labyrint & & 0 & Sensordata & & 0 & Fjärrstyrt \\
+    1 & Linje & & 1 & Specialkommando & & 1 & Autonomt \\
+  \end{tabular}
+  \caption{A-,D- och E-flaggor}
+  \label{tab:adeflaggor}
+\end{table}
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{BC} & \textbf{Sensor} \\
+    00 & Fram vänster \\
+    01 & Bak vänster \\
+    10 & Fram höger\\
+    11 & Bak höger, Kort vänster, Kort höger\\
+  \end{tabular}
+  \caption{B- och C-flaggor}
+  \label{tab:bcflaggor}
+\end{table}
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{2 MSB i databyte} & \textbf{Sensor} \\
+    0- & Bak höger \\
+    10 & Kort höger \\
+    11 & Kort vänster\\
+  \end{tabular}
+  \caption{B- och C-flaggor}
+  \label{tab:kortsensor}
+\end{table}
+
+\begin{table}[h] 
+  \centering
+  \begin{tabular}{| c | c | c | c | c | c |}
+    \hline
+     0 & Specialkommando [3 bitar] & 0 & 0 & 0 & 0 \\ \hline
+  \end{tabular}
+  \caption{Bituppdelning av specialkommandon}
+  \label{tab:specialbitar}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l l}
+    \textbf{Kodning} & \textbf{Specialkommando} \\
+    000 & Återuppta vanlig reglering\\
+    001 & Kör rakt fram \\
+    010 & Sväng höger 90\degree \\
+    011 & Sväng vänster 90\degree \\
+    100 & Rotera höger 90\degree \\
+    110 & Rotera vänster 90\degree \\
+  \end{tabular}
+  \caption{Kodning av specialkommandon}
+  \label{tab:special}
+\end{table}
