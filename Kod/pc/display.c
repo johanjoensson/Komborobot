@@ -208,20 +208,16 @@ void display_error()
  *****************************************************************************/
 enum mode run_mode(struct instruction_t *inst)
 {
-	if((inst->header & 0x01) == 0){
-		return FJARR;
-	}else{
-		switch((int)(inst->header & 0x10) >> 4){
-			case 0:
-				return LABYRINT;
-			case 1:
-				return LINJE;
-			default:
-				return ERROR;
-		}
-	}
+        switch((inst->header & 0x10) >> 4){
+                case 0:
+                        return LABYRINT;
+                case 1:
+                        return LINJE;
+                default:
+                        return ERROR;
+        }
 
-	return ERROR;
+        return ERROR;
 }
 
 /******************************************************************************
@@ -244,11 +240,7 @@ void display_mode(struct instruction_t *inst)
 			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,//
                                         "Följer linjen");
 			break;
-		case FJARR:
-			mvwaddstr(mode, y >> 1, (x >> 1) - x/12 ,//
-                                        "Fjärrstyrt läge");
-			break;
-		default:
+                default:
                         break;
 	}
 

@@ -66,8 +66,7 @@ int receive_inst(int s, struct sockaddr_rc ff, struct instruction_t *inst)
 	receive_data(s, ff, &inst->data);
 
 
-        if(!( ( ( (int) inst->header & 0xC0) >> 5 == 4 )||//
-                                ( ( (int)inst->header & 0xC0) >> 5 == 6) ) ){
+        if(inst->data & 0x80){
                 return 1;
         }
 
@@ -92,6 +91,7 @@ void exit_program()
  *****************************************************************************/
 int main(void)
 {
+        FILE *rec = fopen("blue_rec.txt", "w+");
         sock = init();
         /**********************************************************************
          * Bind ctr + c till exit_program
@@ -122,6 +122,13 @@ int main(void)
 			send_inst(sock, inst);
 		}else{
                         if( receive_inst(sock, firefly, ex_inst) == 0){
+                                if((ex_inst->header % 2 == 1) && ((ex_inst->header & 0x10) >> 4) == 1){
+                                        fprintf(rec, "Linjeläge\nHeader = %X\n", (int)ex_inst->header);
+                                }else if((ex_inst->header % 2 == 1) && ((ex_inst->header & 0x10) >> 4) == 0){
+                                        fprintf(rec, "Labyrintläge\nHeader = %X\n", (int)ex_inst->header);
+                                }
+                                fflush(rec);
+
                                 display_inst(ex_inst);
                         }
 		}
