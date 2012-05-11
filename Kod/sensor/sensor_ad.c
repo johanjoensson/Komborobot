@@ -16,7 +16,7 @@ unsigned char control_mux();
 int display_ctr = 0;
 int ad_counter=0;
 int duplicate;
-int lost_one_wall=0;
+
 
 
 
@@ -130,7 +130,7 @@ void start_next_ad()
                 else if(maze_mode == 0 && auto_mode==1){  //linjeläge
                         header = 0x99;	//Skicka till pc
                 }
-                else {
+                else if(auto_mode == 0) {
                         header = 0x88;
                 }
                 data= dist_right_front;
@@ -238,7 +238,8 @@ void start_next_ad()
                                         //Resetar next_special_command
                                 generate_special_command(4);
 						}
-						else if(temp2==3){
+						else if(temp2==3 && (get_next_special_command()==0x10))
+						{
 								generate_special_command(4);
 						}
                         else if(temp2==4){		//vanlig 90 högersväng
@@ -265,12 +266,7 @@ void start_next_ad()
                                 }
                                 req_sending();
                         }
-
-                        if(dist_left_front < 65 && 
-                                dist_right_front < 65 && lost_one_wall ==1){
-                                lost_one_wall=0;
-                                generate_special_command(4);
-                        }								
+								
 
                         //linjer? byt till maze_mode=0 om inga väggar finns
                         if(line_array_1!=0 || line_array_2!=0) {

@@ -126,12 +126,12 @@ void set_speed(unsigned char speed)
 		speed = 0x6A + speed;		// sätter lägsta hastigheten till 6A och högsta till 88
 		if (trim > 0)
 		{
-			speed_right = speed - 2;			// sätter hastigheten för rak körning höger hjul
+			speed_right = speed - 1;			// sätter hastigheten för rak körning höger hjul
 			speed_left = speed + (2+trim);		// sätter hastigheten för rak körning vänser hjul
 		}
 		else
 		{
-			speed_right = speed - (2+trim);		// sätter hastigheten för rak körning höger hjul
+			speed_right = speed - (1+trim);		// sätter hastigheten för rak körning höger hjul
 			speed_left = speed + 2;				// sätter hastigheten för rak körning vänser hjul
 		}
 	}
