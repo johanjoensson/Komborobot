@@ -21,9 +21,13 @@ från en PC, samt skicka relevant information, såsom sensordata, till PC.
 Figur \ref{fig:prod1} visar robotens utseende. Basen är en trehjulig plattform 
 av typ \emph{CarpetRover}, på vilken är monterat fem stycken avståndssensorer 
 riktade åt sidorna respektive framåt, samt elva stycken sensorer för att upptäcka 
-linjer på marken. 
+linjer på marken. Avståndssensorerna är placerade med tre sensorer på varje sida, 
+samt en riktad framåt. Sensorerna på sidorna är placerade så att de kan se vinkeln till väggen.
+Två av de tre avståndssensorerna på vardera sida mäter avståndet från väggen då roboten
+är en bit ut från väggen, medan den tredje sensorn på sidan används då avståndet är
+kortare. 
 
-\nyBild{komborobot.jpg}{Bild på produkten}{prod1}
+\nyBild{komborobot.jpg}{Bild på produkten}{prod1}{1.0}
 
 Robotens funktionalitet är uppdelad på tre enheter, som var och en 
 representeras av en AVR-processor. De tre enheterna är: 

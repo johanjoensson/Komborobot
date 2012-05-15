@@ -4,9 +4,12 @@
 
 Sensorenheten är den enhet som behandlar all sensordata. Den samlar in data från 
 avståndssensorerna och linjesensorerna som den sedan antingen omvandlar till 
-cm värden i avståndsensorns fall, eller trösklar och ger diskreta varierande storheter 
+cm-värden i avståndsensorns fall, eller trösklar och ger diskreta varierande storheter 
 som i linjesensorns fall. Linjesensorn kommunicerar sedan med kommunikationsenheten
-som förmedlar värdena till styrenheten och till PCn.
+som förmedlar värdena till styrenheten och till PCn. En schematisk översikt över sensorenheten 
+kan ses i fig. \ref{fig:sensor_schema}.
+
+\nyBild{sensorer.png}{En schematisk översikt över sensorenheten}{sensor_schema}{0.5}
 
 \subsection{Hårdvara}
 Sensorenheten utgörs av en AVR microcontroller samt de analoga sensorer som är kopplade till denna. Sensorenheten består av en AVR ATmega16 som 
@@ -237,7 +240,7 @@ data till andra delar av roboten. Sensorenheten är den stora leverantören av
 data i systemet och sänder iväg betydligt mer data än vad den tar emot. För att 
 adressera och specificera den data som skickas iväg från sensorenheten märks 
 headerbyten upp med diverse olika flaggor och adresseringsbitar. För mer info om 
-dessa, se \ref{sec:protokoll}. Den enda data som tas emot av sensorenheten är en 
+dessa, se sektion \ref{sec:protokoll}. Den enda data som tas emot av sensorenheten är en 
 referenskod för att kalibrera linjesensorerna.
 
 I fjärrstyrt läge så skickar sensorenheten avståndet från avståndssensorerna 

@@ -3,7 +3,10 @@
 Styrenhetens huvudsakliga uppgift är att ta emot data från
 kommunikationsenheten och omvandla det till PWM signaler som styr motorerna.
 Styrningen av motorerna sker antingen autonomt med reglering eller 
-manuellt genom styrkommandon.
+manuellt genom styrkommandon. Figur \ref{fig:styr_schema} visar en schematisk 
+översikt över styrenheten. 
+
+\nyBild{styrenhet.png}{En schematisk översikt över styrenheten}{styr_schema}{0.5}
 
 \subsection{Hårdvara}
 
@@ -87,11 +90,11 @@ en när roboten kör i labyrinter.
 \subsubsection{Linjereglering}
 \label{sec:linjereglering}
 Utöver att uppfatta var på linjen roboten för närvarande befinner sig är 
-linjeregleringen är anpassad för att uppfatta i vilken riktning roboten för 
+linjeregleringen anpassad för att uppfatta i vilken riktning roboten för 
 närvarande färdas. Datan som styrenheten tar emot när roboten befinner sig i 
 linjeläge innehåller en kod som visar vilken sensor som är närmast mitten på 
-tejpen. Är 2 sensorer för närvarande på tejpen väljs den längst åt höger. 
-Koden kan vara något av 11 diskreta värden som sträcker sig från -127 till 127.
+tejpen. Är två sensorer för närvarande på tejpen väljs den längst åt höger. 
+Koden kan vara någon av elva diskreta värden som sträcker sig från -127 till 127.
 
 Då detta värde ändras så bestäms i vilken riktning relativt tejpen som 
 roboten för närvarande rör sig. Detta avgör sedan hur roboten ska bete sig.
@@ -110,15 +113,15 @@ tejpen ligger över de högra sensorerna.
 Linjeregulatorn har utöver detta flera olika egenskaper för att förbättra 
 regleringen:
 \begin{itemize}
-\item Visar linjesensorerna att samma sensor varit mitt över tejpen i mer än 8st 
-avläsningar, så utgår regulatorn ifrån att tejpen för tillfället är rak och roboten 
-beordras att röra sig rakt framåt. Under de första 8 avläsningarna som samma 
-sensor varit i mitten av tejpen så utgår regulatorn att roboten har samma riktning 
+\item Visar linjesensorerna att samma sensor varit mitt över tejpen i mer än åtta 
+avläsningar, så utgår regulatorn från att tejpen för tillfället är rak och roboten 
+beordras att röra sig rakt framåt. Under de första åtta avläsningarna som samma 
+sensor varit i mitten av tejpen så utgår regulatorn från att roboten har samma riktning 
 relativt tejpen som tidigare.
-\item Visar linjesensorerna att att mitten av tejpen rört sig än 2 sensorer eller mer
- under de senaste 20 avläsningar, så dubblas regulatorns "effekt".
+\item Visar linjesensorerna att mitten av tejpen rört sig två sensorer eller mer
+ under de senaste 20 avläsningarna, så dubblas regulatorns "effekt".
 \item Om roboten hamnat utanför tejpen, det vill säga att den av någon anledning 
-kört av, så svänger regulatorn kraftigt åt den riktning där tejpen senast uppfattats
+kört av, så svänger regulatorn kraftigt åt den riktning där tejpen senast uppfattats.
 \end{itemize}
 
 
@@ -155,7 +158,7 @@ För att utföra till exempel köra rakt framåt eller utföra 90\degree svänga
 roboten något som kallas för specialkommandon. Dessa är förprogrammerade 
 sekvenser av motorhastigheter, som utförs när styrenheten mottar vissa speciella
 headerfilen. Den flagga i headern som avgör om det skickade kommandot är ett
-specialkommando är E-flaggan, se \ref{protokoll}.
+specialkommando eller ej är E-flaggan, se sektion \ref{sec:protokoll}.
 
 Roboten har sex olika specialkommandon:
 
@@ -188,8 +191,6 @@ att komma in mellan de väggar som finns på sidan av korsningen som.
 Specialkommandot utförs då roboten upptäckt en 90\degree  kurva labyrinten. Roboten utför efter 
 mottaget kommando en 90\degree sväng åt den givna riktningen, utan körning framåt varken innan 
 eller efter svängen.
-
-
 
 
  

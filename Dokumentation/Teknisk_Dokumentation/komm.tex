@@ -11,7 +11,9 @@ Kommunikationsenheten ansvarar för att förmedla data mellan de olika
 enheterna i systemet. Kommunikationsenheten består av en AVR ATmega16 och en 
 Fireflymodul. Processorn klockas av en extern 16 MHz kristalloscillator, samma klocka som för 
 resten av systemet. Kommunikationsenheten tar ingen hänsyn till om roboten 
-opererar i fjärrstyrt eller autonomt läge.
+opererar i fjärrstyrt eller autonomt läge. Figur \ref{komm-schema} visar en schematisk bild över kommunikationsenhetens anslutningar till andra enheter. 
+
+\nyBild{Kommunikationsenhet.png}{Schematisk översikt över kommunikationsenheten}{komm-schema}{0.5}
 
 Kommunikationen mellan PCn och roboten sker via blåtand. Kommunikation mellan 
 de olika enheterna på roboten sker med en så kallad SPI-buss. SPI-bussens 
@@ -81,8 +83,8 @@ vilka register som används och hur dessa programmeras.
 
 Atmel Atmega16 har hårdvarustöd för SPI-bussar. Detta betyder i praktiken att 
 det finns pinnar på processorn som enkelt kan ställas in för att fungera 
-enligt SPI-standard. Dessa pinnar ligger alla på Port B, se \ref{fig:PINkomm}.
-I \ref{fig:spibuss} visas hur pinnarna i de olika enheterna ska kopplas samman.
+enligt SPI-standard. Dessa pinnar ligger alla på Port B, se figur \ref{fig:PINkomm}.
+I figur \ref{fig:spibuss} visas hur pinnarna i de olika enheterna ska kopplas samman.
 
 \begin{figure}[H]
   \centering
@@ -119,7 +121,7 @@ inte är garanterad att fungera för slavar.
 MOSI porten är den port som används när kommunikationsenheten ska skicka 
 information till styrenheten och sensorenheten. Den kommer alltså att 
 användas som input för slavarna och output för mastern. MOSI-signalen 
-parallellkopplas till slavarna, se \ref(fig:spibuss). Om SPI-bussen är 
+parallellkopplas till slavarna, se figur \ref{fig:spibuss}. Om SPI-bussen är 
 korrekt inställd kommer slaven som inte är avsedd att motta den skickade 
 datan att ignorera vad överföringen. Se pin SS för mer information om 
 denna funktion.
@@ -178,15 +180,14 @@ headerbyte och är redo att ta emot en databyte.
 
 Det finns i Atmega16 flertalet register som används för att kontrollera SPI-
 bussen. Dessa register varierar lite i funktion beroende på om processorn är 
-inställd för att fungera som master eller slav på SPI-bussen. För mer 
-information om dessa register se *INSERT KÄLLA atmega16 guide*
+inställd för att fungera som master eller slav på SPI-bussen. 
 
 \textbf{SPI Statusregister - SPSR}
 
 
 Detta register innehåller dels två olika flaggor och dels en bit som kan 
 sättas hög för att fördubbla SPI-bussens överföringshastighet om processorn 
-är konfigurerad till att fungera som master . 
+är konfigurerad till att fungera som master. 
 
 MSB är SPIF-flaggan som sätts hög på både master och slav när en 
 SPI- överföring slutförts. Tillåts SPI-avbrott kommer 
