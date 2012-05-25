@@ -1,0 +1,184 @@
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\input{LIPS.tex}
+
+
+\newcommand{\LIPSartaltermin}{2012/VT}
+\newcommand{\LIPSkursnamn}{TSEA27}
+
+\newcommand{\LIPSprojekttitel}{Komborobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 17}
+\newcommand{\LIPSgruppepost}{komborobot@googlegroups.com}
+\newcommand{\LIPSgrupphemsida}{finns ej}
+
+\newcommand{\LIPSdokumentansvarig}{Mattias Jansson}
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\ 83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-281368, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{}
+
+
+\newcommand{\LIPSdokumenttyp}{Efterstudie}
+\newcommand{\LIPSredaktor}{Simon Larsson}
+\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+% Förslag till versionshantering:
+% döp helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
+
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Simon Larsson}{Projektledare (PL)}{070-7311646}{simla804@student.liu.se}
+  \LIPSgruppmedlem{\LIPSdokumentansvarig}{Dokumentansvarig (DOK)}{073-6837074}{matja307@student.liu.se}
+  \LIPSgruppmedlem{Gustav Svensk}{Reglersystem (REG)}{073-6208776}{gussv666@student.liu.se}
+  \LIPSgruppmedlem{Johan Jönsson}{Mjukvara (KA)}{073-8305758}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Tobias Andersson}{Hårdvara (HV)}{073-7201098}{toban963@student.liu.se}
+  \LIPSgruppmedlem{Markus Falck}{Leveransansvarig (LV)}{076-3457552}{marlo265@student.liu.se}
+  \LIPSgruppmedlem{Simon Wallin}{Testansvarig (GM)}{076-2300665}{simwa252@student.liu.se}
+\end{LIPSprojektidentitet}
+
+\tableofcontents{}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+\LIPSversionsinfo{0.1}{2012-05-25}{Första utkast.}{matja307}{}
+\LIPSversionsinfo{0.1}{2012-05-25}{Stolpar efter diskussion.}{matja307}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\section{Inledning}
+
+\section{Tidsåtgång}
+Såg bra ut, tiden räckte lagom. 
+\subsection{Arbetsfördelning}
+De som hade stora ansvarsområden fick mer att göra, pga att de hade kunskapen att jobba på nya områden. För få som kunde vissa saker.
+Ansvarsfördelning kunde ha varit jämnare. 
+\subsection{Tidsåtgång jämfört med planerad tid}
+Skriv antalet timmar och jämför med planerad. Vissa aktiviteter växte och vissa föll bort. Tester tog mer tid än väntat. Några få aktiviteter kom till. 
+
+\section{Analys av arbete och problem}
+
+\subsection{Vad som hände under de olika faserna}
+Före: (Vad, hur?) Kravspec, projektplan.  Svårt att veta hur saker funkar. Ingen erfarenhet. Höftar mycket. 
+
+Under: Designspec. Bygga robot. Kontinuerlig dokumentation hade varit bra. Svårt att skriva, ingen erfarenhet av så stora rapporter. Tajt om tid. 
+
+Efter: Efterstudie. 
+
+\subsection{Hur vi arbetade tillsammans}
+Delade upp oss i mindre grupper med en huvudansvarig. Ibland själva. Kunde ha haft bättre kommunikation. (Ex bättre dokumentation) 
+
+Bra med möten en gång i veckan, på bestämda tider. 
+
+\subsection{Hur vi använde projektmallen}
+I förarbetet gjorde vi helt enligt mallen. Fungerade jättebra. Slapp uppfinna allt själva. Framför allt designspec och aktivitetsuppdelning. 
+
+Kravspecen borde använts mer, istället för att bara titta på designspecen. Vilka aktiviteter hör till vilket krav? 
+
+Aktiviteter som inte stog med från början tog väldigt lång tid innan de blev gjorda. Vi borde inte tvekat att uppdatera aktivitetslistan när nya aktiviteter komms på. 
+
+\subsection{Hur relationen med beställaren fungerade}
+Bra svar på frågor och tydliga kommentarer på inlämnade dokument. Engagerad. Frekvent respons. Tydligt på skillnaden mellan vad som 
+är kommentarer från examinator och beställare. 
+
+\subsection{Hur relationen med handledaren fungerade}
+Kunde ha utnyttjats mer. Fråga tidigare. Bra svar när vi väl frågade. Tillgänglig. 
+
+\subsection{Tekniska framgångar och problem}
+
+\begin{enumerate}
+\item Reglering
+Instabilt schassi, bakhjul. 
+Bättre tänk innan, fler sensorer.
+Många små problem, mycket tid. Minst 60 timmar. 
+
+\item Bakhjul
+Hade vi bytt schassi så hade det minskat tiden på motorstyrningen, men det kunde ha gett problem vid ex. linjereglering. 
+40 timmar. 
+
+\item Blåtand 
+Extern klocka
+Mjukvara. 
+Dålig data i överföring. Dålig data filtrerades bort. 
+Alla problem löstes inte helt, vissa fel filtrerades bort, så bättre lösning kunde ha gjorts. 
+Kanske 30 timmar. 
+\end{enumerate}
+
+\section{Måluppfyllelse}
+\subsection{Vad som har uppnåtts}
+Målet var att göra en fungerande robot. Det har vi gjort. Några få ändringar i kravspecifikationen fick göras. 
+
+\subsection{Hur leveransen fungerade}
+Bra. Godkända direkt. Tävlingen vanns inte, men banan klarades. Vi kom två. Konkurrenterna kom näst sist. Kraven 
+uppfylldes i tid, likaså dokumentationen.  
+
+\subsection{Hur studiesituationen har påverkat projektet}
+Vi hade till viss del samma schema, vilket var både bra och dåligt. Bra för möten och liknande, sämre för att vi alla 
+kunde sitta samtidigt i Muxen, vilket blev lite trångt runt roboten. 
+
+Projektet tog mycket tid. 
+
+\section{Sammanfattning}
+\subsection{De tre viktigaste erfarenheterna}
+\begin{itemize}
+\item Planera mera! Tänk innan! Flödesschema över systemet.
+\item Jobba med hårdvara, inte bara teorin. Läsa datablad. 
+\item Versionshanterare för kod och dokumentation. 
+\item Kakbak
+\end{itemize}
+
+\subsection{Goda råd till dem som ska utföra ett liknande projekt}
+\begin{itemize}
+\item Planera ännu mera
+\item Bättre kommunikation
+\item Tydliga krav och mål. Funktionella krav, och inte designmässiga. Spara designen till designspecen. 
+\end{itemize}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
