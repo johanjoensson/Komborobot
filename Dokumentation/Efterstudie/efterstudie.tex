@@ -27,17 +27,17 @@
 
 \newcommand{\LIPSdokumenttyp}{Efterstudie}
 \newcommand{\LIPSredaktor}{Simon Larsson}
-\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSversion}{1.0}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 % Förslag till versionshantering:
 % döp helt enkelt om filen till [dokument]_vX.Y.tex vid varje revision
 
 
-\newcommand{\LIPSgranskare}{}
-\newcommand{\LIPSgranskatdatum}{}
-\newcommand{\LIPSgodkannare}{}
-\newcommand{\LIPSgodkantdatum}{}
+\newcommand{\LIPSgranskare}{simla804}
+\newcommand{\LIPSgranskatdatum}{2012-05-30}
+\newcommand{\LIPSgodkannare}{-}
+\newcommand{\LIPSgodkantdatum}{-}
 
 \begin{document}
 
@@ -62,31 +62,33 @@
 \begin{LIPSdokumenthistorik}
 \LIPSversionsinfo{0.1}{2012-05-25}{Första utkast.}{matja307}{}
 \LIPSversionsinfo{0.1}{2012-05-25}{Stolpar efter diskussion.}{matja307}{}
+\LIPSversionsinfo{1.0}{2012-05-30}{Stolpar utvecklade till text.}{MJ,MF,SL,JJ,GS}{simla804}
 \end{LIPSdokumenthistorik}
 \newpage
 
 \section{Inledning}
-Denna studie är en sammanfattning av hur grupp 17, bestående de sju projektmedlemarna vars namn anges på sida 2, arbetat med projektkursen "Elektronikprojekt Y" under vårterminen 2012, samt vilka erfarenheter och lärdomar som kunnat dras av det. Under projektet har gruppen konstruerat en s.k. Komborobot, vilket i detta fall innebär en robot som autonomt kan ta sig fram sig genom en bana bestående dels av en upptejpad linje på golvet (linjen har mörkare färg än underlaget), dels en labyrint uppbyggd av 80 centimeter långa väggmoduler.
+Denna studie är en sammanfattning av hur grupp 17, bestående de sju projektmedlemarna vars namn anges på sida 2, arbetat med projektkursen "Elektronikprojekt Y" under vårterminen 2012 samt vilka erfarenheter och lärdomar som kunnat dras av det. Under projektet har gruppen konstruerat en s.k. Komborobot, vilket i stora drag innebär en robot som autonomt kan ta sig fram sig genom en bana bestående dels av en upptejpad linje på golvet (linjen har mörkare färg än underlaget), dels en labyrint uppbyggd av 80 centimeter långa väggmoduler.
 
+Som grund för denna efterstudie ligger ett utvärderingsmöte där samtliga gruppmedlemmar under knappt två timmar diskuterade berörda punkter.
 \section{Tidsåtgång}
-Från det att underfasen av projektet (se avsnitt 3.1) inleddes med att gruppen framställde en designspecifikation för roboten till projektets slutförande fanns en tidsbudget på 140 timmar per gruppmedlem.
+Från det att "underfasen"\ av projektet (se avsnitt 3.1) inleddes med att gruppen framställde en designspecifikation för roboten fram till projektets slutförande fanns en tidsbudget på 140 timmar per gruppmedlem.
 \subsection{Tidsåtgång jämfört med planerad tid}
-Då gruppen bestod av sju medlemmar skulle totalt 980 timmar användas till under- och efterfasen av projektet. Denna tidsbudget har överskridits något och ser ut att landa på 1020 timmar, vilken vi ändå anser ligga inom rimliga gränser. Tidsplanen som fastställdes i projektets början följdes genom hela arbetets gång. Det som orsakade störst problem med tidsplaneringen var svårigheterna i att förutse hur mycket tid en viss aktivitet skulle ta i anspråk.
+Då gruppen bestod av sju medlemmar skulle totalt 980 timmar användas till under- och efterfasen av projektet. Denna tidsbudget har överskridits något och ser ut att landa på 1020 timmar, en överskridelse vi dock anser ligga inom rimliga gränser. Tidsplanen som fastställdes i projektets början följdes, med kontinuerlig modifikation, genom hela arbetets gång. Det som orsakade störst problem med tidsplaneringen var svårigheterna i att förutse hur mycket tid en viss aktivitet skulle ta i anspråk. Dett fanns gott om exempel både på aktiviteter som tog flera gånger längre tid än beräknat och på aktiviter som försvann helt eftersom syftet redan uppnåtts genom arbetet med andra aktiviteter.
 \subsection{Arbetsfördelning}
-Redan vid projektets start fick varje projektmedlem ett ansvarsområde som de var huvudansvariga över under projektets gång. Ambitionen var att alla skulle hjälpa till så mycket som möjligt under olika områden men det stod ganska snart klart att de med huvudansvar över större områden (t.ex sensor/hårdvara) för det mesta var sysselsatta med sitt område, eftersom det helt enkelt skulle gå åt för mycket tid om alla i gruppen skulle lära sig allt inom de olika områdena på egen hand. De som hade mindre ansvarsområden hade däremot ofta problem att hitta givande arbetsuppgiffter att spendera den budgeterade tiden på eftersom de ofta fick hjälpa till med det som för stunden var mest tidskrävande vilket gjorde det svårt att få in ett "flyt" i arbetet.
+Redan vid projektets start fick varje projektmedlem ett ansvarsområde som de var huvudansvariga över under projektets gång. Ambitionen var att alla skulle hjälpa till så mycket som möjligt med olika områden men det stod ganska tidigt klart att de med huvudansvar över större områden (t.ex sensor/hårdvara) för det mesta var sysselsatta med sitt område, eftersom det helt enkelt skulle gå åt för mycket tid om alla i gruppen skulle lära sig allt inom de olika områdena på egen hand. De som hade mindre ansvarsområden hade däremot ofta problem att hitta givande arbetsuppgiffter att spendera den budgeterade tiden på eftersom de ofta fick hjälpa till med det som för stunden var mest tidskrävande vilket gjorde det svårt att få in ett flyt i arbetet.
 För att undvika detta hade det förmodligen varit bättre att sortera upp aktiviteterna i ansvarsområden efter det att tidsplanen fastställts för att får en tidsmässigt jämn fördelning.
 
 \section{Analys av arbete och problem}
 Så som vanligtvis sker vid arbete med projekt så har vissa problem uppstått under projektets gång, samt att vissa delar av projektet har fungerat
-bättre än väntat. Problemen har varit främst i brist på planering samt rent tekniska problem. 
+bättre än väntat. Problemen har främst varit bristande kommunikation samt rent tekniska problem. 
 
 \subsection{Vad som hände under de olika faserna}
- Under \"före-fasen\" så skrevs kravspecifikation och projektplan. Kravspecifikationen visade sig i efterhand var inte skriven på ett optimalt sätt. 
-Framför allt så var den alltför detaljerad vad gäller designen av roboten. Bättre hade varit om den fokuserat endast på beställarens krav, och 
-lämnat designen till designspecifikationen. Ett problem som gruppen hade var brist på erfarenhet främst gällande hårdvaran. Det blev en hel 
+ Under förefasen skrevs kravspecifikation och projektplan. Det visade sig i efterhand att kravspecifikationen inte var skriven på ett optimalt sätt. 
+Framför allt så var den alltför detaljerad vad gäller designen av roboten. Bättre hade varit om den fokuserat endast på beställarens krav och lämnat designen till designspecifikationen. 
+Ett annat problem som gruppen hade var brist på erfarenhet främst gällande hårdvaran. Det blev en hel 
 del gissningar om hur roboten skulle fungera. Detta fortsatte även i skrivandet av designspecifikationen. 
 
-Under byggandet av roboten så var designspecifikationen mycket användbar, men en hel del fick ändras under projektets gång på grund av
+Under byggandet av roboten var designspecifikationen mycket användbar, men en hel del fick ändras under projektets gång på grund av
 att nya kunskaper fick oss att hitta bättre lösningar, samt att nya problem uppstod. På grund av dessa förändringar så hade det varit bra om vi
 hade varit mer noggranna i att skriva teknisk dokumentation under själva konstruktionsarbetet, istället för att spara detta till slutet av projektet. 
 
@@ -100,16 +102,15 @@ Det huvudsakliga arbetet gjordes i mindre grupper, vanligtvis om två personer. 
 Kommunikationen mellan de mindre grupperna kunde ha varit bättre, exempelvis så kunde varje grupp varit bättre på att dokumentera
 det de gjorde. Uppdelningen i mindre grupper fungerade i övrigt mycket bra. Det var ett tidseffektivt sätt att arbeta. 
 
-Möten hölls en gång i veckan, på måndagar. Detta var lagom ofta. Vidare var det mycket bra med bestämda dagar för mötena. Detta förenklade 
-planeringen. 
+Möten hölls en gång i veckan, på måndaga, vilket oftast var lagom. Vidare var det mycket bra med bestämda dagar för mötena. Detta förenklade planeringen. 
 
 \subsection{Hur vi använde projektmallen}
-Projektmallen (LIPS-mallen) var mycket användbar, främst i förarbetet. Den gjorde så att vi hade tydliga riktlinjer att följa, vilket innebar att vi 
-slapp i essens uppfinna projektarbetesplanering själva. Mallen var extra användbar vid skrivandet av kravspecifikationen och då vi tog fram 
+Projektmallen (LIPS-mallen) var mycket användbar, främst i förarbetet. Den gjorde att vi hade tydliga riktlinjer att följa, vilket innebar att vi 
+slapp uppfinna formen för projektarbetesplaneringen själva. Mallen var extra användbar vid skrivandet av kravspecifikationen och då vi tog fram 
 de olika aktiviteterna. 
 
 Under arbetets gång så borde vi ha använt kravspecifikationen mer, främst för att kontrollera arbetet mot de olika kraven oftare. Istället så
-användes främst designspecifikationen. Vi borde vidare ha varit mer noggranna med att uppdatera aktivitetslistan då nya aktiviteter kom upp. 
+användes främst designspecifikationen. Vi kunde vidare ha varit mer noggranna med att uppdatera aktivitetslistan då nya aktiviteter kom upp. 
 
 \subsection{Hur relationen med beställaren fungerade}
 Relationen med beställaren fungerade bra. Vi fick tydliga kommentarer på inlämnade dokument och vid beslutspunkter. Beställaren var engagerad
@@ -125,18 +126,18 @@ Nedan listas några av våra svåraste tekniska problem.
 
 \begin{enumerate}
 \item Att få regleringen att fungera var nog den punkt som tog mest tid. 
-Ett problem som vi hade här var ett instabilt schassi, med ett skakande bakhjul. Detta försvårade relgeringen i labyrinten avsevärt. 
+Ett problem som vi hade här var ett instabilt chassi, med ett skakande bakhjul. Detta försvårade relgeringen i labyrinten avsevärt. 
 Lösningen till detta problem var kanske främst att använda fler sensorer. Det skulle ha varit bättre om vi tänkt till mer på regleringen 
 under början av projektet. 
 Problemet med regleringen bestod av många små problem. Tiden som lades på felsökning var cirka 60 timmar. 
 
-\item Bakhjul
+\item 
 Bakhjulet gjorde det svårt för oss att åka rakt framåt. Hade vi bytt schassi så hade det minskat tiden på motorstyrningen, 
 men det kunde ha gett problem vid exempelvis linjereglering. 
 Ungefär 40 timmar lades på felsökning och -remedering här. 
 
-\item Bluetooth
-Här lade vi en hel del tid i början av bygg-fasen. Det stora problemet låg i kommunikationen mellan processorn och Firefly-enheten. 
+\item 
+Bluetoothen lade vi också en hel del tid på i början av byggfasen. Det stora problemet låg i kommunikationen mellan processorn och Firefly-enheten. 
 Lösningen på problemen var tvådelad. Dels så installerades en extern klocka som löste de initiala problemen med att få fram någon 
 form av data. Därefter löstes problemen med \"dålig\" data med att i PC kasta bort den data som inte stämde in med den förväntade formen
 på data.  
@@ -185,7 +186,7 @@ teoretisk kunskap men ibland måste man låta sig begränsas av verkligheten.
 Många problem är kopplade till hårdvaran och inte teorin. Läs igenom databladen
 så ni vet hur saker och ting fungerar. När ni läst igenom databladen, läs igenom
 dem igen. 
-\item En versionshanterar, t.ex. Git, kan vara användbart att använda sig av för
+\item En versionshanterare, t.ex. Git, kan vara användbart att använda sig av för
 att förenkla arbetet med kod och dokumentation. Tänk på att alla bör vara
 insatta i hur versionshanteraren fungerar. 
 \item För att göra era projektmöten trevligare kan det vara en bra ide att någon
